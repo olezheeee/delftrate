@@ -1,0 +1,23 @@
+name: Assign PR to its author
+
+# A pull request opened without an assignee belongs to the person who opened it.
+# PRs a lead hands out with scripts/new_task.py already have an assignee and are left alone.
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  assign:
+    if: ${{ github.event.pull_request.assignees[0] == null }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr edit "$PR" --repo "$REPO" --add-assignee "$AUTHOR"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
