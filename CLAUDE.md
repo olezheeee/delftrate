@@ -2,6 +2,10 @@
 
 Course and professor ratings for TU Delft students. `index.html` is the approved demo; the real app is built from here.
 
+## Stack
+
+Next.js (App Router, TypeScript) in `app/`, Supabase clients in `lib/supabase/`, Vitest for tests. Run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` before marking a pull request ready. Next.js conventions for this version: see `AGENTS.md`.
+
 ## Team rules (follow these in every session)
 
 - Two long-lived branches: `develop` (daily work, default) and `main` (releases).
