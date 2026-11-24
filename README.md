@@ -23,7 +23,7 @@ The real application is being built on the `develop` branch.
 
 ## Running the app
 
-You need Node.js 24 (the current LTS release; `.nvmrc` pins it).
+You need Node.js 24 or 26 (the LTS releases). First time on this project? Follow [SETUP.md](SETUP.md).
 
 ```bash
 npm install

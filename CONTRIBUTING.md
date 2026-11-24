@@ -39,7 +39,7 @@ GitHub usernames and roles are in `.github/team.json`. The start-session briefin
    - run the code review on the PR (`/code-review` in Claude Code);
    - fix what it finds, through a `task/...` pull request into `develop`, and wait for the checks to pass.
 
-   After that, any lead can merge the PR into `main`.
+   After that, any lead can merge the PR into `main`. GitHub only allows the merge while the `checks` job on the PR is green.
 
 ## Start of every session
 
