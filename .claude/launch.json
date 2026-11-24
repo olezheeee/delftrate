@@ -3,8 +3,23 @@
   "configurations": [
     {
       "name": "delftrate",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "delftrate-demo",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "5599"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5599",
+        "--bind",
+        "127.0.0.1"
+      ],
       "port": 5599
     }
   ]

@@ -4,7 +4,7 @@ Course and professor ratings for TU Delft students. `index.html` is the approved
 
 ## Stack
 
-Next.js (App Router, TypeScript) in `app/`, Supabase clients in `lib/supabase/`, Vitest for tests. Run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` before marking a pull request ready. Next.js conventions for this version: see `AGENTS.md`.
+Next.js (App Router, TypeScript) in `app/`, Supabase clients in `lib/supabase/`, Vitest for tests. Run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` before marking a pull request ready. Components that call the Supabase server client must sit inside `<Suspense>` (`cacheComponents` is on). Next.js conventions for this version: see `AGENTS.md`.
 
 ## Team rules (follow these in every session)
 
