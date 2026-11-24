@@ -11,7 +11,7 @@ Next.js (App Router, TypeScript) in `app/`, Supabase clients in `lib/supabase/`,
 - Two long-lived branches: `develop` (daily work, default) and `main` (releases).
 - Never commit or push to `main` or `develop` directly. All work happens on a `task/...` branch and reaches `develop` through a pull request.
 - Every pull request has a description and an owner. Open one with `/new-task` (or `python3 scripts/new_task.py`).
-- Only leads (Oleg, Chad, Oreo) release `develop` into `main`, and only after an approving review from a lead.
+- Only leads (Oleg, Chad, Oreo) release `develop` into `main`. Any lead can review the release pull request, including the lead who opened it: run `/code-review` on it and fix what it finds. After that, any lead can merge it.
 - Start every working session with `/start-session`.
 - Team members and their roles live in `.github/team.json`.
 
