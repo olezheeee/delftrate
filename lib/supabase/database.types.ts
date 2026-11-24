@@ -339,15 +339,15 @@ export type Database = {
       course_professor_stats: {
         Args: { p_course_id?: string }
         Returns: {
-          approachability: number
+          approachability: number | null
           approachability_votes: number
           course_id: string
-          engagement: number
+          engagement: number | null
           engagement_votes: number
           enough_votes: boolean
           hidden: boolean
           professor_id: string
-          understanding: number
+          understanding: number | null
           understanding_votes: number
           votes: number
         }[]
@@ -356,12 +356,12 @@ export type Database = {
         Args: { p_course_id?: string }
         Returns: {
           course_id: string
-          difficulty: number
+          difficulty: number | null
           difficulty_votes: number
           enough_votes: boolean
-          exam_level: number
+          exam_level: number | null
           exam_level_votes: number
-          interest: number
+          interest: number | null
           interest_votes: number
           votes: number
         }[]

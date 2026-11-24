@@ -165,6 +165,10 @@ npx supabase migration new short_name_of_the_change
 
 Write the SQL in the file it creates, add tests to `supabase/database.test.ts`, and open a pull request with the `fable-review` label.
 
+Everything a migration adds starts closed. A new table needs its own `grant` and policies before the site can read it, and a new function needs `grant execute ... to authenticated` before anyone can call it. This also holds for a helper function outside `public` that a policy or a check on a table uses.
+
+`supabase/config.jsonc` only describes a database running on your own computer. It is not our project's settings: sign-in, email and the rest are set in the Supabase dashboard. Never run `npx supabase config push`.
+
 We have two Supabase projects, **development** and **production**. Both get the schema from the same files, and a brand-new project reaches the full schema with the four steps below. The project folder is always linked to the **development** project; production is never linked, it is named in the command each time.
 
 1. Sign in to Supabase once per computer. A browser opens.
@@ -205,9 +209,12 @@ npm run db:types
 npx supabase db push --remote=productionprojectref
 ```
 
-**Making someone an admin.** The admin flag cannot be set from the site. In the Supabase dashboard, open SQL Editor and run this with the person's email address; they must have registered first.
+**Making someone an admin.** The admin flag cannot be set from the site. In the Supabase dashboard, open SQL Editor and run this with the person's email address. They must have finished registering, including the programme and year.
 
 ```
 update public.profiles set is_admin = true
-where id = (select id from auth.users where email = 'name@student.tudelft.nl');
+where id = (select id from auth.users where email = 'name@student.tudelft.nl')
+returning id;
 ```
+
+It answers with one row. If it answers with no rows, nothing was changed: the email address is wrong, or the person has not finished registering.

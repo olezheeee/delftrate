@@ -3,7 +3,8 @@
 --
 -- It holds no users. Every vote here is a manual vote, which needs no account, so the
 -- averages work on a project where nobody has registered yet.
--- Safe to run twice: rows that already exist are left alone.
+-- Safe to run twice: rows that already exist are left alone. An example course whose code
+-- is already taken by a real course is skipped, together with its links and votes.
 --
 -- What to expect when signed in as a student:
 --   CSE1001  two professors with enough votes; van Houten is the best rated one
@@ -36,8 +37,10 @@ insert into public.courses (id, code, name, programme_id, year) values
   ('00000000-0000-4000-a000-000000000207', 'AE1001', 'Thermodynamics', 'AE', 1)
 on conflict do nothing;
 
-insert into public.course_professors (course_id, professor_id) values
-  ('00000000-0000-4000-a000-000000000201', '00000000-0000-4000-a000-000000000101'),
+insert into public.course_professors (course_id, professor_id)
+select l.course_id, l.professor_id
+from (values
+  ('00000000-0000-4000-a000-000000000201'::uuid, '00000000-0000-4000-a000-000000000101'::uuid),
   ('00000000-0000-4000-a000-000000000201', '00000000-0000-4000-a000-000000000106'),
   ('00000000-0000-4000-a000-000000000202', '00000000-0000-4000-a000-000000000102'),
   ('00000000-0000-4000-a000-000000000203', '00000000-0000-4000-a000-000000000105'),
@@ -46,6 +49,9 @@ insert into public.course_professors (course_id, professor_id) values
   ('00000000-0000-4000-a000-000000000206', '00000000-0000-4000-a000-000000000104'),
   ('00000000-0000-4000-a000-000000000206', '00000000-0000-4000-a000-000000000107'),
   ('00000000-0000-4000-a000-000000000207', '00000000-0000-4000-a000-000000000106')
+) as l (course_id, professor_id)
+where exists (select 1 from public.courses c where c.id = l.course_id)
+  and exists (select 1 from public.professors p where p.id = l.professor_id)
 on conflict do nothing;
 
 -- Each line is one criterion: its target average and its number of votes. The votes are
@@ -108,6 +114,14 @@ split as (
     floor(t.average)::smallint as low,
     round((t.average - floor(t.average)) * t.votes)::smallint as high_votes
   from targets t
+  where exists (select 1 from public.courses c where c.id = t.course_id)
+    and (
+      t.professor_id is null
+      or exists (
+        select 1 from public.course_professors cp
+        where cp.course_id = t.course_id and cp.professor_id = t.professor_id
+      )
+    )
 )
 insert into public.manual_votes (course_id, professor_id, criterion, value, count)
 select course_id, professor_id, criterion, low, (votes - high_votes)::smallint

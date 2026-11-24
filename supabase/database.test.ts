@@ -603,6 +603,18 @@ describe("the seed data", () => {
     expect(names.rows).not.toContainEqual({ name: "Dr. Hiroshi Tanabe" });
   });
 
+  it("skips an example course whose code is already taken, instead of failing", async () => {
+    const taken = await createTestDatabase();
+    await taken.query("insert into public.courses (code, name, programme_id, year) values ('CSE1001', 'The real one', 'CSE', 1)");
+    await taken.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
+
+    const { rows: found } = await taken.query<Row>(
+      "select (select count(*) from public.courses)::int as courses, (select name from public.courses where code = 'CSE1001') as name, (select count(*) from public.manual_votes m join public.courses c on c.id = m.course_id where c.code = 'CSE1001')::int as votes",
+    );
+    expect(found).toEqual([{ courses: 7, name: "The real one", votes: 0 }]);
+    await taken.close();
+  });
+
   it("can be loaded twice without adding anything", async () => {
     const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses");
     const before = (await count()).rows;

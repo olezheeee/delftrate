@@ -67,9 +67,9 @@ export function verdict(subject: SubjectAverages, professor: ProfessorAverages):
 // compares vote counts itself; it reads the enough_votes flag the database returns.
 // ---------------------------------------------------------------------------
 
-// Type the rows of the two stats functions with SubjectStatsRow and ProfessorStatsRow, not
-// with the generated database types: the generator cannot know that the averages are
-// sometimes null and types them as plain numbers.
+// SubjectStatsRow and ProfessorStatsRow are the rows of the two stats functions. The
+// generated database types say the same (scripts/db_types.mjs marks the averages as
+// nullable, which the generator alone would not).
 
 /** What the score needs from a row of course_subject_stats(). */
 export type SubjectStats = {
