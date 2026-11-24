@@ -122,8 +122,8 @@ def main():
         for p in merged[:5]:
             say(f"  #{p['number']:<4} {p['title']}  ({who(p)}, merged {ago(p['mergedAt'])})")
     else:
-        log = run("git", "log", "origin/develop", "-5", "--pretty=format:  %h  %s  (%an, %cr)", check=False)
-        say(log or "  Nothing merged yet.")
+        log = run("git", "log", "origin/develop", "-5", "--pretty=format:%h  %s  (%an, %cr)", check=False)
+        say("\n".join("  " + l for l in log.splitlines()) or "  Nothing merged yet.")
 
     if lead:
         # ---- leads: fresh work, new PRs, everyone's schedule ----

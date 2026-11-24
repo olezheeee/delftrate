@@ -13,7 +13,7 @@ GitHub usernames and roles are in `.github/team.json`. The start-session briefin
 
 ## Branches
 
-- `main` — released, working code. Changes arrive only as a pull request from `develop`, approved by a lead.
+- `main` — released, working code. Changes arrive only as a pull request from `develop`, reviewed and merged by a lead.
 - `develop` — where finished tasks come together. Default branch. Changes arrive only through pull requests.
 - `task/<name>` — one branch per task, created from `develop`.
 
@@ -35,7 +35,11 @@ GitHub usernames and roles are in `.github/team.json`. The start-session briefin
    ```
    Commit and push to that branch. When it is finished, press **Ready for review** on the PR.
 5. **Review and merge into `develop`.** A teammate reviews; then it is merged.
-6. **Release.** A lead opens a PR from `develop` into `main`. It needs an approving review from a lead (Oleg, Chad or Oreo) before it can be merged.
+6. **Release.** A lead opens a PR from `develop` into `main`. Any lead (Oleg, Chad or Oreo) can review it, including the lead who opened it:
+   - run the code review on the PR (`/code-review` in Claude Code);
+   - fix what it finds, through a `task/...` pull request into `develop`, and wait for the checks to pass.
+
+   After that, any lead can merge the PR into `main`. GitHub only allows the merge while the `checks` job on the PR is green.
 
 ## Start of every session
 
@@ -58,9 +62,7 @@ A line `Due: 2026-12-05` in a PR description puts a date on the task in the sche
 
 ## First-time setup
 
-1. Install the [GitHub CLI](https://cli.github.com) and run `gh auth login`.
-2. Accept the repository invitation in your email.
-3. `gh repo clone olezheeee/delftrate`
+Follow [SETUP.md](SETUP.md): it goes from an empty computer to your first briefing.
 
 ## For leads: adding people
 
