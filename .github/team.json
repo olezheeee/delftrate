@@ -2,9 +2,9 @@
   "repo": "olezheeee/delftrate",
   "members": [
     {"name": "Oleg",  "title": "Team lead",         "role": "lead",  "github": "olezheeee"},
-    {"name": "Chad",  "title": "Support code lead", "role": "lead",  "github": ""},
-    {"name": "Oreo",  "title": "Code lead",         "role": "lead",  "github": ""},
-    {"name": "Ariv",  "title": "Coder",             "role": "coder", "github": ""},
-    {"name": "Sahil", "title": "Coder",             "role": "coder", "github": ""}
+    {"name": "Chad",  "title": "Support code lead", "role": "lead",  "github": "chad971"},
+    {"name": "Oreo",  "title": "Code lead",         "role": "lead",  "github": "Oreo7382"},
+    {"name": "Ariv",  "title": "Coder",             "role": "coder", "github": "ArivK"},
+    {"name": "Sahil", "title": "Coder",             "role": "coder", "github": "sahilrajpal58-blip"}
   ]
 }
