@@ -7,7 +7,7 @@
 | Oleg | Team lead |
 | Chad | Support code lead |
 | Oreo | Code lead |
-| Adi, Ariv, Sahil, Jose | Coders |
+| Ariv, Sahil | Coders |
 
 GitHub usernames and roles are in `.github/team.json`. The start-session briefing reads that file to decide what to show you.
 
@@ -22,7 +22,7 @@ GitHub usernames and roles are in `.github/team.json`. The start-session briefin
 1. **Meeting.** We outline the work.
 2. **Oleg hands out tasks.** Each task is a draft pull request into `develop` with a description and one owner:
    ```bash
-   python3 scripts/new_task.py "Course search API" --to Adi --due 2026-12-05 --body "What to build and what done looks like"
+   python3 scripts/new_task.py "Course search API" --to Ariv --due 2026-12-05 --body "What to build and what done looks like"
    ```
 3. **Anyone can open their own task** when something comes up. Write the description yourself; the PR is assigned to you automatically:
    ```bash
