@@ -58,9 +58,7 @@ A line `Due: 2026-12-05` in a PR description puts a date on the task in the sche
 
 ## First-time setup
 
-1. Install the [GitHub CLI](https://cli.github.com) and run `gh auth login`.
-2. Accept the repository invitation in your email.
-3. `gh repo clone olezheeee/delftrate`
+Follow [SETUP.md](SETUP.md): it goes from an empty computer to your first briefing.
 
 ## For leads: adding people
 

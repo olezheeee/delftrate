@@ -16,4 +16,4 @@ The real application is being built on the `develop` branch.
 
 ## Working on it
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md). In short: start each session with `/start-session`, work on a `task/...` branch, and send it to `develop` through a pull request.
+New here? Follow [SETUP.md](SETUP.md) first. Then read [CONTRIBUTING.md](CONTRIBUTING.md). In short: start each session with `/start-session`, work on a `task/...` branch, and send it to `develop` through a pull request.
