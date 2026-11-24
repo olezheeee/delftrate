@@ -17,7 +17,9 @@ import sys
 from datetime import date, datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FIELDS = "number,title,author,assignees,isDraft,reviewDecision,createdAt,mergedAt,state,baseRefName,body,url"
+FIELDS = "number,title,author,assignees,isDraft,reviewDecision,createdAt,mergedAt,state,baseRefName,body,url,labels"
+# Labels that say which model and person a task or its review belongs to (see "Models" in CLAUDE.md).
+MARKS = {"fable": "FABLE TASK (Oleg only)", "fable-review": "FABLE REVIEW (Oleg)"}
 
 
 def run(*cmd, check=True):
@@ -94,6 +96,8 @@ def main():
             bits.append(f"due {d:%d %b}" + (" (OVERDUE)" if d < date.today() else ""))
         if owner:
             bits.append(who(p))
+        names = {l["name"] for l in p.get("labels") or []}
+        bits += [text for label, text in MARKS.items() if label in names]
         return f"  #{p['number']:<4} {p['title']}  [{' · '.join(bits)}]\n        {p['url']}"
 
     out = []
@@ -122,8 +126,8 @@ def main():
         for p in merged[:5]:
             say(f"  #{p['number']:<4} {p['title']}  ({who(p)}, merged {ago(p['mergedAt'])})")
     else:
-        log = run("git", "log", "origin/develop", "-5", "--pretty=format:  %h  %s  (%an, %cr)", check=False)
-        say(log or "  Nothing merged yet.")
+        log = run("git", "log", "origin/develop", "-5", "--pretty=format:%h  %s  (%an, %cr)", check=False)
+        say("\n".join("  " + l for l in log.splitlines()) or "  Nothing merged yet.")
 
     if lead:
         # ---- leads: fresh work, new PRs, everyone's schedule ----
