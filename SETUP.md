@@ -2,7 +2,7 @@
 
 This takes you from an empty Windows computer to your first DelftRate briefing. It takes about 20 minutes. Every command goes into **Command Prompt**: press the Windows key, type `cmd`, press Enter.
 
-On a Mac the steps are the same, but install the tools with [Homebrew](https://brew.sh) (`brew install git gh` and `brew install --cask claude-code`) and skip step 3.
+On a Mac, open **Terminal** instead. Install the tools with [Homebrew](https://brew.sh) (`brew install git gh node python` and `brew install --cask claude-code`), skip steps 1 to 4, and continue from step 5. Where a command says `cd %USERPROFILE%\Documents`, type `cd ~/Documents` instead.
 
 ## Before you start
 
@@ -28,7 +28,7 @@ winget install --id GitHub.cli -e
 
 This gives you the `gh` command, which our scripts use to read tasks and pull requests.
 
-## 3. Install Python
+## 3. Install Python and Node.js
 
 Type this and press Enter:
 
@@ -37,6 +37,14 @@ python3
 ```
 
 If Python is missing, the Microsoft Store opens on the Python page. Press **Get**. Install it this way and not from python.org, because our scripts call `python3` and only the Store version adds that command.
+
+If Python is already installed, you see `>>>` instead. Type `exit()` and press Enter to get back to cmd.
+
+Then install Node.js, which runs the app itself:
+
+```
+winget install --id OpenJS.NodeJS.LTS -e
+```
 
 ## 4. Install Claude Code
 
@@ -48,16 +56,17 @@ It shows no progress while it downloads; wait for it to finish. You do not need 
 
 ## 5. Close cmd and open it again
 
-The new commands only work in a new window. Check all four:
+The new commands only work in a new window. Check all five:
 
 ```
 git --version
 gh --version
 python3 --version
+node --version
 claude --version
 ```
 
-Each line should print a version number. If one says "is not recognized", repeat its install step and open a new window again.
+Each line should print a version number; for `node` it must be 24 or higher. If one says "is not recognized", repeat its install step and open a new window again.
 
 ## 6. Sign in to GitHub — this is how you select who you are
 
@@ -90,9 +99,10 @@ Open [github.com/olezheeee/delftrate/invitations](https://github.com/olezheeee/d
 cd %USERPROFILE%\Documents
 gh repo clone olezheeee/delftrate
 cd delftrate
+npm install
 ```
 
-The project is now in `Documents\delftrate`.
+The project is now in `Documents\delftrate`. `npm install` downloads the libraries the app needs; it takes a minute. After it, `npm run dev` starts the app at http://localhost:3000.
 
 ## 9. Start Claude Code
 
@@ -137,6 +147,8 @@ Then `/start-session`. To open a task of your own, type `/new-task` followed by 
 | `'winget' is not recognized` | Install **App Installer** from the Microsoft Store, then open a new cmd window. |
 | `The token '&&' is not a valid statement separator` | You are in PowerShell. Open `cmd` instead. |
 | `'claude' is not recognized` after installing | Close every cmd window and open a new one. |
+| `>>>` appears and commands give `SyntaxError` | You are inside Python. Type `exit()` and press Enter. |
+| `'npm' is not recognized` | Node.js is missing. Repeat the Node.js install in step 3 and open a new cmd window. |
 | `python3` opens the Store every time | Python is not installed yet. Press **Get** in the Store. |
 | `gh repo clone` says the repository was not found | Accept the invitation in step 7 first. |
 | `/start-session` is an unknown command | You started `claude` outside the project folder. Leave with `/exit`, run `cd %USERPROFILE%\Documents\delftrate`, start again. |

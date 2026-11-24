@@ -6,7 +6,8 @@ on:
     branches: [develop, main]
 concurrency:
   group: checks-${{ github.ref }}
-  cancel-in-progress: true
+  # Cancel superseded pull request runs, but let every develop and main run finish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:
