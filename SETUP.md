@@ -152,3 +152,69 @@ Then `/start-session`. To open a task of your own, type `/new-task` followed by 
 | `python3` opens the Store every time | Python is not installed yet. Press **Get** in the Store. |
 | `gh repo clone` says the repository was not found | Accept the invitation in step 7 first. |
 | `/start-session` is an unknown command | You started `claude` outside the project folder. Leave with `/exit`, run `cd %USERPROFILE%\Documents\delftrate`, start again. |
+
+## The database
+
+Coders do not need this section to start working: `npm test` builds a throwaway database from the migration files on your own computer, with nothing to install. The steps below are for a lead who applies the schema to a Supabase project.
+
+The whole schema lives in `supabase/migrations`: the tables, the access rules and the averages. A Supabase project gets its schema only from these files. Do not create or change tables in the Supabase dashboard, and do not edit a migration that is already merged. To change the schema, add a new file:
+
+```
+npx supabase migration new short_name_of_the_change
+```
+
+Write the SQL in the file it creates, add tests to `supabase/database.test.ts`, and open a pull request with the `fable-review` label.
+
+Everything a migration adds starts closed. A new table needs its own `grant` and policies before the site can read it, and a new function needs `grant execute ... to authenticated` before anyone can call it. This also holds for a helper function outside `public` that a policy or a check on a table uses.
+
+`supabase/config.jsonc` only describes a database running on your own computer. It is not our project's settings: sign-in, email and the rest are set in the Supabase dashboard. Never run `npx supabase config push`.
+
+We have two Supabase projects, **development** and **production**. Both get the schema from the same files, and a brand-new project reaches the full schema with the four steps below. The project folder is always linked to the **development** project; production is never linked, it is named in the command each time.
+
+1. Sign in to Supabase once per computer. A browser opens.
+
+   ```
+   npx supabase login
+   ```
+
+2. Point the folder at the development project. The project ref is the first part of the project URL: for `https://abcdefghijklmnopqrst.supabase.co` it is `abcdefghijklmnopqrst`. It asks for the database password of that project.
+
+   ```
+   npx supabase link --project-ref abcdefghijklmnopqrst
+   ```
+
+3. Apply the migrations. It lists the files it is going to run and asks before running them. Files that were applied earlier are skipped.
+
+   ```
+   npm run db:push
+   ```
+
+4. Check the result: in the Supabase dashboard, Table Editor shows the tables (`courses`, `professors`, `profiles` and the others), each marked as protected by row level security.
+
+**Development project only: example data.** This loads a few fictional courses, professors and votes, so the pages have something to show before the real course import. Never run it on production.
+
+```
+npx supabase db push --remote --include-seed
+```
+
+**After a new migration is applied to development,** refresh the TypeScript types and commit the file it rewrites (`lib/supabase/database.types.ts`):
+
+```
+npm run db:types
+```
+
+**Production** gets the same migrations, without the example data. Do not link the folder to it. Name the production project ref in the command instead, so no later command can reach production by accident:
+
+```
+npx supabase db push --remote=productionprojectref
+```
+
+**Making someone an admin.** The admin flag cannot be set from the site. In the Supabase dashboard, open SQL Editor and run this with the person's email address. They must have finished registering, including the programme and year.
+
+```
+update public.profiles set is_admin = true
+where id = (select id from auth.users where email = 'name@student.tudelft.nl')
+returning id;
+```
+
+It answers with one row. If it answers with no rows, nothing was changed: the email address is wrong, or the person has not finished registering.
