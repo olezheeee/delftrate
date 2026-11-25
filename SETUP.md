@@ -167,7 +167,7 @@ Write the SQL in the file it creates, add tests to `supabase/database.test.ts`, 
 
 Everything a migration adds starts closed. A new table needs its own `grant` and policies before the site can read it, and a new function needs `grant execute ... to authenticated` before anyone can call it. This also holds for a helper function outside `public` that a policy or a check on a table uses.
 
-`supabase/config.jsonc` only describes a database running on your own computer. It is not our project's settings: sign-in, email and the rest are set in the Supabase dashboard. Never run `npx supabase config push`.
+`supabase/config.jsonc` only describes a database running on your own computer. It is not our project's settings: sign-in, email and the rest are set in the Supabase dashboard (see "Sign-in and email settings" below). Never run `npx supabase config push`.
 
 We have two Supabase projects, **development** and **production**. Both get the schema from the same files, and a brand-new project reaches the full schema with the four steps below. The project folder is always linked to the **development** project; production is never linked, it is named in the command each time.
 
@@ -218,3 +218,32 @@ returning id;
 ```
 
 It answers with one row. If it answers with no rows, nothing was changed: the email address is wrong, or the person has not finished registering.
+
+## Sign-in and email settings
+
+These are set by a lead in the Supabase dashboard, once per project (development and production). The site expects exactly these values; with different ones registration does not work.
+
+Under **Authentication**:
+
+| Where | Setting | Value |
+|---|---|---|
+| Sign In / Providers, Email | Confirm email | on |
+| Sign In / Providers, Email | Minimum password length | 8 |
+| Sign In / Providers, Email | Email OTP length | 6 |
+| Sign In / Providers, Email | Email OTP expiration | 3600 seconds |
+| Emails, SMTP Settings | Enable custom SMTP | on |
+| Emails, SMTP Settings | Host, port, username | `smtp.resend.com`, `465`, `resend` |
+| Emails, SMTP Settings | Password | the Resend API key (Oleg has it) |
+| Emails, SMTP Settings | Sender email, sender name | `onboarding@resend.dev` for now, `DelftRate` |
+| Emails, Templates, Confirm sign up | Subject, body | `Your DelftRate code`, the contents of `supabase/templates/confirmation.html` |
+| Emails, Templates, Reset password | Subject, body | `Your DelftRate password reset code`, the contents of `supabase/templates/recovery.html` |
+| Rate Limits | Emails sent per hour | 30 (raised for launch) |
+| Rate Limits | Sign-ups and sign-ins, token verifications | see below |
+
+Our emails carry a six-digit code that the student types on the site. They contain no link on purpose: the university's mail filter opens links in incoming mail to check them, which would use up a one-time link before the student sees it.
+
+`onboarding@resend.dev` is Resend's test sender. It delivers only to the email address the Resend account was created with, so until our own domain is verified in Resend, only that one address can register. After the domain is verified, change the sender email to an address on it.
+
+Supabase limits sign-ups, sign-ins and code checks per internet address (30 per 5 minutes by default). Our site sends these requests from its own server, so Supabase may count all students together as one address. Before launch, check how the limits behave with several people registering at once and raise them if needed; this is part of the abuse protection in Pack 7.
+
+The length of the code and of the password are also written in `lib/auth/validation.ts`. Change them in both places or not at all.
