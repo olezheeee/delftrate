@@ -2,7 +2,7 @@
 """Open a task: a draft pull request into develop with a description and an owner.
 
 A lead hands a task to someone:
-    python3 scripts/new_task.py "Course search API" --to Adi --due 2026-12-05 --body "What to build ..."
+    python3 scripts/new_task.py "Course search API" --to Ariv --due 2026-12-05 --body "What to build ..."
 A coder opens a task for themselves (it is assigned to them):
     python3 scripts/new_task.py "Fix slider on Safari" --body "What I am going to do ..."
 
