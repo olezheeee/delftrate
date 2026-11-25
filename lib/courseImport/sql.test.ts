@@ -2,7 +2,7 @@ import type { PGlite } from "@electric-sql/pglite";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { as, createTestDatabase, createUser } from "../../supabase/testing/database";
 import type { Course } from "./schema";
-import { dollarQuote, importSql } from "./sql";
+import { dollarQuote, importSql, TOTALS_SQL } from "./sql";
 
 vi.setConfig({ hookTimeout: 60_000, testTimeout: 60_000 });
 
@@ -16,8 +16,11 @@ function course(code: string, professors: string[], extra: Partial<Course> = {})
   return { code, name: `Course ${code}`, programme: "CSE", year: 1, quarters: [1, 2], professors, ...extra };
 }
 
+// query, not exec: query sends one prepared statement, which (like `supabase db query
+// --file`) may hold only one command. exec would accept a multi-statement script that the
+// real command refuses.
 async function run(courses: Course[]) {
-  await db.exec(importSql(courses));
+  await db.query(importSql(courses));
 }
 
 async function count(table: string): Promise<number> {
@@ -118,12 +121,30 @@ describe("course import SQL", () => {
     }
   });
 
+  it("is a single statement, as `supabase db query --file` requires, also for awkward data", async () => {
+    db = await createTestDatabase();
+    // Names that contain dollar-quote tags must not end either literal early.
+    const tricky = [course("D1", ["Dr. $import$ Tag", "Prof. $import_json$ Tag"], { name: "Costs $$ and $x$" })];
+    await run(tricky); // query() rejects more than one command, like the CLI
+    const { rows } = await db.query<{ name: string }>("select name from public.professors order by name");
+    expect(rows.map((r) => r.name)).toEqual(["Dr. $import$ Tag", "Prof. $import_json$ Tag"]);
+    const c = await db.query<{ name: string }>("select name from public.courses where code = 'D1'");
+    expect(c.rows[0].name).toBe("Costs $$ and $x$");
+  });
+
+  it("reports the totals in a separate single statement", async () => {
+    db = await createTestDatabase();
+    await run(DATA);
+    const { rows } = await db.query<Record<string, unknown>>(TOTALS_SQL);
+    const totals = Object.fromEntries(Object.entries(rows[0]).map(([k, v]) => [k, Number(v)]));
+    expect(totals).toEqual({ courses: 2, professors: 2, course_professors: 3 });
+  });
+
   it("stops and changes nothing when a name matches two professors", async () => {
     db = await createTestDatabase();
     await db.exec("insert into public.professors (name) values ('Twin'), ('Twin'), ('Solo')");
     const before = await snapshot();
     await expect(run([course("T9", ["Solo", "Twin", "Fresh"])])).rejects.toThrow(/'Twin'/);
-    await db.exec("rollback");
     expect(await snapshot()).toEqual(before);
   });
 
@@ -161,7 +182,6 @@ describe("course import SQL", () => {
     await db.exec("insert into public.professors (name) values ('Dr.  Jane DOE')");
     const before = await snapshot();
     await expect(run([course("N1", ["Dr. Jane Doe"])])).rejects.toThrow(/'Dr\. Jane Doe' in the files, 'Dr\.  Jane DOE' in the database/);
-    await db.exec("rollback");
     expect(await snapshot()).toEqual(before);
   });
 
