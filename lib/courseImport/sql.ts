@@ -23,23 +23,27 @@ const LINKS = `select c.code, p.name
     from jsonb_to_recordset(v_doc) as c(code text, professors jsonb),
          jsonb_array_elements_text(c.professors) as p(name)`;
 
+// The rows sent to the database: exactly the fields the import writes. Quarters are sorted
+// here (not only by the validator), because the "unchanged course" check below compares
+// the stored list in order: [2, 1] and [1, 2] would otherwise count as a change every run.
+export function importRows(courses: Course[]) {
+  return courses.map((c) => ({
+    code: c.code,
+    name: c.name,
+    programme: c.programme,
+    year: c.year,
+    professors: c.professors,
+    quarters: [...c.quarters].sort((a, b) => a - b),
+  }));
+}
+
 // The import is ONE statement: a do block. `supabase db query --file` sends a file as a
 // single prepared statement, which may hold only one command, and a single statement is
 // all or nothing by itself, so no begin/commit is needed.
 // It never deletes or hides anything. It adds and updates only.
+// It needs the quarters column (migration 20261126000002_course_quarters.sql) on the target.
 export function importSql(courses: Course[]): string {
-  const literal = dollarQuote(
-    JSON.stringify(
-      courses.map((c) => ({
-        code: c.code,
-        name: c.name,
-        programme: c.programme,
-        year: c.year,
-        professors: c.professors,
-        // Quarters would be added here once the courses table has the column (Pack 4).
-      })),
-    ),
-  );
+  const literal = dollarQuote(JSON.stringify(importRows(courses)));
 
   const body = `
 declare
@@ -79,16 +83,18 @@ begin
 
   -- 2. Courses: matched on code, updated in place so the id and its ratings stay. A course
   -- whose data did not change is not touched.
-  -- Quarters would be written here once the courses table has the column (Pack 4).
-  insert into public.courses as c (code, name, programme_id, year)
-  select d.code, d.name, d.programme, d.year
-  from jsonb_to_recordset(v_doc) as d(code text, name text, programme text, year smallint)
+  -- jsonb_to_recordset reads the JSON array of quarters straight into smallint[].
+  insert into public.courses as c (code, name, programme_id, year, quarters)
+  select d.code, d.name, d.programme, d.year, d.quarters
+  from jsonb_to_recordset(v_doc)
+    as d(code text, name text, programme text, year smallint, quarters smallint[])
   on conflict (code) do update
     set name = excluded.name,
         programme_id = excluded.programme_id,
-        year = excluded.year
-    where (c.name, c.programme_id, c.year)
-      is distinct from (excluded.name, excluded.programme_id, excluded.year);
+        year = excluded.year,
+        quarters = excluded.quarters
+    where (c.name, c.programme_id, c.year, c.quarters)
+      is distinct from (excluded.name, excluded.programme_id, excluded.year, excluded.quarters);
 
   -- 3. Professors: matched on exact name, created once when missing.
   insert into public.professors (name)
