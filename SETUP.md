@@ -218,3 +218,46 @@ returning id;
 ```
 
 It answers with one row. If it answers with no rows, nothing was changed: the email address is wrong, or the person has not finished registering.
+
+## Importing the courses
+
+The course lists in `data/courses` (`AE.json` and `CSE.json`) are written into the database by an import. Only a lead runs it. It needs the steps of "The database" first.
+
+What the import does: it adds new courses, updates the name, programme and year of courses it already knows (matched on the course code), adds professors it does not know yet (matched on the exact name) and links each professor to their courses. It is one transaction: everything is written, or nothing is.
+
+What it never does: it never deletes or hides a course, a professor or a link, even when they are missing from the files. Deleting a link would delete the ratings on it. So a professor who stops teaching one course stays linked to it after the next import. Hiding the professor is not the answer: it hides them, and their ratings, on every course. Until there is a way to retire a single link, ask Oleg before removing one by hand. If one name matches two professors in the database, the import stops with an error naming them and changes nothing.
+
+Run it for the development project:
+
+1. Check the files and make the SQL file (it fails, and tells you why, if the files are wrong):
+
+   ```
+   npm run db:import:sql
+   ```
+
+2. Write it to the development project. It asks for confirmation first.
+
+   ```
+   npm run db:import
+   ```
+
+For production, make the file and run it with the project ref in the command:
+
+```
+npm run db:import:sql && npx supabase db query --remote=productionprojectref --file supabase/.temp/course_import.sql
+```
+
+Keep it as one line: the `&&` runs the second half only when the files passed the check. (A failed check also deletes the old SQL file, so nothing stale can be sent.)
+
+**Development project with example data:** if the development project has the example data from `seed.sql`, a real course whose code is also an example code (such as `AE2001`) takes over that example course, with its fictional professors and votes. Before the first real import, reset the development project without the seed.
+
+**Every new academic year:**
+
+1. Change `academicYear` in both files.
+2. Compile the new lists by hand, as described in `data/courses/README.md`.
+3. Run `npm test`.
+4. Run the import for development, then for production.
+
+**Check the result.** The script ends by printing the totals: courses, professors and course_professors. Run the import a second time: the totals must be the same.
+
+Quarters are in the files but are not stored yet. They are written once Pack 4 adds the column.
