@@ -1,12 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { Database } from "./database.types";
 import { supabaseEnv } from "./env";
 
 // Use in Server Components, Server Actions and Route Handlers.
 export async function createClient() {
   const { url, key } = supabaseEnv();
   const cookieStore = await cookies();
-  return createServerClient(url, key, {
+  return createServerClient<Database>(url, key, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
