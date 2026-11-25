@@ -160,6 +160,38 @@ describe("profiles", () => {
   });
 });
 
+describe("cancelling an unfinished registration", () => {
+  const cancel = (userId: string | null) =>
+    rows(userId, "select public.cancel_unfinished_registration() as removed");
+  const accounts = () => one<number>("select count(*)::int from auth.users");
+
+  it("removes the caller's own account while it has no profile, and no other account", async () => {
+    const fresh = await one<string>("insert into auth.users default values returning id");
+    const stranger = await one<string>("insert into auth.users default values returning id");
+    const before = await accounts();
+
+    expect(await cancel(fresh)).toEqual([{ removed: true }]);
+    expect(await accounts()).toBe(before - 1);
+    expect(await one("select count(*)::int from auth.users where id = $1", [fresh])).toBe(0);
+    expect(await one("select count(*)::int from auth.users where id = $1", [stranger])).toBe(1);
+
+    // A second call finds nothing left to remove.
+    expect(await cancel(fresh)).toEqual([{ removed: false }]);
+  });
+
+  it("never removes an account that has a profile", async () => {
+    const before = await accounts();
+    expect(await cancel(student)).toEqual([{ removed: false }]);
+    expect(await cancel(admin)).toEqual([{ removed: false }]);
+    expect(await accounts()).toBe(before);
+    expect(await rows(student, "select id from public.profiles")).toEqual([{ id: student }]);
+  });
+
+  it("is closed to a signed-out visitor", async () => {
+    await expect(cancel(null)).rejects.toThrow(/permission denied/);
+  });
+});
+
 describe("courses and professors", () => {
   it("a signed-in user reads them and cannot change them", async () => {
     expect(await rows(student, "select code from public.courses order by code")).toEqual([{ code: "AE1" }, { code: "CSE1" }]);

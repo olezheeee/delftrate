@@ -25,9 +25,10 @@ export async function requireUser(): Promise<CurrentUser> {
   return user;
 }
 
-// The profile is saved at the end of registering. It is missing only when that last step
-// failed, or for an account made outside the site (for example from the Supabase
-// dashboard); the account page asks for the programme and year then.
+// The profile is saved at the end of registering, and a registration that cannot save it
+// is undone. It is missing only when that undoing failed too, or for an account made
+// outside the site (for example from the Supabase dashboard); the account page asks for
+// the programme and year then.
 export const getProfile = cache(async (): Promise<Profile | null> => {
   const user = await getCurrentUser();
   if (!user) return null;

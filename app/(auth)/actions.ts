@@ -21,6 +21,8 @@ function field(formData: FormData, name: string): string {
   return typeof value === "string" ? value : "";
 }
 
+const GENERIC_PROBLEM = "Something went wrong on our side.";
+
 function withEmail(path: string, email: string): string {
   return `${path}?email=${encodeURIComponent(email)}`;
 }
@@ -86,22 +88,50 @@ export async function completeRegistration(
   if (verified.error) return { error: authErrorMessage(verified.error, "verify"), values };
   const userId = verified.data.user?.id;
 
-  // The address is confirmed and the user is signed in. Now make the account theirs.
-  const updated = await supabase.auth.updateUser({ password });
-  if (updated.error || !userId) {
-    // Without a password they could never log in again, so do not pretend it worked.
-    await supabase.auth.signOut({ scope: "local" });
+  // The address is confirmed and the user is signed in. An account exists only with a
+  // password and a profile as well, so when either cannot be saved the whole account is
+  // removed again (see the migration that adds cancel_unfinished_registration).
+  let problem: string | null = null;
+  if (!userId) {
+    problem = GENERIC_PROBLEM;
+  } else {
+    const updated = await supabase.auth.updateUser({ password });
+    if (updated.error) {
+      problem = authErrorMessage(updated.error, "verify");
+    } else {
+      const saved = await supabase
+        .from("profiles")
+        .insert({ id: userId, programme_id: programme, year });
+      // 23505: the profile is already there (the form was sent twice). Nothing left to do.
+      if (saved.error && saved.error.code !== "23505") {
+        problem = "Your programme and year could not be saved.";
+      }
+    }
+  }
+  if (!problem) redirect(SIGNED_IN_HOME);
+
+  const cancelled = await supabase.rpc("cancel_unfinished_registration");
+  await supabase.auth.signOut({ scope: "local" });
+  if (cancelled.error || !cancelled.data) {
+    // The account could not be removed either. Say what is true and how to get in.
     return {
-      error:
-        "Your email address is confirmed, but your password could not be saved. Use \"Forgot your password?\" on the login page to set it.",
-      values: { email: input.email },
+      error: `${problem} Your email address is confirmed, but your account is not finished. Use "Forgot your password?" on the login page to get in and finish it.`,
+      values: { email },
     };
   }
 
-  // The database lets a user create only their own profile. If this fails, the account
-  // page asks for the programme and year again.
-  await supabase.from("profiles").insert({ id: userId, programme_id: programme, year });
-  redirect(SIGNED_IN_HOME);
+  // Nothing is left of the account, and the code is used up. Start the registration again
+  // so the student only has to type the new code.
+  const restarted = await supabase.auth.signUp({
+    email,
+    password: crypto.randomUUID() + crypto.randomUUID(),
+  });
+  return {
+    error: restarted.error
+      ? `${problem} No account was created. Register again to get a new code.`
+      : `${problem} No account was created. We sent you a new code: enter it and try again.`,
+    values: { ...values, email, code: "" },
+  };
 }
 
 export async function login(_previous: FormState, formData: FormData): Promise<FormState> {
