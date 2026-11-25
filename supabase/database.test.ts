@@ -95,12 +95,12 @@ afterEach(async () => {
 });
 
 describe("a signed-out visitor", () => {
-  it("reads the programmes and nothing else", async () => {
+  it("reads the programmes and the courses and nothing else", async () => {
     expect(await rows(null, "select id from public.programmes order by id")).toEqual([{ id: "AE" }, { id: "CSE" }]);
+    expect(await rows(null, "select code from public.courses order by code")).toEqual([{ code: "AE1" }, { code: "CSE1" }]);
 
     for (const table of [
       "profiles",
-      "courses",
       "professors",
       "course_professors",
       "subject_ratings",
@@ -110,6 +110,26 @@ describe("a signed-out visitor", () => {
     ]) {
       await expect(rows(null, `select * from public.${table}`), table).rejects.toThrow(/permission denied/);
     }
+  });
+
+  it("reads code, name, programme, year and quarters of every course", async () => {
+    await db.query("update public.courses set quarters = '{1,2}' where id = $1", [cse]);
+    expect(
+      await rows(null, "select code, name, programme_id, year, quarters from public.courses order by code"),
+    ).toEqual([
+      { code: "AE1", name: "Aerodynamics", programme_id: "AE", year: 1, quarters: [] },
+      { code: "CSE1", name: "Algorithms", programme_id: "CSE", year: 1, quarters: [1, 2] },
+    ]);
+  });
+
+  it("cannot add, change or remove a course", async () => {
+    await expect(
+      rows(null, "insert into public.courses (code, name, programme_id, year) values ('X', 'X', 'AE', 1)"),
+    ).rejects.toThrow(/permission denied/);
+    await expect(rows(null, "update public.courses set name = 'Hacked'")).rejects.toThrow(/permission denied/);
+    await expect(rows(null, "delete from public.courses")).rejects.toThrow(/permission denied/);
+    expect(await one("select count(*)::int from public.courses where name = 'Hacked'")).toBe(0);
+    expect(await one("select count(*)::int from public.courses")).toBe(2);
   });
 
   it("reads no averages and cannot rate", async () => {
@@ -180,6 +200,19 @@ describe("courses and professors", () => {
     expect(await one("select count(*)::int from public.course_professors")).toBe(3);
   });
 
+  it("a student reads the quarters and cannot change them", async () => {
+    expect(await rows(student, "select quarters from public.courses where id = $1", [cse])).toEqual([{ quarters: [] }]);
+    await rows(student, "update public.courses set quarters = '{4}'");
+    expect(await one("select count(*)::int from public.courses where quarters = '{4}'")).toBe(0);
+  });
+
+  it("an admin sets the quarters of a course", async () => {
+    await rows(admin, "update public.courses set quarters = '{1,2}' where id = $1", [cse]);
+    await rows(admin, "insert into public.courses (code, name, programme_id, year, quarters) values ('AE2', 'Flight', 'AE', 2, '{3}')");
+    expect(await one("select quarters from public.courses where id = $1", [cse])).toEqual([1, 2]);
+    expect(await one("select quarters from public.courses where code = 'AE2'")).toEqual([3]);
+  });
+
   it("an admin adds, changes and removes them", async () => {
     await rows(admin, "insert into public.courses (code, name, programme_id, year) values ('AE2', 'Flight', 'AE', 2)");
     await rows(admin, "insert into public.professors (name) values ('Dan')");
@@ -189,6 +222,30 @@ describe("courses and professors", () => {
     expect(await one("select count(*)::int from public.professors")).toBe(4);
     expect(await one("select hidden from public.professors where id = $1", [bob])).toBe(true);
     expect(await one("select count(*)::int from public.course_professors")).toBe(2);
+  });
+});
+
+describe("the quarters of a course", () => {
+  it("accepts no quarters, one quarter and several", async () => {
+    for (const ok of ["{}", "{2}", "{1,2}", "{1,2,3,4}"]) {
+      await rows(admin, "update public.courses set quarters = $1 where id = $2", [ok, cse]);
+      expect(await one("select quarters::text from public.courses where id = $1", [cse])).toBe(ok);
+    }
+  });
+
+  it("rejects 0, 5, duplicates and nulls", async () => {
+    for (const bad of ["{0}", "{5}", "{1,5}", "{2,2}", "{1,NULL}", "{NULL}", "{{1,2},{3,4}}"]) {
+      await expect(
+        rows(admin, "update public.courses set quarters = $1 where id = $2", [bad, cse]),
+        bad,
+      ).rejects.toThrow(/courses_quarters_valid/);
+    }
+    await expect(
+      rows(admin, "insert into public.courses (code, name, programme_id, year, quarters) values ('Z', 'Z', 'AE', 1, '{3,3}')"),
+    ).rejects.toThrow(/courses_quarters_valid/);
+    await expect(rows(admin, "update public.courses set quarters = null where id = $1", [cse])).rejects.toThrow(
+      /not-null|null value/,
+    );
   });
 });
 
@@ -597,6 +654,16 @@ describe("the seed data", () => {
     expect(await cards(seedAdmin)).toEqual(EXPECTED);
   });
 
+  it("gives every course quarters, with a course over two quarters and two in one quarter", async () => {
+    const { rows: found } = await seeded.query<Row>("select code, programme_id, year, quarters from public.courses");
+    expect(found).toHaveLength(7);
+    for (const course of found) expect((course.quarters as number[]).length, String(course.code)).toBeGreaterThan(0);
+    expect(found.some((c) => (c.quarters as number[]).length === 2)).toBe(true);
+
+    const slots = found.flatMap((c) => (c.quarters as number[]).map((q) => `${c.programme_id}${c.year}Q${q}`));
+    expect(new Set(slots).size).toBeLessThan(slots.length);
+  });
+
   it("hides the hidden professor from the student", async () => {
     const names = await as(seeded, seedStudent, (tx) => tx.query<Row>("select name from public.professors"));
     expect(names.rows).toHaveLength(7);
@@ -620,5 +687,41 @@ describe("the seed data", () => {
     const before = (await count()).rows;
     await seeded.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
     expect((await count()).rows).toEqual(before);
+  });
+});
+
+describe("quarters: writers outside the API roles", () => {
+  it("lets a server job with the service key write courses through the quarters check", async () => {
+    const fresh = await createTestDatabase();
+    try {
+      await fresh.transaction(async (tx) => {
+        await tx.exec("set local role service_role");
+        await tx.query(
+          "insert into public.courses (code, name, programme_id, year, quarters) values ('SR1', 'Service', 'CSE', 1, '{1,2}')",
+        );
+        await tx.query("update public.courses set name = 'Service job' where code = 'SR1'");
+      });
+      const { rows } = await fresh.query<Row>("select name, quarters from public.courses where code = 'SR1'");
+      expect(rows).toEqual([{ name: "Service job", quarters: [1, 2] }]);
+    } finally {
+      await fresh.close();
+    }
+  });
+
+  it("gives quarters to example courses of a project seeded before quarters existed", async () => {
+    const old = await createTestDatabase({ seed: true });
+    try {
+      // As if seeded before this migration: the example courses exist without quarters.
+      await old.exec("update public.courses set quarters = '{}'");
+      await old.exec("insert into public.courses (code, name, programme_id, year) values ('REAL1', 'Real', 'AE', 1)");
+      await old.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
+      const { rows } = await old.query<Row>("select code, quarters from public.courses order by code");
+      const byCode = Object.fromEntries(rows.map((r) => [r.code, r.quarters]));
+      expect(byCode.CSE1001).toEqual([1, 2]);
+      expect(byCode.AE1001).toEqual([1, 2, 3]);
+      expect(byCode.REAL1).toEqual([]); // not an example course: left alone
+    } finally {
+      await old.close();
+    }
   });
 });

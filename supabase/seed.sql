@@ -15,6 +15,13 @@
 --   AE3001   one visible professor, and one hidden professor with better ratings who must
 --            not appear anywhere and must not be used for the combined score
 --   AE1001   no votes at all
+--
+-- Quarters, for the calendar on the home page:
+--   CSE1001  quarters 1 and 2, and CSE1002 quarter 1: two year-1 CSE courses in quarter 1
+--   CSE2001  quarter 3, and CSE2002 quarter 3: two year-2 CSE courses in quarter 3
+--   AE2001   quarter 2
+--   AE3001   quarter 4
+--   AE1001   quarters 1, 2 and 3
 
 insert into public.professors (id, name, hidden) values
   ('00000000-0000-4000-a000-000000000101', 'Dr. Marijke van Houten', false),
@@ -27,15 +34,31 @@ insert into public.professors (id, name, hidden) values
   ('00000000-0000-4000-a000-000000000108', 'Dr. Leila Haddadi', false)
 on conflict (id) do nothing;
 
-insert into public.courses (id, code, name, programme_id, year) values
-  ('00000000-0000-4000-a000-000000000201', 'CSE1001', 'Calculus for Engineers', 'CSE', 1),
-  ('00000000-0000-4000-a000-000000000202', 'CSE1002', 'Algorithms and Data Structures', 'CSE', 1),
-  ('00000000-0000-4000-a000-000000000203', 'CSE2001', 'Control Systems', 'CSE', 2),
-  ('00000000-0000-4000-a000-000000000204', 'CSE2002', 'Systems Modelling', 'CSE', 2),
-  ('00000000-0000-4000-a000-000000000205', 'AE2001', 'Aerodynamics I', 'AE', 2),
-  ('00000000-0000-4000-a000-000000000206', 'AE3001', 'Orbital Mechanics', 'AE', 3),
-  ('00000000-0000-4000-a000-000000000207', 'AE1001', 'Thermodynamics', 'AE', 1)
+insert into public.courses (id, code, name, programme_id, year, quarters) values
+  ('00000000-0000-4000-a000-000000000201', 'CSE1001', 'Calculus for Engineers', 'CSE', 1, '{1,2}'),
+  ('00000000-0000-4000-a000-000000000202', 'CSE1002', 'Algorithms and Data Structures', 'CSE', 1, '{1}'),
+  ('00000000-0000-4000-a000-000000000203', 'CSE2001', 'Control Systems', 'CSE', 2, '{3}'),
+  ('00000000-0000-4000-a000-000000000204', 'CSE2002', 'Systems Modelling', 'CSE', 2, '{3}'),
+  ('00000000-0000-4000-a000-000000000205', 'AE2001', 'Aerodynamics I', 'AE', 2, '{2}'),
+  ('00000000-0000-4000-a000-000000000206', 'AE3001', 'Orbital Mechanics', 'AE', 3, '{4}'),
+  ('00000000-0000-4000-a000-000000000207', 'AE1001', 'Thermodynamics', 'AE', 1, '{1,2,3}')
 on conflict do nothing;
+
+-- A project seeded before courses had quarters keeps its example courses above (they
+-- already exist), so give those quarters here. Only example courses still without quarters
+-- are touched, so running this twice, or after a real import, changes nothing.
+update public.courses c
+set quarters = q.quarters
+from (values
+  ('00000000-0000-4000-a000-000000000201'::uuid, '{1,2}'::smallint[]),
+  ('00000000-0000-4000-a000-000000000202', '{1}'),
+  ('00000000-0000-4000-a000-000000000203', '{3}'),
+  ('00000000-0000-4000-a000-000000000204', '{3}'),
+  ('00000000-0000-4000-a000-000000000205', '{2}'),
+  ('00000000-0000-4000-a000-000000000206', '{4}'),
+  ('00000000-0000-4000-a000-000000000207', '{1,2,3}')
+) as q (id, quarters)
+where c.id = q.id and c.quarters = '{}';
 
 insert into public.course_professors (course_id, professor_id)
 select l.course_id, l.professor_id
