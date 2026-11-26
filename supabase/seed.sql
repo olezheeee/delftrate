@@ -131,3 +131,70 @@ select course_id, professor_id, criterion, (low + 1)::smallint, high_votes
   from split
   where high_votes > 0
 on conflict do nothing;
+
+-- The real curriculum, for the calendar on the home page: every bachelor course of the two
+-- launch programmes with its year and quarters, as printed on the curriculum sheets
+-- (BSc CSE 2026-2027 new curriculum; AE modules and courses, July 2022). No professors and
+-- no votes: those come with the course import (Pack 3), which also replaces this list.
+-- The AE sheet prints WI1421LR on both halves of Calculus I, so it is one course here.
+-- The example courses above have no quarters and do not appear in the calendar.
+insert into public.courses (code, name, programme_id, year, quarters) values
+  ('AE1111-I', 'Exploring Aerospace Engineering', 'AE', 1, '{1,2}'),
+  ('AE1111-II', 'Engineering Drawing', 'AE', 1, '{1,2}'),
+  ('AE1222-I', 'Design & Construction', 'AE', 1, '{3,4}'),
+  ('AE1222-II', 'Aerospace Design & Systems Engineering Elements I', 'AE', 1, '{3,4}'),
+  ('AE1110-I', 'Introduction to Aerospace Engineering-I', 'AE', 1, '{1}'),
+  ('AE1110-II', 'Introduction to Aerospace Engineering-II', 'AE', 1, '{2}'),
+  ('AE1108-I', 'Aerospace Materials', 'AE', 1, '{2}'),
+  ('AE1108-II', 'Aerospace Mechanics of Materials', 'AE', 1, '{3}'),
+  ('AE1130-I', 'Statics', 'AE', 1, '{1}'),
+  ('AE1130-II', 'Dynamics', 'AE', 1, '{2}'),
+  ('AE1241', 'Physics', 'AE', 1, '{3,4}'),
+  ('WI1421LR', 'Calculus I', 'AE', 1, '{1,2}'),
+  ('WI1402LR', 'Calculus II', 'AE', 1, '{3}'),
+  ('WI1403LR', 'Linear Algebra', 'AE', 1, '{4}'),
+  ('AE1205', 'Programming & Scientific Computing in Python for AE1', 'AE', 1, '{4}'),
+  ('AE2111-I', 'Systems Design', 'AE', 2, '{1,2}'),
+  ('AE2111-II', 'Aerospace Design & Systems Engineering Elements II', 'AE', 2, '{1}'),
+  ('AE2224-I', 'Test, Analysis & Simulation', 'AE', 2, '{3,4}'),
+  ('AE2224-II', 'Artificial Intelligence for Aerospace Engineering', 'AE', 2, '{3}'),
+  ('AE2130-I', 'Aerodynamics I', 'AE', 2, '{1}'),
+  ('AE2130-II', 'Low-speed Wind Tunnel Test', 'AE', 2, '{2}'),
+  ('AE2130-III', 'Aerodynamics II', 'AE', 2, '{2}'),
+  ('AE2230-I', 'Flight & Orbital Mechanics', 'AE', 2, '{3}'),
+  ('AE2230-II', 'Propulsion & Power', 'AE', 2, '{3}'),
+  ('AE2135-I', 'Structural Analysis & Design', 'AE', 2, '{2}'),
+  ('AE2135-II', 'Vibrations', 'AE', 2, '{2}'),
+  ('AE2235-I', 'Aerospace Systems and Control Theory', 'AE', 2, '{4}'),
+  ('AE2235-II', 'Signal Analysis and Telecommunication Principles', 'AE', 2, '{4}'),
+  ('WI2180-I', 'Differential Equations', 'AE', 2, '{1}'),
+  ('WI2180-II', 'Probability and Statistics', 'AE', 2, '{1}'),
+  ('AE2220-I', 'Applied Numerical Analysis', 'AE', 2, '{3}'),
+  ('AE2220-II', 'Computational Modelling', 'AE', 2, '{4}'),
+  ('AE3211-I', 'Systems Engineering & Aerospace Design', 'AE', 3, '{3}'),
+  ('AE3211-II', 'Production of Aerospace Systems', 'AE', 3, '{3}'),
+  ('AE3212-I', 'Aerospace Flight Dynamics & Simulation, incl. Flight Test', 'AE', 3, '{3}'),
+  ('AE3212-II', 'Simulation, Verification & Validation', 'AE', 3, '{3}'),
+  ('AE3200', 'Design Synthesis', 'AE', 3, '{4}'),
+  ('CSE11A', 'Reasoning and Logic', 'CSE', 1, '{1}'),
+  ('CSE11B', 'Introduction to Programming', 'CSE', 1, '{1}'),
+  ('CSE11C', 'Computer Organisation', 'CSE', 1, '{1}'),
+  ('CSE12A', 'Calculus', 'CSE', 1, '{2}'),
+  ('CSE12B', 'Human Computer Interaction & AI-Assisted Prototyping', 'CSE', 1, '{2}'),
+  ('CSE12C', 'Data Management', 'CSE', 1, '{2}'),
+  ('CSE13A', 'Linear Algebra', 'CSE', 1, '{3}'),
+  ('CSE13B', 'Software Design and Engineering', 'CSE', 1, '{3}'),
+  ('CSE13C', 'Algorithms and Data Structures', 'CSE', 1, '{3}'),
+  ('CSE14A', 'Probability Theory and Statistics', 'CSE', 1, '{4}'),
+  ('CSE14B', 'Computer Networks', 'CSE', 1, '{4}'),
+  ('CSE100', 'Collaborative Development Project', 'CSE', 1, '{4}'),
+  ('CSE21A', 'Introduction to AI', 'CSE', 2, '{1}'),
+  ('CSE21B', 'Algorithm Design', 'CSE', 2, '{1}'),
+  ('CSE21C', 'Operating Systems', 'CSE', 2, '{1}'),
+  ('CSE22A', 'Machine Learning', 'CSE', 2, '{2}'),
+  ('CSE22B', 'Theoretical Foundations of Computer Science', 'CSE', 2, '{2}'),
+  ('CSE22C', 'Concepts of Programming Languages', 'CSE', 2, '{2}'),
+  ('CSE23A', 'Computer Security', 'CSE', 2, '{3}'),
+  ('CSE200', 'Software Project', 'CSE', 2, '{4}'),
+  ('CSE300', 'Research Project', 'CSE', 3, '{4}')
+on conflict (code) do nothing;

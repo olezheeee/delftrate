@@ -56,6 +56,7 @@ export type Database = {
           id: string
           name: string
           programme_id: string
+          quarters: number[]
           year: number
         }
         Insert: {
@@ -64,6 +65,7 @@ export type Database = {
           id?: string
           name: string
           programme_id: string
+          quarters?: number[]
           year: number
         }
         Update: {
@@ -72,6 +74,7 @@ export type Database = {
           id?: string
           name?: string
           programme_id?: string
+          quarters?: number[]
           year?: number
         }
         Relationships: [
