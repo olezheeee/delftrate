@@ -336,6 +336,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cancel_unfinished_registration: { Args: never; Returns: boolean }
       course_professor_stats: {
         Args: { p_course_id?: string }
         Returns: {
