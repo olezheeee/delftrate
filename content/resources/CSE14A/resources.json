@@ -1,0 +1,255 @@
+{
+  "course": "CSE14A",
+  "source": {
+    "name": "Lightspace",
+    "title": "Probability Theory and Statistics",
+    "url": "https://lightspace.study/courses/probability-theory-and-statistics",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Essence of Probability – 3Blue1Brown",
+          "url": "https://youtube.com/playlist?list=PLiAulSm0XXgvCGe63mrAkda9UQ9478YQv"
+        },
+        {
+          "title": "Probability Distributions – 365 Data Science",
+          "url": "https://youtube.com/playlist?list=PLaFfQroTgZnzbfK-Rie19FdV6diehETQy"
+        },
+        {
+          "title": "Statistics – Cody Baldwin",
+          "url": "https://youtube.com/playlist?list=PLkqeJcxGgeVUxEmkl0etMjb5gQMzV4N3I"
+        },
+        {
+          "title": "StatQuest",
+          "url": "https://www.youtube.com/@statquest"
+        },
+        {
+          "title": "Community notes (Notion)",
+          "url": "https://plain-pocket-06a.notion.site/Prob-and-Stats-6d8504725f4e4a2a90699c6d4c8cdfd6"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture Recordings 2024",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lecture%20Recordings%202024.pdf",
+          "size": "73 KB"
+        },
+        {
+          "title": "Lecture 1 - Introduction to Course and Uncertainty",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%201%20-%20Introduction%20to%20Course%20and%20Uncertainty.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 2 - Conditional Probability and Bayes' Rule",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%202%20-%20Conditional%20Probability%20and%20Bayes'%20Rule.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 3 - Random Variables and Distributions",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%203%20-%20Random%20Variables%20and%20Distributions.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 4 - Modelling",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%204%20-%20Modelling.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 5 - Independence and Expectation",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%205%20-%20Independence%20and%20Expectation.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 6 - Estimation",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%206%20-%20Estimation.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 7 - Variance and MSE",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%207%20-%20Variance%20and%20MSE.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 8 - Joint Continuous Distribution and Correlation",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%208%20-%20Joint%20Continuous%20Distribution%20and%20Correlation.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 9 - Sums of Random Variables and the Multivariate Gaussian",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%209%20-%20Sums%20of%20Random%20Variables%20and%20the%20Multivariate%20Gaussian.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 10 - CLT and Maximum Likelihood",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2010%20-%20CLT%20and%20Maximum%20Likelihood.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 11 - Confidence Intervals",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2011%20-%20Confidence%20Intervals.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 12 - Hypothesis Testing",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2012%20-%20Hypothesis%20Testing.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 13 - Linear Regression Part 1",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2013%20-%20Linear%20Regression%20Part%201.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 14 - Linear Regression Part 2",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2014%20-%20Linear%20Regression%20Part%202.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 15 - More Hypothesis Testing",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2015%20-%20More%20Hypothesis%20Testing.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 16 - Even More Hypothesis Testing",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Lectures/PTS%20Lecture%2016%20-%20Even%20More%20Hypothesis%20Testing.pdf",
+          "size": "6 MB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2021 Solutions",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Endterms/PTS%20Endterm%202021%20Solutions.pdf",
+          "size": "285 KB"
+        },
+        {
+          "title": "Endterm 2022",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Endterms/PTS%20Endterm%202022.pdf",
+          "size": "207 KB"
+        },
+        {
+          "title": "Endterm 2023",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Endterms/PTS%20Endterm%202023.pdf",
+          "size": "267 KB"
+        },
+        {
+          "title": "Endterm 2024",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Endterms/PTS%20Endterm%202024.pdf",
+          "size": "273 KB"
+        },
+        {
+          "title": "Endterm 2025",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Endterms/PTS%20Endterm%202025.pdf",
+          "size": "454 KB"
+        },
+        {
+          "title": "Midterm 2019",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Midterms/PTS%20Midterm%202019.pdf",
+          "size": "59 KB"
+        },
+        {
+          "title": "Midterm 2021",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Midterms/PTS%20Midterm%202021.pdf",
+          "size": "635 KB"
+        },
+        {
+          "title": "Midterm 2022",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Midterms/PTS%20Midterm%202022.pdf",
+          "size": "152 KB"
+        },
+        {
+          "title": "Midterm 2023",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Midterms/PTS%20Midterm%202023.pdf",
+          "size": "148 KB"
+        },
+        {
+          "title": "Midterm 2024",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Midterms/PTS%20Midterm%202024.pdf",
+          "size": "155 KB"
+        },
+        {
+          "title": "Midterm 2025",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Midterms/PTS%20Midterm%202025.pdf",
+          "size": "176 KB"
+        },
+        {
+          "title": "Resit 2023",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Resits/PTS%20Resit%202023.pdf",
+          "size": "246 KB"
+        },
+        {
+          "title": "Resit 2024",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Resits/PTS%20Resit%202024.pdf",
+          "size": "262 KB"
+        },
+        {
+          "title": "Resit 2025",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exams/PTS%20Resits/PTS%20Resit%202025.pdf",
+          "size": "657 KB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Exercise Sheet 1 Solutions",
+          "section": "Exercise Sheet Solutions",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exercise%20Sheet%20Solutions/PTS%20Exercise%20Sheet%201%20Solutions.pdf",
+          "size": "125 KB"
+        },
+        {
+          "title": "Exercise Sheet 2 Solutions",
+          "section": "Exercise Sheet Solutions",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exercise%20Sheet%20Solutions/PTS%20Exercise%20Sheet%202%20Solutions.pdf",
+          "size": "145 KB"
+        },
+        {
+          "title": "Exercise Sheet 3 Solutions",
+          "section": "Exercise Sheet Solutions",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exercise%20Sheet%20Solutions/PTS%20Exercise%20Sheet%203%20Solutions.pdf",
+          "size": "180 KB"
+        },
+        {
+          "title": "Exercise Sheet 4 Solutions",
+          "section": "Exercise Sheet Solutions",
+          "url": "https://lightspace.study/courses/probability-theory-and-statistics/read/PTS%20Exercise%20Sheet%20Solutions/PTS%20Exercise%20Sheet%204%20Solutions.pdf",
+          "size": "251 KB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "A Modern Introduction to Probability and Statistics"
+        },
+        {
+          "title": "Tail Probabilities and Critical Values Tables"
+        }
+      ]
+    }
+  ]
+}

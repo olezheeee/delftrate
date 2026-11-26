@@ -1,0 +1,250 @@
+{
+  "course": "CSE12A",
+  "source": {
+    "name": "Lightspace",
+    "title": "Calculus",
+    "url": "https://lightspace.study/courses/calculus",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Essence of Calculus – 3Blue1Brown",
+          "url": "https://youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr"
+        },
+        {
+          "title": "Differential Calculus – 3Blue1Brown",
+          "url": "https://youtube.com/playlist?list=PLZHQObOWTQDNPOjrT6KVlfJuKtYTftqH6"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Functions and Continuity",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%201%20-%20Functions%20and%20Continuity.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 2 - Limits of Functions",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%202%20-%20Limits%20of%20Functions.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 3 - Limits at Infinity (Asymptotes)",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%203%20-%20Limits%20at%20Infinity%20(Asymptotes).pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 4 - Linearization and Extreme Values",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%204%20-%20Linearization%20and%20Extreme%20Values.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 5 - Implicit Differentiation and Newton's Method",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%205%20-%20Implicit%20Differentiation%20and%20Newton's%20Method.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 6 - L'Hospital's Rule",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%206%20-%20L'Hospital's%20Rule.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 7 - Integrals and the Substitution Rule",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%207%20-%20Integrals%20and%20the%20Substitution%20Rule.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 8 - Integration by Parts",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%208%20-%20Integration%20by%20Parts.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 9 - Improper Integrals",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%209%20-%20Improper%20Integrals.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 10 - Sequences",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2010%20-%20Sequences.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 11 - Series",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2011%20-%20Series.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 12 - Alternating Series and Comparison Test",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2012%20-%20Alternating%20Series%20and%20Comparison%20Test.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 13 - Ratio Test and Power Series",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2013%20-%20Ratio%20Test%20and%20Power%20Series.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 14 - Functions as Power Series",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2014%20-%20Functions%20as%20Power%20Series.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 15 - Taylor Series",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2015%20-%20Taylor%20Series.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 16 - Functions of Several Variables",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2016%20-%20Functions%20of%20Several%20Variables.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 17 - Partial Derivatives and Linearization",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2017%20-%20Partial%20Derivatives%20and%20Linearization.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 18 - The Chain Rule and the Directional Derivative",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2018%20-%20The%20Chain%20Rule%20and%20the%20Directional%20Derivative.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 19 - Minimum and Maximum Values",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2019%20-%20Minimum%20and%20Maximum%20Values.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 20 - Complex Numbers Part 1",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2020%20-%20Complex%20Numbers%20Part%201.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 21 - Complex Numbers Part 2",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2021%20-%20Complex%20Numbers%20Part%202.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 22 - Integration Over Rectangles",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2022%20-%20Integration%20Over%20Rectangles.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 23 - Integration Over General Regions",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2023%20-%20Integration%20Over%20General%20Regions.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 24 - Exam Preparation",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Lectures/CALC%20Lecture%2024%20-%20Exam%20Preparation.pdf",
+          "size": "2 MB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2019 Solutions",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Endterms/CALC%20Endterm%202019%20Solutions.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Endterm 2020 Solutions",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Endterms/CALC%20Endterm%202020%20Solutions.pdf",
+          "size": "645 KB"
+        },
+        {
+          "title": "Endterm 2023",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Endterms/CALC%20Endterm%202023.pdf",
+          "size": "777 KB"
+        },
+        {
+          "title": "Endterm 2024",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Endterms/CALC%20Endterm%202024.pdf",
+          "size": "560 KB"
+        },
+        {
+          "title": "Endterm 2025",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Endterms/CALC%20Endterm%202025.pdf",
+          "size": "553 KB"
+        },
+        {
+          "title": "Midterm 2020 Solutions",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Midterms/CALC%20Midterm%202020%20Solutions.pdf",
+          "size": "144 KB"
+        },
+        {
+          "title": "Midterm 2023",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Midterms/CALC%20Midterm%202023.pdf",
+          "size": "306 KB"
+        },
+        {
+          "title": "Midterm 2024",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Midterms/CALC%20Midterm%202024.pdf",
+          "size": "359 KB"
+        },
+        {
+          "title": "Midterm 2025",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Midterms/CALC%20Midterm%202025.pdf",
+          "size": "331 KB"
+        },
+        {
+          "title": "Resit 2019 Solutions",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Resits/CALC%20Resit%202019%20Solutions.pdf",
+          "size": "265 KB"
+        },
+        {
+          "title": "Resit 2023",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Resits/CALC%20Resit%202023.pdf",
+          "size": "888 KB"
+        },
+        {
+          "title": "Resit 2024",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Resits/CALC%20Resit%202024.pdf",
+          "size": "335 KB"
+        },
+        {
+          "title": "Resit 2025 Solutions",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Exams/CALC%20Resits/CALC%20Resit%202025%20Solutions.pdf",
+          "size": "417 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "url": "https://lightspace.study/courses/calculus/read/CALC%20Notes.pdf",
+          "size": "316 KB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Calculus Early Transcendentals"
+        }
+      ]
+    }
+  ]
+}

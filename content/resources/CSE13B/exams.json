@@ -1,0 +1,145 @@
+{
+  "course": "CSE13B",
+  "title": "Software Design and Engineering",
+  "available": true,
+  "summary": "The format of the CSE13B exam has not been published; every paper here belongs to one of its two predecessors. SQT examined on WebLab for 3 hours: about 90 percent of the points went to writing JUnit, Mockito, jqwik, Selenium and SQL tests that must compile and pass, and the rest to small multiple-choice items. SEM moved in 2024-25 from a written paper of five open questions to a closed-book WebLab exam of 12 items, mostly multiple choice with guessing correction, plus short motivated answers and PlantUML diagrams.",
+  "basis": {
+    "papers": [
+      { "name": "SEM Endterm 2024", "year": 2024, "kind": "endterm", "questions": 12, "points": 44, "minutes": 180 },
+      { "name": "SEM Resit 2025", "year": 2025, "kind": "resit", "questions": 12, "points": 44, "minutes": 180 },
+      { "name": "SEM Endterm 2023", "year": 2023, "kind": "endterm", "questions": 5, "points": 100, "minutes": 120 },
+      { "name": "SQT Endterm 2025", "year": 2025, "kind": "endterm", "questions": 11, "points": 100, "minutes": 180 },
+      { "name": "SQT Resit 2025", "year": 2025, "kind": "resit", "questions": 13, "points": 100, "minutes": 180 },
+      { "name": "SQT Resit 2024", "year": 2024, "kind": "resit", "questions": 12, "points": 100, "minutes": 180 }
+    ],
+    "note": "SEM Endterm 2024 (4 November 2024) and Resit 2025 are WebLab exams not in the archive list; 44 is their WebLab weight. Each paper counts equally within its set; the SEM and SQT shares are then combined 12 to 9, by content lectures. Unweighted open sub-questions are estimated at twice a multiple-choice one. Not analysed: 3 older SEM endterms and a practice exam, plus 2 listed SEM resits without text; 3 older SQT papers and a mock midterm."
+  },
+  "format": {
+    "mode": "Not published for CSE13B. Both predecessors examined on WebLab: SQT with library documentation open, SEM (2024-25) closed book apart from the PlantUML documentation",
+    "duration": "Not published for CSE13B; the predecessors' WebLab exams took 3 hours, the written SEM paper of 2023 took 2",
+    "structure": "Predecessor formats only. SQT: 11 to 13 items worth 100 points, four to five programming tasks of 10 to 30 points each (domain testing, mocking, property-based testing, Selenium, SQL) and seven or eight items of 1 to 5 points (multiple choice, coverage counts, a mutant). SEM 2024-25: about one item per lecture topic, from requirements to AI, mostly multiple choice, plus short open answers and one or two PlantUML diagrams. SEM 2023: five open questions of 15 to 25 points.",
+    "grading": "Not published for CSE13B. In both predecessors the exam was the grade and 5.75 was needed to pass. SEM also required a pass for Oral Presentations and peer review. SQT gave zero for code that does not compile or has failing tests; SEM gave no points for unmotivated answers and applied guessing correction to single-choice questions, counting a blank as wrong.",
+    "aids": "Predecessors only. SQT: the Java, JUnit, AssertJ, Mockito, Selenium and jqwik documentation on WebLab and the Essentials of jqwik note; Andy limited to running tests and coverage. SEM 2024-25: only the PlantUML documentation."
+  },
+  "topicWeights": [
+    {
+      "topic": "Design patterns and domain-driven design",
+      "share": 17,
+      "appearsIn": 3,
+      "asks": "Pick the pattern for a scenario (Strategy, Builder, Proxy, Observer) and draw its class diagram in PlantUML; DDD multiple choice on entities, value objects, aggregates, services and ubiquitous language; in 2023 a 25-point open question naming the bounded contexts of a booking system."
+    },
+    {
+      "topic": "Larger tests, test code quality and TDD",
+      "share": 15,
+      "appearsIn": 3,
+      "asks": "A Selenium task of 20 to 25 points testing a small web app, an SQL data-access task of 17 or 18 points on two of the three papers, and 1-point items on test code quality, TDD and end-to-end tests."
+    },
+    {
+      "topic": "Open source, agile at scale, sustainability and AI",
+      "share": 13,
+      "appearsIn": 2,
+      "asks": "Multiple choice telling Scrum, Kanban, ScrumBan, SAFe, Scrum@Scale and Spotify apart, energy measurement and sustainability claims, the Open Source Definition; open answers on criteria for choosing an open source system and on licensing or privacy limits of AI-generated code."
+    },
+    {
+      "topic": "Test doubles and design for testability",
+      "share": 10,
+      "appearsIn": 3,
+      "asks": "A mocking task of 15 to 30 points: test a service with Mockito-mocked repositories, catch every planted bug, and avoid mocking the class under test or data classes; 1-point items on dummies and the dependency inversion principle."
+    },
+    {
+      "topic": "Requirements engineering and UML",
+      "share": 10,
+      "appearsIn": 3,
+      "asks": "Classify four requirements as user or system and functional or non-functional; read use case and class diagram notation or draw a sequence diagram with alt fragments; in 2023, extract and classify all requirements from a web-shop scenario and propose what to clarify next."
+    },
+    {
+      "topic": "Testing principles and specification-based testing",
+      "share": 9,
+      "appearsIn": 3,
+      "asks": "A domain-testing task of 20 to 23 points: derive partitions and boundaries from a specification and write the JUnit suite; plus a 1-point item on the testing pyramid or a testing principle such as the pesticide paradox."
+    },
+    {
+      "topic": "Structural testing, coverage and mutation testing",
+      "share": 7,
+      "appearsIn": 4,
+      "asks": "Minimum tests for branch coverage, choosing an MC/DC test set for four conditions, subsumption, and a mutant that is killed plus one that survives; the 2023 SEM paper had a 20-point mutation question on a leap-year method."
+    },
+    {
+      "topic": "Code metrics and technical debt",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "Compute cyclomatic complexity, pick the refactoring for a smell (extract method, move method), feature envy, the open-closed principle, broken windows and self-admitted technical debt; in 2023 a code smell and its refactoring for 10 points."
+    },
+    {
+      "topic": "Software architecture and software at scale",
+      "share": 7,
+      "appearsIn": 2,
+      "asks": "Choose the architectural pattern for a scenario (client-server, event-driven), C4 levels, layered versus MVC, pipe-and-filter trade-offs, plus statements on Docker, serverless, load balancers and the scale cube, and an open answer on caching or reproducing production issues."
+    },
+    {
+      "topic": "Design by contract and property-based testing",
+      "share": 5,
+      "appearsIn": 3,
+      "asks": "A jqwik task of 10 or 20 points on two papers, graded per property (for prime factorisation, a third each for primality, the product, and edge cases), plus 1-point items on invariants in subclasses and pre- and postconditions."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Writing test code",
+      "share": 42,
+      "description": "WebLab programming tasks where you write JUnit, Mockito, jqwik, Selenium or SQL tests, or a mutant, that must compile and pass; graded by meta-tests, coverage and penalty checks."
+    },
+    {
+      "type": "Multiple choice",
+      "share": 31,
+      "description": "Single-choice and select-all questions on concepts and short scenarios; on SEM papers with guessing correction, on SQT papers worth 1 point each."
+    },
+    {
+      "type": "Short explanation",
+      "share": 16,
+      "description": "Open answers that must be motivated: requirements extraction, bounded contexts, open source criteria, caching or AI considerations, refactoring a smell."
+    },
+    {
+      "type": "UML diagram",
+      "share": 8,
+      "description": "Draw a class diagram for a design pattern or a sequence diagram for a scenario, in PlantUML on WebLab or on paper in 2023."
+    },
+    {
+      "type": "Calculation",
+      "share": 3,
+      "description": "Count the tests needed for branch coverage, choose an MC/DC set or compute a cyclomatic complexity."
+    }
+  ],
+  "recurring": [
+    "Every SQT paper has a domain-testing task of about 20 points and a mocking task of 15 to 30 points, both graded by planted bugs.",
+    "Every SQT paper has a Selenium task of 20 to 25 points; the two resits added an SQL task of 17 or 18 points.",
+    "Both 2024-25 SQT papers have a 4-point MC/DC selection for four conditions and a 5-point task to create a killed and a surviving mutant.",
+    "Each 2024-25 SEM paper has about one item per lecture topic, worth 2 to 5 of 44, with DDD, agile, metrics and scale at 5 each.",
+    "Choosing a design pattern and drawing its class diagram (in PlantUML on WebLab) appears on all three SEM papers.",
+    "Requirements classification (user or system, functional or non-functional) appears on all three SEM papers.",
+    "Scenarios repeat within a paper: the 2024-25 SEM items were set in a replacement for Brightspace or in the Queue lab tool."
+  ],
+  "trends": [
+    "SEM moved in 2024-25 from written open questions on paper (2 hours, 100 points) to a WebLab exam with multiple choice under guessing correction, short answers and PlantUML.",
+    "SEM dropped mutation testing in 2024; it now belongs to the testing half only.",
+    "SEM added agile at scale, sustainability, open source, software at scale and AI questions in 2024-25, while DDD fell from 25 of 100 points to one multiple-choice item of 5 of 44.",
+    "SQT set an SQL task only on its two most recent resits, and a 5-point mutant task on both 2024-25 papers but not on the 2023-24 ones."
+  ],
+  "strategy": [
+    "Expect the unknown CSE13B format to borrow from both: practise writing tests on WebLab under time pressure and answering SEM-style multiple choice.",
+    "For every test-writing task, run your tests before moving on: one failing or non-compiling test turns the whole answer into zero, so fix or comment it out.",
+    "Move on from a task once you have a solid set of tests; the SQT Q&A advises coming back later rather than hunting for a perfect score.",
+    "Answer every SEM-style single-choice question: under the guessing correction a blank costs as much as a wrong answer, and ruling out options raises your odds.",
+    "Motivate every open answer in a few sentences, with the alternative you rejected; unmotivated answers got no points.",
+    "Learn PlantUML class and sequence syntax before the exam and use the class names from the question, as the spec tests match names.",
+    "Plan about 1.8 minutes per point on a 100-point, 3-hour paper; a 20-point programming task deserves about 35 minutes."
+  ],
+  "pitfalls": [
+    "Mocking the class under test cost 100 points of a task; mocking data classes or exceptions cost 10, using a spy 20.",
+    "In PBT tasks, filter, Assume.that or random generators cost 50 points each, and example-based tests earn nothing.",
+    "Submitting an equivalent mutant as the surviving one: the grader checks that some input tells the mutant apart from the original.",
+    "In sequence diagrams, sending a response from the wrong participant or leaving out the nested alt lost points in the model answer.",
+    "Filtering AI output to avoid licensed code earned only partial points; training on compatibly licensed code was the full answer.",
+    "Proposing microservices for a small team: the model answers prefer a simpler architecture unless scale or team size demands it."
+  ]
+}

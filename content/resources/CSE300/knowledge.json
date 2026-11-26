@@ -1,0 +1,183 @@
+{
+  "course": "CSE300",
+  "title": "Research Project",
+  "ects": 15,
+  "summary": "Ten weeks of full-time individual research on a sub-question of a topic shared by a peer group of about five students, with a weekly supervisor and a responsible professor. You end with a scientific paper of your own and a poster that you defend before an examiner. The few lectures do not teach computer science content: they teach how to write the paper, make and present the poster, and reflect on research integrity, which the rubric grades directly.",
+  "basis": {
+    "lectures": 6,
+    "description": "Slides of the six supporting lectures of the 2024-25 Q4 edition (four Academic Communication Skills sessions, a Responsible Research lecture and its tutorial), plus the course guide with the paper template, the paper and poster checklists and the assessment rubric. Time shares count content slides of these six lectures.",
+    "caveat": "The material is from CSE3000, the old code. From 2026-27 the course is CSE300 in year 3, quarter 4, and you may only start after the RP Bootcamp in week 3.5, so dates and sessions may differ. The shares cover only the taught sessions: almost all of the 15 EC goes into your own research, and research methods themselves are taught in the bootcamp, not in these lectures."
+  },
+  "topics": [
+    {
+      "name": "Paper structure and the introduction",
+      "lectures": [
+        "Lecture 1 - Academic Writing",
+        "Lecture 3 - Advanced Writing"
+      ],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "The IMRaD structure and its hourglass shape: abstract for hurried readers, then introduction, method, results and discussion",
+        "The moves of an introduction: the situation, what is known, the gap nobody has studied, how you study it, and what you found",
+        "That a search for literature is a cycle: find sources, read and discuss, sharpen the question, then search again",
+        "Research as a response to a gap in earlier work, which is why the gap must be stated concretely and backed by sources",
+        "The answer approach: state your claim first and then the evidence, instead of only announcing what the paper will examine",
+        "A research question needs a clear end point, so that you and the reader know when it has been answered",
+        "The course template: abstract, introduction, background or problem description, your contribution, setup and results, responsible research, discussion, conclusions and future work"
+      ],
+      "do": [
+        "Write a first 300 words that make the known, the unknown and your approach concrete",
+        "Check an introduction against the ACS checklist: background, motivation, a research question that stands out, links between them",
+        "Turn a vague objective sentence into a concrete claim with its supporting method",
+        "Write an abstract that stands on its own: motivation, main question, method and main conclusions"
+      ],
+      "pitfalls": [
+        "Objective sentences that only announce the paper (to describe the problem, process and outcome) and say nothing about the result",
+        "An introduction and conclusion that only a specialist can follow: the examiner usually comes from a different research group"
+      ]
+    },
+    {
+      "name": "Paragraphs, flow and visuals",
+      "lectures": [
+        "Lecture 3 - Advanced Writing"
+      ],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "Each paragraph covers one topic and opens with a topic sentence that covers what follows, neither more nor less",
+        "Transition words for emphasis, addition, contrast and order, and how they make the link between sentences visible",
+        "A functional structure: sections are steps towards the end point, and a repeated pattern (problem, causes, solutions, implications) helps the reader",
+        "Figures get a caption below and tables a title above; both are numbered in order, referred to in the text and readable on their own",
+        "A caption says what the visual shows and how; the text adds why it matters",
+        "Reference rules from the checklist: quotes in quotation marks with page numbers, paraphrases not too close to the source, every citation in the bibliography and back"
+      ],
+      "do": [
+        "Find the real topic sentence of a paragraph and rewrite the paragraph when it is buried or too abstract",
+        "Give peer feedback per paragraph on topic sentence, coverage and transitions",
+        "Rewrite a caption so that a figure or table can be understood without the surrounding text"
+      ],
+      "pitfalls": [
+        "A paragraph whose first sentence is a detail, so the reader only learns the point at the end",
+        "Figures that are never mentioned in the text, or are mentioned without saying what the reader should see in them"
+      ]
+    },
+    {
+      "name": "Designing a scientific poster",
+      "lectures": [
+        "Lecture 2 - Presentation Skills"
+      ],
+      "timeShare": 20,
+      "importance": "important",
+      "know": [
+        "The aim of a poster is to excite: it advertises your research and shows the main insights, not every detail",
+        "The three stages of engagement: the lure that makes people stop, the bite that keeps the promise, and the reel that holds them",
+        "Required content: title, contact details, research question, research method and conclusions",
+        "Who reads it: computer science bachelors who already know a little about the project, which in practice means your peers",
+        "The poster must make its main point without you standing next to it",
+        "The poster checklist: one block per topic, a clear reading order, numbered figures in the story line, terms and abbreviations explained, short text boxes"
+      ],
+      "do": [
+        "Decide your goal and audience before you design, and cut what does not serve them",
+        "Judge a poster in a few seconds on its lure, bite and reel, and give feedback on that basis",
+        "Turn a dense results section into one or two clear charts with labelled axes and legends"
+      ],
+      "pitfalls": [
+        "Posters that are too hard to read, hard to follow, or carry pictures the viewer cannot interpret",
+        "Too much text: long text boxes copied from the paper instead of one main insight per block"
+      ]
+    },
+    {
+      "name": "Presenting and answering questions",
+      "lectures": [
+        "Lecture 4 - Advanced Presentation Skills"
+      ],
+      "timeShare": 13,
+      "importance": "important",
+      "know": [
+        "The poster presentation format: about 7 minutes of presenting followed by about 7 minutes of questions",
+        "The basic talk structure: an opening that connects with the audience and states where you will end, sections that summarise, announce and explain, and a closing that ties back",
+        "Assume no generosity: the listener will not fill in missing steps, so define terms and spell out the research question and hypothesis",
+        "Anticipate response: think about the first thought and the first question a viewer will have",
+        "The three steps for every question: acknowledge the questioner, summarise the question, check that your answer landed",
+        "Guidelines may be broken, but only on purpose"
+      ],
+      "do": [
+        "Walk an audience through your poster in a fixed order within the time limit",
+        "Prepare answers to the questions an examiner from another field is likely to ask",
+        "Handle a vague, critical or off-topic question calmly, and say honestly when you do not know"
+      ],
+      "pitfalls": [
+        "Answering only the person who asked, or answering a question that was not asked because you did not check it first",
+        "Assuming the examiner knows your sub-field and skipping the basic terms"
+      ]
+    },
+    {
+      "name": "Research integrity, reproducibility and data",
+      "lectures": [
+        "Lecture 5 - Research Integrity"
+      ],
+      "timeShare": 25,
+      "importance": "important",
+      "know": [
+        "Selective reporting through the Millikan oil-drop case and the Flint water samples, and why the second changed the conclusion while the first did not",
+        "Why negative results and complete records of method and setup matter for interpreting and checking a study",
+        "The reproducibility crisis, and the difference between reproducing a result (same data) and replicating it (new data from the same distribution)",
+        "The FAIR principles for data: findable, accessible, interoperable, reusable, and the 4TU.ResearchData categories of public, confidential and sensitive data",
+        "Reusing existing datasets responsibly: be critical of the source, state it, and check it was collected ethically",
+        "What counts as plagiarism: also copied sentence structure or argument, uncited datasets, and generative AI use you did not acknowledge"
+      ],
+      "do": [
+        "Decide whether leaving data points out is misconduct, and how you would justify and report it",
+        "Describe your setup so that another researcher could rerun it and get the same results",
+        "Cite datasets, code and tools you reuse as you would cite papers"
+      ],
+      "pitfalls": [
+        "Thinking plagiarism means only literal copying: paraphrasing too closely or reusing a structure without credit also counts",
+        "Leaving out failed runs or awkward results without saying so"
+      ]
+    },
+    {
+      "name": "Writing the Responsible Research section",
+      "lectures": [
+        "Lecture 6 - Research Integrity Tutorial"
+      ],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "The required Responsible Research section of the paper, graded under responsible engineering in the content criterion",
+        "The six areas of the course guide: codes of conduct, data and privacy, replicability and reproducibility, bias, research integrity, and impact beyond the project",
+        "Codes you can follow: the Netherlands Code of Conduct for Research Integrity, the TU Delft code and core values, the ACM Code of Ethics",
+        "Human subject data needs approval under the Human Research Ethics Committee policies, plus safe storage and privacy protection",
+        "Bias can sit in your data, your method and the use of your results, and may be amplified by your work",
+        "Being clear about licences, sources and which parts of the work were produced by AI"
+      ],
+      "do": [
+        "Write your own short code of conduct for the project at the start and check your work against it at the end",
+        "Write a Responsible Research section that answers the six guide questions for your own project, with concrete measures",
+        "Name possible misuse of your results and state the limits of their use"
+      ],
+      "pitfalls": [
+        "A generic statement that the work follows a code of conduct, without saying what you actually did for data, bias or reproducibility",
+        "Leaving out reproducibility: no shared code, no versions, no description of data sources"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "All first-year courses and all courses of quarters 1 and 2 of year 2",
+    "The Software Project (CSE200)",
+    "The RP Bootcamp in week 3.5: research questions, study design, qualitative and quantitative methods, literature reviews",
+    "A pass for the Information Literacy module on searching and evaluating sources",
+    "The subject knowledge your chosen project lists as recommended courses"
+  ],
+  "practical": "The course is the project. You rank about 25 projects on Project Forum, are placed in a peer group of about five, and get your own sub-question. You write a first-week plan and a research plan with a timeline (the template suggests 30 to 50 planned activities), present it to your supervisor in week 2, show progress at a midterm presentation in week 5, submit paper draft v1 in week 7 for peer and supervisor feedback, v2 in week 8 for the responsible professor, the final paper in week 9, and present your poster in week 10. You also review one classmate's draft, and attend the ACS and Responsible Research sessions.",
+  "studyAdvice": [
+    "Spend the first two weeks on reading and the research plan: scan 10 to 20 papers, read about 5 in full and about 2 in enough depth to criticise them, as the guide suggests",
+    "Make the research question narrow and testable, with a clear end point; the plan template prefers questions that one experiment or proof can settle",
+    "Plan backwards from the fixed deadlines (v1 in week 7, v2 in week 8, final paper in week 9), because there are no extensions and no resit",
+    "Start writing during the work, not after it: the ACS assignment on your first 300 words comes early, and v1 must be a full draft that others can review",
+    "Keep notes of data sources, code versions and choices as you go, so that the Responsible Research section and the reproducibility claims are easy to write",
+    "Treat the weekly meetings as graded: planning, independence and how you give and use feedback make up a fifth of the grade",
+    "Test your paper and poster on someone outside your topic, because the examiner comes from another research group"
+  ]
+}

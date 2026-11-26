@@ -1,0 +1,67 @@
+{
+  "course": "CSE100",
+  "source": {
+    "name": "Lightspace",
+    "title": "Collaborative Development Project",
+    "url": "https://lightspace.study/courses/collaborative-development-project",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "JavaFX GUI Full Course",
+          "url": "https://www.youtube.com/watch?v=9XJicRt_FaI"
+        },
+        {
+          "title": "Spring Boot Full Course",
+          "url": "https://www.youtube.com/watch?v=9SGDpanrc8U"
+        },
+        {
+          "title": "Java Pub House podcast",
+          "url": "https://open.spotify.com/show/0laUgleS6VdmeeCk7hRemf"
+        },
+        {
+          "title": "Community notes (Notion)",
+          "url": "https://plain-pocket-06a.notion.site/OOP-Project-ea9a65ba5a8b4882a03c2e693eab5fc5"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Organization & Project, Version Control & Build Basics",
+          "url": "https://lightspace.study/courses/collaborative-development-project/read/CDP%20Lectures/CDP%20Lecture%201%20-%20Organization%20%26%20Project%2C%20Version%20Control%20%26%20Build%20Basics.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 2 - Teamwork",
+          "url": "https://lightspace.study/courses/collaborative-development-project/read/CDP%20Lectures/CDP%20Lecture%202%20-%20Teamwork.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 3 - Dependency Injection",
+          "url": "https://lightspace.study/courses/collaborative-development-project/read/CDP%20Lectures/CDP%20Lecture%203%20-%20Dependency%20Injection.pdf",
+          "size": "10 MB"
+        },
+        {
+          "title": "Lecture 4 - Project Management and Requirements Engineering",
+          "url": "https://lightspace.study/courses/collaborative-development-project/read/CDP%20Lectures/CDP%20Lecture%204%20-%20Project%20Management%20and%20Requirements%20Engineering.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 5 - Accessibility",
+          "url": "https://lightspace.study/courses/collaborative-development-project/read/CDP%20Lectures/CDP%20Lecture%205%20-%20Accessibility.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 6 - Collaborative Software Engineering",
+          "url": "https://lightspace.study/courses/collaborative-development-project/read/CDP%20Lectures/CDP%20Lecture%206%20-%20Collaborative%20Software%20Engineering.pdf",
+          "size": "7 MB"
+        }
+      ]
+    }
+  ]
+}

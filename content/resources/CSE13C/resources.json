@@ -1,0 +1,239 @@
+{
+  "course": "CSE13C",
+  "source": {
+    "name": "Lightspace",
+    "title": "Algorithms and Data Structures",
+    "url": "https://lightspace.study/courses/algorithms-and-data-structures",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Learn DSA – BroCode",
+          "url": "https://youtu.be/CBYHwZcbD-s"
+        },
+        {
+          "title": "Michael Sambol",
+          "url": "https://www.youtube.com/@MichaelSambol"
+        },
+        {
+          "title": "Abdul Bari",
+          "url": "https://www.youtube.com/@abdul_bari/videos"
+        },
+        {
+          "title": "2020 Analysis endterm",
+          "url": "https://www.youtube.com/watch?v=p-U6wVspFXc"
+        },
+        {
+          "title": "2018 Implementation endterm",
+          "url": "https://www.youtube.com/watch?v=YiIXVW9ODXA"
+        },
+        {
+          "title": "Base.cs podcast",
+          "url": "https://open.spotify.com/show/3UFoDk6tc54NTh2NixPuOa"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Introduction to Algorithms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%201%20-%20Introduction%20to%20Algorithms.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 2 - Complexity Analysis and Big-Oh Notation",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%202%20-%20Complexity%20Analysis%20and%20Big-Oh%20Notation.pdf",
+          "size": "607 KB"
+        },
+        {
+          "title": "Lecture 3 - Recursion and Analysis",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%203%20-%20Recursion%20and%20Analysis.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 4 - Arrays and Linked Lists",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%204%20-%20Arrays%20and%20Linked%20Lists.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 5 - Stacks and Queues",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%205%20-%20Stacks%20and%20Queues.pdf",
+          "size": "550 KB"
+        },
+        {
+          "title": "Lecture 6 - Trees and Binary Trees",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%206%20-%20Trees%20and%20Binary%20Trees.pdf",
+          "size": "796 KB"
+        },
+        {
+          "title": "Lecture 7 - Priority Queues and Heaps",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%207%20-%20Priority%20Queues%20and%20Heaps.pdf",
+          "size": "351 KB"
+        },
+        {
+          "title": "Lecture 8 - Sorting Algorithms Part 1",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%208%20-%20Sorting%20Algorithms%20Part%201.pdf",
+          "size": "247 KB"
+        },
+        {
+          "title": "Lecture 9 - Sorting Algorithms Part 2",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%209%20-%20Sorting%20Algorithms%20Part%202.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 10 - Hash Tables and Maps",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%2010%20-%20Hash%20Tables%20and%20Maps.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 11 - Binary Search Trees",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%2011%20-%20Binary%20Search%20Trees.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 12 - AVL Trees and Balanced Trees",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%2012%20-%20AVL%20Trees%20and%20Balanced%20Trees.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 13 - Graphs and Graph Traversal",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%2013%20-%20Graphs%20and%20Graph%20Traversal.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 14 - Graph Algorithms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%2014%20-%20Graph%20Algorithms.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 15 - QA Exam Practice",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Lectures/ADS%20Lecture%2015%20-%20QA%20Exam%20Practice.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Analysis Endterm 2019",
+          "section": "Analysis Exams / Analysis Endterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Endterms/ADS%20Analysis%20Endterm%202019.pdf",
+          "size": "204 KB"
+        },
+        {
+          "title": "Analysis Endterm 2020",
+          "section": "Analysis Exams / Analysis Endterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Endterms/ADS%20Analysis%20Endterm%202020.pdf",
+          "size": "445 KB"
+        },
+        {
+          "title": "Analysis Endterm 2022",
+          "section": "Analysis Exams / Analysis Endterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Endterms/ADS%20Analysis%20Endterm%202022.pdf",
+          "size": "416 KB"
+        },
+        {
+          "title": "Analysis Endterm 2023",
+          "section": "Analysis Exams / Analysis Endterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Endterms/ADS%20Analysis%20Endterm%202023.pdf",
+          "size": "442 KB"
+        },
+        {
+          "title": "Analysis Endterm 2024",
+          "section": "Analysis Exams / Analysis Endterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Endterms/ADS%20Analysis%20Endterm%202024.pdf",
+          "size": "378 KB"
+        },
+        {
+          "title": "Analysis Endterm 2025",
+          "section": "Analysis Exams / Analysis Endterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Endterms/ADS%20Analysis%20Endterm%202025.pdf",
+          "size": "428 KB"
+        },
+        {
+          "title": "Analysis Midterm 2019",
+          "section": "Analysis Exams / Analysis Midterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Midterms/ADS%20Analysis%20Midterm%202019.pdf",
+          "size": "394 KB"
+        },
+        {
+          "title": "Analysis Midterm 2020",
+          "section": "Analysis Exams / Analysis Midterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Midterms/ADS%20Analysis%20Midterm%202020.pdf",
+          "size": "385 KB"
+        },
+        {
+          "title": "Analysis Midterm 2022",
+          "section": "Analysis Exams / Analysis Midterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Midterms/ADS%20Analysis%20Midterm%202022.pdf",
+          "size": "390 KB"
+        },
+        {
+          "title": "Analysis Midterm 2024",
+          "section": "Analysis Exams / Analysis Midterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Midterms/ADS%20Analysis%20Midterm%202024.pdf",
+          "size": "373 KB"
+        },
+        {
+          "title": "Analysis Midterm 2025",
+          "section": "Analysis Exams / Analysis Midterms",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Midterms/ADS%20Analysis%20Midterm%202025.pdf",
+          "size": "396 KB"
+        },
+        {
+          "title": "Analysis Resit 2019",
+          "section": "Analysis Exams / Analysis Resits",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Resits/ADS%20Analysis%20Resit%202019.pdf",
+          "size": "397 KB"
+        },
+        {
+          "title": "Analysis Resit 2022",
+          "section": "Analysis Exams / Analysis Resits",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Resits/ADS%20Analysis%20Resit%202022.pdf",
+          "size": "410 KB"
+        },
+        {
+          "title": "Analysis Resit 2023",
+          "section": "Analysis Exams / Analysis Resits",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Resits/ADS%20Analysis%20Resit%202023.pdf",
+          "size": "380 KB"
+        },
+        {
+          "title": "Analysis Resit 2024",
+          "section": "Analysis Exams / Analysis Resits",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Resits/ADS%20Analysis%20Resit%202024.pdf",
+          "size": "337 KB"
+        },
+        {
+          "title": "Analysis Resit 2025",
+          "section": "Analysis Exams / Analysis Resits",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Analysis%20Exams/ADS%20Analysis%20Resits/ADS%20Analysis%20Resit%202025.pdf",
+          "size": "448 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "url": "https://lightspace.study/courses/algorithms-and-data-structures/read/ADS%20Notes.pdf",
+          "size": "798 KB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Data Structures and Algorithms in Java"
+        }
+      ]
+    }
+  ]
+}

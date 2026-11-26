@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { requireUser } from "@/lib/auth/session";
 import { getCourseSheet } from "@/lib/course-sheet-data";
+import { papersNoun } from "@/lib/resources";
+import { getCourseMaterial } from "@/lib/resources-data";
 import { CourseCard } from "./CourseCard";
 import styles from "./CourseCard.module.css";
 
@@ -30,5 +32,23 @@ async function Course({ params }: { params: PageProps<"/courses/[code]">["params
   await requireUser();
   const found = await getCourseSheet(decodeURIComponent(code));
   if (!found) notFound();
-  return <CourseCard course={found.course} sheet={found.sheet} />;
+  // The study material is keyed by the course code as the database spells it.
+  const material = await getCourseMaterial(found.course.code);
+  return (
+    <CourseCard
+      course={found.course}
+      sheet={found.sheet}
+      resources={material.resources}
+      booklets={{
+        knowledge: material.knowledge && {
+          topics: material.knowledge.topics.length,
+          lectures: material.knowledge.basis.lectures,
+        },
+        exams: material.exams && {
+          papers: material.exams.basis.papers.length,
+          noun: papersNoun(material.exams),
+        },
+      }}
+    />
+  );
 }

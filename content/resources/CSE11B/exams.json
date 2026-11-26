@@ -1,0 +1,166 @@
+{
+  "course": "CSE11B",
+  "title": "Introduction to Programming",
+  "available": true,
+  "summary": "Two exams count equally: a three-hour theory exam on WebLab and a three-hour programming exam in IntelliJ, and you need at least 5.0 on each. The theory exam mixes ten multiple-choice questions with two open questions and three coding exercises. The programming exam is one scenario: read a text file into well-designed classes, offer a console menu with filters, and deliver tested, documented code that compiles. Rubric points for testing, style and design weigh about as much as the features.",
+  "basis": {
+    "papers": [
+      { "name": "Theoretical Endterm 2025", "year": 2025, "kind": "endterm", "questions": 15, "points": 21, "minutes": 180 },
+      { "name": "Theoretical Resit 2025", "year": 2025, "kind": "resit", "questions": 15, "points": 19, "minutes": 180 },
+      { "name": "Theoretical Midterm 2025", "year": 2025, "kind": "midterm", "questions": 9, "points": 12.5, "minutes": 90 },
+      { "name": "Programming Endterm 2025", "year": 2025, "kind": "endterm", "questions": 5, "points": 10, "minutes": 180 },
+      { "name": "Programming Endterm 2024", "year": 2024, "kind": "endterm", "questions": 7, "points": 10, "minutes": 180 },
+      { "name": "Programming Resit 2024", "year": 2024, "kind": "resit", "questions": 7, "points": 10, "minutes": 180 }
+    ],
+    "note": "Names follow the archive's academic-year style (Endterm 2025 was sat in November 2024); the theory papers are not in the archive list. Only the 9 multiple-choice points of the theory resit are in the text. Programming questions are menu options, points are rubric points. Design and feature points were split evenly between two topics. Shares are per exam kind, then averaged 50/50. Not counted: 4 older programming papers and 8 practice theory papers."
+  },
+  "format": {
+    "mode": "Theory: digital on WebLab, closed book apart from the built-in Java documentation. Programming: IntelliJ on an exam computer without internet.",
+    "duration": "3 hours each; the midterm took 90 minutes and the mock programming exam 2 hours",
+    "structure": "Theory: 10 multiple-choice questions of about 1 point (often select all that apply, with guessing correction), 2 open questions of 2 to 2.5 points, and 3 coding exercises of 2 points with partly hidden spec tests. Programming: one scenario with a text file to parse and a menu of 5 to 7 options, marked on a rubric of compilation, class design, equals and hashCode, file reading, interface, features, code style and JUnit tests.",
+    "grading": "Exam grade = (theory + programming) / 2, and each part needs at least 5.0. Bonus from the midterm and the mock (at most 10) adds Bonus x (10 - Exam) / 100, and the final result must reach 5.8. Both parts can be resat in quarter 2; the best attempt counts, but nothing carries over to the next year.",
+    "aids": "Theory: only the Java documentation inside WebLab. Programming: a PDF of the lecture slides, the Java API documentation and an offline copy of Answers EWI; no notes, books or internet."
+  },
+  "topicWeights": [
+    {
+      "topic": "Classes, composition and collections",
+      "share": 16,
+      "appearsIn": 6,
+      "asks": "Stack and heap counts of objects, final fields with setters that do not compile, cloning an ArrayList, choosing composition over a subclass for a brand or a SIM card, and in the programming exam separate model classes plus list-based filtering."
+    },
+    {
+      "topic": "Testing, debugging and code quality",
+      "share": 16,
+      "appearsIn": 5,
+      "asks": "Mostly programming rubric points: Checkstyle warnings under a threshold, complete Javadoc, and JUnit tests reaching 75 to 80 percent coverage including the filter options. On the theory side: cyclomatic complexity and whether given tests pass."
+    },
+    {
+      "topic": "Strings, file input and output",
+      "share": 15,
+      "appearsIn": 4,
+      "asks": "Parsing a multi-line text file into objects for a file name the user enters, a looping console menu, writing books to a Writer in an exact format, and converting text to camelCase."
+    },
+    {
+      "topic": "Inheritance, polymorphism and interfaces",
+      "share": 13,
+      "appearsIn": 6,
+      "asks": "An open question on static versus dynamic binding with an example (2.5 points, on the midterm and the endterm), which calls compile and what they print in a hierarchy with interfaces, and an inheritance hierarchy for ticket, plant or media types."
+    },
+    {
+      "topic": "Generics, functional and modern Java",
+      "share": 10,
+      "appearsIn": 5,
+      "asks": "A coding exercise allowed only streams and Optional, the type of max on an empty IntStream, what a record is equivalent to, autoboxing in an ArrayList of Integer, and replaceAll for the plant growth option."
+    },
+    {
+      "topic": "Other",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "Compilation points on every programming paper: a project that does not compile scores a 1 overall."
+    },
+    {
+      "topic": "Equality and hashCode",
+      "share": 7,
+      "appearsIn": 6,
+      "asks": "Whether equals-based tests pass, a record with a hand-written equals, a class whose equality ignores file order, and correct equals and hashCode in every model class of the programming exam."
+    },
+    {
+      "topic": "Methods, arrays and recursion",
+      "share": 5,
+      "appearsIn": 3,
+      "asks": "A class that rotates posters stored in a String array, whether three array methods give the same output, and when a recursive Fibonacci overflows the stack."
+    },
+    {
+      "topic": "Java basics: types, operators and control flow",
+      "share": 4,
+      "appearsIn": 1,
+      "asks": "Midterm only: what == compares, statements about primitive types and casts, and a method that builds a star pattern with nested loops."
+    },
+    {
+      "topic": "Exceptions",
+      "share": 4,
+      "appearsIn": 2,
+      "asks": "An open question on handling a checked exception and what the compiler requires, and whether two orders of catch blocks compile."
+    },
+    {
+      "topic": "Threads",
+      "share": 3,
+      "appearsIn": 3,
+      "asks": "Possible outputs of two threads calling a static synchronized method, true statements about interleaving and the scheduler, and running one menu calculation in a separate thread."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Multiple choice",
+      "share": 28,
+      "description": "Theory questions on a code fragment or a set of claims, often select all that apply, with a guessing correction."
+    },
+    {
+      "type": "Program features",
+      "share": 20,
+      "description": "Programming exam points for a working file reader, a looping menu, the filter and reset options and, in November 2024, a thread."
+    },
+    {
+      "type": "Short coding exercise",
+      "share": 13,
+      "description": "Implement one method or a small class on WebLab against spec tests, some hidden; code that does not compile scores 0."
+    },
+    {
+      "type": "Class design",
+      "share": 10,
+      "description": "Rubric points in the programming exam for separate model classes, a sensible inheritance hierarchy, composition, and equals and hashCode."
+    },
+    {
+      "type": "Open explanation",
+      "share": 9,
+      "description": "Explain a concept such as binding or checked exceptions in a few precise sentences, with an example when asked."
+    },
+    {
+      "type": "Compiling project",
+      "share": 7,
+      "description": "1.4 to 1.5 programming points just for a project whose sources and tests all compile."
+    },
+    {
+      "type": "Code style and Javadoc",
+      "share": 7,
+      "description": "Checkstyle warnings and errors under the rubric thresholds, and Javadoc with filled-in parameters."
+    },
+    {
+      "type": "Unit tests",
+      "share": 6,
+      "description": "JUnit tests graded by line coverage per model class and by tests for each filter option."
+    }
+  ],
+  "recurring": [
+    "Static versus dynamic binding: an open question on the midterm and the endterm, and a multiple-choice question on the resit.",
+    "Equality in every paper: a Student class compared in JUnit tests, a record with its own equals, and equals and hashCode required in all programming model classes.",
+    "A stack-and-heap question on a String array that is copied, asking how many objects exist.",
+    "A design multiple-choice question: strings, composition or subclasses for a car, a phone or a SIM card. Composition wins each time.",
+    "Programming scenarios follow one template: a file with several item types, a menu that prints everything, two or three filters, a reset that must not re-read the file, and quit.",
+    "The same rubric blocks each year: compilation, class design, equals and hashCode, file reading, interface, features, code style, JUnit tests.",
+    "A thread question in both 2024-25 theory papers and in Programming Endterm 2025."
+  ],
+  "trends": [
+    "The 2024-25 papers carry the new name Introduction to Programming; older ones say Object Oriented Programming, with the same rubric structure.",
+    "Functional style is now enforced: one theory exercise scores 0 if it uses loops, and the plant exam reserved points for replaceAll.",
+    "Threads entered the programming rubric in November 2024 (0.4 points for running option 3 in a thread).",
+    "The coverage target fell from 80 percent (2023-24 papers) to 75 percent (November 2024), with rubric points per model class."
+  ],
+  "strategy": [
+    "Do the practice theory exams on WebLab under time; the real papers reuse their question styles, and some questions return almost unchanged.",
+    "Learn one exact definition of static and dynamic binding with an example of each; it is worth 2.5 points and the graders list the wrong claims they punish.",
+    "In the programming exam, first get a compiling skeleton of model classes and a reader, then the menu, then the filters, and add tests as you go.",
+    "Stop coding 5 to 10 minutes before the end to check that sources and tests compile and to hand in the zip.",
+    "Let the user enter the file name: hardcoding it costs 0.5 points.",
+    "Collect easy rubric points: equals and hashCode in each model class, Javadoc on every method, Checkstyle clean, readable toString output.",
+    "On multiple choice, tick only what you can justify, and read select all that apply questions option by option."
+  ],
+  "pitfalls": [
+    "A programming project with one compile error scores a 1, whatever else works.",
+    "Printing the auto-generated toString or re-reading the file for option 1 loses interface points.",
+    "Open answers lose points for every incorrect extra claim, such as saying binding means determining the type.",
+    "A coding answer that does not compile on WebLab scores 0 for that exercise; check for missing imports and types.",
+    "The plant rubric gave equals points only for versions that use getClass() rather than instanceof.",
+    "A reset that reads the file again, or filters that do not stack, cost feature points."
+  ]
+}

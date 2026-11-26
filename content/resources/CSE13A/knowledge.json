@@ -1,0 +1,284 @@
+{
+  "course": "CSE13A",
+  "title": "Linear Algebra",
+  "ects": 5,
+  "summary": "Linear algebra in R^n for first-year computer scientists, following Lay's Linear Algebra and Its Applications: linear systems and row reduction, matrix algebra, subspaces, determinants, eigenvalues, orthogonality and least squares. Twenty lectures come with pre-lecture videos and Grasple exercises, plus weekly construction blocks and an instruction session. Two lectures train academic reasoning: proving a true statement or refuting a false one with an explicit counterexample.",
+  "basis": {
+    "lectures": 20,
+    "description": "The CSE1205 lecture slides (Lectures 1 to 20 as text; Lecture 21, exam training, left out), the official CSE1205 description and the 2022 to 2024 papers. Time shares count content slides; the general proof-method slides of Lectures 7 and 17 are left out and their worked statements counted under the topic they treat.",
+    "caveat": "From 2026-27 the course is CSE13A, renamed from CSE1205 with content unchanged, still in year 1, quarter 3. The official description weighs the midterm at 20 percent, the Lecture 1 slides at 25 percent: check the current rule. LU decomposition is in the official description but not in the slides. Slide counts understate determinants (a full lecture on only 12 slides)."
+  },
+  "topics": [
+    {
+      "name": "Linear systems, spans and linear independence",
+      "lectures": [
+        "Lecture 1 - Linear systems and echelon forms-course organization",
+        "Lecture 2 - Spans and vector equations",
+        "Lecture 3 - Solution sets and linear independence",
+        "Lecture 7 - Academic Reasoning-1"
+      ],
+      "timeShare": 19,
+      "importance": "essential",
+      "know": [
+        "Elementary row operations, echelon and reduced echelon form, pivot positions, basic and free variables",
+        "A system has no, exactly one or infinitely many solutions; it is inconsistent exactly when an echelon form of the augmented matrix has a row 0 ... 0 | b with b not 0",
+        "The three equivalent forms of one problem: a system of equations, a vector equation x1 a1 + ... + xn an = b, and a matrix equation Ax = b",
+        "Span and its picture in R^2 and R^3 (a line or plane through the origin); Ax = b is solvable for every b exactly when A has a pivot in every row",
+        "Ax = 0 is always consistent; its solutions in parametric vector form; the solutions of Ax = b are one particular solution plus all solutions of Ax = 0",
+        "Linear independence: x1 v1 + ... + xp vp = 0 has only the trivial solution; shortcuts: more vectors than entries, or a set containing 0, is always dependent"
+      ],
+      "do": [
+        "Find the values of a parameter h for which a system is inconsistent, has one solution or has infinitely many",
+        "Write the general solution in parametric vector form from a reduced echelon form",
+        "Decide whether a vector lies in a span, or find where lines given in parametric form meet",
+        "Test a set of vectors with a parameter in it for linear independence",
+        "Prove that vectors built from an independent set, such as v1 - v2, v2 and v2 - v3, are independent again"
+      ],
+      "pitfalls": [
+        "Dividing by an expression containing the parameter during row reduction without checking the values that make it zero: the 2023 endterm question had three bad values of h, one of them hidden this way",
+        "Concluding infinitely many solutions from a free variable without first checking that the system is consistent"
+      ]
+    },
+    {
+      "name": "Linear transformations and standard matrices",
+      "lectures": ["Lecture 4 - Linear transformations"],
+      "timeShare": 7,
+      "importance": "important",
+      "know": [
+        "The definition T(u + v) = T(u) + T(v) and T(cu) = cT(u), and its consequences: T(0) = 0 and T keeps linear combinations",
+        "Domain, codomain and range; b is in the range of T(x) = Ax exactly when Ax = b is consistent",
+        "The standard matrix A = [T(e1) ... T(en)]: its columns are the images of the standard basis vectors",
+        "The rotation matrix [cos t, -sin t; sin t, cos t] and the reflections in the axes and in the lines y = x and y = -x",
+        "The matrix of first S, then T is the product (matrix of T)(matrix of S)"
+      ],
+      "do": [
+        "Find the standard matrix of a rotation followed by a reflection in R^2, or the other way round",
+        "Find the parameter for which a given vector lies in the range of T",
+        "Use the images of two vectors to find the standard matrix or the image of a third vector",
+        "Show that a map is not linear, for example because T(0) is not 0"
+      ],
+      "pitfalls": [
+        "Multiplying the matrices in the order the maps are named: the map applied first stands on the right",
+        "Taking T(0) = 0 as proof of linearity: it is necessary but not sufficient, as one of the Lecture 4 true/false slides shows",
+        "Using the counter-clockwise rotation matrix for a clockwise rotation: use minus the angle"
+      ]
+    },
+    {
+      "name": "Matrix algebra and inverses",
+      "lectures": [
+        "Lecture 5 - Matrix operations",
+        "Lecture 6 - Invertibility of matrices",
+        "Lecture 7 - Academic Reasoning-1"
+      ],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "Sum, scalar multiple, transpose and the product AB by the column rule and the row-column rule, and when a product is defined",
+        "(AB)C = A(BC), (AB)^T = B^T A^T, (AB)^-1 = B^-1 A^-1 and (A^T)^-1 = (A^-1)^T",
+        "What fails for matrices: AB = BA, cancelling (AB = AC does not give B = C), and AB = 0 does not force A = 0 or B = 0",
+        "The inverse of a 2 x 2 matrix through ad - bc, and row reducing [A I] to [I A^-1] for larger matrices",
+        "The Invertible Matrix Theorem: for a square A, invertible equals n pivots, independent columns, columns spanning R^n, only the trivial solution of Ax = 0, Ax = b solvable for every b"
+      ],
+      "do": [
+        "Solve a matrix equation such as (XB^-1)^T = C for X and simplify to a product of A, B, C, their inverses and transposes",
+        "Compute a 3 x 3 inverse by row reduction, or the matrix X with AX = D for a diagonal D",
+        "Simplify a high power using a given relation such as A^3 = 3A",
+        "Refute an identity from ordinary algebra, such as (A + B)(A - B) = A^2 - B^2, with explicit 2 x 2 matrices"
+      ],
+      "pitfalls": [
+        "Losing the order when inverting or transposing a product: (AB)^-1 is B^-1 A^-1, not A^-1 B^-1",
+        "Using rules for numbers that fail for matrices, the point of the Warning slide in Lecture 5; the 2024 endterm asked exactly for a counterexample to such an expansion"
+      ]
+    },
+    {
+      "name": "Subspaces, bases, dimension and rank",
+      "lectures": ["Lecture 8 - Subspaces", "Lecture 9 - Coordinates and dimension"],
+      "timeShare": 11,
+      "importance": "essential",
+      "know": [
+        "The subspace test: contains 0, closed under sums and scalar multiples; a line not through the origin or the set of unit vectors is not a subspace",
+        "Col A and Nul A; a basis of Col A is formed by the pivot columns of A itself, a basis of Nul A comes from the parametric vector form of Ax = 0",
+        "A basis is an independent spanning set, and a subspace has many bases",
+        "Coordinates [x]_B relative to a basis B, and back from [x]_B to x",
+        "Dimension, rank A = dim Col A, and the Rank Theorem: rank A + dim Nul A = number of columns",
+        "The Basis Theorem: in a p-dimensional subspace, p independent vectors, or p vectors that span, form a basis"
+      ],
+      "do": [
+        "Find bases of Col A and Nul A, or of a subspace given by one equation such as 3x2 + 2x3 + 3x4 = 0",
+        "Say which sets of columns of A are guaranteed to be a basis of Col A, given only an echelon form",
+        "Compute [x]_B, or write DNE when x is not in the span of B",
+        "Find the parameter for which dim Nul A takes a given value, and use the Rank Theorem on a matrix of given size"
+      ],
+      "pitfalls": [
+        "Taking the pivot columns of the echelon form instead of the matching columns of A (the warning slide in Lecture 8; Endterm 2024 question 3 tests it)",
+        "Assuming Nul A and Col A can never be equal: for a 2 x 2 matrix of rank 1 they can (Resit 2022)"
+      ]
+    },
+    {
+      "name": "Determinants",
+      "lectures": ["Lecture 10 - Determinants"],
+      "timeShare": 4,
+      "importance": "essential",
+      "know": [
+        "Cofactor expansion along any row or column, with the checkerboard of signs; the determinant of a triangular matrix is the product of its diagonal",
+        "Row operations: a replacement keeps det, a swap changes its sign, scaling a row by k multiplies it by k; the same holds for columns",
+        "det(AB) = det(A) det(B), det(A^T) = det(A), det(A^-1) = 1/det(A), and det(cA) = c^n det(A) for an n x n matrix",
+        "A is invertible exactly when det(A) is not 0"
+      ],
+      "do": [
+        "Compute a 4 x 4 or 5 x 5 determinant by expanding along rows and columns with many zeros",
+        "Find the determinant of a matrix with permuted, scaled or combined rows or columns from the determinant of the original",
+        "Find all possible values of det(A) from a matrix equation such as A^2 = I",
+        "Find the parameter for which a matrix is singular"
+      ],
+      "pitfalls": [
+        "Writing det(cA) = c det(A) instead of c^n det(A); the midterm questions on det(-3B) and det(-2A) test exactly this",
+        "Losing a sign: each swap of two rows or columns flips it, so a cyclic shift of three columns keeps it"
+      ]
+    },
+    {
+      "name": "Eigenvalues and diagonalisation",
+      "lectures": [
+        "Lecture 11 - Eigenvectors and eigenvalues",
+        "Lecture 12 - Diagonalization",
+        "Lecture 17 - Academic Reasoning-2"
+      ],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "Av = lambda v with v not 0; the eigenspace of lambda is Nul(A - lambda I)",
+        "The characteristic equation det(A - lambda I) = 0 and algebraic multiplicity; a triangular matrix has its diagonal entries as eigenvalues",
+        "0 is an eigenvalue exactly when A is not invertible; eigenvectors for distinct eigenvalues are independent",
+        "Similar matrices, A = PBP^-1, share the characteristic polynomial and so the eigenvalues",
+        "A = PDP^-1 exists exactly when A has n independent eigenvectors, so when every geometric multiplicity equals the algebraic one; n distinct eigenvalues are enough",
+        "Powers through a diagonalisation: A^k = P D^k P^-1"
+      ],
+      "do": [
+        "Compute the eigenvalues and a basis of each eigenspace of a 2 x 2 or 3 x 3 matrix",
+        "Find the parameter for which a matrix with a repeated eigenvalue is diagonalisable",
+        "Read the eigenvalues and eigenvectors of A = PCP^-1 from C and P",
+        "Compute A^10, or one column of it, through a diagonalisation",
+        "Decide true or false for statements about the eigenvalues of A^T, A^2, AB or a row-equivalent matrix"
+      ],
+      "pitfalls": [
+        "Assuming a matrix is diagonalisable because its eigenvalues are real: a double eigenvalue also needs a two-dimensional eigenspace (Endterm 2023 question 4)",
+        "Believing row operations keep eigenvalues or diagonalisability; Resit 2023 asked for a counterexample",
+        "Giving eigenvectors of C as eigenvectors of A = PCP^-1: multiply them by P first (Endterm 2024 question 7)"
+      ]
+    },
+    {
+      "name": "Complex eigenvalues and dynamical systems",
+      "lectures": ["Lecture 13 - Complex eigenvalues", "Lecture 14 - Discrete dynamical systems"],
+      "timeShare": 10,
+      "importance": "important",
+      "know": [
+        "Complex eigenvalues of a real matrix come in conjugate pairs, with conjugate eigenvectors",
+        "For a real 2 x 2 matrix with eigenvalue a - bi (b not 0) and eigenvector v: A = PCP^-1 with P = [Re v, Im v] and C = [a, -b; b, a], a rotation combined with a scaling by r = sqrt(a^2 + b^2)",
+        "For diagonalisable A the system x_(k+1) = A x_k has general solution x_k = c1 lambda1^k v1 + ... + cn lambdan^k vn",
+        "The origin is an attractor if every |lambda| < 1, a repeller if every |lambda| > 1, a saddle point if there are some of each; an eigenvalue with |lambda| = 1 makes it none of these",
+        "With complex eigenvalues the trajectories spiral inwards when r < 1, outwards when r > 1, and stay on an ellipse when r = 1"
+      ],
+      "do": [
+        "Find a real P and C = [a, -b; b, a] with A = PCP^-1",
+        "Solve an initial value problem x_(k+1) = A x_k and give a formula for one coordinate",
+        "Classify the origin for given eigenvalues, also when one depends on a parameter",
+        "Find the smallest k with A^k = I for a matrix similar to a rotation"
+      ],
+      "pitfalls": [
+        "Combining C built from a - bi with the eigenvector of a + bi: the 2024 endterm solutions list that P as incorrect",
+        "Calling the origin an attractor when one eigenvalue equals 1 (Resit 2023 question 8)"
+      ]
+    },
+    {
+      "name": "Orthogonality, projections and Gram-Schmidt",
+      "lectures": [
+        "Lecture 15 - Inner product and orthogonality",
+        "Lecture 16 - Orthogonal projections",
+        "Lecture 17 - Academic Reasoning-2",
+        "Lecture 18 - The Gram-Schmidt process"
+      ],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "Inner product, length, distance and unit vectors; u and v are orthogonal when u . v = 0",
+        "The orthogonal complement W^perp, with (Row A)^perp = Nul A, (Col A)^perp = Nul A^T and dim W + dim W^perp = n",
+        "Orthogonal and orthonormal bases; coordinates relative to an orthogonal basis are c_i = (y . u_i)/(u_i . u_i)",
+        "U has orthonormal columns exactly when U^T U = I; a square such U is an orthogonal matrix, with inverse U^T",
+        "Projection onto a line and onto W given an orthogonal basis; y = y-hat + z with y-hat in W and z in W^perp, and y-hat is the point of W closest to y",
+        "The projection matrix P = U U^T for an orthonormal basis in the columns of U; P^2 = P, so its eigenvalues are 0 and 1",
+        "The Gram-Schmidt process, which turns any basis of a subspace into an orthogonal one"
+      ],
+      "do": [
+        "Find a basis of W^perp by solving a homogeneous system",
+        "Compute a projection, the distance from a vector to a subspace, or one row or column of the projection matrix",
+        "Run Gram-Schmidt on two or three vectors in R^3 or R^4",
+        "Prove short statements such as: if ||u - v|| = ||u + v||, then u and v are orthogonal"
+      ],
+      "pitfalls": [
+        "Using the projection formula with a basis that is not orthogonal: run Gram-Schmidt first, as Endterm 2024 question 5 requires",
+        "Forgetting that Gram-Schmidt gives a zero vector when an input vector depends on the earlier ones (a Lecture 18 polling question)"
+      ]
+    },
+    {
+      "name": "Least-squares problems",
+      "lectures": ["Lecture 18 - The Gram-Schmidt process", "Lecture 19 - Least-squares problems"],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "A least-squares solution x-hat minimises ||b - Ax||, and x-hat is one exactly when A x-hat is the projection of b onto Col A",
+        "The normal equations A^T A x = A^T b; the solution is unique exactly when the columns of A are independent, so when A^T A is invertible",
+        "The least-squares error ||b - A x-hat||",
+        "Linear models: design matrix X, parameter vector beta and observation vector y, for the line y = beta0 + beta1 x and for other curves such as a parabola",
+        "Residuals: the vertical differences between the data and the fitted curve"
+      ],
+      "do": [
+        "Find all least-squares solutions, including a whole line of them when the columns of A are dependent",
+        "Compute the least-squares error",
+        "Fit the least-squares line through four data points by hand",
+        "Set up the design matrix for another model curve"
+      ],
+      "pitfalls": [
+        "Giving the squared error instead of the error: Resit 2023 gave 1 of 3 points for 38 instead of sqrt(38)",
+        "Assuming the least-squares solution is unique when the columns of A are dependent"
+      ]
+    },
+    {
+      "name": "Symmetric matrices",
+      "lectures": ["Lecture 20 - Symmetric matrices"],
+      "timeShare": 3,
+      "importance": "important",
+      "know": [
+        "A real symmetric matrix (A^T = A) has real eigenvalues, and eigenvectors for different eigenvalues are orthogonal",
+        "Orthogonally diagonalisable means A = PDP^T with P an orthogonal matrix",
+        "The spectral theorem: a real matrix is orthogonally diagonalisable exactly when it is symmetric",
+        "The method: eigenvalues, a basis of each eigenspace, Gram-Schmidt inside each eigenspace, then normalise"
+      ],
+      "do": [
+        "Find an orthogonal eigenvector basis of R^3 for a symmetric matrix with a two-dimensional eigenspace",
+        "Find the parameter for which a given PDP^-1 is symmetric",
+        "Refute statements such as: a matrix similar to a symmetric matrix is orthogonally diagonalisable"
+      ],
+      "pitfalls": [
+        "Leaving the columns of P orthogonal but not of length 1 (the remark in Lecture 20)",
+        "Skipping Gram-Schmidt inside a two-dimensional eigenspace: only vectors from different eigenspaces are orthogonal automatically"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Secondary-school algebra: solving equations, fractions and simplifying expressions by hand, as no calculator is allowed",
+    "Exact sine and cosine values of standard angles such as 30, 45, 60 and 120 degrees, for rotation matrices",
+    "Complex numbers: arithmetic, conjugates, modulus and argument, for Lectures 13 and 14",
+    "Vectors in the plane and in space, and lines and planes in parametric form",
+    "Basic logic: if-then statements, proof by contradiction and counterexamples"
+  ],
+  "practical": "No lab or project counts towards the grade. Each lecture has a pre-lecture video and exercises and post-lecture exercises, many in Grasple. Each week also has construction blocks and one instruction (exercise) session; the 2024-25 instruction exercises are in the archive. For Lectures 7 and 17 there are academic reasoning tests in Grasple with four true/false statements, where teachers give feedback on uploaded proofs.",
+  "studyAdvice": [
+    "Linear systems, matrix algebra and subspaces with rank together carry about 41 percent of the points and appear on every paper; make row reduction, inverses and bases routine first.",
+    "Take the midterm: it covers Lectures 1 to 10 in short-answer questions, can only raise your final grade, and is your best check on the first half.",
+    "Determinants take 4 percent of the slides but about 10 percent of the points, on every paper. Drill expansion along sparse rows and the rules for det(cA), det(A^T), det(A^-1) and row swaps.",
+    "From Lecture 11 on, keep up week by week: eigenvalues feed diagonalisation, dynamical systems and symmetric matrices, and about 60 percent of the endterm and resit points come from Lectures 11 to 20.",
+    "Practise academic reasoning with the Recall, Try, Answer strategy from Lectures 7 and 17: write down the definitions, decide true or false, then give a full proof or an explicit numerical counterexample.",
+    "Do the archive papers without a calculator; several questions return with new numbers, such as the projection matrix for the same two vectors in Resit 2022 and Resit 2023.",
+    "Learn the Invertible Matrix Theorem as one connected list and add determinant and eigenvalue conditions as you meet them: multiple-choice and true/false questions lean on it."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "course": "CSE200",
+  "source": {
+    "name": "Lightspace",
+    "title": "Software Project",
+    "url": "https://lightspace.study/courses/software-project",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Client outreach kit (Notion)",
+          "url": "https://app.notion.com/p/Software-Project-0bc45a61e6ac83aabcd8815f800f88cb"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 0 - Kickoff",
+          "url": "https://lightspace.study/courses/software-project/read/SP%20Lectures/SP%20Lecture%200%20-%20Kickoff.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 1 - Technical Writing Basics",
+          "url": "https://lightspace.study/courses/software-project/read/SP%20Lectures/SP%20Lecture%201%20-%20Technical%20Writing%20Basics.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 2 - Technical Writing Structure",
+          "url": "https://lightspace.study/courses/software-project/read/SP%20Lectures/SP%20Lecture%202%20-%20Technical%20Writing%20Structure.pdf",
+          "size": "566 KB"
+        },
+        {
+          "title": "Lecture 3 - Technical Writing Style",
+          "url": "https://lightspace.study/courses/software-project/read/SP%20Lectures/SP%20Lecture%203%20-%20Technical%20Writing%20Style.pdf",
+          "size": "879 KB"
+        },
+        {
+          "title": "Lecture 4 - Technical Writing ToC and Practice",
+          "url": "https://lightspace.study/courses/software-project/read/SP%20Lectures/SP%20Lecture%204%20-%20Technical%20Writing%20ToC%20and%20Practice.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 5 - Effective Communication",
+          "url": "https://lightspace.study/courses/software-project/read/SP%20Lectures/SP%20Lecture%205%20-%20Effective%20Communication.pdf",
+          "size": "4 MB"
+        }
+      ]
+    }
+  ]
+}

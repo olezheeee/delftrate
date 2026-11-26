@@ -1,0 +1,42 @@
+{
+  "course": "CSE300",
+  "title": "Research Project",
+  "available": false,
+  "summary": "There is no written exam. Your grade comes from a rubric with four weighted parts: content of the research (40 percent), the paper as a piece of writing (30 percent), your process over the ten weeks (20 percent) and the poster presentation (10 percent). The final assessment is in week 10, when you present your poster and answer questions from an examiner of another research group. Before any grade is given you must pass the Information Literacy module.",
+  "basis": {
+    "papers": [],
+    "note": "The archive holds no past papers: the course is assessed by project. What is said here rests on the official course description, the course guide with its assessment rubric, and the paper and poster checklists of the 2024-25 Q4 edition."
+  },
+  "format": {
+    "mode": "Project assessment: an individual final paper, a poster presented in person with questions, and the supervisor's view of your process. You register for the final assessment in MyTUDelft.",
+    "duration": "10 weeks full time; final presentation and assessment in week 10",
+    "structure": "Graded deliverables: the final paper (week 9, also uploaded to the TU Delft repository) and the poster presentation with Q&A (week 10). Required steps that feed the process grade: a first-week plan and a research plan, a plan presentation in week 2, a midterm presentation in week 5, draft v1 in week 7 with a peer review of a classmate's draft, and draft v2 in week 8. All deliverables are individual.",
+    "grading": "Each of the four parts gets a partial grade from 1 to 10 (below 6 counts as insufficient, 6 to 8 as sufficient, above 8 as excellent), and the final grade is their weighted average rounded to 0.5. The parts need no minimum grade on their own. The responsible professor and the examiner agree the grade with input from the supervisor. ACS and Information Literacy are pass/fail. There is no repair: if you fail, you redo a project in a later edition (Q2 or Q4).",
+    "aids": null
+  },
+  "topicWeights": [],
+  "questionTypes": [],
+  "recurring": [],
+  "trends": [
+    "From 2026-27 the course is CSE300 (formerly CSE3000) and you may only start after the RP Bootcamp in week 3.5",
+    "Earlier editions already put a week-long Research Methods Bootcamp and the Information Literacy module before the project starts"
+  ],
+  "strategy": [
+    "Read the rubric before you start: 40 percent is content (related work, method, scientific approach, interpretation, responsible engineering), so a well-written paper about thin work cannot score well",
+    "For content above sufficient, discuss and criticise many sources and derive your question from them, and argue for your method against alternatives",
+    "Use the two feedback rounds: v1 for your peers and supervisor, v2 for your responsible professor; v2 is the last chance for feedback on writing",
+    "Keep your research plan alive: the rubric rewards a plan that you refine and use to decide what to do, not one written once in week 1",
+    "Show independence in meetings: come with proposed next steps and questions, tell your supervisor early when something slips, and give timely, clear peer feedback",
+    "Write the introduction and conclusions for any computer science bachelor, since the examiner usually works in another area",
+    "Prepare for the poster Q&A by listing the questions an outsider would ask; the excellent level asks for insightful, short answers, not a longer talk",
+    "Run your paper through the ACS checklist and your poster through the poster checklist before each submission"
+  ],
+  "pitfalls": [
+    "Missing a deadline: no extensions are given, and a failed project cannot be repaired within the same edition",
+    "A related-work section that only lists who did what, without comparing sources or showing the gap your question fills",
+    "Conclusions not tied back to the research question, or claims the results do not support, which costs points under interpretation of results",
+    "A Responsible Research section with only a passing remark: some reflection is the bar for sufficient, while excellent needs a worked-out discussion of reproducibility and integrity challenges",
+    "Writing with others or copying structure: the paper must be your own work, and uncited code, data or AI help counts as plagiarism",
+    "Not finishing the Information Literacy module, without which you get no final grade at all"
+  ]
+}

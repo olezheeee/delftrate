@@ -13,6 +13,15 @@ export type CourseDetails = {
   quarters: number[];
 };
 
+// Whether a course has this code. For a page that hangs under a course without showing
+// its sheet, such as a booklet.
+export async function courseExists(code: string): Promise<boolean> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("courses").select("code").eq("code", code).maybeSingle();
+  if (error) throw new Error(`The course could not be read: ${error.message}`);
+  return data !== null;
+}
+
 // Null when no course has this code.
 export async function getCourseSheet(
   code: string,
