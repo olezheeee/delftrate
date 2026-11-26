@@ -77,8 +77,11 @@
   min-width: 720px;
   padding-bottom: 8px;
 }
+.quarter {
+  position: relative;
+  padding: 12px 14px 2px;
+}
 .lane {
-  padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--card);

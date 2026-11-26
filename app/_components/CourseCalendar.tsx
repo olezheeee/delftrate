@@ -125,9 +125,18 @@ export function CourseCalendar({
                   key={quarter}
                   className={styles.lane}
                   style={{ gridColumn: quarter, gridRow: `1 / span ${layout.rows + 1}` }}
+                />
+              ))}
+              {/* The names sit in a row of their own: a lane spans every row, so it cannot
+                  give the first row its height. */}
+              {QUARTERS.map((quarter) => (
+                <span
+                  key={quarter}
+                  className={`mono ${styles.quarter}`}
+                  style={{ gridColumn: quarter, gridRow: 1 }}
                 >
-                  <span className="mono">Q{quarter}</span>
-                </div>
+                  Q{quarter}
+                </span>
               ))}
               {layout.blocks.map((block, index) => {
                 const { item } = block;
