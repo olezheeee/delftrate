@@ -98,10 +98,16 @@ describe("a signed-out visitor", () => {
   it("reads the programmes and the courses, and nothing else", async () => {
     expect(await rows(null, "select id from public.programmes order by id")).toEqual([{ id: "AE" }, { id: "CSE" }]);
     // The calendar on the home page is public: code, name, programme, year and quarters.
-    expect(await rows(null, "select code, quarters from public.courses order by code")).toEqual([
-      { code: "AE1", quarters: [] },
-      { code: "CSE1", quarters: [] },
+    expect(
+      await rows(null, "select code, name, programme_id, year, quarters from public.courses order by code"),
+    ).toMatchObject([
+      { code: "AE1", programme_id: "AE", quarters: [] },
+      { code: "CSE1", programme_id: "CSE", quarters: [] },
     ]);
+    // Those five columns and no others: not the internal id, not when the row was made.
+    for (const columns of ["id", "created_at", "*"]) {
+      await expect(rows(null, `select ${columns} from public.courses`), columns).rejects.toThrow(/permission denied/);
+    }
     await expect(rows(null, "update public.courses set name = 'x'")).rejects.toThrow(/permission denied/);
     await expect(rows(null, "delete from public.courses")).rejects.toThrow(/permission denied/);
     await expect(
@@ -747,8 +753,25 @@ describe("the seed data", () => {
     await taken.close();
   });
 
+  it("gives its lecturers to its own courses only, not to a real course with the same code", async () => {
+    const taken = await createTestDatabase();
+    await taken.query("insert into public.courses (code, name, programme_id, year) values ('CSE11C', 'The real one', 'CSE', 1)");
+    await taken.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
+
+    const { rows: found } = await taken.query<Row>(
+      `select c.code, c.name, count(l.professor_id)::int as lecturers
+       from public.courses c left join public.course_professors l on l.course_id = c.id
+       where c.code in ('CSE11C', 'CSE12C') group by c.code, c.name order by c.code`,
+    );
+    expect(found).toEqual([
+      { code: "CSE11C", name: "The real one", lecturers: 0 },
+      { code: "CSE12C", name: "Data Management", lecturers: 1 },
+    ]);
+    await taken.close();
+  });
+
   it("can be loaded twice without adding anything", async () => {
-    const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses");
+    const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses, (select count(*) from public.course_professors)::int as links");
     const before = (await count()).rows;
     await seeded.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
     expect((await count()).rows).toEqual(before);
