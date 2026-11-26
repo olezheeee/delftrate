@@ -95,12 +95,21 @@ afterEach(async () => {
 });
 
 describe("a signed-out visitor", () => {
-  it("reads the programmes and nothing else", async () => {
+  it("reads the programmes and the courses, and nothing else", async () => {
     expect(await rows(null, "select id from public.programmes order by id")).toEqual([{ id: "AE" }, { id: "CSE" }]);
+    // The calendar on the home page is public: code, name, programme, year and quarters.
+    expect(await rows(null, "select code, quarters from public.courses order by code")).toEqual([
+      { code: "AE1", quarters: [] },
+      { code: "CSE1", quarters: [] },
+    ]);
+    await expect(rows(null, "update public.courses set name = 'x'")).rejects.toThrow(/permission denied/);
+    await expect(rows(null, "delete from public.courses")).rejects.toThrow(/permission denied/);
+    await expect(
+      rows(null, "insert into public.courses (code, name, programme_id, year) values ('X1', 'x', 'AE', 1)"),
+    ).rejects.toThrow(/permission denied/);
 
     for (const table of [
       "profiles",
-      "courses",
       "professors",
       "course_professors",
       "subject_ratings",
@@ -228,6 +237,22 @@ describe("confirming an email address", () => {
       [id],
     );
     expect(await password(id)).toBe("chosen-by-the-owner");
+  });
+});
+
+describe("the quarters of a course", () => {
+  const setQuarters = (value: string) =>
+    db.query("update public.courses set quarters = $1::smallint[] where id = $2", [value, cse]);
+
+  it("accepts one to four different quarters, and none at all", async () => {
+    for (const value of ["{}", "{1}", "{2,3}", "{1,2,3,4}"]) await setQuarters(value);
+    expect(await one("select quarters from public.courses where id = $1", [cse])).toEqual([1, 2, 3, 4]);
+  });
+
+  it("refuses a quarter that does not exist, a repeated one, an empty one and a nested list", async () => {
+    for (const value of ["{0}", "{5}", "{1,1}", "{1,NULL}", "{{1,2},{3,4}}"]) {
+      await expect(setQuarters(value), value).rejects.toThrow(/courses_quarters_valid/);
+    }
   });
 });
 
@@ -608,7 +633,8 @@ describe("the seed data", () => {
   async function cards(userId: string) {
     const read = (sql: string) => as(seeded, userId, (tx) => tx.query<Row>(sql)).then((r) => r.rows);
     const number = (v: unknown) => (v === null ? null : Number(v));
-    const courses = await read("select id, code from public.courses");
+    // Only the example courses: the curriculum courses in the seed have no votes.
+    const courses = await read("select id, code from public.courses where id::text like '00000000-0000-4000-a000-%'");
     const professors = await read("select id, name from public.professors");
     const subjects = await read("select * from public.course_subject_stats()");
     const blocks = await read("select * from public.course_professor_stats()");
@@ -664,13 +690,47 @@ describe("the seed data", () => {
     expect(await cards(seedStudent)).toEqual(EXPECTED);
   });
 
+  it("holds the curriculum of both programmes, every course with its quarters", async () => {
+    const perYear = await as(seeded, null, (tx) =>
+      tx.query<Row>(
+        `select programme_id, year, count(*)::int as courses from public.courses
+         where quarters <> '{}' group by programme_id, year order by programme_id, year`,
+      ),
+    );
+    expect(perYear.rows).toEqual([
+      { programme_id: "AE", year: 1, courses: 15 },
+      { programme_id: "AE", year: 2, courses: 17 },
+      { programme_id: "AE", year: 3, courses: 5 },
+      { programme_id: "CSE", year: 1, courses: 12 },
+      { programme_id: "CSE", year: 2, courses: 8 },
+      { programme_id: "CSE", year: 3, courses: 1 },
+    ]);
+  });
+
+  it("links the study guide lecturers to their first-year CSE courses", async () => {
+    const linked = await as(seeded, seedStudent, (tx) =>
+      tx.query<Row>(
+        `select c.code, array_agg(p.name order by p.name) as lecturers
+         from public.course_professors l
+         join public.courses c on c.id = l.course_id
+         join public.professors p on p.id = l.professor_id
+         where c.code in ('CSE11C', 'CSE12C', 'CSE11B') group by c.code order by c.code`,
+      ),
+    );
+    expect(linked.rows).toEqual([
+      { code: "CSE11C", lecturers: ["A. Asadi PhD", "Dr. A.J. Power"] },
+      { code: "CSE12C", lecturers: ["Dr. A.J. Power"] },
+    ]);
+  });
+
   it("gives an admin the same published scores, although an admin receives more rows", async () => {
     expect(await cards(seedAdmin)).toEqual(EXPECTED);
   });
 
   it("hides the hidden professor from the student", async () => {
     const names = await as(seeded, seedStudent, (tx) => tx.query<Row>("select name from public.professors"));
-    expect(names.rows).toHaveLength(7);
+    // 7 visible example professors and the 9 lecturers of the first-year CSE courses.
+    expect(names.rows).toHaveLength(16);
     expect(names.rows).not.toContainEqual({ name: "Dr. Hiroshi Tanabe" });
   });
 
@@ -682,7 +742,8 @@ describe("the seed data", () => {
     const { rows: found } = await taken.query<Row>(
       "select (select count(*) from public.courses)::int as courses, (select name from public.courses where code = 'CSE1001') as name, (select count(*) from public.manual_votes m join public.courses c on c.id = m.course_id where c.code = 'CSE1001')::int as votes",
     );
-    expect(found).toEqual([{ courses: 7, name: "The real one", votes: 0 }]);
+    // 7 example courses (one of them skipped, the real one counted) and 58 from the curriculum.
+    expect(found).toEqual([{ courses: 65, name: "The real one", votes: 0 }]);
     await taken.close();
   });
 
