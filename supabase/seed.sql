@@ -198,3 +198,37 @@ insert into public.courses (code, name, programme_id, year, quarters) values
   ('CSE200', 'Software Project', 'CSE', 2, '{4}'),
   ('CSE300', 'Research Project', 'CSE', 3, '{4}')
 on conflict (code) do nothing;
+
+-- The lecturers of the first-year CSE courses, as the TU Delft study guide 2026-2027 lists
+-- them (lecturers only, not responsible lecturers). CSE11B, CSE13B and CSE13C list none.
+-- No votes. The course import (Pack 3) replaces this list as well.
+insert into public.professors (id, name, hidden) values
+  ('00000000-0000-4000-a000-000000000301', 'Dr.ir. S. Dumančić', false),
+  ('00000000-0000-4000-a000-000000000302', 'Dr. A.J. Power', false),
+  ('00000000-0000-4000-a000-000000000303', 'A. Asadi PhD', false),
+  ('00000000-0000-4000-a000-000000000304', 'Dr. C.O. Smet', false),
+  ('00000000-0000-4000-a000-000000000305', 'J.J. Koorn', false),
+  ('00000000-0000-4000-a000-000000000306', 'Dr. W.M. Schouten-Straatman', false),
+  ('00000000-0000-4000-a000-000000000307', 'Dr. T. Shreedhar', false),
+  ('00000000-0000-4000-a000-000000000308', 'I.C. de Bruin MSc', false),
+  ('00000000-0000-4000-a000-000000000309', 'Prof.dr. O.E. Scharenborg', false)
+on conflict (id) do nothing;
+
+insert into public.course_professors (course_id, professor_id)
+select c.id, l.professor_id
+from (values
+  ('CSE11A', '00000000-0000-4000-a000-000000000301'::uuid),
+  ('CSE11C', '00000000-0000-4000-a000-000000000302'),
+  ('CSE11C', '00000000-0000-4000-a000-000000000303'),
+  ('CSE12A', '00000000-0000-4000-a000-000000000304'),
+  ('CSE12B', '00000000-0000-4000-a000-000000000305'),
+  ('CSE12C', '00000000-0000-4000-a000-000000000302'),
+  ('CSE13A', '00000000-0000-4000-a000-000000000306'),
+  ('CSE14A', '00000000-0000-4000-a000-000000000304'),
+  ('CSE14B', '00000000-0000-4000-a000-000000000307'),
+  ('CSE100', '00000000-0000-4000-a000-000000000308'),
+  ('CSE100', '00000000-0000-4000-a000-000000000309')
+) as l (code, professor_id)
+join public.courses c on c.code = l.code
+where exists (select 1 from public.professors p where p.id = l.professor_id)
+on conflict do nothing;

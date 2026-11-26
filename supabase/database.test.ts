@@ -707,13 +707,30 @@ describe("the seed data", () => {
     ]);
   });
 
+  it("links the study guide lecturers to their first-year CSE courses", async () => {
+    const linked = await as(seeded, seedStudent, (tx) =>
+      tx.query<Row>(
+        `select c.code, array_agg(p.name order by p.name) as lecturers
+         from public.course_professors l
+         join public.courses c on c.id = l.course_id
+         join public.professors p on p.id = l.professor_id
+         where c.code in ('CSE11C', 'CSE12C', 'CSE11B') group by c.code order by c.code`,
+      ),
+    );
+    expect(linked.rows).toEqual([
+      { code: "CSE11C", lecturers: ["A. Asadi PhD", "Dr. A.J. Power"] },
+      { code: "CSE12C", lecturers: ["Dr. A.J. Power"] },
+    ]);
+  });
+
   it("gives an admin the same published scores, although an admin receives more rows", async () => {
     expect(await cards(seedAdmin)).toEqual(EXPECTED);
   });
 
   it("hides the hidden professor from the student", async () => {
     const names = await as(seeded, seedStudent, (tx) => tx.query<Row>("select name from public.professors"));
-    expect(names.rows).toHaveLength(7);
+    // 7 visible example professors and the 9 lecturers of the first-year CSE courses.
+    expect(names.rows).toHaveLength(16);
     expect(names.rows).not.toContainEqual({ name: "Dr. Hiroshi Tanabe" });
   });
 
