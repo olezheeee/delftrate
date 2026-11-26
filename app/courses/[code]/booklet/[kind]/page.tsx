@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { requireUser } from "@/lib/auth/session";
+import { courseExists } from "@/lib/course-sheet-data";
 import { getCourseMaterial } from "@/lib/resources-data";
 import styles from "./Booklet.module.css";
 import { ExamBookletView } from "./ExamBookletView";
@@ -32,9 +33,10 @@ async function Booklet({ params }: { params: PageProps<"/courses/[code]/booklet/
   if (kind !== "knowledge" && kind !== "exams") notFound();
 
   const code = decodeURIComponent(rawCode);
-  const { knowledge, exams } = await getCourseMaterial(code);
-  // The two booklets come as a pair: each one links to the other.
-  if (!knowledge || !exams) notFound();
+  const [exists, { knowledge, exams }] = await Promise.all([courseExists(code), getCourseMaterial(code)]);
+  // A booklet belongs to a course of the site: without the course, its link back leads
+  // nowhere. And the two booklets come as a pair: each one links to the other.
+  if (!exists || !knowledge || !exams) notFound();
 
   return kind === "knowledge" ? (
     <KnowledgeBookletView knowledge={knowledge} exams={exams} />

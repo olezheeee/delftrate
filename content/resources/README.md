@@ -40,8 +40,10 @@ source, and we say so wherever we show it.
   (lectures are counted where the slides are not available as text).
 - **Exam points** of a topic: its share of the points over the papers listed in
   `basis.papers` of `exams.json` (at most the six most recent complete papers).
-- **Suggested study time**: the course's hours (28 per EC) divided by the mean of the two
-  shares. Not shown for a course without past papers (the projects): there lecture time
+- **Suggested study time**: the course's hours (28 per EC) divided over the topics by the
+  mean of the two shares, in whole hours that add up to the course. Exam points filed
+  under "Other" belong to no topic and are left out of the division. Not shown for a
+  course without past papers (the projects): there lecture time
   says how the taught sessions are divided, not where the hours go. Worked out by
   `topicStatistics` in `lib/resources.ts`, not stored.
 

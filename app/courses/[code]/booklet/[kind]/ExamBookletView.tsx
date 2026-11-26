@@ -1,6 +1,6 @@
 // Booklet 2: what the past papers show, and how to prepare. A course without past papers
 // (a project) gets "The assessment": how it is graded, without numbers.
-import { papersNoun, type ExamBooklet, type PaperKind } from "@/lib/resources";
+import { OTHER_TOPIC, papersNoun, type ExamBooklet, type PaperKind } from "@/lib/resources";
 import styles from "./Booklet.module.css";
 import { Bar, BookletHead, Disclaimer, Facts, Points, Section, courseHref, plural, scaleMax } from "./parts";
 import { PrintButton } from "./PrintButton";
@@ -20,14 +20,11 @@ function orDash(value: number | null): string {
 export function ExamBookletView({ exams }: { exams: ExamBooklet }) {
   const papers = exams.basis.papers;
   const years = papers.flatMap((paper) => (paper.year === null ? [] : [paper.year]));
-  const span =
-    years.length === 0
-      ? null
-      : Math.min(...years) === Math.max(...years)
-        ? String(years[0])
-        : `${Math.min(...years)}–${Math.max(...years)}`;
+  const oneYear = years.length > 0 && Math.min(...years) === Math.max(...years);
+  const span = years.length === 0 ? null : oneYear ? String(years[0]) : `${Math.min(...years)}–${Math.max(...years)}`;
   // Largest share first: the reader wants to know where most points are.
   const weights = [...exams.topicWeights].sort((a, b) => b.share - a.share);
+  const examined = weights.filter((weight) => weight.topic !== OTHER_TOPIC).length;
   const types = [...exams.questionTypes].sort((a, b) => b.share - a.share);
   const format = [
     { label: "Mode", value: exams.format.mode },
@@ -51,8 +48,9 @@ export function ExamBookletView({ exams }: { exams: ExamBooklet }) {
           <Facts
             facts={[
               { value: String(papers.length), label: `${papersNoun(exams)} counted` },
-              ...(span ? [{ value: span, label: "years covered" }] : []),
-              { value: String(weights.length), label: "topics examined" },
+              ...(span ? [{ value: span, label: oneYear ? "year covered" : "years covered" }] : []),
+              // "Other" collects the points outside the topics; it is not a topic itself.
+              { value: String(examined), label: examined === 1 ? "topic examined" : "topics examined" },
             ]}
           />
         ) : (

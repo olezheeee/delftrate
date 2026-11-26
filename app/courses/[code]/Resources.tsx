@@ -86,7 +86,8 @@ export function Resources({
                 </summary>
                 <ul>
                   {group.items.map((item, index) => (
-                    <li key={item.url ?? `${item.title}-${index}`}>
+                    // The archive may list one file under two headings, so the link alone is no key.
+                    <li key={index}>
                       {item.url ? (
                         <a href={item.url} target="_blank" rel="noopener noreferrer">
                           {item.title}

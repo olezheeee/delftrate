@@ -223,13 +223,21 @@ function courseCode(value: unknown, path: string): string {
   return value;
 }
 
+// A day that exists, written as 2026-11-26. "2026-02-31" has the shape of a date and is
+// none: the page would show another day for it, or fail to show the list at all.
+function isCalendarDay(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
 export function parseResources(value: unknown): CourseResources {
   const root = record(value, "resources", ["course", "source", "groups"]);
   const source = record(root.source, "source", ["name", "title", "url", "retrieved"]);
   const sourceUrl = text(source.url, "source.url", 300, false);
   if (!/^https:\/\//.test(sourceUrl)) fail("source.url", "must be an https address");
   const retrieved = text(source.retrieved, "source.retrieved", 10, false);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(retrieved)) fail("source.retrieved", "must be a date such as 2026-11-26");
+  if (!isCalendarDay(retrieved)) fail("source.retrieved", "must be a date such as 2026-11-26");
 
   const groups = list(root.groups, "groups", 1, RESOURCE_KINDS.length, (raw, path): ResourceGroup => {
     const group = record(raw, path, ["kind", "items"]);
@@ -430,17 +438,43 @@ export type TopicStatistic = {
 
 export function topicStatistics(knowledge: KnowledgeBooklet, exams: ExamBooklet | null): TopicStatistic[] {
   const counted = exams?.available ? exams : null;
-  const total = knowledge.ects * HOURS_PER_ECTS;
-  return knowledge.topics.map((topic) => {
-    const examShare = counted
-      ? (counted.topicWeights.find((weight) => weight.topic === topic.name)?.share ?? 0)
-      : null;
-    return {
-      name: topic.name,
-      importance: topic.importance,
-      timeShare: topic.timeShare,
-      examShare,
-      hours: examShare === null ? null : Math.round((total * (topic.timeShare + examShare)) / 200),
-    };
-  });
+  const examShares = knowledge.topics.map((topic) =>
+    counted ? (counted.topicWeights.find((weight) => weight.topic === topic.name)?.share ?? 0) : null,
+  );
+  // The hours of the course are divided over the topics by the mean of the two shares.
+  // Exam points that belong to no topic ("Other") are left out of that division: the
+  // shares of the topics are taken of what is left, so that the hours add up to the course.
+  const named = examShares.reduce<number>((sum, share) => sum + (share ?? 0), 0);
+  const hours = wholeParts(
+    knowledge.topics.map((topic, index) => {
+      const examPart = named > 0 ? (examShares[index] ?? 0) / named : topic.timeShare / 100;
+      return (topic.timeShare / 100 + examPart) / 2;
+    }),
+    knowledge.ects * HOURS_PER_ECTS,
+  );
+  return knowledge.topics.map((topic, index) => ({
+    name: topic.name,
+    importance: topic.importance,
+    timeShare: topic.timeShare,
+    examShare: examShares[index],
+    hours: examShares[index] === null ? null : hours[index],
+  }));
+}
+
+// Divides a whole number over parts (fractions that add up to 1) in whole numbers that add
+// up to it again: every part is rounded down, and what is left goes one by one to the
+// parts that lost most by that.
+function wholeParts(parts: number[], total: number): number[] {
+  const exact = parts.map((part) => part * total);
+  const whole = exact.map((value) => Math.floor(value + 1e-9));
+  const order = exact
+    .map((value, index) => ({ index, lost: value - whole[index] }))
+    .sort((a, b) => b.lost - a.lost || a.index - b.index);
+  let left = total - whole.reduce((sum, value) => sum + value, 0);
+  for (const { index } of order) {
+    if (left <= 0) break;
+    whole[index] += 1;
+    left -= 1;
+  }
+  return whole;
 }

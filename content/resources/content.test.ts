@@ -4,11 +4,13 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
+  HOURS_PER_ECTS,
   crossCheck,
   isCourseCode,
   parseExamBooklet,
   parseKnowledgeBooklet,
   parseResources,
+  topicStatistics,
   type ExamBooklet,
   type KnowledgeBooklet,
 } from "@/lib/resources";
@@ -57,5 +59,10 @@ describe.each(courses)("%s", (code) => {
     // A course has both booklets or neither.
     expect(knowledge === null, "one booklet is missing").toBe(exams === null);
     expect(crossCheck(code, knowledge, exams)).toEqual([]);
+    // The suggested study time divides the hours of the course and nothing else.
+    if (knowledge && exams?.available) {
+      const hours = topicStatistics(knowledge, exams).reduce((sum, row) => sum + (row.hours ?? 0), 0);
+      expect(hours, "the suggested hours add up to the course").toBe(knowledge.ects * HOURS_PER_ECTS);
+    }
   });
 });

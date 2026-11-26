@@ -108,6 +108,11 @@ def parse_course(slug, page):
                 link = html.unescape(href)
                 if link.startswith(SITE) or any(i["url"] == link for i in items):
                     continue
+                # The site shows https links only (lib/resources.ts) and would refuse the
+                # whole list for one other link, so such a link is left out here.
+                if not re.fullmatch(r'https://[^\s"<>]+', link):
+                    print(f"{slug}: left out a link that is not a plain https address: {link[:80]}")
+                    continue
                 items.append({"title": text(label), "url": link})
             if items:
                 groups.append({"kind": "links", "items": items})

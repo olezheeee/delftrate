@@ -74,8 +74,8 @@ export function Section({ title, note, children }: { title: string; note?: strin
 export function Points({ items }: { items: string[] }) {
   return (
     <ul className={styles.points}>
-      {items.map((item) => (
-        <li key={item}>{item}</li>
+      {items.map((item, index) => (
+        <li key={index}>{item}</li>
       ))}
     </ul>
   );

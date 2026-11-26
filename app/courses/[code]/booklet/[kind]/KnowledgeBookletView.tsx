@@ -1,6 +1,7 @@
 // Booklet 1: what a student should know, topic by topic, with where the time goes.
 import {
   HOURS_PER_ECTS,
+  OTHER_TOPIC,
   papersNoun,
   topicStatistics,
   type ExamBooklet,
@@ -21,6 +22,8 @@ export function KnowledgeBookletView({ knowledge, exams }: { knowledge: Knowledg
   const statistics = topicStatistics(knowledge, exams);
   const papers = exams.available ? exams.basis.papers.length : 0;
   const hours = knowledge.ects * HOURS_PER_ECTS;
+  // Exam points that the exam booklet files under no topic.
+  const outside = exams.available && exams.topicWeights.some((weight) => weight.topic === OTHER_TOPIC);
   const max = scaleMax(statistics.flatMap((row) => [row.timeShare, row.examShare ?? 0]));
   const byName = new Map(statistics.map((row) => [row.name, row]));
 
@@ -103,7 +106,7 @@ export function KnowledgeBookletView({ knowledge, exams }: { knowledge: Knowledg
         <p className={styles.footnote}>
           Lecture time is each topic&apos;s share of the lecture material.{" "}
           {papers > 0
-            ? `Exam points is its share of the points in ${papers} ${papersNoun(exams)}. The suggested study time divides the course's ${hours} hours (${knowledge.ects} EC of ${HOURS_PER_ECTS} hours) by the mean of the two shares: a starting point, not a rule.`
+            ? `Exam points is its share of the points in ${papers} ${papersNoun(exams)}. The suggested study time divides the course's ${hours} hours (${knowledge.ects} EC of ${HOURS_PER_ECTS} hours) over the topics by the mean of the two shares${outside ? ", leaving out the exam points that belong to no topic" : ""}: a starting point, not a rule.`
             : "There are no past papers to count exam points from, so no study time is suggested: the shares say how the taught sessions are divided, not where the hours of the course go."}
         </p>
       </Section>

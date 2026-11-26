@@ -114,6 +114,10 @@ describe("the resource list", () => {
 
   it("refuses an unknown kind, a repeated group, an empty group and an unknown field", () => {
     expect(() => parseResources(change(RESOURCES, "groups.0.kind", "videos"))).toThrow(/must be one of/);
+    // The shape of a date is not enough: the page shows the day, and these are none.
+    for (const day of ["2026-13-01", "2026-02-31", "2026-00-10", "26-11-2026"]) {
+      expect(() => parseResources(change(RESOURCES, "source.retrieved", day)), day).toThrow(/source.retrieved must be a date/);
+    }
     expect(() => parseResources(change(RESOURCES, "groups.1.kind", "lectures"))).toThrow(/twice/);
     expect(() => parseResources(change(RESOURCES, "groups.0.items", []))).toThrow(/entries/);
     expect(() => parseResources(change(RESOURCES, "groups.0.items.0.note", "x"))).toThrow(/not a known field/);
@@ -249,13 +253,24 @@ describe("the statistics of a topic", () => {
   const knowledge = parseKnowledgeBooklet(KNOWLEDGE);
 
   it("puts the exam share next to the lecture time and suggests hours from both", () => {
-    // 5 EC is 140 hours. Scheduling: (50 + 60) / 2 = 55% of 140 = 77 hours.
-    expect(topicStatistics(knowledge, parseExamBooklet(EXAMS))).toEqual([
-      { name: "Scheduling", importance: "essential", timeShare: 50, examShare: 60, hours: 77 },
-      { name: "Memory", importance: "essential", timeShare: 30, examShare: 30, hours: 42 },
+    // 5 EC is 140 hours. 10% of the exam points are under "Other" and belong to no topic,
+    // so Scheduling has 60 of the 90 that do: (50% + 60/90) / 2 of 140 = 81.7 hours.
+    const statistics = topicStatistics(knowledge, parseExamBooklet(EXAMS));
+    expect(statistics).toEqual([
+      { name: "Scheduling", importance: "essential", timeShare: 50, examShare: 60, hours: 82 },
+      { name: "Memory", importance: "essential", timeShare: 30, examShare: 30, hours: 44 },
       // Not examined in the papers counted: 0, not unknown.
       { name: "File systems", importance: "essential", timeShare: 20, examShare: 0, hours: 14 },
     ]);
+    // In whole hours that add up to the course again.
+    expect(statistics.reduce((sum, row) => sum + (row.hours ?? 0), 0)).toBe(140);
+  });
+
+  it("divides the hours by lecture time alone when no exam point falls in a topic of the booklet", () => {
+    // The checks on the files do not let this through; the hours must still be numbers.
+    const exams = parseExamBooklet(EXAMS);
+    const other = { ...exams, topicWeights: [{ ...exams.topicWeights[2], share: 100 }] };
+    expect(topicStatistics(knowledge, other).map((row) => row.hours)).toEqual([70, 42, 28]);
   });
 
   it("suggests no hours when there are no past papers to weigh the lecture time against", () => {
