@@ -7,6 +7,21 @@ export type AuthFlow = "register" | "verify" | "resend" | "login" | "forgot" | "
 
 const GENERIC = "Something went wrong on our side. Please try again in a moment.";
 
+// How Supabase words "asked again within a minute": "... you can only request this after 42 seconds."
+const ASKED_TOO_SOON = /after \d+ seconds/;
+
+// True when Supabase refused to send an email only because it sent one to the same address
+// less than a minute ago. Supabase gives this answer only when it was about to send, so
+// showing it tells the visitor whether the address has an account: registering never sends
+// to an address that has one, and a password reset never sends to an address without one.
+// The forms that must not reveal this treat it as "sent" (see the actions).
+export function emailSentMomentAgo(error: AuthFailure): boolean {
+  return (
+    (error.code === "over_email_send_rate_limit" || error.status === 429) &&
+    ASKED_TOO_SOON.test(error.message ?? "")
+  );
+}
+
 export function authErrorMessage(error: AuthFailure, flow: AuthFlow): string {
   switch (error.code) {
     case "invalid_credentials":
@@ -35,7 +50,7 @@ export function authErrorMessage(error: AuthFailure, flow: AuthFlow): string {
     case "over_email_send_rate_limit":
       // One code covers two limits: asking again within a minute ("... after 42 seconds")
       // and the hourly limit of the whole site. Only the message tells them apart.
-      return /after \d+ seconds/.test(error.message ?? "")
+      return ASKED_TOO_SOON.test(error.message ?? "")
         ? "You asked for an email a moment ago. Wait a minute before asking again."
         : "We sent too many emails in a short time. Wait a few minutes and try again.";
     case "over_request_rate_limit":

@@ -5,7 +5,7 @@
 // either redirects or hands a message back to the form.
 import { redirect } from "next/navigation";
 import type { FormState } from "@/app/ui/form";
-import { authErrorMessage } from "@/lib/auth/errors";
+import { authErrorMessage, emailSentMomentAgo } from "@/lib/auth/errors";
 import { safeNextPath, SIGNED_IN_HOME } from "@/lib/auth/routes";
 import {
   normalizeEmail,
@@ -27,6 +27,14 @@ function withEmail(path: string, email: string): string {
   return `${path}?email=${encodeURIComponent(email)}`;
 }
 
+// The password of the empty shell that step 1 makes (see register): random, and never
+// shown or stored anywhere. It is 72 characters, the most Supabase accepts, and ends in a
+// lowercase letter, an uppercase letter, a digit and a symbol, so it also passes any
+// password requirements switched on in the dashboard.
+function shellPassword(): string {
+  return crypto.randomUUID() + crypto.randomUUID().slice(0, 32) + "aA1!";
+}
+
 // Step 1 of registering: only the email address. The account that Supabase makes here is
 // an empty shell with a password nobody knows. Everything that matters (the real password,
 // the programme and the year) is set in step 2 by whoever holds the emailed code, so
@@ -39,11 +47,15 @@ export async function register(_previous: FormState, formData: FormData): Promis
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
     email: result.data.email,
-    password: crypto.randomUUID() + crypto.randomUUID(),
+    password: shellPassword(),
   });
-  if (error) return { error: authErrorMessage(error, "register"), values: input };
+  // Asking again within a minute is not a failure: the code sent a moment ago still works.
+  if (error && !emailSentMomentAgo(error)) {
+    return { error: authErrorMessage(error, "register"), values: input };
+  }
   // The same answer for an address that already has an account: Supabase sends nothing
-  // then, and the next page says so.
+  // then, and the next page says so. That is also why "asked again within a minute" is not
+  // shown above: Supabase says it only for an address without an account.
   redirect(withEmail("/verify", result.data.email));
 }
 
@@ -72,10 +84,14 @@ export async function completeRegistration(
     const result = validateEmailOnly(input);
     if (!result.ok) return { fieldErrors: result.errors, values };
     const { error } = await supabase.auth.resend({ type: "signup", email: result.data.email });
-    if (error) return { error: authErrorMessage(error, "resend"), values };
+    if (error && !emailSentMomentAgo(error)) {
+      return { error: authErrorMessage(error, "resend"), values };
+    }
+    // One answer for every address, so it has to be true for all of them: a new code was
+    // sent, or one was sent less than a minute ago, or the address is not waiting at all.
     return {
       notice:
-        "If this address is waiting to be confirmed, we sent it a new code and the earlier one no longer works.",
+        "If this address is waiting to be confirmed, we send it a new code, at most once a minute. When the new code arrives, the earlier one no longer works.",
       values: { ...values, code: "" },
     };
   }
@@ -88,9 +104,14 @@ export async function completeRegistration(
   if (verified.error) return { error: authErrorMessage(verified.error, "verify"), values };
   const userId = verified.data.user?.id;
 
-  // The address is confirmed and the user is signed in. An account exists only with a
-  // password and a profile as well, so when either cannot be saved the whole account is
-  // removed again (see the migration that adds cancel_unfinished_registration).
+  // The address is confirmed and the user is signed in. The database forgot whatever
+  // password the shell had in that same moment (see the migration that adds
+  // forget_password_on_confirmation), so if this request stops here, nobody can log in with
+  // a password that was set before the code was entered.
+  //
+  // An account exists only with a password and a profile as well, so when either cannot be
+  // saved the whole account is removed again (see the migration that adds
+  // cancel_unfinished_registration).
   let problem: string | null = null;
   if (!userId) {
     problem = GENERIC_PROBLEM;
@@ -122,10 +143,7 @@ export async function completeRegistration(
 
   // Nothing is left of the account, and the code is used up. Start the registration again
   // so the student only has to type the new code.
-  const restarted = await supabase.auth.signUp({
-    email,
-    password: crypto.randomUUID() + crypto.randomUUID(),
-  });
+  const restarted = await supabase.auth.signUp({ email, password: shellPassword() });
   return {
     error: restarted.error
       ? `${problem} No account was created. Register again to get a new code.`
@@ -143,7 +161,10 @@ export async function login(_previous: FormState, formData: FormData): Promise<F
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(result.data);
   if (error) {
-    // The registration was started but never finished: continue where they stopped.
+    // The password was right but the address is not confirmed: continue with the code.
+    // Supabase checks the password first, and a registration started on the site has a
+    // password nobody knows until it is finished, so this is reached only for an account
+    // made outside the site. Everyone else gets the same "not correct" as for a wrong password.
     if (error.code === "email_not_confirmed") redirect(withEmail("/verify", result.data.email));
     return { error: authErrorMessage(error, "login"), values };
   }
@@ -167,9 +188,13 @@ export async function requestPasswordReset(
 
   const supabase = await createClient();
   const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
-  if (error) return { error: authErrorMessage(error, "forgot"), values: input };
+  // Asking again within a minute is not a failure: the code sent a moment ago still works.
+  if (error && !emailSentMomentAgo(error)) {
+    return { error: authErrorMessage(error, "forgot"), values: input };
+  }
   // The same answer whether or not the address has an account, so this form cannot be
-  // used to find out who is registered.
+  // used to find out who is registered. That is also why "asked again within a minute" is
+  // not shown above: Supabase says it only for an address that has an account.
   redirect(withEmail("/reset-password", result.data.email));
 }
 
@@ -186,9 +211,14 @@ export async function resetPassword(_previous: FormState, formData: FormData): P
     const result = validateEmailOnly(input);
     if (!result.ok) return { fieldErrors: result.errors, values };
     const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
-    if (error) return { error: authErrorMessage(error, "forgot"), values };
+    if (error && !emailSentMomentAgo(error)) {
+      return { error: authErrorMessage(error, "forgot"), values };
+    }
+    // One answer whether or not the address has an account, true in every case: a new code
+    // was sent, or one was sent less than a minute ago, or there is no account.
     return {
-      notice: "We sent a new code. The earlier one no longer works.",
+      notice:
+        "We send a new code at most once a minute. When the new code arrives, the earlier one no longer works.",
       values: { email: input.email },
     };
   }

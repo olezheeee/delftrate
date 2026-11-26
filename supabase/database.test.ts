@@ -192,6 +192,45 @@ describe("cancelling an unfinished registration", () => {
   });
 });
 
+describe("confirming an email address", () => {
+  // Supabase Auth writes to auth.users as the owner of that table, not through the API roles.
+  const unconfirmed = () =>
+    one<string>("insert into auth.users (encrypted_password) values ('set-by-a-stranger') returning id");
+  const password = (id: string) =>
+    one<string | null>("select encrypted_password from auth.users where id = $1", [id]);
+
+  it("forgets the password the account had before", async () => {
+    const id = await unconfirmed();
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    expect(await password(id)).toBeNull();
+  });
+
+  it("keeps a password that is set in the same write", async () => {
+    const id = await unconfirmed();
+    await db.query(
+      "update auth.users set email_confirmed_at = now(), encrypted_password = 'chosen-by-a-lead' where id = $1",
+      [id],
+    );
+    expect(await password(id)).toBe("chosen-by-a-lead");
+  });
+
+  it("leaves the password alone before and after the confirmation", async () => {
+    const id = await unconfirmed();
+    // Not confirmed yet: other changes to the account do not touch the password.
+    await db.query("update auth.users set email = 'someone@example.com' where id = $1", [id]);
+    expect(await password(id)).toBe("set-by-a-stranger");
+
+    // Confirmed, then the owner saves a password: it stays through every later change.
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    await db.query("update auth.users set encrypted_password = 'chosen-by-the-owner' where id = $1", [id]);
+    await db.query(
+      "update auth.users set email_confirmed_at = now() + interval '1 day', email = 'other@example.com' where id = $1",
+      [id],
+    );
+    expect(await password(id)).toBe("chosen-by-the-owner");
+  });
+});
+
 describe("courses and professors", () => {
   it("a signed-in user reads them and cannot change them", async () => {
     expect(await rows(student, "select code from public.courses order by code")).toEqual([{ code: "AE1" }, { code: "CSE1" }]);
