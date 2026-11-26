@@ -1,0 +1,138 @@
+{
+  "course": "CSE21C",
+  "title": "Operating Systems",
+  "available": true,
+  "summary": "One closed-book exam of three hours makes up the whole grade, once the lab is passed. The 2024 papers have nine problems of 100 points, one per course topic, mixing short explanations with fixed calculation exercises: scheduling, page replacement, disk-head scheduling, page tables and inodes. The 2023 paper had seven problems and ended with a 20-point question that tied the whole course together.",
+  "basis": {
+    "papers": [
+      { "name": "Endterm 2023", "year": 2023, "kind": "endterm", "questions": 7, "points": 108, "minutes": 180 },
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 9, "points": 100, "minutes": 180 },
+      { "name": "Resit 2024", "year": 2024, "kind": "resit", "questions": 9, "points": 100, "minutes": 180 }
+    ],
+    "note": "All three are CSE2430 papers with model answers; Endterm 2024 and Resit 2024 are labelled 23/24 on the paper. The archive also lists a Practice Endterm, but its text was not available, so it is not counted. Shares are by printed points over 308 points; sub-questions were assigned one by one."
+  },
+  "format": {
+    "mode": "Closed-book written exam with answer space below each question; the course description calls it a digital exam",
+    "duration": "3 hours",
+    "structure": "2024 papers: nine problems, one per topic (introduction, processes and scheduling, memory, security, threads and synchronisation, I/O and storage, file systems, Windows, virtualisation), each split into sub-questions of 1 to 8 points. The 2023 paper grouped them into seven problems, opened with a mixed definitions problem and closed with a 20-point integrative question.",
+    "grading": "The exam is 100 percent of the grade. The lab is pass/fail and mandatory: failing it gives a final grade of 1. A resit is offered in the next quarter.",
+    "aids": "None: no books, notes, calculator or electronic devices. A table of binary unit prefixes (KiB to EiB) is printed on the paper."
+  },
+  "topicWeights": [
+    {
+      "topic": "Memory management and virtual memory",
+      "share": 19,
+      "appearsIn": 3,
+      "asks": "Always 19 points: a page replacement table (FIFO, LRU or clock), heap addresses under first, best and worst fit, offset bits and forward-mapped page table size, plus one of page faults, thrashing, inverted tables or effective access time."
+    },
+    {
+      "topic": "Processes, IPC and CPU scheduling",
+      "share": 16,
+      "appearsIn": 3,
+      "asks": "A 6-point table of completion times for five processes under three policies, an RMS or EDF schedule, counting processes created by fork, process states and transitions, and short questions on exec, waitpid, init, niceness or multilevel feedback queues."
+    },
+    {
+      "topic": "I/O and storage devices",
+      "share": 13,
+      "appearsIn": 3,
+      "asks": "Ordering nine track requests under four disk-head algorithms with tracks crossed, comparing an SSD with a RAID array by calculation, and choosing polling, interrupts, DMA or an asynchronous I/O API for a described case."
+    },
+    {
+      "topic": "Threads, synchronisation and deadlock",
+      "share": 12,
+      "appearsIn": 3,
+      "asks": "Pseudocode with semaphores or mutexes to enforce an order, deadlock-free lock ordering, user versus kernel versus hybrid threads, futexes, ticket locks and the bakery algorithm, spinlocks versus mutexes, and Amdahl's law."
+    },
+    {
+      "topic": "OS structure and hardware support",
+      "share": 8,
+      "appearsIn": 3,
+      "asks": "The mode bit before, during and after a system call or exception, system calls versus exceptions versus interrupts, where drivers sit in each kernel design, and the hardware behind batch processing and time sharing."
+    },
+    {
+      "topic": "Protection and security",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "An attack scenario with its defence (session hijacking, replaying a car-key signal, a quantum channel), least privilege and dropping privileges in the access matrix, and buffer-overflow mitigations."
+    },
+    {
+      "topic": "Virtualisation and containers",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "Emulation versus trap-and-emulate, why some instruction sets resist trap-and-emulate, para-virtualisation, hardware features that speed up VMs, the three goals of virtualisation, and containers versus VMs."
+    },
+    {
+      "topic": "File systems",
+      "share": 6,
+      "appearsIn": 3,
+      "asks": "Maximum file size and metadata block count for a given inode layout, plus one short question on links, the open file table, extents or journaling."
+    },
+    {
+      "topic": "Windows internals",
+      "share": 6,
+      "appearsIn": 3,
+      "asks": "Subsystems and their purpose, priority boosts for responsiveness, NT versus Unix design, filter drivers, the kernel-mode window manager, and why UWP offers async tasks instead of threads."
+    },
+    {
+      "topic": "Other",
+      "share": 6,
+      "appearsIn": 1,
+      "asks": "The 2023 integrative question: name ten distinct OS mechanisms involved in a real-world scenario (live streaming to many viewers)."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Short explanation",
+      "share": 53,
+      "description": "Explain, compare or give examples in a few sentences, often worth 1 to 3 points, including choosing and defending a design option for a described device or program."
+    },
+    {
+      "type": "Calculation or trace",
+      "share": 36,
+      "description": "Fill in a schedule, replacement table or disk-head order, or compute sizes, times and counts by hand, showing each step."
+    },
+    {
+      "type": "Integrative essay",
+      "share": 7,
+      "description": "One 20-point question on the 2023 paper asking for ten distinct OS aspects in a scenario."
+    },
+    {
+      "type": "Synchronisation pseudocode",
+      "share": 4,
+      "description": "Write pseudocode or a locking scheme with semaphores, mutexes or non-blocking locks that meets ordering, deadlock or fairness rules."
+    }
+  ],
+  "recurring": [
+    "Every paper has a 6-point scheduling table: five processes A to E with burst, priority and arrival, three policies, round-robin with quantum 2.",
+    "Every paper has a 6 to 8-point page replacement table for seven requests over four frames with a given access history; the algorithm changes each time.",
+    "Every paper has a 7 to 8-point disk-head exercise: 200 tracks, nine requests, arm at track 100 moving upwards, four algorithms.",
+    "Address arithmetic comes back each time: offset bits, number of forward-mapped page table entries and their total size.",
+    "The inode question repeats with new numbers: block size, address size and inode layout, then the metadata blocks of a file of 1 or 2 MiB.",
+    "A periodic real-time schedule (RMS in 2023, EDF in 2024) and a fork-counting puzzle appear on most papers.",
+    "Security is asked as an attack scenario plus its defence; session hijacking appears on two of the three papers.",
+    "The mode-bit (MSR) question about entering and leaving the kernel appears on both endterms."
+  ],
+  "trends": [
+    "2023 had seven problems and 108 points with a 20-point integrative question; the 2024 papers moved to nine problems of 100 points, one per topic, with no integrative question.",
+    "Windows got its own 7-point problem in 2024; in 2023 its questions were mixed into the opening definitions problem.",
+    "The 2024 endterm added a question on choosing between blocking, non-blocking and asynchronous I/O APIs such as io_uring, which is not in the lecture text in the archive.",
+    "Multicore and cache coherence has not been examined on any of the three papers."
+  ],
+  "strategy": [
+    "Master the calculation drills first: they are about a third of the points, repeat with new numbers each year and can be fully prepared.",
+    "Practise without a calculator: page table sizes, inode limits and disk times all reduce to powers of two and simple millisecond sums.",
+    "Write out every step in the trace and calculation tables. The cover page says a correct answer without working gets no credit, while sound working can earn partial credit.",
+    "Answer explanation questions in full sentences with as many distinct points as the marks: the model answers say their own short versions would not earn full marks.",
+    "Plan about 1.8 minutes per point: 100 points in 180 minutes leaves time to check your tables.",
+    "Fill in the optional helper tables, such as the last-used tracker for LRU: the markers use them to give partial credit if the main table is wrong.",
+    "Make a one-page list of Windows and virtualisation facts; together they are about 13 percent of the points and the questions are short."
+  ],
+  "pitfalls": [
+    "The scheduling tables ask for response time, but the model answers measure it from arrival to completion, not to first run; check the definition used before you fill the table.",
+    "In disk-head scheduling the model answers let SCAN and C-SCAN run to the edge of the disk, and C-SCAN counts the jump back; LOOK and C-LOOK turn at the last request.",
+    "When counting metadata blocks, include the inode itself and every indirect block, also the one hanging under the doubly-indirect block.",
+    "Use the virtual address width for the number of page table entries; the physical width only matters for inverted tables and frame counts.",
+    "In page replacement, start from the stated access history and clock hand position; a wrong starting state spoils every column after it.",
+    "On an 'exactly ten aspects' style question, every aspect must be distinct and correct, so do not pad with repeats."
+  ]
+}

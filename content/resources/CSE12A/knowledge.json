@@ -1,0 +1,269 @@
+{
+  "course": "CSE12A",
+  "title": "Calculus",
+  "ects": 5,
+  "summary": "Single-variable calculus from functions and limits through derivatives, integrals, sequences and series, then a first step into functions of two variables, complex numbers and double integrals. The quarter has 24 two-hour lectures, three a week, with one central topic per week, pre-lecture videos and polling quizzes in class. Practice is ungraded homework from the Stewart textbook and Grasple; the grade comes from a midterm and an endterm, both written by hand without a calculator.",
+  "basis": {
+    "lectures": 23,
+    "description": "Slide text of Lectures 1 to 23 of the course as taught under the old code CSE1200, the official CSE1200 course description, and the past papers from 2019 to 2025. Time shares count content slides; Lecture 24 (exam training) is left out.",
+    "caveat": "The curriculum note says CSE1200 was renamed CSE12A for 2026-27 with the content unchanged, still in year 1, quarter 2. Lecture 13 is split by its slides: the first half finishes the convergence tests, the second half starts power series."
+  },
+  "topics": [
+    {
+      "name": "Functions, limits and asymptotes",
+      "lectures": [
+        "Lecture 1 - Functions and Continuity",
+        "Lecture 2 - Limits of Functions",
+        "Lecture 3 - Limits at Infinity (Asymptotes)",
+        "Lecture 6 - L'Hospital's Rule"
+      ],
+      "timeShare": 19,
+      "importance": "essential",
+      "know": [
+        "Domain, range and inverse of a one-to-one function, and how restricting the domain decides which branch of the inverse you take",
+        "arcsin, arccos and arctan with their ranges, and how to turn expressions such as cos(2 arcsin(x)) into algebra with a right-angled triangle or a double-angle identity",
+        "Continuity, the intermediate value theorem, and the epsilon-delta definition of a limit, including one-sided limits",
+        "Techniques for 0/0: cancelling common factors, the square-root (conjugate) trick, the squeeze theorem and the standard limits such as sin(x)/x as x goes to 0",
+        "Horizontal, vertical and oblique asymptotes, and why a factor that cancels gives a hole instead of a vertical asymptote",
+        "L'Hospital's rule, the conditions under which it may be used, and rewriting 0 times infinity, 1^infinity, 0^0 and infinity minus infinity into a quotient first",
+        "The exam conventions: a limit is a finite value, plus or minus infinity, or DNE"
+      ],
+      "do": [
+        "Compute limits at a point and at plus and minus infinity without a calculator",
+        "Find every asymptote of a rational or root function, checking plus and minus infinity separately",
+        "Give the formula and the domain of the inverse of a quadratic on a restricted interval",
+        "Evaluate power limits such as (1 + ln(x))^(1/(x^2 - 1)) by taking the logarithm and applying l'Hospital"
+      ],
+      "pitfalls": [
+        "Using l'Hospital where the limit of the quotient of derivatives does not exist: the Midterm 2025 model answer needs a squeeze argument instead",
+        "Missing an oblique asymptote at minus infinity: when x is negative, taking x^3 inside a square root flips the sign",
+        "Writing infinity when the left and right limits differ, where the answer is DNE"
+      ]
+    },
+    {
+      "name": "Derivatives and their applications",
+      "lectures": [
+        "Lecture 4 - Linearization and Extreme Values",
+        "Lecture 5 - Implicit Differentiation and Newton's Method"
+      ],
+      "timeShare": 11,
+      "importance": "essential",
+      "know": [
+        "The derivative as a limit of difference quotients, differentiability, and the product, quotient and chain rules",
+        "Tangent line and linearisation L(x) = f(a) + f'(a)(x - a), and differentials for estimating an error",
+        "Critical points, the extreme value theorem and the closed interval method for absolute extremes",
+        "The mean value theorem and its corollary that f' = 0 on an interval means f is constant",
+        "Implicit differentiation, logarithmic differentiation (as for x^x) and the derivatives of the inverse trigonometric functions",
+        "Newton's method: the iteration formula, its picture with tangent lines, and when it converges"
+      ],
+      "do": [
+        "Approximate a value such as the cube root of 217 with a well-chosen linearisation",
+        "Find the absolute maximum and minimum of a function on a closed interval",
+        "Find horizontal or vertical tangents of an implicitly defined curve",
+        "Sketch two Newton steps on a given graph"
+      ],
+      "pitfalls": [
+        "Forgetting the end points of the interval when listing candidates for an absolute extreme",
+        "Including the origin when asked for the top of a curve: the solution has to exclude points where the derivative equation is trivially satisfied"
+      ]
+    },
+    {
+      "name": "Integration techniques and improper integrals",
+      "lectures": [
+        "Lecture 7 - Integrals and the Substitution Rule",
+        "Lecture 8 - Integration by Parts",
+        "Lecture 9 - Improper Integrals"
+      ],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "Riemann sums, the properties of the definite integral and both parts of the Fundamental Theorem of Calculus",
+        "Standard antiderivatives and the substitution rule, including changing the bounds of a definite integral",
+        "Integration by parts, the LIATE heuristic, integrals that return to themselves (e^x cos(x)) and reduction formulas",
+        "Even and odd functions: an odd integrand over a symmetric interval integrates to 0",
+        "Improper integrals of type 1 (infinite bound) and type 2 (unbounded integrand), the standard cases 1/x^p, and the comparison test",
+        "The exam convention: an integral is either its value or DIV"
+      ],
+      "do": [
+        "Evaluate an integral that needs a substitution followed by integration by parts",
+        "Compute the area between two curves after finding their intersection points",
+        "Decide whether an improper integral converges, splitting it at every problem point",
+        "Use the Fundamental Theorem to differentiate a function defined as an integral"
+      ],
+      "pitfalls": [
+        "Not splitting an integral at an asymptote inside the interval: the Midterm 2025 integral has both an infinite bound and an asymptote at u = 0",
+        "Treating an integral over the whole real line as one limit; both separate limits must exist"
+      ]
+    },
+    {
+      "name": "Sequences and convergence of series",
+      "lectures": [
+        "Lecture 10 - Sequences",
+        "Lecture 11 - Series",
+        "Lecture 12 - Alternating Series and Comparison Test",
+        "Lecture 13 - Ratio Test and Power Series"
+      ],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "Limits of explicit and recursive sequences, fixed points, simple iteration and the monotone convergence theorem",
+        "Series as limits of partial sums; geometric series and when they converge; p-series",
+        "The divergence test, integral test, comparison and limit comparison tests, alternating series test and ratio test, with the conditions of each",
+        "Absolute convergence, conditional convergence and divergence (AC, CC or D)",
+        "Error bounds on partial sums from the integral test, the alternating series test and comparison"
+      ],
+      "do": [
+        "Prove a recursive sequence is monotone and bounded by induction, then find its limit as the correct fixed point",
+        "Classify a series as AC, CC or D and name the test and the conditions you checked",
+        "Sum a geometric series, or a sum of two geometric series",
+        "Approximate the sum of a series to a given error and justify the bound"
+      ],
+      "pitfalls": [
+        "Choosing the wrong root of L = g(L) for a recursive sequence; check which fixed point the sequence can actually reach",
+        "Applying the alternating series test without checking that the terms decrease, or calling a series CC without showing that the absolute series diverges"
+      ]
+    },
+    {
+      "name": "Power series and Taylor series",
+      "lectures": [
+        "Lecture 13 - Ratio Test and Power Series",
+        "Lecture 14 - Functions as Power Series",
+        "Lecture 15 - Taylor Series"
+      ],
+      "timeShare": 9,
+      "importance": "essential",
+      "know": [
+        "Centre, radius and interval of convergence of a power series, found with the ratio test, and the separate check of both end points",
+        "Building series from 1/(1 - x) by substitution, multiplication, differentiation and integration term by term",
+        "The Maclaurin series of e^x, sin(x), cos(x), ln(1 + x), arctan(x) and the binomial series, which you need to know by heart",
+        "Taylor coefficients: the coefficient of x^n is f^(n)(0)/n!",
+        "Taylor polynomials, Taylor's inequality and the Lagrange remainder"
+      ],
+      "do": [
+        "Find the interval of convergence of a given power series, end points included or excluded with a reason",
+        "Write the Taylor series at 0 of an antiderivative of e^(x^2) or a similar function",
+        "Approximate a definite integral to a given error using a series and justify the bound",
+        "Read off a high derivative such as f^(9)(0) from a series",
+        "Sum a series such as the sum of n/2^(n-1) by differentiating a geometric series"
+      ],
+      "pitfalls": [
+        "Forgetting to test the end points: the papers remind you every time, and the Endterm 2025 grading guide gives a point for each end point",
+        "Forgetting the n! when going from a series coefficient to a derivative value"
+      ]
+    },
+    {
+      "name": "Functions of several variables and gradients",
+      "lectures": [
+        "Lectures 16 to 18"
+      ],
+      "timeShare": 14,
+      "importance": "important",
+      "know": [
+        "Vectors: length, dot product and the cosine of the angle between two vectors",
+        "Maximal domain, graph, level curves and contour plots of a function of two variables",
+        "Limits in two variables and how to show that one does not exist along different paths",
+        "Partial derivatives, higher partials and Clairaut's theorem",
+        "Tangent plane, linearisation in two variables and differentiability",
+        "The multivariable chain rule, the gradient, the directional derivative D_u f = grad f . u with u a unit vector, and the gradient as the direction of steepest ascent"
+      ],
+      "do": [
+        "Compute a gradient and a directional derivative at a point",
+        "Match functions to contour plots by reasoning about their level sets",
+        "Find the slope of a level curve at a point with the gradient or implicit differentiation",
+        "Find the unit vector along which the function decreases fastest"
+      ],
+      "pitfalls": [
+        "Using the direction vector without normalising it first",
+        "Mixing up the gradient (a vector) with the directional derivative (a number)"
+      ]
+    },
+    {
+      "name": "Extrema of functions of two variables",
+      "lectures": [
+        "Lecture 19 - Minimum and Maximum Values"
+      ],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "Critical points as solutions of grad f = 0",
+        "The second derivatives test with D = f_xx f_yy - (f_xy)^2: local minimum, local maximum, saddle point or inconclusive",
+        "The extreme value theorem for closed and bounded regions",
+        "The closed and bounded region method: interior critical points, each boundary piece as a one-variable problem, and the corner points"
+      ],
+      "do": [
+        "Find and classify the interior critical points on a triangle or half-disc",
+        "Find the absolute maximum and minimum on that region by checking every edge and corner",
+        "Read a local minimum off a plot of normalised gradient vectors"
+      ],
+      "pitfalls": [
+        "Leaving out the corner points of the region; the Endterm 2025 grading guide gives a separate point for them",
+        "Counting a saddle point as a candidate for an absolute extreme"
+      ]
+    },
+    {
+      "name": "Complex numbers",
+      "lectures": [
+        "Lecture 20 - Complex Numbers Part 1",
+        "Lecture 21 - Complex Numbers Part 2"
+      ],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "Arithmetic with complex numbers, the conjugate, and division by multiplying with the conjugate",
+        "Modulus, argument, polar form r(cos(theta) + i sin(theta)) and the exponential form r e^(i theta)",
+        "Euler's formula and De Moivre's rule, and how they give double and triple angle formulas",
+        "The n-th roots of a complex number: n roots on a circle, spaced 2 pi/n apart",
+        "The fundamental theorem of algebra and the fact that the non-real roots of a real polynomial come in conjugate pairs"
+      ],
+      "do": [
+        "Solve equations such as (z - 2)^3 = -8 and give the roots as a + bi or draw them in the plane",
+        "Compute powers and quotients with the polar form",
+        "Derive a trigonometric identity from Euler's formula, or prove Euler's formula with power series"
+      ],
+      "pitfalls": [
+        "Stopping after one root: the grading guide gives a point for the correct number of solutions",
+        "Taking the argument from arctan(b/a) without checking the quadrant"
+      ]
+    },
+    {
+      "name": "Double integrals",
+      "lectures": [
+        "Lecture 22 - Integration Over Rectangles",
+        "Lecture 23 - Integration Over General Regions"
+      ],
+      "timeShare": 7,
+      "importance": "important",
+      "know": [
+        "The double integral as a limit of Riemann sums in two variables, and its meaning as volume",
+        "Fubini's theorem: iterated integrals over a rectangle in either order, and separable integrands",
+        "Type I and type II regions, and how to describe a region with variable bounds",
+        "Reversing the order of integration, and splitting a region that is neither type into simple pieces"
+      ],
+      "do": [
+        "Sketch a region bounded by curves and find the intersection points",
+        "Set up and evaluate a double integral over a triangle, trapezoid or curved region",
+        "Split an irregular region into simple parts, or subtract simpler regions from a larger one"
+      ],
+      "pitfalls": [
+        "Choosing an order of integration that forces a split when the other order needs none",
+        "Bounds that do not match the region; in the Endterm 2025 grading guide the bounds carry 2 of the 5 points"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Fluent secondary-school algebra: factoring polynomials, long division, rules for exponents, roots and logarithms",
+    "Trigonometry: exact values on the unit circle and the double-angle identities",
+    "The standard derivative rules, which Lecture 4 only recaps",
+    "Proof by induction and the idea of a function as a relation, from Reasoning & Logic",
+    "Basic vectors in two and three dimensions, recapped in Lecture 16"
+  ],
+  "practical": "No labs or graded assignments. Each lecture has a pre-lecture video and exercises that the lecture assumes you have done, plus ungraded homework from the Stewart textbook and on Grasple, which gives instant feedback on basic skills.",
+  "studyAdvice": [
+    "Power series and Taylor series take 9 percent of the lectures but about a quarter of all exam points, mostly in open questions on the endterm and resit. Give them far more practice time than their slides suggest.",
+    "For the midterm (Lectures 1 to 10), drill limits, asymptotes, inverse functions and integrals: these carry most of the points on Midterm 2024 and Midterm 2025.",
+    "Learn the standard Maclaurin series and the convergence tests by heart. The 2025 papers mention no formula sheet, and Midterm 2025 explicitly banned one.",
+    "Practise without a calculator and under time pressure: about 14 short questions in two hours, where only the final answer counts.",
+    "Write out the full procedures for the recurring open questions (interval of convergence, extremes on a region, double integral, series approximation with an error bound) until you can follow each step without notes.",
+    "Do not skip the last two weeks: complex numbers, extrema in two variables and double integrals each come back as an open question on every endterm and resit."
+  ]
+}

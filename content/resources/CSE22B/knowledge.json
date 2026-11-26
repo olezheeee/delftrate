@@ -1,0 +1,196 @@
+{
+  "course": "CSE22B",
+  "title": "Theoretical Foundations of Computer Science",
+  "ects": 5,
+  "summary": "What machines can compute and how fast: finite automata and regular languages, context-free grammars and pushdown automata, Turing machines and the limits of decidability, and the classes P, NP and NP-complete. The course follows Sipser's Introduction to the Theory of Computation closely and is taught as a flipped classroom: you read and watch at home, and lectures are used for questions and quizzes. Optional weekly lab assignments are peer reviewed, and one closed-book written exam gives the whole grade.",
+  "basis": {
+    "lectures": 15,
+    "description": "The archive lists 17 lectures of CSE2315 Automata, Computability and Complexity by number only, with no slide text. Time shares count lectures per topic, placed by the weekly lab assignments and Acing ACC sessions (two lectures a week); the last two lectures were exam preparation and are left out.",
+    "caveat": "The lecture-to-topic split is an estimate: only the weekly schedule and lab topics show what each lecture covered, and the three one-lecture topics may have shared slots. The material is from CSE2315 in quarter 3; from 2026-27 the course is CSE22B in year 2, quarter 2, with the same three parts, so the schedule may differ."
+  },
+  "topics": [
+    {
+      "name": "DFAs, NFAs and closure properties",
+      "lectures": ["Lectures 1 to 3"],
+      "timeShare": 20,
+      "importance": "essential",
+      "know": [
+        "The formal definition of a DFA as a 5-tuple (Q, Sigma, delta, q0, F), the extended transition function and what it means to accept a word",
+        "NFAs with epsilon transitions, and why a transition diagram of an NFA cannot always be written as a DFA 5-tuple",
+        "The subset construction from Sipser for turning an NFA into a DFA, including epsilon closures and leaving out unreachable states",
+        "The product construction for union and intersection, and how to adapt it for difference or XOR",
+        "Closure of regular languages under union, concatenation, star, complement, intersection, difference and reversal, with the NFA constructions for union, concatenation and star",
+        "Why swapping accept and non-accept states complements a DFA but not an NFA"
+      ],
+      "do": [
+        "Design a DFA or NFA for a described language within a given number of states",
+        "Convert an NFA to a DFA with the Sipser procedure and name the states as sets",
+        "Build a DFA for the intersection, union, difference or XOR of two DFAs",
+        "Decide whether a modified automaton model (one accept state, a different acceptance rule) recognises exactly the regular languages, and argue both directions"
+      ],
+      "pitfalls": [
+        "Forgetting the epsilon closure of the start state or of each target set in the subset construction",
+        "Handing in a result of the subset construction that is still not a valid DFA, for example with a missing transition on some symbol",
+        "Complementing an NFA by flipping its accept states"
+      ]
+    },
+    {
+      "name": "Regular expressions and GNFAs",
+      "lectures": ["Lecture 4"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "The inductive definition of regular expressions with union, concatenation and star, and the empty set versus the empty word",
+        "The equivalence of regular expressions and finite automata, and the constructions in both directions",
+        "The GNFA: one start state with no incoming edges, one accept state with no outgoing edges, and a regular expression on every other pair of states",
+        "The state-ripping procedure from Sipser that turns a GNFA into a regular expression, and why the order of ripping changes the expression but not the language"
+      ],
+      "do": [
+        "Write a regular expression for a described language, such as all words whose third-to-last symbol is an a",
+        "Turn an NFA into a GNFA and rip out a given state, writing the new edge labels",
+        "Read a GNFA or regular expression and describe its language in plain English"
+      ],
+      "pitfalls": [
+        "Forgetting to add the new start and accept states with epsilon edges before ripping states",
+        "Dropping the self-loop of the ripped state from the new edge labels"
+      ]
+    },
+    {
+      "name": "Pumping lemma and non-regularity",
+      "lectures": ["Lecture 5"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "The exact statement of the pumping lemma for regular languages: pumping length p, split w = xyz with |y| > 0 and |xy| <= p, and xy^i z in L for all i >= 0",
+        "The proof-by-contradiction template: suppose L is regular, pick a word of length at least p that is in L, cover every allowed split, find an i that leaves L",
+        "Why the choice of word decides whether the proof can be finished, and what makes a word unsuitable",
+        "How to prove a language is regular instead, by giving a DFA, NFA or regular expression or using closure properties"
+      ],
+      "do": [
+        "Judge whether a started pumping-lemma proof with a given word can be finished, and finish it or explain why not",
+        "Choose a good word for languages with counting conditions, such as a^n b^m with n <= m",
+        "Handle every case of the split, including i = 0 and the case where x is empty"
+      ],
+      "pitfalls": [
+        "Treating only one convenient split instead of all splits that the conditions |y| > 0 and |xy| <= p allow",
+        "Picking a word that is not in L or is shorter than p, or a word where pumping can stay inside L",
+        "Assuming every proof given on the exam can be finished: some started proofs use a word that does not work"
+      ]
+    },
+    {
+      "name": "Context-free grammars and PDAs",
+      "lectures": ["Lecture 6"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "Context-free grammars as a 4-tuple (V, Sigma, R, S), derivations, leftmost derivations and parse trees",
+        "Ambiguity: a word with two different leftmost derivations or parse trees, and the difference between an ambiguous word and an ambiguous grammar",
+        "Chomsky normal form and the Sipser conversion steps: new start variable, remove epsilon rules, remove unit rules, then split long rules and replace terminals",
+        "Pushdown automata: transitions of the form a, x -> y, the bottom-of-stack marker $, and nondeterminism",
+        "The equivalence of CFGs and PDAs, and closure of context-free languages under union, concatenation and star"
+      ],
+      "do": [
+        "Write a grammar for a described language within a limit on rules or variables",
+        "Convert a grammar to Chomsky normal form with the Sipser procedure, showing every step",
+        "Prove a grammar is ambiguous by giving two derivations of one word",
+        "Design a PDA within a given number of states, or describe the language of a given PDA in set-builder notation",
+        "Build grammars for the union, concatenation or star of given grammars"
+      ],
+      "pitfalls": [
+        "Skipping intermediate steps of the CNF conversion when the question asks for them",
+        "Not adding a new start variable first, so the start variable still appears on a right-hand side",
+        "Reading past how $ is pushed and popped in a given PDA, and so describing the wrong language"
+      ]
+    },
+    {
+      "name": "Turing machines and their variants",
+      "lectures": ["Lectures 7 to 9"],
+      "timeShare": 20,
+      "importance": "important",
+      "know": [
+        "The Turing machine as a 7-tuple with input alphabet Sigma, tape alphabet Gamma (which contains the blank), and separate accept and reject states",
+        "Configurations, such as u q v, and how a computation moves from one configuration to the next on a tape bounded on the left",
+        "Recognisers versus deciders: a machine can loop on some words and still have a decidable language",
+        "Variants that are equally powerful: multitape, nondeterministic TMs and enumerators, and how a DTM simulates an NTM",
+        "The Church-Turing thesis and the level of detail of a high-level description"
+      ],
+      "do": [
+        "Trace a given TM on a word as a sequence of configurations, and find a word on which it loops",
+        "Draw a TM within a given number of states for a simple language",
+        "Explain whether a given TM is a decider and whether its language is decidable",
+        "Give a high-level description of an enumerator, or show that a new machine model is as powerful as a TM"
+      ],
+      "pitfalls": [
+        "Confusing whether M is a decider with whether L(M) is decidable",
+        "Forgetting that the tape is bounded on the left unless the question says otherwise"
+      ]
+    },
+    {
+      "name": "Decidability and reductions",
+      "lectures": ["Lectures 10 to 12"],
+      "timeShare": 20,
+      "importance": "essential",
+      "know": [
+        "Decidable, Turing-recognisable and co-Turing-recognisable languages, and the theorem that a language is decidable if and only if it is both recognisable and co-recognisable",
+        "The decidable problems about automata and grammars, such as A_DFA, E_DFA, EQ_DFA, A_CFG and E_CFG",
+        "Undecidability of A_TM by diagonalisation, and the undecidable problems HALT_TM, E_TM and EQ_TM",
+        "Proof by reduction: assume a decider R for L and build a decider S for A_TM, which gives a contradiction",
+        "Mapping reductions A <=m B: a computable f with w in A if and only if f(w) in B, and what they carry over in each direction",
+        "Dovetailing to show recognisability when a machine has to run on many inputs, and Rice's theorem as a shortcut for properties of TM languages"
+      ],
+      "do": [
+        "Prove that a language about TMs is recognisable or co-recognisable, usually by dovetailing",
+        "Prove that such a language is undecidable by a reduction from A_TM, HALT_TM, E_TM or EQ_TM",
+        "Prove that it is not recognisable, using that it is co-recognisable but undecidable",
+        "Complete a given mapping reduction by saying what the constructed machine must accept, and state what it proves",
+        "Prove or refute claims that combine reductions, subsets and decidability"
+      ],
+      "pitfalls": [
+        "Reducing in the wrong direction, from L to the undecidable problem instead of from the undecidable problem to L; the rubric deducts a point and grades the rest as if that direction were meant",
+        "Writing a decider that runs a TM directly where it can loop, instead of dovetailing",
+        "Concluding from a reduction to a decidable problem that the language is undecidable, or from subset relations that decidability carries over"
+      ]
+    },
+    {
+      "name": "P, NP and NP-completeness",
+      "lectures": ["Lectures 13 to 15"],
+      "timeShare": 20,
+      "importance": "essential",
+      "know": [
+        "Time complexity on a single-tape deterministic TM, the classes TIME(t(n)), P, NP and EXP, and why the machine model matters for TIME",
+        "NP as the problems with a polynomial-time verifier for a certificate, and its equivalence to nondeterministic polynomial time",
+        "Karp reductions A <=P B, NP-hard and NP-complete, and that NP is closed downwards under them",
+        "The Cook-Levin theorem and the standard NP-complete problems: SAT, 3SAT, Clique, Vertex Cover, Hamiltonian path and cycle, Subset Sum",
+        "The standing exam assumption that P is not NP and NP is not EXP, and what each claim would mean if P = NP"
+      ],
+      "do": [
+        "Prove that a problem is in NP: name the certificate, list the checks and give a polynomial bound for each",
+        "Give a small yes-instance or no-instance of 3SAT, Vertex Cover or HAMC with set sizes",
+        "Apply a given reduction to your instance, show it breaks, and repair one step of it",
+        "Use a polynomial-time decider for a decision problem to find an actual solution, and give the running time",
+        "Prove or refute claims that chain Karp and mapping reductions between P, NP, NP-hard and NPC"
+      ],
+      "pitfalls": [
+        "Leaving out the time complexity of the verifier's checks when proving membership in NP",
+        "Arguing that a fast algorithm in Java puts a problem in TIME(n^2), forgetting the cost of simulating it on a single-tape DTM",
+        "Applying a reduction carelessly to your own instance, so the result does not show the flaw"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Proof techniques from Reasoning and Logic: contradiction, contraposition, induction and quantifiers",
+    "Sets, functions, relations and countability, with confident set-builder notation",
+    "Big-O notation and the running time of simple algorithms",
+    "Graph basics and standard graph problems from Algorithms and Data Structures: paths, cycles, spanning trees, shortest paths"
+  ],
+  "practical": "Optional lab assignments, one a week (eight in 2024-25), made of exam-level questions, often old exam questions. You may work alone or in a pair, hand in a paper copy at a peer review session, mark each other's work and then get feedback from a TA in a booked slot. They do not count towards the grade. Weekly Acing ACC sessions each pose one harder goal problem, broken into guiding questions.",
+  "studyAdvice": [
+    "Read the Sipser sections before each lecture: the lectures assume you have, and the exam requires the book's procedures by name",
+    "Do every weekly lab assignment and compare with the solutions; they are exam questions in all but name",
+    "Drill the fixed procedures until they are mechanical: subset construction, product construction, GNFA ripping, CNF conversion",
+    "Learn the proof templates as fixed structures: pumping lemma, recognisable by dovetailing, undecidable by reduction from A_TM, in NP by verifier",
+    "Give the second half at least as much time as the first: decidability and complexity carry about half of the exam points",
+    "Practise true-or-false claims about reductions and classes, starting each answer with the verdict and a counterexample where false",
+    "Fill your hand-written A4 sheet with the definitions, the closure and decidability tables and the reduction directions"
+  ]
+}

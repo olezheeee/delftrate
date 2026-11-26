@@ -1,0 +1,267 @@
+{
+  "course": "CSE14B",
+  "title": "Computer Networks",
+  "ects": 5,
+  "summary": "How the Internet works, layer by layer: from framing and error checks on a single link, through shared media, IP and routing, to TCP, applications such as DNS and email, and the security protocols that protect each layer. Two lectures a week follow the Tanenbaum, Feamster and Wetherall textbook (6th edition), with two self-study readings, seven tutorials and weekly WebLab assignments alongside. Much of the course is about running the core algorithms by hand on small examples.",
+  "basis": {
+    "lectures": 12,
+    "description": "Slides of the 12 lectures of the 2024-25 edition, the chapter summaries, the two self-study notes (Error Detection and Correction, Cryptography) and the seven tutorials. Time shares count text slides; each self-study note is estimated as one average lecture (36 slides), since neither has lecture slides.",
+    "caveat": "From 2026-27 the course is CSE14B in year 1, quarter 4, renamed from CSE1405 with unchanged content. Error detection is taught only through self-study, so its share is an estimate; the security share also counts the cryptography notes as one lecture, and the Lecture 10 slides alone would give it less."
+  },
+  "topics": [
+    {
+      "name": "Layers and network performance",
+      "lectures": [
+        "Lecture 1 - Intro + Data Link Layer"
+      ],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "The seven OSI layers in order, what each of physical, data link, network, transport and application does, and that session and presentation have hardly any protocols of their own",
+        "The name of the unit each layer sends: bit, frame, packet, segment",
+        "Which layers run on every router along a path and which run only on the two end hosts",
+        "How TCP/IP differs from OSI: physical and data link merged, no session or presentation layer",
+        "Connection-oriented versus connectionless service, and what state means in a protocol",
+        "Propagation delay, transmission delay, round-trip time, bandwidth, throughput and goodput, each defined precisely"
+      ],
+      "do": [
+        "Order the layers and place a protocol or device on the right one",
+        "Argue why layering helps: lower layers can be swapped without touching the ones above",
+        "Say what a single ping can and cannot tell you about route, delay and processing time"
+      ],
+      "pitfalls": [
+        "Confusing transmission delay (pushing all bits onto the wire) with propagation delay (one bit travelling to the other end)",
+        "Assuming reliability at the data link layer makes the end-to-end path reliable: routers can still drop packets"
+      ]
+    },
+    {
+      "name": "Error detection and correction",
+      "lectures": [],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "Parity bits, even versus odd parity, and Hamming distance",
+        "Parity words and the Internet checksum: add the blocks, wrap the carry back in, take the 1's complement",
+        "CRC: append as many zeros as the generator has bits minus one, divide with XOR, the remainder is the check value",
+        "Parity blocks with a row and a column of parity bits, and how they locate and fix a single flipped bit",
+        "Hamming codes: parity bits at positions 1, 2, 4, 8 and so on counted from the left, each covering the positions whose binary index contains it",
+        "How many parity bits m data bits need, so that you can give the length of an (n, m) code",
+        "Burst errors and why they shape the choice of detection method"
+      ],
+      "do": [
+        "Compute an Internet checksum for 4-bit blocks",
+        "Compute the CRC to send, check a received CRC, or work out which generators could have produced it",
+        "Fill in the parity bits of a parity block, or find the flipped bit in a received one",
+        "Encode a message with an (11,7), (19,14) or (21,16) Hamming code, with even or odd parity as asked"
+      ],
+      "pitfalls": [
+        "Using even parity when the question asks for odd, or the other way round: the rubric gives only half the points",
+        "Writing just the codeword: full points need the parity positions and how each bit was filled",
+        "Forgetting to add the overflow back in before taking the 1's complement of a checksum"
+      ]
+    },
+    {
+      "name": "Reliable links: sliding windows and framing",
+      "lectures": [
+        "Lectures 1 and 2"
+      ],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "Stop-and-wait with ARQ, timeouts, sequence numbers and piggybacked acknowledgements",
+        "Sliding window with window size k, and how k limits throughput when the first ACK comes back late",
+        "Go-back-N versus selective repeat: receiver buffer, what is resent, and when each is the better choice",
+        "Cumulative and duplicate acknowledgements, and negative acknowledgements",
+        "Framing by byte count, byte stuffing with FLAG and ESC bytes, and bit stuffing after five 1s",
+        "Frame structure: header, payload, trailer"
+      ],
+      "do": [
+        "Compute throughput and goodput of a sliding window link from frame size, header share, bandwidth, k and the latency in each direction",
+        "Work backwards from a given goodput to the header fraction or another unknown",
+        "Trace selective repeat with an error and timeouts to find which frames are resent",
+        "Byte-stuff or unstuff a frame, and give the worst-case size after stuffing"
+      ],
+      "pitfalls": [
+        "Not checking whether k frames are sent before the first ACK returns; that comparison decides the throughput formula",
+        "Removing escaped data bytes when unstuffing: drop the FLAG at each end and the ESC bytes, keep what was escaped"
+      ]
+    },
+    {
+      "name": "MAC sublayer, Ethernet, Wi-Fi and switches",
+      "lectures": [
+        "Lectures 2 to 4"
+      ],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "ALOHA and slotted ALOHA, and why slots double the efficiency",
+        "1-persistent, nonpersistent and p-persistent CSMA, and collision-free protocols: token ring, bit-map, binary countdown",
+        "CSMA/CD, the 2 tau collision detection time and why Ethernet needs a minimum frame size",
+        "Binary exponential backoff: after collision i, wait a random number of slots from 0 to 2 to the power i, minus 1",
+        "Hidden and exposed terminals, MACA with RTS and CTS, and CSMA/CA in 802.11 with NAV, paused backoff and stop-and-wait ACKs",
+        "802.11 infrastructure and ad-hoc mode, and why a frame can carry three or four addresses",
+        "Hubs versus switches, backward learning, and the Spanning Tree Protocol with the smallest ID as root"
+      ],
+      "do": [
+        "Trace a CSMA/CA timeline with several stations, backoffs and ACKs to find when a station may send",
+        "Compute backoff ranges or the probability of a given number of collisions on Ethernet",
+        "Decide which stations can send in a MACA scenario with given ranges",
+        "Fill in a switch table from a sequence of frames, and draw the spanning tree of a switch network"
+      ],
+      "pitfalls": [
+        "In CSMA/CA, restarting a backoff that was paused instead of resuming it where it stopped",
+        "In a switch table, keeping an old port for an address that has since been seen on a new port"
+      ]
+    },
+    {
+      "name": "Network layer: IP, fragmentation and helpers",
+      "lectures": [
+        "Lecture 5 - Network Layer",
+        "Lecture 6 - Network Layer"
+      ],
+      "timeShare": 12,
+      "importance": "important",
+      "know": [
+        "Internet structure: hosts, routers, autonomous systems and Internet exchange points",
+        "IPv4 and IPv6 addresses, their sizes and notation, including shortening IPv6 addresses",
+        "The key IPv4 header fields (addresses, TTL, checksum, fragment fields) and what IPv6 changed",
+        "Transparent and nontransparent fragmentation and MTU discovery; IPv6 uses only MTU discovery",
+        "DHCP, ICMP and traceroute, ARP, and NAT mapping internal address plus port to an external port",
+        "Network-layer congestion control: provisioning, traffic-aware routing, throttling, ECN and RED"
+      ],
+      "do": [
+        "Count the fragments arriving at each network with and without MTU discovery",
+        "Say when the IP checksum and the TCP checksum of a fragmented segment can each be checked",
+        "Explain how NAT rewrites outgoing and incoming packets, and convert a prefix length to a subnet mask"
+      ],
+      "pitfalls": [
+        "Fragmenting the whole packet at once by the smallest MTU when there is no MTU discovery: each router splits the fragments it receives",
+        "Describing NAT without ports: the rubric gives most points only for the internal address and port to external port mapping"
+      ]
+    },
+    {
+      "name": "Routing and IP prefixes",
+      "lectures": [
+        "Lecture 6 - Network Layer"
+      ],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "Forwarding versus routing, and what a routing table holds: destination, cost and outgoing line",
+        "Distance vector routing and the count-to-infinity problem",
+        "Link state routing: flooding link state packets and computing shortest paths",
+        "IP prefixes, CIDR and longest prefix match",
+        "Intra-domain routing (OSPF, link state) versus inter-domain routing (BGP, path vector)"
+      ],
+      "do": [
+        "Build a router's table from its neighbours' distance vectors and the link costs, using the stated tie-break",
+        "Compute shortest-path costs and first hops from a weighted graph",
+        "Pick the prefix that handles a given destination address"
+      ],
+      "pitfalls": [
+        "Writing the full path where the table asks for the outgoing line: the rubric deducts points for it",
+        "Ignoring the tie-break rule the question gives for equal-cost options"
+      ]
+    },
+    {
+      "name": "Transport layer: UDP and TCP",
+      "lectures": [
+        "Lecture 7 - Transport Layer",
+        "Lecture 8 - Transport Layer",
+        "Lecture 9 - Transport Layer"
+      ],
+      "timeShare": 16,
+      "importance": "essential",
+      "know": [
+        "Ports, Berkeley socket primitives, and multiplexing versus inverse multiplexing",
+        "UDP: the 8-byte header and why its checksum is optional",
+        "TCP header, three-way handshake, and which flags use up a sequence number (SYN and FIN do, a bare ACK does not)",
+        "Sequence and acknowledgement numbers count bytes; duplicate ACKs and fast retransmission",
+        "Clock-based initial sequence numbers, packet lifetime and the forbidden region",
+        "Symmetric and asymmetric connection release, and the two-armies problem",
+        "Flow control with the receiver window, silly-window syndrome, and congestion control: slow start, threshold, additive increase, TCP Tahoe and TCP Reno",
+        "Head-of-line blocking and how QUIC avoids it with independent streams over UDP"
+      ],
+      "do": [
+        "Compute the sequence or acknowledgement number of a later segment after a handshake",
+        "Compute when clock-based sequence numbers reach the forbidden region, or the number of sequence bits from that time",
+        "Trace a congestion window through slow start, additive increase and a congestion signal under Tahoe or Reno"
+      ],
+      "pitfalls": [
+        "Forgetting the 1 that the SYN adds to the initial sequence number",
+        "Mixing up Tahoe (window back to 1) and Reno (window set to the new threshold) after a congestion signal"
+      ]
+    },
+    {
+      "name": "Network security and cryptography",
+      "lectures": [
+        "Lecture 10 - Network Security"
+      ],
+      "timeShare": 18,
+      "importance": "essential",
+      "know": [
+        "Confidentiality, integrity and availability; authentication; repudiation versus nonrepudiation",
+        "Full, responsible and coordinated disclosure of vulnerabilities",
+        "Stream and block ciphers, S-boxes and P-boxes, and the modes ECB, CBC and counter mode",
+        "Textbook RSA (n = p times q, c to the power d mod n), hybrid encryption and Diffie-Hellman",
+        "MACs versus digital signatures, cryptographic hash properties, hash-then-sign, and PKIs",
+        "WEP and why it failed, WPA2 and WPA3; firewalls with signature- or anomaly-based detection, discard versus TCP reset",
+        "IPsec and VPNs in transport and tunnel mode, Tor onion routing and onion services, TLS, DNS spoofing and DNSSEC",
+        "PGP (sign, then encrypt with a fresh symmetric key sent under the receiver's public key) and OTR"
+      ],
+      "do": [
+        "Encrypt or decrypt a few 4-bit blocks with a given S-box or P-box in CBC or counter mode",
+        "Decrypt a small RSA ciphertext",
+        "Explain the steps of onion encryption, PGP or a responsible disclosure",
+        "Judge which security properties a system needs and which protocol provides them"
+      ],
+      "pitfalls": [
+        "Applying the P-box forwards when decrypting; the rubric halves the points for it",
+        "Doing XOR and S-box in the wrong order in CBC, or XOR-ing with the wrong block",
+        "Saying a relay uses its public key in Tor: the layers use the shared keys set up with each relay"
+      ]
+    },
+    {
+      "name": "Application layer: DNS, email, web and P2P",
+      "lectures": [
+        "Lecture 11 - Application Layer",
+        "Lecture 12 - Application Layer"
+      ],
+      "timeShare": 13,
+      "importance": "important",
+      "know": [
+        "DNS name space, name servers, resource records, recursive versus iterative lookups, and why DNS runs over UDP",
+        "Email: envelope, header and body; SMTP to send, IMAP or POP3 to read",
+        "Base64: three bytes become four 6-bit characters, with = padding",
+        "HTTP requests and status codes, URLs, persistent connections, pipelining versus multiplexing",
+        "Video streaming: I, P and B frames, buffering, interleaving, and live and interactive streaming",
+        "CDNs and DNS redirection, BitTorrent, Chord DHT finger tables, and the three kinds of blockchain"
+      ],
+      "do": [
+        "Encode bytes in Base64 or decode a Base64 string, including padding",
+        "Count the queries of an uncached DNS lookup, and say which server a CDN returns for a lookup",
+        "Fill in a Chord finger table: entry i is the successor of the node's position plus 2 to the power i, modulo the ring size"
+      ],
+      "pitfalls": [
+        "Getting the padding wrong at the end of a Base64 string",
+        "Forgetting that a CDN name server sees the address of whoever sends it the lookup, which in a recursive lookup is the local name server"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Binary and hexadecimal numbers, XOR and modular arithmetic, from Computer Organisation and Reasoning and Logic",
+    "Logarithms and powers of two, for Hamming code lengths, sequence numbers and backoff",
+    "Basic probability for collision and backoff questions; Probability Theory and Statistics runs in the same quarter",
+    "Shortest paths in a weighted graph, from Algorithms and Data Structures"
+  ],
+  "practical": "Seven ungraded tutorials (error detection, error correction, sliding windows, network layer, two on transport and application, cryptography) and weekly WebLab programming or Wireshark assignments of 2 to 5 hours, done in the shared lab hours with TAs. Two self-study notes of 3 to 4 hours each, on error detection and correction and on cryptography, come before the matching tutorials. None of it counts towards the grade, but the tutorials are close to exam questions.",
+  "studyAdvice": [
+    "Read the Error Detection and Correction notes in week 1: they come before Tutorials 1 and 2, and those calculations are 14 percent of the exam points with no lecture to catch up from.",
+    "Do the cryptography notes before Lecture 10. S-box and P-box encryption, RSA and the protocol questions together make security the largest topic on the papers.",
+    "Practise each calculation type until it is routine: checksum, CRC, Hamming code, sliding window goodput, fragmentation, distance vector table, TCP sequence numbers, forbidden region, Base64, Chord finger table, CBC or counter mode.",
+    "Work through all seven tutorials and check them against the posted solutions; the exam reuses their formats with new numbers.",
+    "Learn the delay and throughput definitions early. They are not asked as definitions, but the sliding window and forbidden region calculations depend on them.",
+    "For the MAC sublayer and Wi-Fi, draw timelines. Most questions there are scenarios: who hears whom, who backs off, when someone may send.",
+    "In the last week sit two or three past papers in 120 minutes and write out every step, as full points need the working."
+  ]
+}

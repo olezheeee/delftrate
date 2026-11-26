@@ -1,0 +1,166 @@
+{
+  "course": "CSE21B",
+  "title": "Algorithm Design",
+  "available": true,
+  "summary": "Half the grade is a three-hour programming exam on WebLab with five or six Java tasks, one or two per paradigm, graded by hand on correctness and efficiency. The other half is written: a 90-minute midterm on greedy and divide and conquer and a 90-minute endterm on dynamic programming and network flow, or one three-hour resit on everything. The written papers are open questions only: proofs, hand traces, recurrences and network models.",
+  "basis": {
+    "papers": [
+      {
+        "name": "Written Resit 2025",
+        "year": 2025,
+        "kind": "resit",
+        "questions": 11,
+        "points": 40,
+        "minutes": 180
+      },
+      {
+        "name": "Digital Resit 2025",
+        "year": 2025,
+        "kind": "resit",
+        "questions": 6,
+        "points": 10,
+        "minutes": 180
+      },
+      {
+        "name": "Written Endterm 2025",
+        "year": 2025,
+        "kind": "endterm",
+        "questions": 6,
+        "points": 20,
+        "minutes": 90
+      },
+      {
+        "name": "Digital Endterm 2025",
+        "year": 2025,
+        "kind": "endterm",
+        "questions": 6,
+        "points": 10,
+        "minutes": 180
+      },
+      {
+        "name": "Written Resit 2024",
+        "year": 2024,
+        "kind": "resit",
+        "questions": 12,
+        "points": 40,
+        "minutes": 180
+      },
+      {
+        "name": "Digital Resit 2024",
+        "year": 2024,
+        "kind": "resit",
+        "questions": 5,
+        "points": 10,
+        "minutes": 180
+      }
+    ],
+    "note": "The three latest sittings, each a written and a digital paper; the archive holds 17 more (2020 to 2025). Shares are point shares per paper, weighted by the paper's weight in the final grade: each digital paper and written resit 0.5, the written endterm 0.3 (it is 0.6 of W). Topic of a digital task text given only on paper is read from its solution code."
+  },
+  "format": {
+    "mode": "Written: closed-book open questions on paper. Digital: Java programming in WebLab (IntelliJ available), closed book apart from the Java 17 API docs",
+    "duration": "Written midterm and endterm 90 minutes each, written resit 3 hours, digital exam 3 hours",
+    "structure": "Written midterm and endterm: six or seven open questions of 20 to 27 points, one module pair each. Written resit: 11 or 12 questions of 40 points over all four modules. Digital: five or six tasks worth 10 points, ordered greedy, divide and conquer, dynamic programming, network flow, each with public tests; the final mark comes from hand grading.",
+    "grading": "W = 0.4 W1 + 0.6 W2; final grade 0.5 W + 0.5 P, but if W or P is below 5 the final grade is the lower of the two. A resit of W is one three-hour exam on everything; W and P can be resat separately. Partial results last one academic year. Written points convert as 1 + 9 times the score share.",
+    "aids": "None on the written papers: no book, notes or calculator. In the digital exam only the Java API documentation and the network flow library supplied in WebLab."
+  },
+  "topicWeights": [
+    {
+      "topic": "Dynamic programming",
+      "share": 30,
+      "appearsIn": 6,
+      "asks": "Write OPT with base cases and initial call for a new story problem, extend a known recurrence with an extra parameter, fill a weighted interval or edge-selection table and trace back the choice, state time and minimal space, and implement an iterative solution or rebuild one from a given table."
+    },
+    {
+      "topic": "Network flow modelling and circulations",
+      "share": 24,
+      "appearsIn": 6,
+      "asks": "Build a network for an assignment problem with minimum and maximum limits, remove lower bounds step by step, prove that a min cut gives the optimum of a two-way split, adapt baseball elimination or a matching model, and code a model with the library."
+    },
+    {
+      "topic": "Greedy scheduling, caching and Huffman codes",
+      "share": 22,
+      "appearsIn": 5,
+      "asks": "A counterexample to a wrong greedy rule, then a 5-point exchange or stays-ahead proof for the right one, a farthest-in-future trace, and programming tasks on interval partitioning, Huffman-style merging or scheduling by sort order."
+    },
+    {
+      "topic": "Divide and conquer and recurrences",
+      "share": 13,
+      "appearsIn": 5,
+      "asks": "Solve a recurrence with the master method in three marked steps, design a recursive algorithm for a new problem (majority element, L-shaped tiling), count multiplications in fast exponentiation, and code maximum subarray or counting inversions recursively."
+    },
+    {
+      "topic": "Flow networks, cuts and Ford-Fulkerson",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "Find a minimum cut and its capacity from a given flow, run scaling Ford-Fulkerson phase by phase, change a capacity to create an augmenting path, give the running time of build plus max flow, and counterexamples on unique cuts and flows."
+    },
+    {
+      "topic": "Minimum spanning trees, shortest paths and clustering",
+      "share": 4,
+      "appearsIn": 3,
+      "asks": "Apply the cut or cycle property to a graph and state the MST consequence, and in the programming exam a maximum-spacing clustering with Kruskal and union-find."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Writing code",
+      "share": 54,
+      "description": "Digital tasks: implement the most efficient algorithm in Java for a story problem, often a variant of a course problem, with the network flow library for flow tasks."
+    },
+    {
+      "type": "Calculation or trace",
+      "share": 17,
+      "description": "Solve a recurrence, fill a DP table, run scaling Ford-Fulkerson, read a min cut off a flow, build a given network for an instance or trace a greedy rule."
+    },
+    {
+      "type": "Design",
+      "share": 14,
+      "description": "On paper: write a recurrence with its call, a divide and conquer procedure, a loop order, or a change to a network model, with a short explanation."
+    },
+    {
+      "type": "Proof",
+      "share": 8,
+      "description": "Exchange-argument and greedy-stays-ahead proofs, and proofs that a cut capacity equals the objective of a flow model."
+    },
+    {
+      "type": "Counterexample",
+      "share": 4,
+      "description": "Give a small instance showing that a greedy rule, an unmodified recurrence or a claim about cuts and flows fails."
+    },
+    {
+      "type": "Complexity analysis",
+      "share": 3,
+      "description": "State and justify the time or the minimal space of a DP or a flow-based algorithm."
+    }
+  ],
+  "recurring": [
+    "Both analysed written resits have a 3-point master-method recurrence, marked in three steps (leaves, case, answer); the coverage tables on the papers list one on the recent midterms too.",
+    "A greedy problem in two steps: disprove a suggested rule with an instance, then prove the correct rule with a 5-point exchange or stays-ahead argument.",
+    "A 3-point DP table question on the 2025 endterm and resit: complete a partly given OPT, fill the table from index 0 and trace back the chosen intervals or edges.",
+    "A known recurrence (weighted interval scheduling, subset sum, the restaurant shifts) is extended with an extra constraint, and you must update the call too.",
+    "A two-way split solved by a min cut (two people sharing tasks, lectures versus tutorials), with a proof that the cut capacity is the cost.",
+    "An assignment network with lower bounds that you must turn into a circulation, on paper and in code.",
+    "Each digital exam has one or two tasks per paradigm in a fixed order (greedy, divide and conquer, dynamic programming, network flow), and the DP and flow tasks together carry 5 or 6 of the 10 points."
+  ],
+  "trends": [
+    "Up to 2022-23 the written papers had a multiple-choice part worth 30 percent and the digital exam came in two parts; since 2023-24 the written papers are open questions only and the digital exam is one three-hour sitting.",
+    "The 2022-23 papers weighted the digital exams at 60 percent of the final grade; the current rule is 50 percent each.",
+    "Questions now reuse earlier problems: the 2025 resit continues the poem problem of the 2025 endterm, and resit digital tasks extend endterm tasks such as the judo camp."
+  ],
+  "strategy": [
+    "Prepare for the two halves separately: a strong written grade cannot rescue a programming grade below 5, or the other way round.",
+    "Memorise the proof templates for greedy (both styles) and the cut-capacity proof for min-cut models; they return almost word for word with new problems.",
+    "For every OPT you write, check that the base cases fit the initial call and that no maximum can return plus infinity.",
+    "In the programming exam, first get a correct solution, then make it asymptotically optimal; a slower one loses points, and partial steps still earn credit.",
+    "Do not trust the spec tests: grading is manual, and a boolean task can pass many tests by always returning the same value.",
+    "Practise coding network models with the supplied Graph, Node and Edge library, including demands and lower bounds, before the exam.",
+    "On the 20-point 2025 endterm you have 4.5 minutes per point; do the trace and recurrence questions first and leave the proofs for after."
+  ],
+  "pitfalls": [
+    "Turning a lower-bound problem into a circulation by adding only an infinite edge from t to s, which drops the rule that everyone must be assigned.",
+    "Answering a counterexample question about circulations with an all-zero flow, which the 2025 endterm marking notes call a very common mistake.",
+    "In exchange proofs, defining an inversion without the inequality between the jobs or deriving the contradiction from a wrong assumption.",
+    "Claiming that two cuts or two flows exist without writing them out: the 2024 resit gave at most 1 of 2 points for counterexamples without explicit cuts and flows.",
+    "In digital tasks, forgetting one cost or bound, such as the cleaning time in a schedule or one of the limits in a model: the reference code checks exactly those versions."
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "course": "CSE22B",
+  "title": "Theoretical Foundations of Computer Science",
+  "available": true,
+  "summary": "One closed-book written exam with a hand-written A4 cheat sheet gives the whole grade. Each paper walks through the course in order: automata and regular languages, a pumping-lemma proof, grammars and PDAs, Turing machines, an undecidability proof, an NP-hardness reduction to apply and repair, and a closing block of true-or-false claims. Almost every question asks you to construct, convert or prove, often with the Sipser procedure named.",
+  "basis": {
+    "papers": [
+      { "name": "Written Endterm 2025", "year": 2025, "kind": "endterm", "questions": 10, "points": 45, "minutes": null },
+      { "name": "Written Resit 2025", "year": 2025, "kind": "resit", "questions": 10, "points": 45, "minutes": null },
+      { "name": "Written Endterm 2024", "year": 2024, "kind": "endterm", "questions": 13, "points": 60, "minutes": null },
+      { "name": "Written Resit 2024", "year": 2024, "kind": "resit", "questions": 14, "points": 60, "minutes": null },
+      { "name": "Written Endterm 2023", "year": 2023, "kind": "endterm", "questions": 17, "points": 60, "minutes": null },
+      { "name": "Written Resit 2023", "year": 2023, "kind": "resit", "questions": 16, "points": 60, "minutes": null }
+    ],
+    "note": "The archive holds 3 more papers: Written Midterm 2020, Written Midterm 2022 and Written Resit 2022. The text file also has older TI2316 papers and two 2021 WebLab exams. All six analysed papers come with model answers and rubrics. Shares are by printed points over 330 points; true-or-false blocks were split per claim. A bonus point on Endterm 2025 is not counted. No paper states its duration."
+  },
+  "format": {
+    "mode": "Written exam on paper, closed book, open questions only",
+    "duration": null,
+    "structure": "10 to 17 numbered questions, worth 45 points (2025) or 60 points (2023 and 2024), in course order: finite automata and regular expressions, a started pumping-lemma proof, grammars and PDAs, a Turing machine, a decidability problem in three parts, an NP problem in five parts, and true-or-false claims. Parts are worth 1 to 6 points.",
+    "grading": "The final exam counts for 100 percent of the grade; the lab assignments are optional and not graded. The 2020 and 2022 papers in the archive include midterms, but the official description lists only the final exam.",
+    "aids": "One double-sided A4 sheet of hand-written notes. No books, printed slides, calculators or other devices."
+  },
+  "topicWeights": [
+    {
+      "topic": "DFAs, NFAs and closure properties",
+      "share": 18,
+      "appearsIn": 6,
+      "asks": "Draw a DFA from a table or write one as a 5-tuple, run the subset or product construction from Sipser, build an NFA for a star, union or reversal, and judge whether a changed automaton model still recognises exactly the regular languages."
+    },
+    {
+      "topic": "Regular expressions and GNFAs",
+      "share": 7,
+      "appearsIn": 6,
+      "asks": "Write a short regular expression for a described language, rip one state out of a GNFA, describe a GNFA's language in English, or argue whether an extra operator such as intersection adds power."
+    },
+    {
+      "topic": "Pumping lemma and non-regularity",
+      "share": 7,
+      "appearsIn": 6,
+      "asks": "Every paper gives the opening of a pumping-lemma proof with a chosen word and asks whether it can be finished: either complete it for all splits or explain why that word fails."
+    },
+    {
+      "topic": "Context-free grammars and PDAs",
+      "share": 12,
+      "appearsIn": 6,
+      "asks": "Convert a grammar to Chomsky normal form, prove a grammar ambiguous with two derivations, design a grammar or PDA within a size limit, describe a given PDA's language, or prove a counting fact about CNF grammars."
+    },
+    {
+      "topic": "Turing machines and their variants",
+      "share": 7,
+      "appearsIn": 6,
+      "asks": "Trace a given TM to find the word it loops on or to describe its language, say whether it is a decider and whether its language is decidable, or draw a small TM for a simple language."
+    },
+    {
+      "topic": "Decidability and reductions",
+      "share": 24,
+      "appearsIn": 6,
+      "asks": "A three-part question on a language of TM descriptions: show it is recognisable or co-recognisable, prove it undecidable by reduction, prove it is not recognisable. Also: complete or judge a given mapping reduction, and true-or-false claims about reductions."
+    },
+    {
+      "topic": "P, NP and NP-completeness",
+      "share": 25,
+      "appearsIn": 6,
+      "asks": "A five-part question on a new problem: prove it is in NP, give a small 3SAT, Vertex Cover or HAMC instance, apply a proposed reduction, show the result is wrong, and fix one step. Plus claims about P, NP, NPC, TIME classes and Karp reductions."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Proof",
+      "share": 27,
+      "description": "Pumping-lemma proofs, ambiguity, recognisability, undecidability and non-recognisability of TM languages, NP membership, and equivalence of automaton models."
+    },
+    {
+      "type": "True-or-false claims",
+      "share": 20,
+      "description": "State true or false, then prove the claim or give a counterexample; mostly about reductions, closure and complexity classes."
+    },
+    {
+      "type": "Short answer or trace",
+      "share": 17,
+      "description": "Give a word, trace configurations, describe a language, give a small instance, or explain a fact about a machine in a few lines."
+    },
+    {
+      "type": "Construction",
+      "share": 13,
+      "description": "Design a DFA, NFA, regular expression, grammar, PDA, TM, mapping reduction or algorithm, often within a limit on states or rules."
+    },
+    {
+      "type": "Apply or repair a reduction",
+      "share": 13,
+      "description": "Apply a given reduction to your own instance, decide whether the result is still a yes-instance, complete a reduction's missing step, or fix the faulty step."
+    },
+    {
+      "type": "Sipser procedure",
+      "share": 10,
+      "description": "Run a named conversion exactly as in the book: subset construction, product construction, GNFA state removal or CNF conversion."
+    }
+  ],
+  "recurring": [
+    "A started pumping-lemma proof with a given word: finish it or explain why it cannot be finished",
+    "A TM language in three parts: recognisable or co-recognisable, undecidable by reduction, and not recognisable",
+    "A new NP problem with a flawed reduction from 3SAT, Vertex Cover or HAMC: prove NP membership, apply the reduction to a tiny instance, expose the flaw and fix it",
+    "A mapping reduction with a missing piece: say what the constructed machine must accept and what the reduction proves",
+    "A Sipser construction on given automata: subset construction, product for intersection or XOR, or ripping a GNFA state",
+    "Chomsky normal form conversion or an ambiguity proof for a short grammar",
+    "A final block of true-or-false claims that mix regular languages, reductions and complexity classes"
+  ],
+  "trends": [
+    "Papers got shorter: 16 to 17 questions in 2023, 13 to 14 in 2024 and 10 in 2025, with the total cut from 60 to 45 points",
+    "The archive has no midterm after 2022; since 2023 one final exam covers the whole course",
+    "From 2023 a hand-written double-sided A4 sheet is allowed; the 2022 resit allowed no notes at all",
+    "The cover has grown a list of conventions: P is not NP, NP is not EXP, 0 is in N, and the symbols for direct, mapping and Karp reductions"
+  ],
+  "strategy": [
+    "Work through the six papers from 2023 to 2025 under timed conditions; the question pattern hardly changes between years",
+    "Write the proof templates on your cheat sheet: pumping lemma with all splits, dovetailing, reduction from A_TM, NP verifier with time bounds",
+    "Learn the Sipser procedures step by step: rubrics give points for intermediate steps and take them away when the result is not a valid DFA or CNF",
+    "For a reduction question, check the direction first: from the known undecidable or NP-hard problem to the new one",
+    "When you build a small instance for a reduction, keep it tiny and check it by hand; the follow-up questions build on it",
+    "Start every true-or-false answer with the verdict, then give the theorem or the smallest counterexample you can find",
+    "Read the cover conventions and each question's assumptions: P is not NP unless stated, the tape is bounded on the left, and missing transitions often go to an omitted reject state"
+  ],
+  "pitfalls": [
+    "Reducing from L to the undecidable problem instead of the other way round costs a point, and the rest is graded as if that direction were meant",
+    "A pumping-lemma proof that handles one split, or forgets i = 0 or an empty x, loses the points per split and per contradiction",
+    "Proving NP membership without giving the time complexity of each check",
+    "Claiming a problem is in TIME(n^2) from a Java running time, without the cost of simulating it on a single-tape DTM",
+    "Running the subset construction and ending with a machine that is still not a DFA",
+    "Assuming that a TM that loops on some input must have an undecidable language"
+  ]
+}

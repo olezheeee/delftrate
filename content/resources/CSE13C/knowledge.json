@@ -1,0 +1,221 @@
+{
+  "course": "CSE13C",
+  "title": "Algorithms and Data Structures",
+  "ects": 5,
+  "summary": "How to store data so that the operations you need are fast, and how to prove how fast they are, with everything written in Java. The course runs from complexity analysis and recursion through lists, trees, heaps, sorting, hash tables and balanced search trees to graph algorithms, in the order of the Goodrich, Tamassia and Goldwasser textbook. Each week has two lectures, four hours of lab and WebLab homework, and you prepare with videos, the book and Skill Circuits.",
+  "basis": {
+    "lectures": 15,
+    "description": "Slide text of the 15 lectures in the archive (the slides shown in the lecture room and the longer video slides), the official course description and the Acing ADS sessions, all from the course as CSE1305. Course organisation slides and Lecture 15 - QA Exam Practice were left out of the time shares.",
+    "caveat": "The course is CSE1305 renamed to CSE13C for 2026-27, content unchanged, in year 1 quarter 3. Time shares come from slide counts by topic, not by lecture: the lecture-room slides only roughly follow the archive's lecture titles, one session repeated a block of slides from the session before (counted once), and animated slides without text (Dijkstra and Kruskal steps) are not counted, so graphs are somewhat under-counted."
+  },
+  "topics": [
+    {
+      "name": "Complexity analysis and recursion",
+      "lectures": [
+        "Lecture 1 - Introduction to Algorithms",
+        "Lecture 2 - Complexity Analysis and Big-Oh Notation",
+        "Lecture 3 - Recursion and Analysis"
+      ],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "The formal definitions of O, Omega and Theta with a constant c and a threshold n0, and what the tightest bound of a function is",
+        "Why counting primitive operations beats timing runs, and why constant factors and lower-order terms are dropped",
+        "The growth order of the usual functions: 1, log n, n, n log n, n^2, n^3, 2^n, and how logarithms with different bases relate",
+        "How to turn a recursive method into a base case and a recurrence such as T(n) = c1 + c2 n + 2T(n/4), one term per part of the code",
+        "The unfolding procedure: expand a few times, simplify, write the pattern after k steps, choose k so you reach the base case, substitute",
+        "Space complexity: the call stack grows with recursion depth, and tail-recursion optimisation can remove that cost",
+        "Binary search as the model example, with O(log n) time and O(1) or O(log n) space depending on how it is written"
+      ],
+      "do": [
+        "Prove a bound such as 2n^2 + 5n + 49 is O(n^2) by giving c and n0",
+        "Read a Java method and give its worst-case runtime, including the cost of each library call it makes",
+        "Write the base case and recurrence for a recursive method and justify every term with line numbers",
+        "Unfold a recurrence to a closed form and state its Theta class",
+        "Give the recurrence for the space use of a recursive method"
+      ],
+      "pitfalls": [
+        "Skipping steps while unfolding: the marking gives a point per step, and an error after skipped steps costs all of them",
+        "Forgetting that LinkedList.get(i) is O(n), so calling it inside a double loop adds a factor n to the bound",
+        "Leaving out what the input size n is, or not tying each term of the recurrence to lines of code"
+      ]
+    },
+    {
+      "name": "Arrays, lists, stacks and queues",
+      "lectures": [
+        "Lecture 4 - Arrays and Linked Lists",
+        "Lecture 5 - Stacks and Queues"
+      ],
+      "timeShare": 19,
+      "importance": "essential",
+      "know": [
+        "Arrays: insertion and removal by shifting, shallow versus deep copies with clone, and in-place insertion sort",
+        "Singly, doubly and circularly linked lists, and the cost of inserting and removing at the head, the tail and a given node",
+        "Dynamic arrays that double when full: Theta(n) worst case for one append but amortised O(1) per append",
+        "The Stack, Queue and Deque ADTs, each implemented with an array (a circular one for queues) or a linked list, with their costs",
+        "Positional lists and iterators, and why a position gives O(1) insertion next to a node",
+        "Applications such as matching brackets with a stack and building a queue from two stacks"
+      ],
+      "do": [
+        "Implement list, queue and stack methods in Java with correct pointer updates and in the required complexity",
+        "Implement a new linked variant (extra pointers, a grid of nodes) and keep all its references consistent",
+        "Show by summing the copying costs that n appends to a doubling array take O(n) in total",
+        "Say which ADT operations can be O(1) under a given implementation"
+      ],
+      "pitfalls": [
+        "Moving the head before linking the new node, which leaves the rest of the list unreachable",
+        "Mixing up worst case and amortised cost: a single append to a full dynamic array is Theta(n)",
+        "Assuming the tail of a singly linked list can be removed in O(1): you have to walk to the node before it"
+      ]
+    },
+    {
+      "name": "Trees, priority queues and heaps",
+      "lectures": [
+        "Lecture 6 - Trees and Binary Trees",
+        "Lecture 7 - Priority Queues and Heaps"
+      ],
+      "timeShare": 14,
+      "importance": "important",
+      "know": [
+        "Tree terms: depth, height, internal and external nodes, proper and complete binary trees, and the bounds linking nodes and height",
+        "Pre-order, post-order, in-order and breadth-first traversals, and linked versus array storage of a binary tree",
+        "The priority queue ADT, with unsorted and sorted list versions and their insert and removeMin costs",
+        "Heaps: heap order, completeness, height floor(log n), and up-heap and down-heap bubbling in O(log n)",
+        "The array heap with children of index i at 2i+1 and 2i+2, and finding the last position in a linked heap",
+        "Bottom-up heap construction in O(n), and adaptable priority queues that can update or remove any entry",
+        "Comparable versus Comparator for defining the order of keys"
+      ],
+      "do": [
+        "Trace inserts, removeMin and bottom-up heapify on an array and count the swaps",
+        "Implement add and a remove variant on an ArrayList heap in O(log n)",
+        "Implement a traversal or a lazy iterator over a tree",
+        "Use a heap of size k to solve a problem in O(n log k)"
+      ],
+      "pitfalls": [
+        "Calling bottom-up construction O(n log n): the sum over levels gives O(n)",
+        "Off-by-one parent and child indices, which the heap rubric checks step by step"
+      ]
+    },
+    {
+      "name": "Sorting and selection",
+      "lectures": [
+        "Lecture 8 - Sorting Algorithms Part 1",
+        "Lecture 9 - Sorting Algorithms Part 2"
+      ],
+      "timeShare": 21,
+      "importance": "important",
+      "know": [
+        "Selection, insertion and heap sort as sorting with a priority queue, and their in-place versions",
+        "Merge sort and quick sort as divide and conquer, with their recursion trees and recurrences",
+        "Quick sort: Theta(n^2) worst case with a bad pivot, expected O(n log n) with a random pivot, in-place partitioning",
+        "The Omega(n log n) lower bound for comparison sorting from the decision-tree argument",
+        "Bucket sort in O(n + N) and radix sort with stable bucket passes, and when they beat comparison sorts",
+        "Stability, in-place behaviour and running time on nearly sorted input for every algorithm",
+        "Quick-select for the k-th smallest element in expected O(n)"
+      ],
+      "do": [
+        "Count the swaps or comparisons a given sort makes on a given array",
+        "Choose a sort that meets a list of constraints on time, space and stability",
+        "Trace radix sort passes on a short list of keys",
+        "Implement merge sort, quick sort, quick-select or a hybrid in Java as the task describes"
+      ],
+      "pitfalls": [
+        "Forgetting that quick sort with the last element as pivot runs in Theta(n^2) on sorted input",
+        "Treating radix sort as linear when the number of digits grows with n, for example d = log n"
+      ]
+    },
+    {
+      "name": "Maps and hash tables",
+      "lectures": [
+        "Lecture 10 - Hash Tables and Maps"
+      ],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "The map ADT and its cost with an unsorted or a sorted array list",
+        "Hash codes, compression by division or by the MAD method, and why a prime table size spreads keys better",
+        "Separate chaining and linear probing, with DEFUNCT markers for removed entries",
+        "The load factor, rehashing and expected O(1) versus worst-case O(n) operations",
+        "Sets, multisets, multimaps and sorted maps, and why a hash table cannot answer ordered queries"
+      ],
+      "do": [
+        "Trace inserts into a table with chaining or linear probing and give the final layout or longest chain",
+        "Implement put, get, remove or contains for a hash set or hash map in Java",
+        "Decide between a hash map and a search tree for a set of required operations"
+      ],
+      "pitfalls": [
+        "Treating a DEFUNCT slot as empty when searching, which ends the probe too early",
+        "Expecting a hash map to find the next larger key quickly: it has to scan everything"
+      ]
+    },
+    {
+      "name": "Search trees: BST, AVL, (2,4) and red-black",
+      "lectures": [
+        "Lecture 11 - Binary Search Trees",
+        "Lecture 12 - AVL Trees and Balanced Trees"
+      ],
+      "timeShare": 16,
+      "importance": "important",
+      "know": [
+        "Binary search trees: search, insert and delete (with the in-order successor or predecessor) in O(h), and h up to n",
+        "AVL trees: the height-balance rule, single and double rotations by tri-node restructuring, and height O(log n)",
+        "(2,4) trees: multiway search, splits on overflow, and transfers and fusions on underflow",
+        "Red-black trees as a binary encoding of (2,4) trees, with recolouring and restructuring on insert and delete",
+        "When a balanced tree beats a hash table: ordered operations such as first, last, floor and ceiling"
+      ],
+      "do": [
+        "Insert into or delete from an AVL, (2,4) or red-black tree and draw the result",
+        "Name the rebalancing steps a given removal triggers",
+        "Implement add, contains and an in-order listing for a BST in Java",
+        "Compute the maximum height of an AVL tree with a given number of nodes"
+      ],
+      "pitfalls": [
+        "Using the wrong height convention: some questions count a null leaf position as height 0",
+        "Forgetting that a plain BST built from sorted input degrades to a list with O(n) operations"
+      ]
+    },
+    {
+      "name": "Graphs and graph algorithms",
+      "lectures": [
+        "Lecture 13 - Graphs and Graph Traversal",
+        "Lecture 14 - Graph Algorithms"
+      ],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Graph terms: directed and undirected, simple graphs, paths, cycles, connectivity, and at most n(n-1)/2 edges",
+        "Edge list, adjacency list, adjacency map and adjacency matrix, with the space and cost of each operation",
+        "DFS and BFS in O(n + m), and using them for connected components, path finding and cycle detection",
+        "DAGs and topological ordering by repeatedly taking a vertex with no incoming edges",
+        "Dijkstra's algorithm with an adaptable priority queue in O((n + m) log n), only for non-negative weights",
+        "Kruskal's algorithm for minimum spanning trees, using a partition (union-find) structure"
+      ],
+      "do": [
+        "Run DFS, BFS, Dijkstra or Kruskal by hand and give the visiting order or the distance labels",
+        "Count the valid topological orderings or minimum spanning trees of a small graph",
+        "Implement topological sort, Dijkstra or a traversal in Java, including a twist such as a limit on edges",
+        "Compare the cost of a procedure under two graph representations"
+      ],
+      "pitfalls": [
+        "Using Dijkstra where BFS is enough (all weights equal) or where weights can be negative",
+        "Picking the representation by habit: an edge test is O(1) in a matrix but O(n^2) space suits only dense graphs"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Java and object-oriented programming: classes, references, generics, interfaces and the collections library",
+    "Writing and debugging recursive methods",
+    "Predicate logic, quantifiers and proof by induction from Reasoning and Logic",
+    "Logarithms, powers and sums such as the arithmetic and geometric series"
+  ],
+  "practical": "There is no graded project. Every week has WebLab homework with spec tests and analysis exercises, worked on in four hours of lab with teaching assistants, plus Skill Circuits and Acing ADS sessions in which you design, analyse and implement a solution to one larger problem. All of it is practice for the two finals, and the WebLab exercises run in the same environment as the Implementation exam.",
+  "studyAdvice": [
+    "Start with complexity and recursion and keep using them: they carry 40 percent of the recent Analysis papers through two fixed open questions.",
+    "Learn the cost of every operation of every structure, and of the Java classes ArrayList, LinkedList, TreeSet and HashMap, and put that table on your cheat sheet.",
+    "Do the weekly WebLab homework yourself, without help at first: the Implementation exam asks for new variants of the same structures under time pressure.",
+    "Take both formative midterms in week 5 seriously; they use the same format as the finals and show which track needs more work.",
+    "Divide your time between the two tracks: each final must reach 5.0, so a strong Analysis grade does not rescue a weak Implementation grade.",
+    "Leave time for graphs: they come last in the course but are in every Implementation paper and every recent Analysis paper.",
+    "For design questions use the Acing ADS method: find an algorithm and its bound, argue a lower bound, then compare."
+  ]
+}

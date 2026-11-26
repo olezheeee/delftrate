@@ -1,0 +1,279 @@
+{
+  "course": "CSE11C",
+  "title": "Computer Organisation",
+  "ects": 5,
+  "summary": "How a computer works from the transistor up: logic gates and circuits, number formats, instruction sets, the processor's datapath and control, I/O, memory and caches, pipelining, parallelism and virtual memory. Alongside the lectures you program in x86-64 assembly in the lab. The grade is a points game: two exams of 4000 points each plus points from bonus labs, self-study, quizzes and tutorials, divided by 1000.",
+  "basis": {
+    "lectures": 16,
+    "description": "Slides of Lectures 0 to 15 as text, the 2024-25 lab manual, the self-study sets for weeks 2 to 9, and six exam papers from 2023-24 and 2024-25 with rubrics. Time shares count content slides; Lecture 0 (course organisation) and the lab introduction slides in Lecture 2 are left out.",
+    "caveat": "From 2026-27 the course is CSE11C, renamed from CSE1400, in year 1, quarter 1; the curriculum note says the content is unchanged. The slides show one combined Lecture 15, while the official schedule lists superscalar execution and parallel and virtual memory as two lectures. The memory lecture is mostly figures without text, so its share here is on the low side."
+  },
+  "topics": [
+    {
+      "name": "History of computing",
+      "lectures": ["Lecture 1 - History"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "The pre-history: mechanical calculators, the Jacquard loom as the first programmable machine, Babbage's Difference and Analytical Engines, and Ada Lovelace as the first programmer",
+        "Electro-mechanical and early electronic machines (ASCC/Harvard Mark I, ENIAC) and the practical problems that made them hard to use: size, power, failing valves, rewiring to reprogram",
+        "Atanasoff's digital computer, the stored-program (Von Neumann) idea, the transistor, the microprocessor and the IBM PC",
+        "The multi-computing generation: networked machines and the roots of the Internet",
+        "Rough dates of landmarks such as the first computer bug, the mouse, the Apple computer and the Internet",
+        "Why war and military funding sped up computing, and why performance is the thread through the whole history"
+      ],
+      "do": [
+        "Put a list of inventions in chronological order",
+        "Name problems of early machines and explain in a sentence or two why each mattered"
+      ],
+      "pitfalls": [
+        "Naming the problems without saying why they were significant: on the 2025 midterm the explanation part was worth more than the list itself"
+      ]
+    },
+    {
+      "name": "Assembly programming (x86-64)",
+      "lectures": ["Lecture 2 - Assembly"],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "The x86-64 general-purpose registers, their 32, 16 and 8-bit partial names, and the instruction suffixes b, w, l and q for operand size",
+        "AT&T syntax (source first, destination second) versus Intel syntax, and the addressing modes: immediate, register, direct, indirect and base plus offset",
+        "The stack: push and pop, how %rsp moves, and how call and ret save and follow the return address",
+        "Stack frames: the prologue (push %rbp, then copy %rsp to %rbp), local variables at negative offsets from %rbp, and the epilogue",
+        "The System V calling convention: arguments in %rdi, %rsi, %rdx, %rcx, %r8, %r9, then on the stack; the return value in %rax; callee-saved versus caller-saved registers",
+        "Why the stack must be 16-byte aligned before calling a C function such as printf or scanf",
+        "Assembler directives (.text, .data, .bss, .quad, .asciz, .global) and conditional jumps for if-then-else and loops"
+      ],
+      "do": [
+        "Trace a short subroutine and draw the stack contents after each push, call and store",
+        "Find what a piece of uncommented assembly computes and spot the bug in it",
+        "Write a recursive subroutine such as factorial or Fibonacci that respects the calling convention",
+        "Work out what an unaligned stack or a missing pop does to the values a program uses"
+      ],
+      "pitfalls": [
+        "Forgetting that the pushed %rbp and the return address also sit on the stack when you draw it",
+        "Losing track of bytes that were never written: an unaligned or unbalanced stack leaves unknown values that the code then reads"
+      ]
+    },
+    {
+      "name": "Logic circuits and Boolean algebra",
+      "lectures": ["Lecture 3 - Logic Circuits Part 1", "Lecture 4 - Logic Circuits Part 2"],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "The Boolean algebra laws, including De Morgan, and how a truth table becomes a sum of products",
+        "The gates AND, OR, NOT, NAND, NOR and XOR, and why NAND and NOR are universal",
+        "Karnaugh maps for four variables: Gray-code order, wrap-around groups, corners and don't-cares, and how they give a minimal sum of products",
+        "CMOS gates: PMOS transistors in the pull-up network, NMOS in the pull-down network, and why this uses almost no power compared with resistors",
+        "Propagation delay and transition time in networks of gates",
+        "Building blocks: half and full adder, multiplexer, SR latch, gated latch, D flip-flop, shift register, counter",
+        "Combinational versus sequential circuits and the role of the clock",
+        "Moore's law and Rock's law"
+      ],
+      "do": [
+        "Fill a Karnaugh map from a verbal specification, including don't-cares, and read off the minimal sum of products",
+        "Prove that two expressions or circuits are equivalent with a truth table or the algebra laws",
+        "Draw the pull-up and pull-down network for a given function, or give the transistor states and output of a given CMOS circuit",
+        "Design a small circuit from AND, OR and NOT gates, or with multiplexers, from a truth table",
+        "Find and fix the mistake in a given circuit such as a full adder"
+      ],
+      "pitfalls": [
+        "Missing the corner group or a lone 1 that has to be circled as its own term: the Midterm 2025 rubric gave separate points for each",
+        "Drawing a resistor instead of a PMOS pull-up network, or far more transistors than needed: the Resit 2023 rubric gave partial or no points for these"
+      ]
+    },
+    {
+      "name": "Data representation",
+      "lectures": ["Lecture 5 - Data Representation Part 1", "Lecture 6 - Data Representation Part 2"],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "Positional number systems and converting between radices by largest power or by repeated division, and the shortcut between radix 2, 4, 8 and 16 by grouping bits",
+        "Unsigned binary and BCD",
+        "Signed formats: sign and magnitude, one's complement, two's complement and excess-x (biased), with the range and the zeros of each",
+        "Sign extension, and addition and overflow detection in each signed format, including the end-around carry in one's complement",
+        "Fixed-point fractions and converting a decimal fraction to binary",
+        "IEEE 754 single precision: sign bit, 8-bit exponent with bias 127, 23-bit mantissa with a hidden bit, and how custom formats change these widths and the bias",
+        "The trade-off between fixed and floating point: range against precision"
+      ],
+      "do": [
+        "Convert numbers between radices, including odd ones such as radix 4, 7, 12 and 36, showing every step",
+        "Decode a mix of BCD, sign and magnitude, one's complement, two's complement and excess-x values and add them up",
+        "Subtract in two's complement by adding the negated number and dropping the carry",
+        "Encode a decimal number in a custom floating-point format with a given exponent bias, and decode one back",
+        "Work out the largest, smallest or lost precision of a format after bits are removed"
+      ],
+      "pitfalls": [
+        "Adding the carry back in when subtracting in two's complement: the end-around carry belongs to one's complement, and the Midterm 2025 rubric gave only part of the points for it",
+        "Forgetting the range of the target format: a positive sum such as 160 no longer fits in 8-bit two's complement and reads as a negative number",
+        "Writing only the result: conversions without the intermediate steps lose points, even when the answer is right"
+      ]
+    },
+    {
+      "name": "Instruction set architectures",
+      "lectures": ["Lecture 7 - ISA Part 1", "Lecture 8 - ISA Part 2"],
+      "timeShare": 11,
+      "importance": "important",
+      "know": [
+        "Memory organisation from the ISA's point of view: byte and word addressability, alignment, and big versus little endian",
+        "Three, two, one and zero-address instructions, and how each handles an expression",
+        "Accumulator, stack, register-memory and register-register architectures",
+        "Addressing modes: immediate, direct, register, indirect and index, and what each costs in instruction bits",
+        "CISC versus RISC characteristics (and the extreme of MISC), with the arguments for and against each, including the frequency of instruction use",
+        "How the bits of an instruction are split between opcode, register fields, memory addresses and immediate values"
+      ],
+      "do": [
+        "Write the code for an expression in a zero-address ISA via postfix notation, and in a two or three-address ISA",
+        "Count the minimum number of instructions an expression needs in a given ISA",
+        "Compute how many opcodes fit, given the instruction length, the number of registers and the memory size",
+        "Argue which of hardware designer, compiler writer or programmer carries the burden in a given ISA style"
+      ],
+      "pitfalls": [
+        "Getting the bits for a memory operand wrong: count them from the memory size and whether it is byte or word addressable",
+        "Listing extra advantages or disadvantages that are wrong: the rubrics take points off for incorrect additional statements"
+      ]
+    },
+    {
+      "name": "Basic processing unit and control",
+      "lectures": ["Lecture 9 - BPU Part 1", "Lecture 10 - BPU Part 2"],
+      "timeShare": 9,
+      "importance": "important",
+      "know": [
+        "Instruction execution in stages: fetch, decode and operand fetch, execute, write back",
+        "The single-bus CISC-style BPU and the RISC-style BPU, and the registers PC, IR, MAR, MDR, X, Y and Z",
+        "Tri-state gates on the bus, the register file with RF in and RF out, and which bus connections are one-way",
+        "Control signals such as PC out, MAR in, READ, WMFC and END, and the step counter that sequences them",
+        "Hardwired control versus microprogrammed control: the control store in ROM, microinstructions and microroutines",
+        "Horizontal versus vertical encoding of microinstructions and how many bits each needs",
+        "How waiting for memory (WMFC and MFC) stops the step counter"
+      ],
+      "do": [
+        "Write the shortest microroutine for a given instruction, including the instruction fetch",
+        "Read a table of control bits and say what the microroutine does",
+        "Count the clock ticks or bus steps an instruction takes",
+        "Compute the number of control bits for a horizontally or vertically encoded microinstruction",
+        "Explain why a CISC instruction with a memory operand cannot be one RISC instruction"
+      ],
+      "pitfalls": [
+        "Confusing microinstructions with machine instructions, which the 2025 endterm rubric penalised",
+        "Swapping the meaning of horizontal and vertical encoding",
+        "Leaving out the fetch steps or the END signal from a microroutine"
+      ]
+    },
+    {
+      "name": "Input/output and interrupts",
+      "lectures": ["Lecture 11 - IO", "Lecture 12 - Memory"],
+      "timeShare": 9,
+      "importance": "important",
+      "know": [
+        "Bus topology and the bus interface: address decoding, memory-mapped I/O, and what happens when address lines are ignored",
+        "Synchronous buses (including multi-cycle transfers) and asynchronous buses with handshake signals",
+        "Program-controlled I/O with polling, as in the video terminal example",
+        "Interrupts: the execution flow, the interrupt service routine, and the cost of the extra work",
+        "Handling several devices: polling, vectored interrupts, priorities and daisy chaining of the grant line",
+        "Direct memory access: why it is needed, what the DMA controller does, and how it affects throughput rather than latency"
+      ],
+      "do": [
+        "Work out which addresses a device answers to when some address lines are not connected",
+        "Add up IRQ response, grant forwarding and ISR times along a daisy chain and decide whether every device is served in time",
+        "Compute the time to send data over a synchronous bus at a given clock rate",
+        "Choose between polling, interrupts and DMA for a described device"
+      ],
+      "pitfalls": [
+        "Getting the daisy-chain sum wrong: count the CPU's grant delay once, then one forwarding delay for each device up to and including the one being served",
+        "Giving bus transfer times in the wrong unit when the question asks for nanoseconds"
+      ]
+    },
+    {
+      "name": "Memory organisation",
+      "lectures": ["Lecture 12 - Memory"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "How one bit is stored: the SRAM cell of cross-coupled transistors with a word line and two bit lines",
+        "Memory arrays split into rows and columns, and the row and column address pins this needs",
+        "The cost of a memory chip in pins: address, data and control lines",
+        "How the number of address lines relates to word size and byte addressability",
+        "Building larger memories from smaller chips",
+        "Interleaved versus flat memory banks, and which address bits select the bank in each"
+      ],
+      "do": [
+        "Fill in the missing size, address pins or data pins of a memory chip from a figure",
+        "Compute how many chips of a given size a memory needs and how they are arranged",
+        "Pick the bank-select bits for an interleaved layout, after the bits for the byte within a word",
+        "Draw an SRAM cell and explain how it keeps its value once the word line is low"
+      ],
+      "pitfalls": [
+        "Forgetting the byte-offset bits within a word when you choose the bank bits for interleaving"
+      ]
+    },
+    {
+      "name": "Caches and virtual memory",
+      "lectures": ["Lecture 13 - Caching", "Lecture 15 - Parallel & Virtual Memory"],
+      "timeShare": 10,
+      "importance": "essential",
+      "know": [
+        "The memory hierarchy and why caches work: temporal and spatial locality",
+        "Average access time c + (1 - h) m, with hit ratio h, cache time c and memory time m",
+        "Direct-mapped, fully associative and set-associative mapping, and how an address splits into tag, set or block, and word fields",
+        "Thrashing in a direct-mapped cache and how block size changes the hit ratio",
+        "Replacement policies: LRU, LFU, FIFO and random",
+        "Virtual memory: pages and frames, the page table and its control bits, page faults, swap space and the TLB",
+        "Page tables per process for protection, and how the page table size limits the number of processes that fit in RAM"
+      ],
+      "do": [
+        "Compute the number of tag, set and offset bits for a given cache and memory",
+        "Trace a sequence of accesses through a cache with LRU or LFU and count hits and misses",
+        "Compute hits, misses and the hit ratio of a loop over arrays for different mappings",
+        "Compute the size of a full page table from the RAM size, page size and control bits, rounded up to whole bytes or words",
+        "Say how many processes fit when each needs its own page table"
+      ],
+      "pitfalls": [
+        "Rounding page table entries wrongly: the entry is rounded up to the stated unit, which changes how many entries fit",
+        "Using a wrong cache or block size early on, which the rubrics penalise in every later part"
+      ]
+    },
+    {
+      "name": "Pipelining and parallelism",
+      "lectures": ["Lecture 14 - Pipelining", "Lecture 15 - Parallel & Virtual Memory"],
+      "timeShare": 10,
+      "importance": "essential",
+      "know": [
+        "Execution time T = N times S divided by R, and how an n-stage pipeline divides it by up to n",
+        "The four-stage pipeline (Fetch, Decode, Execute, Writeback) with its interstage buffers",
+        "Stalls from cache misses, data dependencies, branches and long operations, and operand forwarding",
+        "Branch prediction, and the average extra cycles per instruction from miss rates and penalties",
+        "Latency versus throughput of a pipeline, and which stage limits it",
+        "Superscalar execution and out-of-order execution",
+        "Amdahl's law: Tp = Ts times (fs + fp / p), and the speedup it limits",
+        "Flynn's taxonomy (SISD, SIMD, MISD, MIMD), GPUs as SIMD, shared-memory multiprocessors and NUMA"
+      ],
+      "do": [
+        "Schedule an everyday multi-step process (printing an exam, releasing songs, streaming music) as a pipeline and compute its latency, throughput and number of workers needed",
+        "Compute the average extra clock cycles per instruction from instruction and data cache misses and branch mispredictions",
+        "Apply Amdahl's law forwards (speedup) and backwards (the parallel fraction from measured times)",
+        "Compare a many-core CPU with a slower GPU using Amdahl's law and find the break-even fraction"
+      ],
+      "pitfalls": [
+        "Forgetting that the slowest stage sets the throughput of a pipeline",
+        "Adding cache miss penalties without weighting them by how many instructions access data"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "None formally: the course starts in the first quarter of year 1",
+    "Comfort with powers of two and binary arithmetic without a calculator",
+    "Some programming experience helps for reading pseudocode and for the assembly lab",
+    "A Linux, WSL, virtual machine or Docker setup with GCC for the lab, which you prepare in week 1"
+  ],
+  "practical": "Three mandatory lab assignments in x86-64 assembly, done in pairs and signed off by a TA: Powers (a pow subroutine with input and output via scanf and printf), Recursion (factorial) and Memory (decoding a message stored as linked 8-byte blocks). They give no points but must be passed. Code must have a pseudocode specification, comments, stack frames for every subroutine and follow the calling convention. Eight bonus assignments (Assignments 4 to 11, 250 to 750 points) range from SHA-1 and printf to a Brainfuck interpreter and a game. Weekly self-study sets with peer review give 200 points each.",
+  "studyAdvice": [
+    "Data representation and logic circuits together carry about a third of all exam points and fill most of each midterm. Drill radix conversions, signed formats, custom floating point, Karnaugh maps and CMOS until they are routine.",
+    "On the endterm side, caches and virtual memory, and pipelining with Amdahl's law, are about a quarter of the points. Practise hit and miss traces, page table sizes and pipeline schedules for everyday processes.",
+    "Do the assembly lab early and seriously: the last midterm question is usually an x86-64 stack trace, and it rewards the same stack frame habits the TAs check at sign-off.",
+    "Learn the microroutine notation (PC out, MAR in, READ, WMFC, END) by writing several microroutines yourself; every endterm and resit asks for one or for reading one.",
+    "Practise without a calculator: every paper is pen and paper with powers of two, conversions and small sums.",
+    "Do the weekly self-study sets: they cover each week's lectures in the exam style and give 200 points each, which can lift your grade.",
+    "Spend little time on the history lecture beyond the main machines, people and dates; it is one question of 200 to 300 points per midterm."
+  ]
+}

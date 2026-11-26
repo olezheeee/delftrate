@@ -1,0 +1,40 @@
+{
+  "course": "CSE200",
+  "title": "Software Project",
+  "available": false,
+  "summary": "There is no exam. At the end of the project the software project committee grades the team on exploration, product, process, and the final presentation with Q&A, and the writing lecturer grades the report. Every part needs at least a 5.0 and the combined grade at least a 5.8, and only the report can be repaired. To be admitted you need CSE11B, CSE100, CSE13B and CSE12B, the SP Bootcamp and a registration on Project Forum.",
+  "basis": {
+    "papers": [],
+    "note": "The archive holds no exam papers: the course is assessed as a project. What is said here comes from the official course description, the course and report rubrics, and the TU Write report guide."
+  },
+  "format": {
+    "mode": "Team project for an external client, assessed on the final report, the code and its tests, and an on-campus final presentation with a live demo and Q&A",
+    "duration": "The whole of quarter 4, full time (15 EC, about 42 hours a week); no timed exam",
+    "structure": "Deliverables: a project plan; a working product with tests and documentation (code comments, README with dependencies, build steps and APIs); a final report of at most 12,000 words from introduction to conclusion, uploaded with a change log and an AI-use document; and the final presentation. Before that: a draft report, a self-assessment, writing assignments, a code of conduct and an individual reflection.",
+    "grading": "Exploration 20 percent, product 35 percent, report 15 percent (graded by the writing lecturer), process 20 percent, presentation and Q&A 10 percent. Each part needs 5.0 and the total 5.8. The report scores ten criteria at 1, 4, 7 or 10 points, grade = points / 10. A failed report can be resubmitted for at most 6.0; the other parts have no repair. One student's grade can be lowered for too little contribution.",
+    "aids": "Generative AI may be used for the report if you declare how in the preface footnote and describe the tools and prompts in a separate document."
+  },
+  "topicWeights": [],
+  "questionTypes": [],
+  "recurring": [],
+  "trends": [
+    "From 2026-27 the course code is CSE200 instead of CSE2000, and the entry requirements are new: CSE11B, CSE100, CSE13B and CSE12B plus the mandatory SP Bootcamp."
+  ],
+  "strategy": [
+    "Plan by the weights: the product is the largest part (35 percent), judged on systematic quality assurance with several methods, sound architecture and workflows, fit with the client's problem, and documentation.",
+    "Exploration is a fifth of the grade: make the problem analysis, the risks, the justified requirements and the research behind your design choices visible in the report, since the committee reads them there.",
+    "The process grade rewards a plan you follow and adjust, your own initiative, critical reflection on your choices and good contact with TA, client and coach; keep planning records and meeting notes as evidence.",
+    "The difficulty of the assignment and the novelty of the solution count in the grade, so explain in the report and presentation what made the problem hard.",
+    "Use the draft round: say which parts you want feedback on, score the draft yourselves with the rubric, bring three questions to the draft meeting, then log every change for the final upload.",
+    "Write each report chapter for its reader: the CEO reads summary, introduction, problem and conclusion; the CTO reads requirements, design and testing; the next team reads the appendices.",
+    "Rehearse the presentation so it covers research, design and product, the demo runs smoothly, and every member can answer questions on any part of the work."
+  ],
+  "pitfalls": [
+    "A partial grade below 5.0 fails the whole team, however good the other parts are, and only the report has a second chance, capped at 6.0.",
+    "Report killer criteria: a plagiarism issue, a missing AI declaration, a missing required part, missing assignment content or exceeding the word limit makes the report insufficient at once, and the new version counts as the resit.",
+    "The report fails if more than two of its ten criteria score poor, or more than four score mediocre or lower, even when the total looks fine.",
+    "Too few or badly handled sources: fewer than 10 references or fewer than 5 scientific ones, citations that do not match the list, or a mix of styles.",
+    "Leaving out appendices the guide asks for: the full requirements table with which ones were met, and a division-of-labour overview of at most one A4.",
+    "The Q&A criterion asks that all members answer clearly and show they master the work, so a team where one person does the talking loses points; a student who contributed too little can also get a lower grade than the team."
+  ]
+}
