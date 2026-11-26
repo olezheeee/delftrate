@@ -1,0 +1,220 @@
+{
+  "course": "CSE11C",
+  "source": {
+    "name": "Lightspace",
+    "title": "Computer Organisation",
+    "url": "https://lightspace.study/courses/computer-organisation",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Crash Course Computer Science",
+          "url": "https://youtube.com/playlist?list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo"
+        },
+        {
+          "title": "2018 endterm solved",
+          "url": "https://www.youtube.com/watch?v=DXvg_-Xxf98"
+        },
+        {
+          "title": "Turing Complete",
+          "url": "https://turingcomplete.game/"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 0 - Introduction",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%200%20-%20Introduction.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 1 - History",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%201%20-%20History.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 2 - Assembly",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%202%20-%20Assembly.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 3 - Logic Circuits Part 1",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%203%20-%20Logic%20Circuits%20Part%201.pdf",
+          "size": "806 KB"
+        },
+        {
+          "title": "Lecture 4 - Logic Circuits Part 2",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%204%20-%20Logic%20Circuits%20Part%202.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 5 - Data Representation Part 1",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%205%20-%20Data%20Representation%20Part%201.pdf",
+          "size": "411 KB"
+        },
+        {
+          "title": "Lecture 6 - Data Representation Part 2",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%206%20-%20Data%20Representation%20Part%202.pdf",
+          "size": "388 KB"
+        },
+        {
+          "title": "Lecture 7 - ISA Part 1",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%207%20-%20ISA%20Part%201.pdf",
+          "size": "833 KB"
+        },
+        {
+          "title": "Lecture 8 - ISA Part 2",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%208%20-%20ISA%20Part%202.pdf",
+          "size": "363 KB"
+        },
+        {
+          "title": "Lecture 9 - BPU Part 1",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%209%20-%20BPU%20Part%201.pdf",
+          "size": "627 KB"
+        },
+        {
+          "title": "Lecture 10 - BPU Part 2",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%2010%20-%20BPU%20Part%202.pdf",
+          "size": "571 KB"
+        },
+        {
+          "title": "Lecture 11 - IO",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%2011%20-%20IO.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 12 - Memory",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%2012%20-%20Memory.pdf",
+          "size": "939 KB"
+        },
+        {
+          "title": "Lecture 13 - Caching",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%2013%20-%20Caching.pdf",
+          "size": "502 KB"
+        },
+        {
+          "title": "Lecture 14 - Pipelining",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%2014%20-%20Pipelining.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 15 - Parallel & Virtual Memory",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Lectures/CO%20Lecture%2015%20-%20Parallel%20%26%20Virtual%20Memory.pdf",
+          "size": "530 KB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2020",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Endterms/CO%20Endterm%202020.pdf",
+          "size": "578 KB"
+        },
+        {
+          "title": "Endterm 2021",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Endterms/CO%20Endterm%202021.pdf",
+          "size": "357 KB"
+        },
+        {
+          "title": "Endterm 2022",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Endterms/CO%20Endterm%202022.pdf",
+          "size": "712 KB"
+        },
+        {
+          "title": "Endterm 2023",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Endterms/CO%20Endterm%202023.pdf",
+          "size": "404 KB"
+        },
+        {
+          "title": "Endterm 2024",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Endterms/CO%20Endterm%202024.pdf",
+          "size": "712 KB"
+        },
+        {
+          "title": "Endterm 2025 Solutions",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Endterms/CO%20Endterm%202025%20Solutions.pdf",
+          "size": "432 KB"
+        },
+        {
+          "title": "Midterm 2020",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Midterms/CO%20Midterm%202020.pdf",
+          "size": "1014 KB"
+        },
+        {
+          "title": "Midterm 2021",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Midterms/CO%20Midterm%202021.pdf",
+          "size": "416 KB"
+        },
+        {
+          "title": "Midterm 2022",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Midterms/CO%20Midterm%202022.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Midterm 2024",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Midterms/CO%20Midterm%202024.pdf",
+          "size": "562 KB"
+        },
+        {
+          "title": "Midterm 2025 Solutions",
+          "section": "Midterms",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Midterms/CO%20Midterm%202025%20Solutions.pdf",
+          "size": "542 KB"
+        },
+        {
+          "title": "Resit 2023",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Resits/CO%20Resit%202023.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Resit 2024",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Resits/CO%20Resit%202024.pdf",
+          "size": "999 KB"
+        },
+        {
+          "title": "Resit 2025 Solutions",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Exams/CO%20Resits/CO%20Resit%202025%20Solutions.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "url": "https://lightspace.study/courses/computer-organisation/read/CO%20Notes.pdf",
+          "size": "2 MB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Computer Organization and Embedded Systems"
+        }
+      ]
+    }
+  ]
+}

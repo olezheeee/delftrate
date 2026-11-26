@@ -3,6 +3,9 @@
 // The card of one course: the combined score, the subject block, the professor block with
 // its selector, and the six rating sliders.
 //
+// Between the professor block and the sliders sits "Resources" (Resources.tsx): the study
+// material and the two booklets of the course.
+//
 // This is a basic outline. Still to do (Pack 4 and Pack 5): the final look of the card,
 // ranks and study tips, and posting the rating through submit_rating().
 import Link from "next/link";
@@ -10,8 +13,10 @@ import { useState, type CSSProperties } from "react";
 import { programmeName } from "@/lib/auth/programmes";
 import type { CourseDetails } from "@/lib/course-sheet-data";
 import { PROFESSOR_CRITERIA, SUBJECT_CRITERIA, type CourseSheet } from "@/lib/course-sheet";
+import type { CourseResources } from "@/lib/resources";
 import { VERDICT_LABELS } from "@/lib/score";
 import styles from "./CourseCard.module.css";
+import { Resources, type BookletSummary } from "./Resources";
 
 const MIN_VOTES_NOTE = "Not enough votes yet";
 
@@ -102,7 +107,17 @@ function Slider({
   );
 }
 
-export function CourseCard({ course, sheet }: { course: CourseDetails; sheet: CourseSheet }) {
+export function CourseCard({
+  course,
+  sheet,
+  resources,
+  booklets,
+}: {
+  course: CourseDetails;
+  sheet: CourseSheet;
+  resources: CourseResources | null;
+  booklets: BookletSummary;
+}) {
   const [professorId, setProfessorId] = useState(sheet.startProfessorId);
   const [rating, setRating] = useState<Record<string, number>>({});
 
@@ -191,6 +206,8 @@ export function CourseCard({ course, sheet }: { course: CourseDetails; sheet: Co
           <p className={styles.waiting}>No professor is listed for this course yet.</p>
         )}
       </section>
+
+      <Resources code={course.code} resources={resources} booklets={booklets} />
 
       <section className={styles.block} aria-labelledby="rating-title">
         <div className={styles.blockHead}>

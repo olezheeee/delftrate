@@ -1,0 +1,219 @@
+{
+  "course": "CSE12B",
+  "source": {
+    "name": "Lightspace",
+    "title": "Human Computer Interaction and AI-Assisted Prototyping",
+    "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "CSE1500 web transcripts",
+          "url": "https://chauff.github.io/cse1500-web-transcripts/"
+        },
+        {
+          "title": "2019 Web resit solved",
+          "url": "https://www.youtube.com/watch?v=XkHI_LSsIAA"
+        },
+        {
+          "title": "Community notes (Notion)",
+          "url": "https://plain-pocket-06a.notion.site/Human-Computer-Interaction-0999b64f4f4e437dbc259dd3058725d9"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Introduction to HCI",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%201%20-%20Introduction%20to%20HCI.pdf",
+          "size": "49 MB"
+        },
+        {
+          "title": "Lecture 2 - Requirements and Information Architecture",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%202%20-%20Requirements%20and%20Information%20Architecture.pdf",
+          "size": "9 MB"
+        },
+        {
+          "title": "Lecture 3 - User Experience and Accessibility",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%203%20-%20User%20Experience%20and%20Accessibility.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 4 - Design and Prototyping",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%204%20-%20Design%20and%20Prototyping.pdf",
+          "size": "27 MB"
+        },
+        {
+          "title": "Lecture 5 - Expert Evaluation",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%205%20-%20Expert%20Evaluation.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 6 - User Evaluation and Controlled Experiments",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%206%20-%20User%20Evaluation%20and%20Controlled%20Experiments.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 7 - Interactive Systems",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%207%20-%20Interactive%20Systems.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 8 - Conversational Interfaces",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%208%20-%20Conversational%20Interfaces.pdf",
+          "size": "7 MB"
+        },
+        {
+          "title": "Lecture 9 - Exam Prep",
+          "section": "From HCI",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Lectures/HCI%20Lecture%209%20-%20Exam%20Prep.pdf",
+          "size": "221 KB"
+        },
+        {
+          "title": "Lecture 1 - Why Web Technology & HTTP",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%201%20-%20Why%20Web%20Technology%20%26%20HTTP.pdf",
+          "size": "8 MB"
+        },
+        {
+          "title": "Lecture 2 - HTML and CSS",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%202%20-%20HTML%20and%20CSS.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 3 - JavaScript",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%203%20-%20JavaScript.pdf",
+          "size": "940 KB"
+        },
+        {
+          "title": "Lecture 4 - REST and RESTful APIs",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%204%20-%20REST%20and%20RESTful%20APIs.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 5 - NodeJS and Express",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%205%20-%20NodeJS%20and%20Express.pdf",
+          "size": "630 KB"
+        },
+        {
+          "title": "Lecture 6 - NodeJS & Postgres & Design Patterns",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%206%20-%20NodeJS%20%26%20Postgres%20%26%20Design%20Patterns.pdf",
+          "size": "832 KB"
+        },
+        {
+          "title": "Lecture 7 - More About React",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%207%20-%20More%20About%20React.pdf",
+          "size": "319 KB"
+        },
+        {
+          "title": "Lecture 8 - Real-time Applications with Web Sockets",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lectures/WDT%20WEB%20Lecture%208%20-%20Real-time%20Applications%20with%20Web%20Sockets.pdf",
+          "size": "984 KB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Expert Analysis Practice Solutions",
+          "section": "From HCI / Exam Practice",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Exam%20Practice/HCI%20Expert%20Analysis%20Practice%20Solutions.pdf",
+          "size": "149 KB"
+        },
+        {
+          "title": "General Exam Practice Solutions",
+          "section": "From HCI / Exam Practice",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Exam%20Practice/HCI%20General%20Exam%20Practice%20Solutions.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Inclusivity Practice Solutions",
+          "section": "From HCI / Exam Practice",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20HCI/HCI%20Exam%20Practice/HCI%20Inclusivity%20Practice%20Solutions.pdf",
+          "size": "1003 KB"
+        },
+        {
+          "title": "Endterm 2020",
+          "section": "From WDT WEB / Endterms",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Exams/WDT%20WEB%20Endterms/WDT%20WEB%20Endterm%202020.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Endterm 2022",
+          "section": "From WDT WEB / Endterms",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Exams/WDT%20WEB%20Endterms/WDT%20WEB%20Endterm%202022.pdf",
+          "size": "1015 KB"
+        },
+        {
+          "title": "Endterm 2024",
+          "section": "From WDT WEB / Endterms",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Exams/WDT%20WEB%20Endterms/WDT%20WEB%20Endterm%202024.pdf",
+          "size": "782 KB"
+        },
+        {
+          "title": "Practice Endterm",
+          "section": "From WDT WEB / Endterms",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Exams/WDT%20WEB%20Endterms/WDT%20WEB%20Practice%20Endterm.pdf",
+          "size": "1016 KB"
+        },
+        {
+          "title": "Resit 2024",
+          "section": "From WDT WEB / Resits",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Exams/WDT%20WEB%20Resits/WDT%20WEB%20Resit%202024.pdf",
+          "size": "561 KB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Lab Assignment 4 Solutions",
+          "section": "From WDT WEB / Lab Assignment Solutions",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Lab%20Assignment%20Solutions/WDT%20WEB%20Lab%20Assignment%204%20Solutions.pdf",
+          "size": "273 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "section": "From WDT WEB",
+          "url": "https://lightspace.study/courses/human-computer-interaction-and-ai-assisted-prototyping/read/From%20WDT%20WEB/WDT%20WEB%20Notes.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Designing User Experience",
+          "section": "From HCI"
+        }
+      ]
+    }
+  ]
+}
