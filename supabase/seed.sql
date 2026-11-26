@@ -3,8 +3,8 @@
 --
 -- It holds no users. Every vote here is a manual vote, which needs no account, so the
 -- averages work on a project where nobody has registered yet.
--- Safe to run twice: rows that already exist are left alone. An example course whose code
--- is already taken by a real course is skipped, together with its links and votes.
+-- Safe to run twice: rows that already exist are left alone. A course of this file whose
+-- code is already taken by a real course is skipped, together with its links and votes.
 --
 -- What to expect when signed in as a student:
 --   CSE1001  two professors with enough votes; van Houten is the best rated one
@@ -138,7 +138,13 @@ on conflict do nothing;
 -- no votes: those come with the course import (Pack 3), which also replaces this list.
 -- The AE sheet prints WI1421LR on both halves of Calculus I, so it is one course here.
 -- The example courses above have no quarters and do not appear in the calendar.
-insert into public.courses (code, name, programme_id, year, quarters) values
+--
+-- Each course gets a fixed id made from its code. The lecturer links further down find a
+-- course by that id, so they reach only the rows this file created: a real course that
+-- already holds the code keeps its own id and gets no lecturers from here.
+insert into public.courses (id, code, name, programme_id, year, quarters)
+select md5('delftrate seed course ' || v.code)::uuid, v.code, v.name, v.programme_id, v.year, v.quarters::smallint[]
+from (values
   ('AE1111-I', 'Exploring Aerospace Engineering', 'AE', 1, '{1,2}'),
   ('AE1111-II', 'Engineering Drawing', 'AE', 1, '{1,2}'),
   ('AE1222-I', 'Design & Construction', 'AE', 1, '{3,4}'),
@@ -197,7 +203,8 @@ insert into public.courses (code, name, programme_id, year, quarters) values
   ('CSE23A', 'Computer Security', 'CSE', 2, '{3}'),
   ('CSE200', 'Software Project', 'CSE', 2, '{4}'),
   ('CSE300', 'Research Project', 'CSE', 3, '{4}')
-on conflict (code) do nothing;
+) as v (code, name, programme_id, year, quarters)
+on conflict do nothing;
 
 -- The lecturers of the first-year CSE courses, as the TU Delft study guide 2026-2027 lists
 -- them (lecturers only, not responsible lecturers). CSE11B, CSE13B and CSE13C list none.
@@ -229,6 +236,6 @@ from (values
   ('CSE100', '00000000-0000-4000-a000-000000000308'),
   ('CSE100', '00000000-0000-4000-a000-000000000309')
 ) as l (code, professor_id)
-join public.courses c on c.code = l.code
+join public.courses c on c.id = md5('delftrate seed course ' || l.code)::uuid
 where exists (select 1 from public.professors p where p.id = l.professor_id)
 on conflict do nothing;

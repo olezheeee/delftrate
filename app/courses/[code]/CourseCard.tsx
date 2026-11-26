@@ -99,8 +99,10 @@ function Slider({
         aria-valuetext={value === null ? "Not rated yet" : `${one(value)} out of 10`}
         style={{ "--p": `${shown * 10}%` } as CSSProperties}
         onChange={(event) => onChange(Number(event.target.value))}
-        // A click or a key press on the starting position is a rating of 5 as well.
-        onPointerDown={() => value === null && onChange(shown)}
+        // A click or a key press on the starting position is a rating of 5 as well. A click and
+        // not a pointer down: a finger that starts scrolling the page on a slider is a pointer
+        // down too, and must not count as a rating.
+        onClick={(event) => value === null && onChange(Number(event.currentTarget.value))}
         onKeyDown={(event) => value === null && event.key.startsWith("Arrow") && onChange(shown)}
       />
     </div>
@@ -123,8 +125,14 @@ export function CourseCard({
 
   const professor = sheet.professors.find((p) => p.id === professorId) ?? null;
   const combined = professor?.combined ?? null;
-  const criteria = professor ? [...SUBJECT_CRITERIA, ...PROFESSOR_CRITERIA] : SUBJECT_CRITERIA;
-  const left = criteria.filter((criterion) => rating[criterion.key] === undefined).length;
+  // A professor's three values are kept under that professor, so they stay behind when
+  // another professor is picked.
+  const professorKey = (criterion: Criterion) => `${professor?.id}:${criterion.key}`;
+  const keys = [
+    ...SUBJECT_CRITERIA.map((criterion) => criterion.key),
+    ...(professor ? PROFESSOR_CRITERIA.map(professorKey) : []),
+  ];
+  const left = keys.filter((key) => rating[key] === undefined).length;
   const set = (key: string) => (value: number) => setRating((current) => ({ ...current, [key]: value }));
 
   return (
@@ -217,7 +225,7 @@ export function CourseCard({
           <span className={styles.legend}>0 to 10, half-point steps</span>
         </div>
         {/* Outline only: nothing is saved yet. Posting goes through submit_rating() (Pack 5). */}
-        <form className={styles.form} onSubmit={(event) => event.preventDefault()} noValidate>
+        <form onSubmit={(event) => event.preventDefault()} noValidate>
           <h3 className={styles.group}>The subject</h3>
           {SUBJECT_CRITERIA.map((criterion) => (
             <Slider
@@ -233,11 +241,11 @@ export function CourseCard({
               <h3 className={styles.group}>{professor.name}</h3>
               {PROFESSOR_CRITERIA.map((criterion) => (
                 <Slider
-                  key={criterion.key}
+                  key={professorKey(criterion)}
                   id={`rate-${criterion.key}`}
                   criterion={criterion}
-                  value={rating[criterion.key] ?? null}
-                  onChange={set(criterion.key)}
+                  value={rating[professorKey(criterion)] ?? null}
+                  onChange={set(professorKey(criterion))}
                 />
               ))}
             </>

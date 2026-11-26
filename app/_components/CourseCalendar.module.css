@@ -57,6 +57,16 @@
   border-radius: 16px;
   color: hsl(var(--fg) / 0.7);
 }
+/* Read out by a screen reader, not shown: the grid says the same to the eye. */
+.announce {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .hint {
   margin: 0;
   font-size: 14px;

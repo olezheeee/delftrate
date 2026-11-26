@@ -60,6 +60,10 @@ export function CourseCalendar({
     );
   }, [courses, choice]);
 
+  const listed = layout
+    ? layout.blocks.reduce((sum, block) => sum + block.item.courses.length, 0)
+    : 0;
+
   return (
     <section className={styles.calendar} aria-label="Course schedule">
       <div className={styles.steps}>
@@ -102,6 +106,8 @@ export function CourseCalendar({
         </div>
       </div>
 
+      {/* Only this short line is read out when the choice changes. With the grid inside it, a
+          screen reader would read every course of the year after each press of a pill. */}
       <div aria-live="polite">
         {courses === null ? (
           <p className={styles.message}>
@@ -114,74 +120,81 @@ export function CourseCalendar({
             Now pick a year of {programmeName(choice.programme)}.
           </p>
         ) : layout && layout.rows > 0 ? (
-          // The key restarts the entrance animation when the choice changes.
-          <div className={styles.scroll} key={`${choice.programme}-${choice.year}`}>
-            <div
-              className={styles.grid}
-              style={{ gridTemplateRows: `auto repeat(${layout.rows}, minmax(84px, auto))` }}
-            >
-              {QUARTERS.map((quarter) => (
-                <div
-                  key={quarter}
-                  className={styles.lane}
-                  style={{ gridColumn: quarter, gridRow: `1 / span ${layout.rows + 1}` }}
-                />
-              ))}
-              {/* The names sit in a row of their own: a lane spans every row, so it cannot
-                  give the first row its height. */}
-              {QUARTERS.map((quarter) => (
-                <span
-                  key={quarter}
-                  className={`mono ${styles.quarter}`}
-                  style={{ gridColumn: quarter, gridRow: 1 }}
-                >
-                  Q{quarter}
-                </span>
-              ))}
-              {layout.blocks.map((block, index) => {
-                const { item } = block;
-                const style = { ...cell(block, 1), "--i": index } as CSSProperties;
-                if (!item.isModule) {
-                  return (
-                    <CourseLink
-                      key={item.code}
-                      course={item.courses[0].item}
-                      signedIn={signedIn}
-                      className={`${styles.block} ${styles.course}`}
-                      style={style}
-                    />
-                  );
-                }
-                return (
-                  <div key={item.code} className={`${styles.block} ${styles.module}`} style={style}>
-                    <span className={styles.moduleCode}>{item.code}</span>
-                    <div
-                      className={styles.parts}
-                      style={{
-                        gridTemplateColumns: `repeat(${block.span}, minmax(0, 1fr))`,
-                      }}
-                    >
-                      {item.courses.map((part) => (
-                        <CourseLink
-                          key={part.item.code}
-                          course={part.item}
-                          signedIn={signedIn}
-                          className={`${styles.course} ${styles.part}`}
-                          style={cell(part)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <p className={styles.announce}>
+            {listed} {listed === 1 ? "course" : "courses"} in year {choice.year} of{" "}
+            {programmeName(choice.programme)}.
+          </p>
         ) : (
           <p className={styles.message}>
             No courses are listed for year {choice.year} of {programmeName(choice.programme)} yet.
           </p>
         )}
       </div>
+
+      {layout && layout.rows > 0 && (
+        // The key restarts the entrance animation when the choice changes.
+        <div className={styles.scroll} key={`${choice.programme}-${choice.year}`}>
+          <div
+            className={styles.grid}
+            style={{ gridTemplateRows: `auto repeat(${layout.rows}, minmax(84px, auto))` }}
+          >
+            {QUARTERS.map((quarter) => (
+              <div
+                key={quarter}
+                className={styles.lane}
+                style={{ gridColumn: quarter, gridRow: `1 / span ${layout.rows + 1}` }}
+              />
+            ))}
+            {/* The names sit in a row of their own: a lane spans every row, so it cannot
+                give the first row its height. */}
+            {QUARTERS.map((quarter) => (
+              <span
+                key={quarter}
+                className={`mono ${styles.quarter}`}
+                style={{ gridColumn: quarter, gridRow: 1 }}
+              >
+                Q{quarter}
+              </span>
+            ))}
+            {layout.blocks.map((block, index) => {
+              const { item } = block;
+              const style = { ...cell(block, 1), "--i": index } as CSSProperties;
+              if (!item.isModule) {
+                return (
+                  <CourseLink
+                    key={item.code}
+                    course={item.courses[0].item}
+                    signedIn={signedIn}
+                    className={`${styles.block} ${styles.course}`}
+                    style={style}
+                  />
+                );
+              }
+              return (
+                <div key={item.code} className={`${styles.block} ${styles.module}`} style={style}>
+                  <span className={styles.moduleCode}>{item.code}</span>
+                  <div
+                    className={styles.parts}
+                    style={{
+                      gridTemplateColumns: `repeat(${block.span}, minmax(0, 1fr))`,
+                    }}
+                  >
+                    {item.courses.map((part) => (
+                      <CourseLink
+                        key={part.item.code}
+                        course={part.item}
+                        signedIn={signedIn}
+                        className={`${styles.course} ${styles.part}`}
+                        style={cell(part)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {layout && layout.rows > 0 && !signedIn && (
         <p className={styles.hint}>Opening a course asks you to log in first.</p>
