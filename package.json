@@ -13,6 +13,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "db:push": "supabase db push --remote",
+    "db:import:sql": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON lib/courseImport/cli.mjs",
+    "db:import": "npm run db:import:sql && supabase db query --remote --file supabase/.temp/course_import.sql && supabase db query --remote --file supabase/.temp/course_totals.sql",
     "db:types": "node scripts/db_types.mjs"
   },
   "dependencies": {
