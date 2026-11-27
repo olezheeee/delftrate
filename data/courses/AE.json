@@ -18,14 +18,14 @@
     },
     {
       "code": "AE1110-I",
-      "name": "Introduction to Aerospace Engineering I",
+      "name": "Introduction to Aerospace Engineering-I",
       "year": 1,
       "quarters": [1],
       "professors": ["J M Hoekstra", "F Scarano", "J A Melkert"]
     },
     {
       "code": "AE1110-II",
-      "name": "Introduction to Aerospace Engineering II",
+      "name": "Introduction to Aerospace Engineering-II",
       "year": 1,
       "quarters": [2],
       "professors": ["R C Alderliesten", "E Mooij"]
@@ -213,28 +213,28 @@
     },
     {
       "code": "AE2235-I",
-      "name": "Aerospace Systems & Control Theory",
+      "name": "Aerospace Systems and Control Theory",
       "year": 2,
       "quarters": [4],
       "professors": ["C C Visser"]
     },
     {
       "code": "AE2235-II",
-      "name": "Signal Analysis & Telecommunication Principles",
+      "name": "Signal Analysis and Telecommunication Principles",
       "year": 2,
       "quarters": [4],
       "professors": ["M Mulder"]
     },
     {
-      "code": "WI2180LR-I",
+      "code": "WI2180-I",
       "name": "Differential Equations",
       "year": 2,
       "quarters": [1],
       "professors": ["A B T Barbaro"]
     },
     {
-      "code": "WI2180LR-II",
-      "name": "Probability & Statistics",
+      "code": "WI2180-II",
+      "name": "Probability and Statistics",
       "year": 2,
       "quarters": [1],
       "professors": ["N Kleijn"]
