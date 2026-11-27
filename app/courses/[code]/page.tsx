@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { requireUser } from "@/lib/auth/session";
-import { getCourseSheet } from "@/lib/course-sheet-data";
+import { requireProfile } from "@/lib/auth/session";
+import { getCourseSheet, getOwnRating } from "@/lib/course-sheet-data";
+import { ratingLock } from "@/lib/rating";
 import { papersNoun } from "@/lib/resources";
 import { getCourseMaterial } from "@/lib/resources-data";
 import { CourseCard } from "./CourseCard";
@@ -27,17 +28,39 @@ export default function CoursePage({ params }: PageProps<"/courses/[code]">) {
   );
 }
 
+// The code from the address. A broken escape such as "%E0" names no course, so it is the
+// not-found page rather than a server error.
+function courseCode(raw: string): string {
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    notFound();
+  }
+}
+
 async function Course({ params }: { params: PageProps<"/courses/[code]">["params"] }) {
   const { code } = await params;
-  await requireUser();
-  const found = await getCourseSheet(decodeURIComponent(code));
+  // The programme decides whether the user may rate, so an account without a profile is
+  // sent to finish it first.
+  const { user, profile } = await requireProfile();
+  const found = await getCourseSheet(courseCode(code));
   if (!found) notFound();
   // The study material is keyed by the course code as the database spells it.
-  const material = await getCourseMaterial(found.course.code);
+  const [material, ownRating] = await Promise.all([
+    getCourseMaterial(found.course.code),
+    getOwnRating(found.course.id, user.id),
+  ]);
+  const lock = ratingLock({
+    userProgramme: profile.programme_id,
+    courseProgramme: found.course.programme,
+    professorCount: found.sheet.professors.length,
+  });
   return (
     <CourseCard
       course={found.course}
       sheet={found.sheet}
+      ownRating={ownRating}
+      lock={lock}
       resources={material.resources}
       booklets={{
         knowledge: material.knowledge && {
