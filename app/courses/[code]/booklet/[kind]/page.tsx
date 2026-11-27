@@ -8,6 +8,9 @@ import { getCourseMaterial } from "@/lib/resources-data";
 import styles from "./Booklet.module.css";
 import { ExamBookletView } from "./ExamBookletView";
 import { KnowledgeBookletView } from "./KnowledgeBookletView";
+import { SketchExam } from "./sketch/SketchExam";
+import { SketchKnowledge } from "./sketch/SketchKnowledge";
+import { HAND_DRAWN } from "./sketch/trial";
 
 export const metadata: Metadata = { title: "Booklet — DelftRate" };
 
@@ -37,6 +40,16 @@ async function Booklet({ params }: { params: PageProps<"/courses/[code]/booklet/
   // A booklet belongs to a course of the site: without the course, its link back leads
   // nowhere. And the two booklets come as a pair: each one links to the other.
   if (!exists || !knowledge || !exams) notFound();
+
+  // The hand-drawn look is on trial for some courses. It draws diagrams of exam points, so
+  // it is for courses with past papers.
+  if (HAND_DRAWN.has(knowledge.course) && exams.available) {
+    return kind === "knowledge" ? (
+      <SketchKnowledge knowledge={knowledge} exams={exams} />
+    ) : (
+      <SketchExam exams={exams} knowledge={knowledge} />
+    );
+  }
 
   return kind === "knowledge" ? (
     <KnowledgeBookletView knowledge={knowledge} exams={exams} />

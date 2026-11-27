@@ -3,9 +3,9 @@
 import styles from "./Booklet.module.css";
 
 // A booklet is something to print or save as a PDF. The page has its own print layout.
-export function PrintButton() {
+export function PrintButton({ className = styles.print }: { className?: string }) {
   return (
-    <button type="button" className={styles.print} onClick={() => window.print()}>
+    <button type="button" className={className} onClick={() => window.print()}>
       Print or save as PDF
     </button>
   );

@@ -1,0 +1,540 @@
+/* The hand-drawn booklet (trial, Pack 10): black ink on a white sheet, written in one
+   hand, with the diagrams coloured in pencil. Colour is kept for the diagrams; the text
+   and the lines are ink. Nothing is tilted and nothing moves when the page scrolls. */
+.sheet {
+  --paper: #fff;
+  /* A warm near-black, as ink on paper is. 17:1 on the sheet. */
+  --ink: #1c1b19;
+  /* For labels and side notes only. 7:1 on the sheet. */
+  --ink-soft: #5a5750;
+  --rule: rgb(28 27 25 / 0.15);
+
+  width: 100%;
+  max-width: 860px;
+  padding: clamp(20px, 5vw, 56px) clamp(20px, 6vw, 60px) clamp(36px, 7vw, 72px);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-hand), "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-size: 18px;
+  line-height: 1.6;
+  font-variation-settings: "INFM" 40;
+}
+.sheet p {
+  margin: 0;
+  max-width: 62ch;
+}
+.sheet p + p {
+  margin-top: 0.7em;
+}
+.sheet a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-thickness 0.15s;
+}
+.sheet a:hover {
+  text-decoration-thickness: 2.5px;
+}
+.sheet :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---- Drawn lines ---- */
+/* The pen: outlines, underlines, ticks. The pencil: hatching in a colour. A drawing that
+   is stretched to fit (a bar, an underline) keeps the width of its lines. */
+.pen,
+.pencil {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.pen {
+  stroke-width: 1.5;
+}
+.pencil {
+  stroke-width: 1.7;
+}
+
+/* ---- Top of the sheet ---- */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 24px;
+  margin-bottom: clamp(20px, 5vw, 44px);
+  font-size: 16px;
+}
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.head {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+.title {
+  margin: 0;
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  font-variation-settings: "INFM" 100;
+}
+/* "what to know" on its own line under the course, underlined by hand. */
+.title span {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin-top: 0.15em;
+  padding-bottom: 0.2em;
+  font-size: 0.56em;
+  font-weight: 500;
+}
+/* In the text, not on the sheet. */
+.unseen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.lead {
+  font-size: 19px;
+}
+.button {
+  min-height: 46px;
+  margin-top: 6px;
+  padding: 8px 20px;
+  border: 1.6px solid var(--ink);
+  /* An oval drawn by hand: no two corners alike. */
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.12s,
+    background-color 0.12s,
+    color 0.12s;
+}
+.button:hover {
+  transform: translateY(-2px);
+  background: var(--ink);
+  color: var(--paper);
+}
+.button:active {
+  transform: translateY(1px);
+}
+
+/* ---- Sections ---- */
+.section {
+  margin-top: clamp(44px, 8vw, 72px);
+}
+.heading {
+  position: relative;
+  width: fit-content;
+  margin: 0 0 22px;
+  padding-bottom: 8px;
+  font-size: clamp(26px, 5vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  font-variation-settings: "INFM" 100;
+}
+.underline {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 8px;
+  overflow: visible;
+}
+.underline .pen {
+  stroke-width: 2;
+}
+.note {
+  margin-top: 22px !important;
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+
+/* ---- A circle diagram with its list ---- */
+.figure {
+  display: grid;
+  grid-template-columns: minmax(0, 290px) minmax(0, 1fr);
+  gap: 20px clamp(20px, 4vw, 40px);
+  align-items: start;
+}
+.pie {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  /* Stays beside the list while the list is read. */
+  position: sticky;
+  top: 16px;
+  overflow: visible;
+}
+.hit {
+  fill: none;
+  pointer-events: all;
+}
+.slice .pencil {
+  transition: stroke-width 0.15s;
+}
+.slice:hover .pencil {
+  stroke-width: 2.6;
+}
+.mark {
+  fill: var(--ink);
+  font-size: 17px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  /* Paper around the figure, so it reads on the hatching. */
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.swatch {
+  width: 40px;
+  height: 18px;
+}
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--rule);
+}
+.row:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+.badge {
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
+.badge .mark {
+  font-size: 16px;
+  stroke-width: 4px;
+}
+.rowHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0 16px;
+  min-height: 36px;
+  line-height: 1.3;
+}
+.rowHead a,
+.rowHead b {
+  font-weight: 600;
+}
+.rowHead a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+.rowHead span {
+  color: var(--ink-soft);
+  font-size: 16px;
+  white-space: nowrap;
+}
+.bars {
+  display: grid;
+  gap: 2px;
+  margin: 4px 0 0;
+}
+.bars div {
+  display: grid;
+  grid-template-columns: 4.6em minmax(0, 1fr);
+  align-items: center;
+}
+.bars dt {
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+.bars dd {
+  margin: 0;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+}
+.bar svg {
+  flex: none;
+  height: 18px;
+  min-width: 6px;
+  overflow: visible;
+}
+.barValue {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.asks {
+  margin-top: 6px !important;
+  font-size: 17px;
+}
+
+/* ---- Topics ---- */
+.topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.topic {
+  padding: 30px 0;
+  border-top: 1px solid var(--rule);
+  /* A link from the list lands with the heading below the top of the window. */
+  scroll-margin-top: 12px;
+}
+.topic:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+.topicHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.topicHead h3 {
+  margin: 0;
+  font-size: clamp(21px, 4vw, 24px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.meta {
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+.meta + .meta {
+  margin-top: 2px !important;
+}
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px clamp(20px, 4vw, 40px);
+  margin-top: 18px;
+}
+.sheet h4 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 62ch;
+}
+.lines li {
+  position: relative;
+  padding-left: 1.5em;
+}
+.lines li + li {
+  margin-top: 8px;
+}
+.lines li::before {
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.lines[data-mark="dash"] li::before {
+  content: "–";
+}
+.lines[data-mark="arrow"] li::before {
+  content: "→";
+}
+.lines[data-mark="warning"] li::before {
+  content: "!";
+  left: 0.3em;
+}
+/* The one kind of box on the sheet: what to watch out for. */
+.box {
+  margin-top: 22px;
+  padding: 16px clamp(16px, 3vw, 24px) 18px;
+  border: 1.6px solid var(--ink);
+  border-radius: 255px 14px 225px 14px / 14px 225px 14px 255px;
+}
+
+/* ---- The format and the papers ---- */
+.format {
+  margin: 0;
+}
+.format div {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr);
+  gap: 4px 20px;
+  padding: 14px 0;
+  border-top: 1px solid var(--rule);
+}
+.format div:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.format dt {
+  font-weight: 700;
+}
+.format dd {
+  margin: 0;
+  max-width: 62ch;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 17px;
+}
+.table th,
+.table td {
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.table thead th {
+  border-bottom: 1.6px solid var(--ink);
+  font-weight: 700;
+}
+.table tbody th {
+  font-weight: 600;
+}
+.table td:nth-child(n + 3),
+.table thead th:nth-child(n + 3) {
+  text-align: right;
+  padding-right: 0;
+  padding-left: 14px;
+}
+.rests p {
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+
+/* ---- A narrow screen: one column, the circle on top ---- */
+/* For screens only: a printed page is about this wide and keeps the wide layout. */
+@media screen and (max-width: 720px) {
+  .figure {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pie {
+    position: static;
+    margin: 0 auto;
+  }
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .format div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* The table of papers, written out: the name, then "Resit, 11 questions, 43 points,
+     180 minutes" under it. */
+  .table,
+  .table tbody,
+  .table tr {
+    display: block;
+  }
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .table tr {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .table tbody th,
+  .table td,
+  .table td:nth-child(n + 3) {
+    display: inline;
+    padding: 0;
+    border: 0;
+    white-space: normal;
+  }
+  .table tbody th {
+    display: block;
+  }
+  .table td + td::before {
+    content: ", ";
+  }
+  .table td[data-unit]::after {
+    content: " " attr(data-unit);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet a,
+  .button,
+  .slice .pencil {
+    transition: none;
+  }
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
+}
+
+/* ---- On paper ---- */
+@media print {
+  .sheet {
+    max-width: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: 12.5pt;
+  }
+  .nav,
+  .button {
+    display: none;
+  }
+  .pie {
+    position: static;
+  }
+  .row,
+  .box,
+  .topicHead,
+  .format div,
+  .table tr {
+    break-inside: avoid;
+  }
+  .heading,
+  .topicHead {
+    break-after: avoid;
+  }
+}
