@@ -1,0 +1,229 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid hsl(0 0% 100% / 0.1);
+  border-radius: 16px;
+  background: #1f1f1f;
+  transition:
+    background-color 300ms var(--ease),
+    border-color 300ms var(--ease);
+}
+
+.tile:hover {
+  background: #272727;
+}
+
+.pressed,
+.pressed:hover {
+  border-color: rgb(127 208 247 / 0.5);
+}
+
+.label {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.hint {
+  margin-bottom: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: hsl(0 0% 100% / 0.5);
+}
+
+.dial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  outline: none;
+  transition: opacity 300ms var(--ease);
+}
+
+.unrated .dial {
+  opacity: 0.7;
+}
+
+.dial:focus-visible {
+  outline: 2px solid #7fd0f7;
+  outline-offset: 2px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tick {
+  stroke: #313131;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition:
+    stroke 300ms var(--ease),
+    opacity 300ms var(--ease);
+}
+
+.lit {
+  stroke: #7fd0f7;
+  opacity: 0.85;
+}
+
+.tile:hover .lit {
+  opacity: 1;
+}
+
+.tickLabel {
+  fill: hsl(0 0% 100% / 0.5);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.beam {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.beam:not(.follow) {
+  transition: transform 500ms var(--ease);
+}
+
+.wedge {
+  transition: fill 300ms var(--ease);
+}
+
+.ghost {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transform: translate(100px, 100px) rotate(270deg);
+  animation: drift 4s var(--ease) infinite alternate;
+}
+
+.ghostWedge {
+  fill: rgb(127 208 247 / 0.1);
+}
+
+@keyframes drift {
+  from {
+    transform: translate(100px, 100px) rotate(245deg);
+  }
+  to {
+    transform: translate(100px, 100px) rotate(295deg);
+  }
+}
+
+.base {
+  fill: #272727;
+}
+
+.lamp {
+  fill: #7fd0f7;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 500ms var(--ease);
+}
+
+.pressed .lamp {
+  transform: scale(1.08);
+}
+
+.shine {
+  fill: none;
+  stroke: #7fd0f7;
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: shine 500ms var(--ease) 1 both;
+}
+
+@keyframes shine {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.band {
+  stroke: transparent;
+  pointer-events: stroke;
+  /* Up and down scroll the page; sideways drags and taps rate (see BeamDial.tsx). */
+  touch-action: pan-y;
+  cursor: pointer;
+}
+
+.readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.value {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.pop {
+  animation: pop 300ms var(--ease) 1;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.caption {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: hsl(0 0% 100% / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost,
+  .pop {
+    animation: none;
+  }
+
+  .shine {
+    display: none;
+  }
+
+  .tick,
+  .lamp,
+  .wedge,
+  .tile,
+  .dial {
+    transition: none !important;
+  }
+
+  .beam:not(.follow) {
+    transition: none;
+  }
+}
