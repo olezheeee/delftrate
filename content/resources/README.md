@@ -29,7 +29,7 @@ source, and we say so wherever we show it.
   It never repeats a slide, an exam question or a model answer.
 - **Only what was counted.** Every share, number of questions, points and minutes comes
   from the material. `basis` says what a booklet rests on and where it had to estimate.
-  A course without past papers has `available: false` and no numbers.
+  A course without past papers has `available: false`, no numbers and no `recurring` lines.
 - **Plain text.** No Markdown, LaTeX or links in a booklet: the page shows the text as it is.
 - **One mark: what to know by heart.** In a line of a list (what to know, what to be able
   to do, the pitfalls, the exam lists) the bit a student has to memorise stands between
@@ -38,7 +38,8 @@ source, and we say so wherever we show it.
   named rule with its condition, a fixed list; not a skill or a piece of advice. At most
   three marks in a line, never the whole line, and no more than a quarter of the text of a
   booklet: a highlighter used on everything says nothing. Nowhere else (names, lecture
-  names, summaries) may a mark stand.
+  names, summaries) may a mark stand. Two brackets together always mean a mark, so brackets
+  that only meet get a space between them: `w[v[i] ]` and `[ [1, 2], [3, 4] ]`.
 - The two booklets come as a pair, carry the same `title`, and the exam booklet weighs the
   topics of the knowledge booklet (or `Other`).
 

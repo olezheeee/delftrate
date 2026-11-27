@@ -63,7 +63,9 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
                 : "Circle diagram of the share of the lecture time per topic"
             }
             slices={statistics.map((row, index) => ({
-              title: counted ? `${row.name}: about ${row.hours} hours` : `${row.name}: ${row.timeShare}% of the lecture time`,
+              title: counted
+                ? `${row.name}: about ${plural(row.hours, "hour", "hours")}`
+                : `${row.name}: ${row.timeShare}% of the lecture time`,
               sign: String(index + 1),
               value: counted ? row.hours : row.timeShare,
               pencil: pencil(index),
@@ -153,7 +155,9 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
                 </div>
                 <p className={styles.meta}>
                   {IMPORTANCE[topic.importance]}. {topic.timeShare}% of the lecture time
-                  {counted && `, ${row.examShare}% of the exam points, about ${row.hours} hours of study`}.
+                  {counted &&
+                    `, ${row.examShare}% of the exam points, about ${plural(row.hours, "hour", "hours")} of study`}
+                  .
                 </p>
                 {topic.lectures.length > 0 && <p className={styles.meta}>{topic.lectures.join("; ")}</p>}
                 <div className={styles.columns}>

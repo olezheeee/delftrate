@@ -148,9 +148,12 @@ const MARKUP = /\*\*|`|\$\$|\\\(|\\frac|https?:\/\//;
 // between [[ and ]]: "The coefficient of x^n is [[f^(n)(0)/n!]]". The page draws a
 // highlighter over it. A line has at most three, and they are parts of it, never all of it.
 // A mark may itself end in a bracket ("[[E[XY] = E[X]E[Y]]]"): it closes at the last two.
+// Two brackets together are always read as the sign of a mark, so brackets that only meet
+// ("w[v[i]]", a list in a list) cannot be written that way; the checks say how instead.
 const MARKED = /\[\[(.*?)\]\](?!\])/g;
 const MARK_SIGN = /\[\[|\]\]/;
 const MARKS_PER_LINE = 3;
+const BRACKETS_THAT_MEET = 'Two brackets that only meet are written with a space between them: "w[v[i] ]"';
 
 export type MarkedPart = { text: string; marked: boolean };
 
@@ -176,14 +179,24 @@ export function withoutMarks(line: string): string {
 
 function checkMarks(value: string, path: string): void {
   const marks = [...value.matchAll(MARKED)].map((match) => match[1]);
-  if (MARK_SIGN.test(value.replace(MARKED, ""))) fail(path, "has a [[ without its ]], or the other way round");
+  if (MARK_SIGN.test(value.replace(MARKED, ""))) {
+    fail(path, `has a [[ without its ]], or the other way round. ${BRACKETS_THAT_MEET}`);
+  }
   for (const mark of marks) {
     if (mark.trim() === "") fail(path, "has an empty [[mark]]");
     if (mark.trim() !== mark) fail(path, `must not have a space at the edge of a mark: "[[${mark}]]"`);
     if (mark.includes("[[")) fail(path, "must not have a mark inside a mark");
+    // "[[1, 2], [3, 4]]" is a list in a list. Read as a mark it would highlight
+    // "1, 2], [3, 4": a bracket closed that was never opened, and one opened and never closed.
+    if (/^[^[]*\]/.test(mark) && /\[[^\]]*$/.test(mark)) {
+      fail(path, `has "[[${mark}]]", which reads as a mark but looks like a list in a list. ${BRACKETS_THAT_MEET}`);
+    }
   }
   if (marks.length > MARKS_PER_LINE) fail(path, `must have at most ${MARKS_PER_LINE} marks (it has ${marks.length})`);
-  if (marks.length > 0 && marks.join("") === withoutMarks(value)) {
+  // A line is marked as a whole also when only spaces and punctuation are left outside
+  // its marks: "[[All of]] [[it]]."
+  const words = (part: string) => part.replace(/[\s.,;:!?()'"-]/g, "");
+  if (marks.length > 0 && words(marks.join("")) === words(withoutMarks(value))) {
     fail(path, "must not be marked as a whole: mark the bit to know by heart");
   }
 }
@@ -194,7 +207,9 @@ function text(value: unknown, path: string, max: number, plain = true, marks = f
   if (trimmed === "") fail(path, "must not be empty");
   if (trimmed !== value) fail(path, "must not start or end with a space");
   if (marks) checkMarks(value, path);
-  else if (plain && MARK_SIGN.test(value)) fail(path, "must not carry [[marks]]: they are for the lines of a list");
+  else if (plain && MARK_SIGN.test(value)) {
+    fail(path, `must not carry [[marks]]: they are for the lines of a list. ${BRACKETS_THAT_MEET}`);
+  }
   // The length is that of the text as it reads.
   const length = marks ? withoutMarks(value).length : value.length;
   if (length > max) fail(path, `must be at most ${max} characters (it has ${length})`);
@@ -432,7 +447,8 @@ export function parseExamBooklet(value: unknown): ExamBooklet {
     },
     topicWeights,
     questionTypes,
-    recurring: lines(root.recurring, "recurring", available ? 3 : 0, 8, 320),
+    // What comes back in the papers: without papers there is nothing to say here.
+    recurring: lines(root.recurring, "recurring", available ? 3 : 0, available ? 8 : 0, 320),
     trends: lines(root.trends, "trends", 0, 5, 320),
     strategy: lines(root.strategy, "strategy", 3, 8, 320),
     pitfalls: lines(root.pitfalls, "pitfalls", available ? 2 : 0, 6, 320),

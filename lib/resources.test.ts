@@ -220,7 +220,12 @@ describe("the marks of what to know by heart", () => {
       ["A [[mark [[in]] a mark]]", /\[\[ without its \]\]|inside a mark/],
       ["[[The whole line]]", /marked as a whole/],
       ["[[The whole]][[line]]", /marked as a whole/],
+      ["[[The whole]] [[line]]", /marked as a whole/],
+      ["[[The whole line]].", /marked as a whole/],
       ["[[One]], [[two]], [[three]] and [[four]] marks", /at most 3 marks/],
+      // Brackets that only meet are not a mark, and are not drawn as one by mistake.
+      ["The matrix [[1, 2], [3, 4]] has determinant -2", /looks like a list in a list.*with a space/],
+      ["Fill the entry OPT[i][w - w[i]] of the table", /\[\[ without its \]\].*with a space/],
     ];
     for (const [value, message] of refused) {
       expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.1.do.0", value)), value).toThrow(message);
@@ -235,6 +240,17 @@ describe("the marks of what to know by heart", () => {
     expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.0.name", "[[Scheduling]] basics"))).toThrow(/marks/);
     expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.0.lectures.0", "Lecture [[1]]"))).toThrow(/marks/);
     expect(() => parseExamBooklet(change(EXAMS, "topicWeights.0.asks", "Trace a [[schedule]]."))).toThrow(/marks/);
+    // Brackets that only meet are told how to be written.
+    expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "summary", "Filling OPT[i][w - w[i]] by hand."))).toThrow(
+      /^summary must not carry \[\[marks\]\].*with a space/,
+    );
+  });
+
+  it("leaves a bracket inside a mark alone when it is no list in a list", () => {
+    for (const value of ["On [[the interval (0, 1]]] it holds", "On [[the interval [0, 1)]] it holds", "Then [[a[i] = b[i]]] holds"]) {
+      const knowledge = change(KNOWLEDGE, "topics.1.do.0", value);
+      expect(parseKnowledgeBooklet(knowledge), value).toEqual(knowledge);
+    }
   });
 
   it("counts the length of a line as it reads, without the signs of its marks", () => {
@@ -294,6 +310,8 @@ describe("the exam booklet", () => {
     // Numbers without papers to count them from are refused.
     expect(() => parseExamBooklet({ ...none, topicWeights: EXAMS.topicWeights })).toThrow(/topicWeights must have 0 entries/);
     expect(() => parseExamBooklet({ ...none, basis: EXAMS.basis })).toThrow(/basis\.papers must have 0 entries/);
+    // So is a list of what comes back in them.
+    expect(() => parseExamBooklet({ ...none, recurring: EXAMS.recurring })).toThrow(/recurring must have 0 entries/);
     // And a booklet that says it has papers must list them.
     expect(() => parseExamBooklet({ ...none, available: true })).toThrow(/basis\.papers must have 1 to 40 entries/);
   });

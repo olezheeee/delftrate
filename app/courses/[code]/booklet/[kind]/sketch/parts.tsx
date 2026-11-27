@@ -40,6 +40,8 @@ export function Sheet({
         <Link href={other.href}>{other.label} →</Link>
       </nav>
       <header className={styles.head}>
+        {/* Print leaves out the way back, and with it the course code: here it is for the paper. */}
+        <p className={styles.code}>{code}</p>
         <h1 className={styles.title}>
           {title}
           <span>

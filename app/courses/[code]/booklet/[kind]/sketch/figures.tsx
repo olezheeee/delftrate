@@ -36,6 +36,8 @@ export function Pie({ label, slices }: { label: string; slices: PieSlice[] }) {
   const radius = 120;
   const seed = seedOf(label);
   const parts = shares(slices.map((item) => item.value));
+  // A circle that is all one slice has no line from the centre: there is nothing to part.
+  const drawn = parts.filter((part) => part.to > part.from).length;
 
   return (
     <svg className={styles.pie} viewBox="0 0 300 300" role="img" aria-label={label}>
@@ -62,7 +64,7 @@ export function Pie({ label, slices }: { label: string; slices: PieSlice[] }) {
         ) : null,
       )}
       <path d={arc(centre, radius, 0, 1, { seed, rough: 1.3 })} className={styles.pen} stroke={INK} />
-      {parts.length > 1 &&
+      {drawn > 1 &&
         parts.map((part, index) =>
           part.to > part.from ? (
             <path
@@ -106,6 +108,11 @@ export function scaleMax(values: number[]): number {
   return Math.max(5, Math.ceil(Math.max(0, ...values) / 5) * 5);
 }
 
+// How far the hatching of a bar may be pushed together, as a share of the width it is
+// drawn at. This is what the bars beside the circle of lecture time do on a wide screen,
+// so a phone shows the hatching no tighter than that.
+const TIGHTEST = 0.57;
+
 // One bar of a bar chart. Its length is the value against the upper end of the chart's
 // scale; the number is written at its end. A value of nothing draws no bar.
 export function Bar({
@@ -122,7 +129,7 @@ export function Bar({
   // Dense hatching for exam points, open hatching for lecture time.
   dense: boolean;
 }) {
-  // Drawn at the width it has on a wide screen; a narrow screen squeezes it.
+  // Drawn at the width it has on a wide screen.
   const width = Math.max((value / max) * 380, 0);
   const seed = seedOf(label);
   const corners: Point[] = [
@@ -131,18 +138,24 @@ export function Bar({
     [width, 15],
     [2, 15],
   ];
+  const box = `0 0 ${Math.round(width) + 2} 18`;
   return (
     <span className={styles.bar} role="img" aria-label={label}>
       {value > 0 && (
-        <svg
-          viewBox={`0 0 ${Math.round(width) + 2} 18`}
-          preserveAspectRatio="none"
-          style={{ width: `calc((100% - 3.4em) * ${value / max})` }}
-          aria-hidden="true"
-        >
-          <Fill corners={corners} pencil={pencil} seed={seed} gap={dense ? 2.7 : 5.5} angle={dense ? -58 : -41} />
-          <path d={outline(corners, { seed, rough: 0.7 })} className={styles.pen} stroke={INK} />
-        </svg>
+        <span className={styles.barDrawing} style={{ width: `calc((100% - 3.4em) * ${value / max})` }} aria-hidden="true">
+          {/* A narrow screen squeezes the outline to the length of the bar, but not the
+              pencil lines: pushed together they would fill the bar, and open and dense
+              hatching would look alike. Below the width set here the bar shows the first
+              part of its hatching instead. */}
+          <span className={styles.barFill}>
+            <svg viewBox={box} preserveAspectRatio="none" style={{ minWidth: Math.round((width + 2) * TIGHTEST) }}>
+              <Fill corners={corners} pencil={pencil} seed={seed} gap={dense ? 2.7 : 5.5} angle={dense ? -58 : -41} />
+            </svg>
+          </span>
+          <svg viewBox={box} preserveAspectRatio="none">
+            <path d={outline(corners, { seed, rough: 0.7 })} className={styles.pen} stroke={INK} />
+          </svg>
+        </span>
       )}
       <span className={styles.barValue} aria-hidden="true">
         {value}%

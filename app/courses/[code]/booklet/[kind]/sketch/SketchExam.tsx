@@ -19,6 +19,12 @@ function orDash(value: number | null): string {
   return value === null ? "–" : String(value);
 }
 
+// What a number in the table of papers counts. A narrow screen writes it after the number:
+// "1 question", "43 points". A dash keeps the many ("– minutes").
+function unit(value: number | null, one: string, many: string): string {
+  return value === 1 ? one : many;
+}
+
 export function SketchExam({ exams, knowledge }: { exams: ExamBooklet; knowledge: KnowledgeBooklet }) {
   const papers = exams.basis.papers;
   const years = papers.flatMap((paper) => (paper.year === null ? [] : [paper.year]));
@@ -64,8 +70,8 @@ export function SketchExam({ exams, knowledge }: { exams: ExamBooklet; knowledge
           {exams.available ? (
             <p>
               Counted here: {papers.length} {papersNoun(exams)}
-              {years.length > 0 && (first === last ? ` from ${first}` : ` from ${first} to ${last}`)}, which examine{" "}
-              {plural(examined, "topic", "topics")}.
+              {years.length > 0 && (first === last ? ` from ${first}` : ` from ${first} to ${last}`)}, which{" "}
+              {papers.length === 1 ? "examines" : "examine"} {plural(examined, "topic", "topics")}.
             </p>
           ) : (
             <p>
@@ -221,13 +227,13 @@ export function SketchExam({ exams, knowledge }: { exams: ExamBooklet; knowledge
                     {paper.name}
                   </th>
                   <td role="cell">{KIND_LABELS[paper.kind]}</td>
-                  <td role="cell" data-unit="questions">
+                  <td role="cell" data-unit={unit(paper.questions, "question", "questions")}>
                     {orDash(paper.questions)}
                   </td>
-                  <td role="cell" data-unit="points">
+                  <td role="cell" data-unit={unit(paper.points, "point", "points")}>
                     {orDash(paper.points)}
                   </td>
-                  <td role="cell" data-unit="minutes">
+                  <td role="cell" data-unit={unit(paper.minutes, "minute", "minutes")}>
                     {orDash(paper.minutes)}
                   </td>
                 </tr>
