@@ -11,6 +11,12 @@ export type CalendarCourse = {
   quarters: number[];
 };
 
+// The ratings of a course as its three circles in the calendar show them, each out of 10:
+// the combined score, the subject's load, and the teaching score of the course's default
+// professor. Each is null until its block has enough votes; the score needs both blocks.
+// They come from the database function calendar_scores().
+export type CourseNumbers = { score: number | null; load: number | null; teach: number | null };
+
 // What the visitor picked. The year only counts once a programme is picked.
 export type Choice = { programme: ProgrammeId | null; year: number | null };
 

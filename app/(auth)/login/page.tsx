@@ -13,7 +13,7 @@ export default function LoginPage() {
       <h1 className={styles.title}>
         Log <em>in.</em>
       </h1>
-      <p className={styles.lead}>Ratings are for registered students only.</p>
+      <p className={styles.lead}>Course pages are for registered students only.</p>
       {/* The form reads the page to return to from the page address, which is only known per request. */}
       <Suspense fallback={<div className={styles.skeleton} />}>
         <LoginForm />

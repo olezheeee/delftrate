@@ -4,7 +4,17 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { PGlite } from "@electric-sql/pglite";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { courseScore, VERDICT_LABELS, type ProfessorStats, type SubjectStats } from "../lib/score";
+import {
+  courseScore,
+  defaultProfessor,
+  load,
+  teach,
+  VERDICT_LABELS,
+  type ProfessorAverages,
+  type ProfessorStats,
+  type SubjectAverages,
+  type SubjectStats,
+} from "../lib/score";
 import { as, createTestDatabase, createUser } from "./testing/database";
 
 // Every test builds its own database, which takes a moment on a slow machine.
@@ -606,6 +616,251 @@ describe("a hidden professor", () => {
   });
 });
 
+describe("the site totals", () => {
+  const totals = async (userId: string | null) => (await rows(userId, "select * from public.site_totals()"))[0];
+
+  it("are three numbers that everyone reads, signed in or not", async () => {
+    // Four accounts with a profile and two courses come from the setup above.
+    const expected = { votes: 0, students: 4, courses: 2 };
+    for (const reader of [null, student, admin]) {
+      expect(await rows(reader, "select * from public.site_totals()")).toEqual([expected]);
+    }
+  });
+
+  it("count a rating as one subject vote and one professor vote", async () => {
+    await rate(student, cse, ada, [5, 5, 5, 5, 5, 5]);
+    expect((await totals(null)).votes).toBe(2);
+
+    // Rating again replaces the earlier rating: still two.
+    await rate(student, cse, ada, [8, 8, 8, 8, 8, 8]);
+    expect((await totals(null)).votes).toBe(2);
+
+    // A second professor of the same course: one more professor vote, the same subject vote.
+    await rate(student, cse, bob, [8, 8, 8, 6, 6, 6]);
+    expect((await totals(null)).votes).toBe(3);
+
+    await rate(aeStudent, ae, eve, [5, 5, 5, 5, 5, 5]);
+    expect((await totals(null)).votes).toBe(5);
+  });
+
+  it("count manual votes as the course page does: the smallest of a block's three criteria", async () => {
+    await setManualVotes(admin, cse, null, "difficulty", 5, 30);
+    // Two criteria of the subject have no votes yet, so the block has none.
+    expect((await totals(null)).votes).toBe(0);
+
+    await setManualVotes(admin, cse, null, "exam_level", 5, 12);
+    await setManualVotes(admin, cse, null, "interest", 5, 20);
+    expect((await totals(null)).votes).toBe(12);
+    expect((await subjectStats(student, cse)).votes).toBe(12);
+
+    for (const criterion of PROFESSOR) await setManualVotes(admin, cse, ada, criterion, 7, 10);
+    await rate(student, cse, ada, [5, 5, 5, 5, 5, 5]);
+    // 12 + 1 for the subject, 10 + 1 for Ada.
+    expect((await totals(null)).votes).toBe(24);
+  });
+
+  it("leave out the votes of a hidden professor, and count them again when shown", async () => {
+    for (const criterion of PROFESSOR) await setManualVotes(admin, cse, bob, criterion, 9, 20);
+    await rate(student, cse, bob, [5, 5, 5, 9, 9, 9]);
+    expect((await totals(null)).votes).toBe(22);
+
+    await rows(admin, "update public.professors set hidden = true where id = $1", [bob]);
+    // The subject vote stays. An admin gets the same number: it is what the site shows.
+    expect((await totals(null)).votes).toBe(1);
+    expect((await totals(admin)).votes).toBe(1);
+
+    await rows(admin, "update public.professors set hidden = false where id = $1", [bob]);
+    expect((await totals(null)).votes).toBe(22);
+  });
+
+  it("count a student once they have a profile, and every course", async () => {
+    // An account that has not finished registering.
+    await db.query("insert into auth.users default values");
+    expect((await totals(null)).students).toBe(4);
+
+    await createUser(db, { programme: "CSE" });
+    await db.query("insert into public.courses (code, name, programme_id, year) values ('CSE2', 'Logic', 'CSE', 1)");
+    expect(await totals(null)).toEqual({ votes: 0, students: 5, courses: 3 });
+  });
+
+  it("open nothing else to a signed-out visitor", async () => {
+    await rate(student, cse, ada, [5, 5, 5, 5, 5, 5]);
+    for (const hidden of ["private.subject_stats", "private.professor_stats", "public.profiles", "public.subject_ratings"]) {
+      await expect(rows(null, `select * from ${hidden}`), hidden).rejects.toThrow(/permission denied/);
+    }
+  });
+});
+
+describe("the calendar scores", () => {
+  const scores = (userId: string | null) => rows(userId, "select * from public.calendar_scores() order by code");
+
+  // Ten votes (the minimum) on each criterion of a block, at the given values.
+  async function subjectVotes(course: string, values: number[], count = 10) {
+    for (const [i, criterion] of SUBJECT.entries()) await setManualVotes(admin, course, null, criterion, values[i], count);
+  }
+  async function professorVotes(course: string, professor: string, values: number[], count = 10) {
+    for (const [i, criterion] of PROFESSOR.entries()) {
+      await setManualVotes(admin, course, professor, criterion, values[i], count);
+    }
+  }
+
+  // What the score module makes of the stats a student receives: the numbers of the
+  // course's own page. calendar_scores() has to give exactly these.
+  async function pageNumbers(course: string) {
+    const number = (v: unknown) => (v === null ? null : Number(v));
+    const s = await subjectStats(student, course);
+    const subject: SubjectStats = {
+      difficulty: number(s.difficulty),
+      exam_level: number(s.exam_level),
+      interest: number(s.interest),
+      enough_votes: s.enough_votes as boolean,
+    };
+    const blocks = await rows(student, "select * from public.course_professor_stats($1)", [course]);
+    const candidates: ProfessorStats[] = blocks.map((row) => ({
+      professor_id: row.professor_id as string,
+      hidden: row.hidden as boolean,
+      engagement: number(row.engagement),
+      understanding: number(row.understanding),
+      approachability: number(row.approachability),
+      votes: row.votes as number,
+      enough_votes: row.enough_votes as boolean,
+    }));
+    const best = defaultProfessor(candidates);
+    return {
+      score: courseScore(subject, candidates)?.score ?? null,
+      load: subject.enough_votes ? load(subject as SubjectAverages) : null,
+      teach: best ? teach(best as ProfessorAverages) : null,
+    };
+  }
+
+  it("are three numbers per course that everyone reads, signed in or not", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    await professorVotes(cse, ada, [9, 9, 9]);
+
+    const expected = [{ code: "CSE1", score: 0.6 * 9 + 0.25 * 6 + 0.15 * (10 - 7.5), load: 7.5, teach: 9 }];
+    // An admin gets no more than anyone else: these are the numbers the site shows.
+    for (const reader of [null, student, aeStudent, admin]) {
+      expect(await scores(reader)).toEqual(expected);
+    }
+  });
+
+  it("leave out a course nobody rated", async () => {
+    expect(await scores(null)).toEqual([]);
+  });
+
+  it("show nothing of a block that is below the minimum", async () => {
+    await subjectVotes(cse, [7, 8, 6], 9);
+    await professorVotes(cse, ada, [9, 9, 9], 9);
+    expect(await scores(null)).toEqual([]);
+    expect(await scores(admin)).toEqual([]);
+
+    // The subject reaches the minimum: its load shows. The score needs the professor too.
+    await subjectVotes(cse, [7, 8, 6]);
+    expect(await scores(null)).toEqual([{ code: "CSE1", score: null, load: 7.5, teach: null }]);
+
+    // One criterion of the professor stays one vote short.
+    await setManualVotes(admin, cse, ada, "engagement", 9, 10);
+    await setManualVotes(admin, cse, ada, "understanding", 9, 10);
+    expect((await scores(null))[0]).toMatchObject({ score: null, teach: null });
+
+    await setManualVotes(admin, cse, ada, "approachability", 9, 10);
+    expect((await scores(null))[0]).toMatchObject({ load: 7.5, teach: 9 });
+    expect((await scores(null))[0].score).not.toBeNull();
+  });
+
+  it("show the teaching score alone while the subject is below the minimum", async () => {
+    await professorVotes(ae, eve, [8, 7, 9]);
+    expect(await scores(null)).toEqual([{ code: "AE1", score: null, load: null, teach: 8 }]);
+  });
+
+  it("use the best rated professor, and never a hidden one", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    await professorVotes(cse, ada, [9, 9, 9]);
+    await professorVotes(cse, bob, [6, 6, 6], 40);
+    expect((await scores(null))[0].teach).toBe(9);
+
+    await rows(admin, "update public.professors set hidden = true where id = $1", [ada]);
+    for (const reader of [null, student, admin]) {
+      expect((await scores(reader))[0]).toEqual({ code: "CSE1", ...(await pageNumbers(cse)) });
+      expect((await scores(reader))[0].teach).toBe(6);
+    }
+
+    // With every professor hidden only the load is left.
+    await rows(admin, "update public.professors set hidden = true where id = $1", [bob]);
+    expect(await scores(null)).toEqual([{ code: "CSE1", score: null, load: 7.5, teach: null }]);
+  });
+
+  it("pick between equally rated professors as the course page does: more votes, then the lower id", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    // The same teaching score from different votes: 8 three times, and 7, 8 and 9.
+    await professorVotes(cse, ada, [8, 8, 8], 12);
+    await professorVotes(cse, bob, [7, 8, 9], 30);
+    expect(await scores(null)).toEqual([{ code: "CSE1", ...(await pageNumbers(cse)) }]);
+
+    await professorVotes(cse, ada, [8, 8, 8], 30);
+    expect(await scores(null)).toEqual([{ code: "CSE1", ...(await pageNumbers(cse)) }]);
+  });
+
+  it("are the numbers of the course's own page, to the last digit", async () => {
+    // Votes chosen to be awkward for a computer, as [value, number of votes] per criterion.
+    // The first gives a score of exactly 6.85 (teaching 7.5, interest 7, load 6), which one
+    // way of calculating shows as 6.8 and another as 6.9. The others give averages that do
+    // not end, such as 7.333...
+    const cases: { subject: [number, number][][]; professor: [number, number][][] }[] = [
+      {
+        subject: [[[6, 5], [7, 5]], [[5, 5], [6, 5]], [[7, 10]]],
+        professor: [[[7, 5], [8, 5]], [[7, 5], [8, 5]], [[7, 5], [8, 5]]],
+      },
+      {
+        subject: [[[7, 10], [8, 5]], [[6, 11], [9, 3]], [[5, 7], [8, 6]]],
+        professor: [[[9, 10], [7, 4]], [[8, 13]], [[6, 9], [10, 2], [7, 3]]],
+      },
+      {
+        subject: [[[1, 3], [10, 8]], [[0, 10], [9, 1]], [[3, 6], [4, 7]]],
+        professor: [[[8, 7], [9, 6]], [[2, 1], [9, 12]], [[7, 11], [8, 2]]],
+      },
+    ];
+    for (const votes of cases) {
+      await db.query("delete from public.manual_votes");
+      for (const [i, criterion] of SUBJECT.entries()) {
+        for (const [value, count] of votes.subject[i]) await setManualVotes(admin, cse, null, criterion, value, count);
+      }
+      for (const [i, criterion] of PROFESSOR.entries()) {
+        for (const [value, count] of votes.professor[i]) await setManualVotes(admin, cse, ada, criterion, value, count);
+      }
+      const page = await pageNumbers(cse);
+      expect(page.score).not.toBeNull();
+      expect(await scores(null)).toEqual([{ code: "CSE1", ...page }]);
+    }
+    // The last case was not rounded on the way: its teaching score is a number without end.
+    expect(String((await scores(null))[0].teach).length).toBeGreaterThan(12);
+  });
+
+  it("count student ratings together with manual votes", async () => {
+    await subjectVotes(cse, [7, 8, 6], 9);
+    await professorVotes(cse, ada, [9, 9, 9], 9);
+    await rate(student, cse, ada, [2, 3, 10, 4, 5, 6]);
+    expect(await scores(null)).toEqual([{ code: "CSE1", ...(await pageNumbers(cse)) }]);
+    // Difficulty (9 * 7 + 2) / 10 = 6.5 and exam level (9 * 8 + 3) / 10 = 7.5.
+    expect((await scores(null))[0].load).toBe(7);
+  });
+
+  it("leave the criteria, the vote counts and the professors closed to a signed-out visitor", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    await professorVotes(cse, ada, [9, 9, 9]);
+    for (const hidden of [
+      "public.course_subject_stats()",
+      "public.course_professor_stats()",
+      "private.subject_stats",
+      "private.professor_stats",
+      "public.manual_votes",
+      "public.professors",
+    ]) {
+      await expect(rows(null, `select * from ${hidden}`), hidden).rejects.toThrow(/permission denied/);
+    }
+  });
+});
+
 describe("something a later migration adds", () => {
   it("is closed to the API roles until that migration grants access", async () => {
     await db.exec(`
@@ -694,6 +949,25 @@ describe("the seed data", () => {
 
   it("gives a student the demo's numbers through the score module", async () => {
     expect(await cards(seedStudent)).toEqual(EXPECTED);
+  });
+
+  it("gives a signed-out visitor the same numbers in the calendar", async () => {
+    const found = await as(seeded, null, (tx) => tx.query<Row>("select * from public.calendar_scores()"));
+    const shown = Object.fromEntries(found.rows.map((row) => [row.code as string, row]));
+    for (const [code, card] of Object.entries(EXPECTED)) {
+      const row = shown[code];
+      if (card) {
+        expect(
+          { load: (row.load as number).toFixed(1), teach: (row.teach as number).toFixed(1), score: (row.score as number).toFixed(1) },
+          code,
+        ).toEqual({ load: card.load, teach: card.teach, score: card.score });
+      } else {
+        // No combined score: the course is left out, or shows only one of the small circles.
+        expect(row?.score ?? null, code).toBeNull();
+      }
+    }
+    // The curriculum courses in the seed have no votes.
+    expect(Object.keys(shown).sort()).toEqual(["AE2001", "AE3001", "CSE1001", "CSE1002", "CSE2001", "CSE2002"]);
   });
 
   it("holds the curriculum of both programmes, every course with its quarters", async () => {

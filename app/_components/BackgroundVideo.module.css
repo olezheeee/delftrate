@@ -1,0 +1,56 @@
+/* Fixed behind the whole page, so it stays put while the calendar scrolls over it. */
+.plate {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* The still and the clip fill the plate the same way, the clip on top of the still. */
+.still,
+.clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+.clip {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.clip[data-ready] {
+  opacity: 1;
+}
+/* Darkens the picture so the page on top stays easy to read, also where its brightest part
+   passes behind small grey text: most at the top, under the bar, and at the bottom. */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.68) 0%,
+    rgba(0, 0, 0, 0.5) 26%,
+    rgba(0, 0, 0, 0.56) 62%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+@media (max-width: 760px) {
+  .still,
+  .clip {
+    object-position: 70% 50%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clip {
+    transition: none;
+  }
+}
+@media print {
+  .plate {
+    display: none;
+  }
+}
