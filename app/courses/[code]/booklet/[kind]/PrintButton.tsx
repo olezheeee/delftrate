@@ -1,0 +1,10 @@
+"use client";
+
+// A booklet is something to print or save as a PDF. The page has its own print layout.
+export function PrintButton({ className }: { className: string }) {
+  return (
+    <button type="button" className={className} onClick={() => window.print()}>
+      Print or save as PDF
+    </button>
+  );
+}

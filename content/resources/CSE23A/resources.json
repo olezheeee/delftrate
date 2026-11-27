@@ -1,0 +1,159 @@
+{
+  "course": "CSE23A",
+  "source": {
+    "name": "Lightspace",
+    "title": "Computer Security",
+    "url": "https://lightspace.study/courses/computer-security",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Introduction",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%201%20-%20Introduction.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 2 - Physical Layer",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%202%20-%20Physical%20Layer.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 3 - DDoS and Botnets",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%203%20-%20DDoS%20and%20Botnets.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 4 - IDS and Firewall",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%204%20-%20IDS%20and%20Firewall.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 5 - Internet Security",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%205%20-%20Internet%20Security.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 6 - Cryptography Part 1",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%206%20-%20Cryptography%20Part%201.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 7 - Cryptography Part 2",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%207%20-%20Cryptography%20Part%202.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 8 - Cryptography Part 3",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%208%20-%20Cryptography%20Part%203.pdf",
+          "size": "936 KB"
+        },
+        {
+          "title": "Lecture 9 - Cryptography Part 4",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%209%20-%20Cryptography%20Part%204.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 11 - OS Level Security",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%2011%20-%20OS%20Level%20Security.pdf",
+          "size": "7 MB"
+        },
+        {
+          "title": "Lecture 12 - Database Security",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%2012%20-%20Database%20Security.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 13 - Software Security and Testing",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%2013%20-%20Software%20Security%20and%20Testing.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 14 - Malware and Malware Detection",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%2014%20-%20Malware%20and%20Malware%20Detection.pdf",
+          "size": "9 MB"
+        },
+        {
+          "title": "Lecture 15 - GL CVD Phishing",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%2015%20-%20GL%20CVD%20Phishing.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 16 - Space Perspective System Security and Applied Crypto",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Lectures/CS%20Lecture%2016%20-%20Space%20Perspective%20System%20Security%20and%20Applied%20Crypto.pdf",
+          "size": "3 MB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2025",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Exams/CS%20Endterms/CS%20Endterm%202025.pdf",
+          "size": "61 KB"
+        },
+        {
+          "title": "Resit 2025",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Exams/CS%20Resits/CS%20Resit%202025.pdf",
+          "size": "51 KB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Assignment 2 Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Assignment%20Solutions/CS%20Assignment%202%20Solutions.pdf",
+          "size": "177 KB"
+        },
+        {
+          "title": "Self Assessment Week 4 Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Assignment%20Solutions/CS%20Self%20Assessment%20Week%204%20Solutions.pdf",
+          "size": "57 KB"
+        },
+        {
+          "title": "Self Assessment Week 5 Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Assignment%20Solutions/CS%20Self%20Assessment%20Week%205%20Solutions.pdf",
+          "size": "57 KB"
+        },
+        {
+          "title": "Sample Questions",
+          "section": "Quiz Solutions",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Quiz%20Solutions/CS%20Sample%20Questions.pdf",
+          "size": "141 KB"
+        },
+        {
+          "title": "Systems Security Quiz 1 Solutions",
+          "section": "Quiz Solutions",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Quiz%20Solutions/CS%20Systems%20Security%20Quiz%201%20Solutions.pdf",
+          "size": "18 KB"
+        },
+        {
+          "title": "Systems Security Quiz 2 Solutions",
+          "section": "Quiz Solutions",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Quiz%20Solutions/CS%20Systems%20Security%20Quiz%202%20Solutions.pdf",
+          "size": "36 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "url": "https://lightspace.study/courses/computer-security/read/CS%20Notes.pdf",
+          "size": "774 KB"
+        }
+      ]
+    }
+  ]
+}

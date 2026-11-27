@@ -1,0 +1,267 @@
+{
+  "course": "CSE23A",
+  "title": "Computer Security",
+  "ects": 5,
+  "summary": "An introduction to defending computer systems, taught in three blocks by three lecturers: network security (threats, physical layer, DDoS, firewalls and IDS, internet protocols), cryptography (from classical ciphers to IND-CPA, signatures, Merkle trees and secret sharing) and systems security (access control, SQL injection, memory errors, malware). Each attack is taught together with the defences against it. Guest lectures add vulnerability disclosure, phishing and space systems. A 3-hour exam gives 80 percent of the grade, two group assignments the rest.",
+  "basis": {
+    "lectures": 14,
+    "description": "Slides of the CSE3220 lectures 1 to 9 and 11 to 15 (2024-25) as text, the 2025 endterm and resit papers, and the WebLab practice questions with their marking checklists. Time shares count content slides, with animation frames collapsed; Lecture 16, a guest lecture on space systems with no exam questions, is left out.",
+    "caveat": "The material is from CSE3220, a year-3 elective. From 2026-27 the course is the compulsory CSE23A in year 2, quarter 3, so content and pace may change. The archive has no Lecture 10, yet both papers ask about attacks on AI systems. The crypto slides build up over many frames, so even after collapsing them Lectures 6 and 9 may look longer than they were. Half of Lecture 15 presents phishing research that the papers barely touch."
+  },
+  "topics": [
+    {
+      "name": "Security principles, threats and disclosure",
+      "lectures": ["Lecture 1 - Introduction", "Lecture 15 - GL CVD Phishing"],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "The [[CIA triad (confidentiality, integrity, availability)]], the tools that serve each, and how to tell which one a given incident breaks",
+        "Threat versus risk, with [[risk as likelihood times impact]]; threat models, threat actors and their motives",
+        "The Cyber Kill Chain phases from reconnaissance to actions on objectives, the Unified Kill Chain and MITRE ATT&CK",
+        "The Pyramid of Pain: [[indicators of compromise ranked from hash values and IP addresses up to tools and TTPs]], by how much it costs the attacker to change them",
+        "Security by design, defence in depth, the eggshell problem and usable security",
+        "Private, full and coordinated vulnerability disclosure, bug bounties, the exploit market and slow patching (WannaCry)",
+        "Phishing as a service, phishing kits, and defences such as blocklists and takedowns by domain registries"
+      ],
+      "do": [
+        "Classify an incident as a breach of confidentiality, integrity or availability",
+        "Argue why a defender should scan their own network, linking it to a kill chain phase with a concrete example",
+        "Compare the disclosure models and explain why an organisation needs a CVD policy"
+      ],
+      "pitfalls": [
+        "Naming the kill chain without tying scanning to a specific phase: the marking checklist scores the framework, the link to a phase and a practical example separately",
+        "Reading the Pyramid of Pain as a risk or impact model rather than a ranking of indicators"
+      ]
+    },
+    {
+      "name": "Physical layer security",
+      "lectures": ["Lecture 2 - Physical Layer"],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "The simplified OSI model and which threats sit at the physical layer",
+        "Wiretaps on copper and fibre, why tapping guided media needs physical access, and how taps are found, for example with [[time-domain reflectometry]]",
+        "Cable types and shielding, and layered physical protection: locked rooms, access control, conduits",
+        "Guided versus unguided media: why wireless signals are hard to contain, and the limits of range reduction and directional antennas",
+        "Threats to shared infrastructure: submarine cables, state wiretapping (Room 641A), GPS jamming and spoofing"
+      ],
+      "do": [
+        "Draw up a physical security plan for an organisation spread over floors of a shared building",
+        "Point out where a tap shows up in a TDR readout"
+      ],
+      "pitfalls": [
+        "Believing that strong encryption or a switch to wireless removes the tapping risk; practice items use exactly these as wrong options"
+      ]
+    },
+    {
+      "name": "DDoS attacks and botnets",
+      "lectures": ["Lecture 3 - DDoS and Botnets"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "Volumetric, protocol and application-layer attacks, and the resource each exhausts: [[bandwidth, connection state, application capacity]]",
+        "Reflection and amplification over UDP services such as DNS and memcached, made possible by spoofed source addresses",
+        "The TCP SYN flood and SYN cookies, which [[encode the connection state in the SYN-ACK sequence number]] instead of server memory",
+        "HTTP floods and the HTTP/2 Rapid Reset attack, and BCP38 ingress filtering against spoofing",
+        "Botnet designs: [[central C2 (Mirai), layered C2 (Emotet), peer-to-peer]], and hiding the C2 with domain generation algorithms or a blockchain"
+      ],
+      "do": [
+        "Explain how SYN cookies keep a server alive during a SYN flood",
+        "Recognise a SYN flood in a packet trace and say what to do about it",
+        "Explain why taking down one C2 server often fails to stop a botnet"
+      ],
+      "pitfalls": [
+        "Swapping volumetric attacks (they fill the link) with protocol attacks (they fill state on servers or middleboxes)",
+        "Assuming a botnet is neutralised once its C2 server is seized; DGAs and peer-to-peer designs exist to survive that"
+      ]
+    },
+    {
+      "name": "Firewalls and intrusion detection",
+      "lectures": ["Lecture 4 - IDS and Firewall"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "Firewall rules checked [[in priority order with a default deny at the end]]",
+        "[[Packet-filtering, stateful inspection, application-level and circuit-level (SOCKS)]] firewalls, and the trade-off between throughput and depth of inspection",
+        "SYN scans, internet-wide scanning and how scanning is detected",
+        "Network layout: a DMZ for public services, security zones, and VPNs for remote access",
+        "IDS kinds: [[signature-based versus anomaly-based, host-based versus network-based]], and alert fatigue",
+        "Honeypots as decoys, and where to place sensors in a network"
+      ],
+      "do": [
+        "Run a list of packets through an ordered rule table and say which get through",
+        "Propose a network set-up for staff working from home",
+        "Choose the right firewall type for a stated need and defend the choice"
+      ],
+      "pitfalls": [
+        "Letting a later allow rule override an earlier deny: [[the first matching rule decides]]",
+        "Answering the remote-work question with a VPN alone; the checklist also wants segmentation or monitoring and user education"
+      ]
+    },
+    {
+      "name": "Internet protocols: TLS, DNS and email",
+      "lectures": ["Lecture 5 - Internet Security"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "Phishing and look-alike domains as the human entry point",
+        "HTTPS with SSL/TLS, certificates, certificate authorities and the chain of trust, and what a compromised root CA breaks",
+        "Heartbleed as a bug in a TLS implementation",
+        "DNS resolution and authoritative servers; DNSSEC, its slow adoption and its role in amplification attacks",
+        "Mail protocols and their TLS variants; email spoofing and the defences SPF and DKIM, and what each one checks",
+        "What TLS leaves visible, such as [[DNS lookups made outside the tunnel unless DoH or DoT is used]]"
+      ],
+      "do": [
+        "Give two advantages of encrypting at the transport layer rather than in each application",
+        "Explain the difference between SPF and DKIM",
+        "Explain what happens to every certificate under a CA that is compromised"
+      ],
+      "pitfalls": [
+        "Assuming HTTPS hides which site you visit, while the DNS lookup usually travels outside TLS",
+        "Saying [[SPF]] encrypts or filters mail: it [[only lists the servers allowed to send for a domain]]"
+      ]
+    },
+    {
+      "name": "Encryption, hashing and security games",
+      "lectures": ["Lecture 6 - Cryptography Part 1", "Lecture 7 - Cryptography Part 2"],
+      "timeShare": 16,
+      "importance": "essential",
+      "know": [
+        "Kerckhoffs's principle; [[symmetric keys grow quadratically for pairwise communication, public keys linearly]]",
+        "Shift and substitution ciphers and frequency analysis; XOR and the one-time pad, its perfect secrecy and the dangers of key reuse and weak randomness",
+        "Cryptographic hash functions: [[one-wayness, weak and strong collision resistance]], and the birthday attack",
+        "[[Information I = log2(1/p)]] and [[entropy H = sum of p times log2(1/p)]]",
+        "Block ciphers (AES) in [[ECB, CBC and counter mode]]: padding, IVs, which modes run in parallel and which need the decryption function",
+        "Stream ciphers, keystream generation and the attack on a reused keystream",
+        "Public-key encryption and RSA, and why it carries keys rather than bulk data",
+        "Adversary models and the IND-CPA and IND-CCA games: why [[deterministic encryption fails IND-CPA]], and what counts as an advantage over guessing"
+      ],
+      "do": [
+        "Encrypt by hand with a Caesar shift or a one-time pad",
+        "Compute the information of an outcome and the entropy of a distribution, such as the sum of two dice",
+        "Draw CBC encryption and decryption, including the IV block",
+        "Play the IND-CPA game against a weak mode: what to ask the oracle, which two messages to submit and how to decide",
+        "Compare brute-force effort for two key lengths"
+      ],
+      "pitfalls": [
+        "Confusing a 50 percent win rate in the IND-CPA game with an attack: an attacker needs a clear advantage over coin tossing",
+        "Leaving out the IV block when drawing CBC, although the question explicitly asks for it"
+      ]
+    },
+    {
+      "name": "Signatures, key exchange, passwords and secret sharing",
+      "lectures": ["Lecture 8 - Cryptography Part 3", "Lecture 9 - Cryptography Part 4"],
+      "timeShare": 19,
+      "importance": "essential",
+      "know": [
+        "Digital signatures: their goals, signing a hash, and the order of signing and encrypting when both are needed",
+        "MACs: [[integrity and unforgeability without non-repudiation]], CBC-MAC and its weakness, and MAC-then-encrypt, MAC-and-encrypt, encrypt-then-MAC",
+        "Diffie-Hellman over modular exponentiation, the discrete logarithm problem, and the [[man-in-the-middle attack on unauthenticated DH]]",
+        "Merkle trees: [[membership proofs of logarithmic size]], secure cloud storage and Certificate Transparency logs",
+        "Password storage: why plaintext and encryption fail, salted hashes, dictionary and brute-force attacks, and password space size",
+        "Secret sharing: n-out-of-n XOR shares, [[Shamir's t-out-of-n scheme with a polynomial of degree t-1]], information-theoretic security and the trusted dealer",
+        "Onion routing and Tor: layered encryption, the unencrypted last hop, censorship and bridge relays"
+      ],
+      "do": [
+        "Recover a Shamir secret from two points on a line",
+        "List the hashes in a Merkle proof for a given leaf and recompute the root",
+        "Explain the man-in-the-middle attack on Diffie-Hellman",
+        "Design a protocol for parties who do not trust each other from hashes, signatures and secret sharing, and justify each step by the property it relies on",
+        "Adapt a threshold scheme to extra requirements, such as one member who must always be able to recover the key"
+      ],
+      "pitfalls": [
+        "Crediting MACs with non-repudiation: both sides hold the key, so [[only a signature proves who signed]]",
+        "Naming primitives in a protocol design without saying which property stops which kind of cheating, which the question asks for"
+      ]
+    },
+    {
+      "name": "OS security and access control",
+      "lectures": ["Lecture 11 - OS Level Security"],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "The trusted computing base and the threat model of a shared operating system",
+        "Identification and authentication at login, authorisation by a reference monitor, and audit",
+        "Discretionary access control: the access control matrix, stored [[per object as access control lists or per subject as capability lists]]; POSIX permissions",
+        "Mandatory access control: [[Bell-LaPadula for confidentiality and Biba for integrity]], and what each cannot enforce",
+        "Flask, SELinux and AppArmor as practical MAC; setuid and setgid binaries and superusers"
+      ],
+      "do": [
+        "Build an access control matrix from a written policy and convert it to ACLs and capability lists",
+        "Classify a mechanism (login, reference monitor, SELinux) as authentication, authorisation or audit",
+        "Name concrete objects a reference monitor checks access to"
+      ],
+      "pitfalls": [
+        "Swapping ACLs and capability lists: the ACL belongs to the object, the capability list to the subject",
+        "Giving vague answers on reference monitors; the checklist wants particular objects such as files, sockets or threads"
+      ]
+    },
+    {
+      "name": "Software security: SQL injection and memory errors",
+      "lectures": ["Lecture 12 - Database Security", "Lecture 13 - Software Security and Testing"],
+      "timeShare": 16,
+      "importance": "essential",
+      "know": [
+        "How database-driven sites build queries from input, and SQL injection, including blind and second-order injection",
+        "[[Input sanitisation (escaping), prepared statements and anomaly detection]], and which injections each one misses",
+        "Memory errors in C and C++: stack buffer overflow, underflow, off-by-one and overread (Heartbleed); why programs in memory-safe languages still depend on unsafe code",
+        "Code injection by [[overwriting the return address to jump into injected code]], and code reuse as the answer to non-executable memory",
+        "[[Enforcement defences (W XOR X, the NX bit) versus randomisation (ASLR)]], and how information leaks and code reuse get around them",
+        "Fuzzing: [[mutation-based, generation-based and coverage-guided]]"
+      ],
+      "do": [
+        "Explain why a short C function overflows its stack buffer and how code injection would exploit it",
+        "Say what an attacker can still do under W XOR X, and how ASLR raises the bar",
+        "Show how SQL injection survives sanitisation and a hidden schema, and propose further countermeasures",
+        "Use the expected number of result rows to detect injected queries",
+        "Describe two fuzzing strategies, each with a bug it would find"
+      ],
+      "pitfalls": [
+        "Saying ASLR randomises memory without saying what that denies the attacker; most points go to the hard-to-find addresses of buffers and code",
+        "Describing code injection with one step only: you must overwrite the return address and point it at the injected code",
+        "Thinking W XOR X stops the overflow: [[the return address can still be overwritten]]",
+        "Relying on input sanitisation alone, which second-order injection gets around"
+      ]
+    },
+    {
+      "name": "Malware and malware detection",
+      "lectures": ["Lecture 14 - Malware and Malware Detection"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "Malware classified by how it spreads and what it does: [[virus, worm, trojan, rootkit, ransomware, backdoor, scareware]]",
+        "Infection vectors: drive-by downloads, mail attachments, fake software, exploits against servers",
+        "Virus versus worm: [[human-assisted versus automatic spreading]]; worm target discovery by random scanning, local subnet, hit lists and topological spread",
+        "The phases of a worm outbreak: [[slow start, fast spread, slow finish]]",
+        "Stuxnet and the XZ/liblzma backdoor as case studies",
+        "Detection by signatures, heuristics, static and dynamic analysis and quarantine, and the cost of false positives and false negatives"
+      ],
+      "do": [
+        "Describe a combined type such as a ransomware worm or a backdoor virus by its spreading part and its payload",
+        "Explain two worm strategies for finding new targets",
+        "Classify a detection outcome as a true or false positive or negative"
+      ],
+      "pitfalls": [
+        "Describing only half of a combined type: the ransomware worm answer is marked on both the ransom payload and the self-propagation",
+        "Saying a worm needs a user to run it; that is a virus, while a worm copies itself to other machines"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Computer networks: the layer model, IP, TCP and its three-way handshake, UDP, DNS and HTTP",
+    "C and process memory: the stack, stack frames, return addresses and pointers",
+    "SQL queries and relational databases",
+    "Operating system basics: processes, users and file permissions",
+    "XOR, modular arithmetic, logarithms and basic probability"
+  ],
+  "practical": "Two mandatory group assignments, each 10 percent of the grade; they cannot be done alone, and an alternative is only granted for unforeseen problems reported at least 2 days before the deadline with a study adviser's note. The archive has the Assignment 2 solutions, self-assessments for weeks 4 and 5 and two Systems Security quizzes, but not the assignment texts.",
+  "studyAdvice": [
+    "Split your time by the three exam parts, not by slides: network security, systems security and cryptography each count for a third, so five short network lectures weigh as much as four dense crypto lectures.",
+    "Start cryptography early. It needs the most practice and has fixed drills: CBC diagrams, IND-CPA attacks, Shamir reconstruction, Merkle proofs, entropy.",
+    "Rehearse the vulnerable C function until you can explain the overflow, the code injection and the effect of W XOR X without notes; this 7-point block was in both papers.",
+    "Learn the course in contrasting pairs for the multiple choice: volumetric versus protocol DDoS, packet filter versus stateful firewall, SPF versus DKIM, ACL versus capability list, Bell-LaPadula versus Biba, virus versus worm.",
+    "Practise open answers against the WebLab marking checklists: points come per required element, so name the mechanism, explain why it works and give an example.",
+    "Build your handwritten A4 cheat sheet while you study: entropy, Shamir, block cipher modes, firewall types, kill chain phases.",
+    "Do not skip the guest lecture on disclosure: both papers end with a short part on it and on attacks against AI systems, a topic you will need to find outside this archive."
+  ]
+}

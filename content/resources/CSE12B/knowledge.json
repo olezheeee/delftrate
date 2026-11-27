@@ -1,0 +1,222 @@
+{
+  "course": "CSE12B",
+  "title": "Human Computer Interaction & AI-Assisted Prototyping",
+  "ects": 5,
+  "summary": "How to design interactive systems around the people who will use them: analysing users, tasks and contexts, structuring information, designing for usability and accessibility, prototyping, and evaluating with experts and with users. In the predecessor CSE3500 this ran as eight lectures, weekly labs on a tourism case and a group project that ended in a report on a controlled user study. CSE12B adds building a software prototype with generative AI and testing it with real users; how it is taught and assessed has not been published.",
+  "basis": {
+    "lectures": 8,
+    "description": "Slides of the eight lectures of the discontinued course CSE3500 Human Computer Interaction (2025 edition, as text), its lab assignments and its official course description. Time shares count text slides; the exam preparation lecture is left out and has no slides in the archive.",
+    "caveat": "CSE12B is new in the 2026-27 curriculum (year 1, quarter 2). It replaces CSE1500 Web and Database Technology in the curriculum table, but its subject is HCI, so this rests on CSE3500, the closest predecessor. The new part, building a prototype with generative AI and testing it with real users, has no material yet. Lectures 1 to 6 were flipped with videos not in the archive, so slide counts understate them, Lecture 3 most."
+  },
+  "topics": [
+    {
+      "name": "Usability and the PACT framework",
+      "lectures": ["Lecture 1 - Introduction to HCI"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Usability as [[effective, efficient and satisfying task completion]] (ISO 9241-11), and how user experience is wider than usability",
+        "PACT: [[People, Activities, Contexts and Technologies]], and what each part asks you to describe",
+        "People: user characteristics (age, domain and computer experience, frequency of use, freedom of choice, direct or indirect use), novice, occasional and expert users, user classes",
+        "Personas and scenarios: a specific person for each core user class, and a short story of how and why they use the system in a given context",
+        "Hierarchical task analysis: task and subtask hierarchy, plan types ([[fixed sequence, optional, waiting, cycles, time-sharing, discretionary]]) and refining heuristics",
+        "Contexts as [[physical, social and organisational]]; visibility, affordance and perceived affordance as properties of the technology"
+      ],
+      "do": [
+        "Write a PACT analysis for a short client brief with distinct user groups, activities, contexts and technologies",
+        "Build a persona and a scenario for a user class, and draw an HTA with plans for an everyday task"
+      ],
+      "pitfalls": [
+        "Listing user groups or activities that overlap: the practice marking gives one point per distinct aspect",
+        "Putting interface details into tasks and scenarios: the slides keep them interface-free so the same analysis fits a phone, a website or a voice system"
+      ]
+    },
+    {
+      "name": "Requirements and information architecture",
+      "lectures": ["Lecture 2 - Requirements and Information Architecture"],
+      "timeShare": 16,
+      "importance": "important",
+      "know": [
+        "Requirement elicitation (ethnography, contextual inquiry, interviews, surveys, focus groups) versus analysis (scenarios, task analysis, card sorting)",
+        "Information architecture: organising content and designing navigation, shaped by content, context and users",
+        "Organisation structures: [[hierarchy (hub and spoke, nested doll), database, linear, hypertext and hybrid]], and when each fits",
+        "Exact schemes ([[alphabetical, chronological, geographical]]) versus inexact ones ([[topic, task, audience]]), and the risk of hybrid schemes",
+        "Labelling systems that are specific, predictable and consistent; open versus closed card sorting",
+        "[[Global, local, contextual and supplemental]] navigation (site map, index, breadcrumbs, search)"
+      ],
+      "do": [
+        "Choose an organisation structure and scheme for a website or app and defend it",
+        "Plan an open or closed card sort and turn its result into a consistent set of labels",
+        "Judge whether a survey or focus group plan will give the design team usable input"
+      ],
+      "pitfalls": [
+        "Mixing kinds of label in one menu, such as a function, a product class and a user group side by side",
+        "Choosing labels for reasons the slides reject, such as the space on a button"
+      ]
+    },
+    {
+      "name": "Design principles, UX and research ethics",
+      "lectures": ["Lecture 3 - User Experience and Accessibility"],
+      "timeShare": 5,
+      "importance": "essential",
+      "know": [
+        "[[Benyon's twelve design principles]] in four groups: learning and remembering (affordance, visibility, familiarity, consistency), being in control (feedback, navigation, control), safety (constraints, recovery) and suitability (style, flexibility, conviviality)",
+        "The System Usability Scale: [[ten Likert items, a score out of 100, 68 as the average]], and why comparing systems tells you most",
+        "Human research ethics at TU Delft: HREC approval, the risk checklist and mitigation plan",
+        "Informed consent: purpose, what participants do, risks including re-identification, mitigation, and [[separate tick boxes per consent point]]",
+        "Minimal-risk rules for student studies: no vulnerable groups, no identifiable recordings, no sensitive topics, no deception, anonymised secure storage"
+      ],
+      "do": [
+        "Name the design principle a described usability problem violates and explain why, using its definition",
+        "Spot what is missing or risky in a consent text or study plan and fix it"
+      ],
+      "pitfalls": [
+        "Picking a nearby principle instead of the closest one: the practice answers want the single best match plus its definition",
+        "Bundling several consent points into one yes or no question, which the slides show as a bad example"
+      ]
+    },
+    {
+      "name": "Accessibility and inclusive design",
+      "lectures": ["Lecture 3 - User Experience and Accessibility"],
+      "timeShare": 2,
+      "importance": "essential",
+      "know": [
+        "Five kinds of exclusion: [[physical, conceptual, economic, cultural and social]], each with a typical example",
+        "[[Universal design's seven principles]]: equitable use, use that is flexible, simple and intuitive, information that is perceptible, error tolerance, low physical effort, and enough size and space to approach and use",
+        "The guidelines under perceptible information and tolerance for error (redundant modes, contrast, legibility, warnings, fail-safe features)",
+        "Inclusivity analysis: a user characteristic is [[fixed or changing, common or rare]], and its solution [[cheap or expensive]]; the tree says whether inclusion is mandatory, recommended or optional",
+        "WCAG as the web accessibility standard, and the difference between usable design and inclusive design"
+      ],
+      "do": [
+        "Classify a described case by type of exclusion",
+        "Place a user characteristic in the inclusivity tree and say whether inclusion is required",
+        "Give two concrete ways to apply a universal design principle to a given interface"
+      ],
+      "pitfalls": [
+        "Calling a characteristic fixed when some users have it only part of the time: read the scenario for who has it and when",
+        "Answering a universal design question with general usability advice instead of the guidelines of the named principle"
+      ]
+    },
+    {
+      "name": "Envisionment and prototyping",
+      "lectures": ["Lecture 4 - Design and Prototyping"],
+      "timeShare": 14,
+      "importance": "important",
+      "know": [
+        "A prototype as a [[concrete but partial representation of a design]], and why teams prototype",
+        "Fidelity: low (sketches, storyboards, paper, PICTIVE), medium (wireframes, scripted simulations) and high, with the trade-offs of each",
+        "[[Horizontal prototypes (the whole surface, little depth)]], [[vertical prototypes (a few features in depth)]] and scenario prototypes (one fixed script)",
+        "Throwaway, incremental and evolutionary prototypes",
+        "Why low fidelity often beats high fidelity early on: users focus on the big picture and developers stay unattached",
+        "Wizard of Oz: [[a hidden human simulates the intelligence]] of a system that does not exist yet"
+      ],
+      "do": [
+        "Choose the fidelity and kind of prototype for a stage and audience, and justify it",
+        "Make a storyboard or wireframe for a scenario from a PACT analysis"
+      ],
+      "pitfalls": [
+        "Swapping horizontal and vertical: the practice set tests exactly this",
+        "Showing a polished prototype too early, so users comment on fonts or think the system already exists"
+      ]
+    },
+    {
+      "name": "Expert evaluation",
+      "lectures": ["Lecture 5 - Expert Evaluation"],
+      "timeShare": 4,
+      "importance": "essential",
+      "know": [
+        "Expert evaluation with usability experts or experts on the users: cheap and quick, but simulated and without real users",
+        "Cognitive walkthrough: task, action sequence, anticipated users and goals, and the four questions asked at every step",
+        "Heuristic evaluation (Nielsen): experts check the interface on their own against heuristics; it works on paper prototypes",
+        "[[Nielsen's ten heuristics]], and the course's twelve design principles used as an alternative list",
+        "[[Three to five evaluators]], or until saturation; [[five find about 75 percent of the problems]]",
+        "The severity matrix: [[severity set by impact and frequency]], with cost added when choosing what to fix"
+      ],
+      "do": [
+        "Run a cognitive walkthrough on a login or booking flow and record where users will fail",
+        "Give the advantages and disadvantages of heuristic evaluation for a described project",
+        "Rate a list of usability problems for severity and choose which to fix first"
+      ],
+      "pitfalls": [
+        "Forgetting that end users in a participatory heuristic evaluation must first be briefed on the heuristics",
+        "Giving a number of evaluators without the reason (diminishing returns or saturation); the reason carries its own point"
+      ]
+    },
+    {
+      "name": "User evaluation and controlled experiments",
+      "lectures": ["Lecture 5 - Expert Evaluation", "Lecture 6 - User Evaluation and Controlled Experiments"],
+      "timeShare": 19,
+      "importance": "essential",
+      "know": [
+        "Research question types (descriptive, comparative, evaluative, defining, explaining, designing) and what makes a question focused, feasible and specific",
+        "Qualitative versus quantitative evaluation; cooperative evaluation, think-aloud, co-discovery, interviews and thematic analysis",
+        "[[Independent, dependent and confounding variables]]; lab versus field studies",
+        "Within-subject versus between-subject and mixed designs, learning effects and counterbalancing",
+        "Inclusion and exclusion criteria, sample size and power; subjective (questionnaire), behavioural and physiological measures",
+        "Questionnaire quality: [[Cronbach's alpha (0.7 as a rough minimum)]], ceiling effects, reusing validated scales",
+        "Significance as a [[false-positive rate below 5 percent]], p-hacking, and why [[a non-significant result does not prove there is no difference]]"
+      ],
+      "do": [
+        "Design a controlled experiment comparing two versions of a system: question, variables, participants, design, measures, procedure and analysis",
+        "Decide between a within-subject and a between-subject design for a given question and explain why",
+        "Write the methods section of a user study: participants, procedure, materials, measures, data preparation"
+      ],
+      "pitfalls": [
+        "Choosing within-subject to save participants when the first condition changes how people do the second; counterbalancing does not remove that",
+        "Reading a non-significant difference as evidence that the two conditions are equal"
+      ]
+    },
+    {
+      "name": "Adaptive systems and layered evaluation",
+      "lectures": ["Lecture 7 - Interactive Systems"],
+      "timeShare": 8,
+      "importance": "useful",
+      "know": [
+        "The five levels of adaptivity (Browne et al.), from changing output on input to reasoning about its own interaction models",
+        "Domain models at [[physical, conceptual and intentional level]], and user models",
+        "Emotion as discrete categories (Ekman, Plutchik) or as valence and arousal",
+        "A Wizard of Oz protocol: what the wizard can observe, what it can do, and how observation leads to action",
+        "Layered evaluation: [[collect input, interpret it, model the state of the world, decide on adaptation, apply it]], each with its own criteria"
+      ],
+      "do": [
+        "Say which layer a described evaluation targets and which criteria fit it",
+        "Write a wizard protocol whose action space matches what the real system will be able to do"
+      ],
+      "pitfalls": [
+        "Letting the wizard observe or do more than the future system could, which makes the results meaningless"
+      ]
+    },
+    {
+      "name": "Conversational interfaces",
+      "lectures": ["Lecture 8 - Conversational Interfaces"],
+      "timeShare": 19,
+      "importance": "useful",
+      "know": [
+        "Text, voice and hybrid conversational interfaces, and why they spread: speed, hands-free and screen-free use",
+        "Their challenges: high expectations, accents and language, narrow query range, poor discoverability without a GUI",
+        "What makes a good conversation ([[common ground, trust, active listening, humour]]) and how people see agent conversations as mostly functional",
+        "Conversational styles ([[high involvement versus high considerateness]]) and the research findings on worker engagement",
+        "Crowd-powered conversational systems as an extension of Wizard of Oz, their latency and privacy problems, and trust in human-AI interaction"
+      ],
+      "do": [
+        "Argue for or against a conversational interface for a given task and user group",
+        "Describe how you would evaluate a chatbot design with users"
+      ],
+      "pitfalls": []
+    }
+  ],
+  "prerequisites": [
+    "None formally listed for CSE3500",
+    "Basic statistics helps for the experiment part: mean and standard deviation, significance, t-tests and ANOVA",
+    "Comfort writing concise English: the CSE3500 report had a hard word limit"
+  ],
+  "practical": "In CSE3500, groups of 4 to 6 ran a project from week 1 to week 9: requirements, design, prototype and a user-centred evaluation, written up in a report of at most 6200 words. It needed at least one controlled experiment with 15 or more participants under minimal-risk ethics rules, and a BuddyCheck peer review. CSE12B's new part, building a software prototype with generative AI and testing it with real users, is not described yet. The archive files the old Web Technology lectures (HTML, CSS, JavaScript, Node.js) under this course as background for building one.",
+  "studyAdvice": [
+    "Learn the fixed lists by heart: the twelve design principles, the seven universal design principles with their guidelines, the five exclusion types, Nielsen's ten heuristics and the four cognitive walkthrough questions. Most practice points ask you to apply them.",
+    "Accessibility takes 2 percent of the slides but a whole practice set; the topic was taught mainly through videos. Give it far more time than its slide count suggests.",
+    "Practise PACT analyses on any short brief until you can produce distinct user groups, activities, contexts and technologies in a few minutes.",
+    "Study controlled experiment design carefully even though no practice question covers it: it is the core of the predecessor's project, and evaluating with real users is the new part of CSE12B.",
+    "Conversational interfaces fill 19 percent of the slides, much of it research case studies; learn the main concepts and challenges rather than every study result.",
+    "Plan your study for user tests early: in CSE3500 the experiment needed ethics checks and 15 or more participants, and groups had to start right after the experiments lecture."
+  ]
+}

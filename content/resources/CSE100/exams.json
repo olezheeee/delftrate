@@ -1,0 +1,43 @@
+{
+  "course": "CSE100",
+  "title": "Collaborative Development Project",
+  "available": false,
+  "summary": "There is no exam. You first have to pass four pass/fail assignments and a set of individual knock-out rules on attendance and weekly contributions; after that your grade is a weighted average of five rubric grades, taken mostly from what your GitLab repository shows at the end. Each rubric is used for weekly formative feedback first and for the summative grade after the code freeze.",
+  "basis": {
+    "papers": [],
+    "note": "The archive holds no past papers because the course has no exam. Everything here comes from the 2024-25 assessment design document, the study guide text and the lecture slides of the predecessor CSE1105; details for CSE100 will be on Brightspace."
+  },
+  "format": {
+    "mode": "No written, digital or oral exam: continuous assessment of the team repository on GitLab, Brightspace submissions, two Buddycheck peer reviews and the weekly TA meetings",
+    "duration": null,
+    "structure": "Pass/fail: team code of conduct, conducting an effective meeting (individual, not repairable), AID peer feedback in Buddycheck (individual) and the Git assignment (individual). Graded: code contribution and code reviews (individual), tasks and planning, implemented features, technology and usability (team). Rubric levels give 1, 4, 6, 8 or 10.",
+    "grading": "2024-25 weights: 25 percent each for code contribution and reviews, for tasks and planning and for implemented features; 15 for technology; 10 for usability. Every part needs at least 5.0 and the average, rounded to .5, at least 6.0. Parts from 4.0 to under 6.0 marked repairable can be repaired, capped at 6.0. No resit. The old study guide lists personal process at 10 percent instead of usability.",
+    "aids": "Generative AI is allowed if you document each use where it happens and can explain all generated content. TAs will not debug code you did not write, and you may not use AI for Buddycheck feedback or feed it personal data."
+  },
+  "topicWeights": [],
+  "questionTypes": [],
+  "recurring": [],
+  "trends": [
+    "In 2024-25 the oral exam and the teamwork essay were dropped, the testing assignment was folded into the code rubric, and teamwork started in week 2.",
+    "The project changes every year: NetNote, a note-taking app, was the 2024-25 project, so expect a new backlog with its own extensions.",
+    "From 2026-27 the course runs in quarter 4 instead of quarter 2, so the weeks of repairs and deadlines will shift."
+  ],
+  "strategy": [
+    "Treat the knock-out rules as the first deadline. By the end you need 600 lines of Java on main (100 or more in both client and server), 6 merged merge requests with code, 6 review comments of 100 or more characters on others' merge requests and 6 approvals.",
+    "Meet the weekly minimum in each project week: a finished merge request with Java code and a passing pipeline, 100 lines of Java, one meaningful comment and one approval. One missed week brings a warning; [[two in a row means a fail]].",
+    "Implemented features: the basic requirements give 6 points (5 if one non-essential one is missing) and the extensions add their average score, at 1, 2 or 4 points each for sufficient, good or excellent. [[All basics and no extensions is a 6.0]].",
+    "Usability is nine pass/fail checks, each worth one point above a base of 1: contrast, keyboard shortcuts, multi-modal cues, logical navigation, keyboard-only flows, multi-step undo, error messages, informative feedback and a delete confirmation.",
+    "Technology checks framework use: dependencies injected by Spring and Guice, static only for constants, services, controllers and configuration kept apart on the server, UI separated from server calls on the client, and Jackson for all JSON.",
+    "Rubrics are incremental: [[you only reach good if you also meet sufficient]], so fix the lower criteria before chasing the top ones.",
+    "Grading looks mostly at the last weeks, so act on each week's formative feedback; it uses the final rubric and is ready before your TA meeting.",
+    "Rotate chair and minute taker from the first meeting, store each agenda in the repository before the lab, and demo only what is merged on main."
+  ],
+  "pitfalls": [
+    "Missing a submission or a deadline altogether: anything not handed in cannot be repaired, and [[missing more than one TA meeting]] without prior approval from the lecturers fails you.",
+    "Teams with no or very few issues get insufficient on every Tasks and Planning item; user stories used as issues without being split score poor.",
+    "Committing straight to main is insufficient for isolation, and branches shared between people or a separate dev branch go against the required workflow.",
+    "Merge requests left unreviewed for days, or merged with a failing pipeline, cost points under code reviews and build server.",
+    "Inflated activity (filler code, empty comments, only refactorings, heavy undocumented AI use) is treated as fraud, and a team that keeps quiet about it is held complicit.",
+    "Features nobody asked for earn nothing; polishing a requested feature does."
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "course": "CSE22C",
+  "source": {
+    "name": "Lightspace",
+    "title": "Concepts of Programming Languages",
+    "url": "https://lightspace.study/courses/concepts-of-programming-languages",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Community notes (Notion)",
+          "url": "https://plain-pocket-06a.notion.site/Concepts-of-Programming-Languages-9a683270c8eb48afae355dd6014fed1a"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Introduction",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%201%20-%20Introduction.pdf",
+          "size": "15 MB"
+        },
+        {
+          "title": "Lecture 2 - Syntax & Parsing",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%202%20-%20Syntax%20%26%20Parsing.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 3 - Syntax & Parsing Part 2",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%203%20-%20Syntax%20%26%20Parsing%20Part%202.pdf",
+          "size": "805 KB"
+        },
+        {
+          "title": "Lecture 4 - Semantic Transformations",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%204%20-%20Semantic%20Transformations.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 5 - Higher-Order Functions",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%205%20-%20Higher-Order%20Functions.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 6 - Functions and Environments",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%206%20-%20Functions%20and%20Environments.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 7 - Function Abstraction",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%207%20-%20Function%20Abstraction.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 8 - Mutation and State",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%208%20-%20Mutation%20and%20State.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 9 - Type Checking",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%209%20-%20Type%20Checking.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 10 - Parallel Computing Part 1",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2010%20-%20Parallel%20Computing%20Part%201.pdf",
+          "size": "615 KB"
+        },
+        {
+          "title": "Lecture 11 - Parallel Computing Part 2",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2011%20-%20Parallel%20Computing%20Part%202.pdf",
+          "size": "514 KB"
+        },
+        {
+          "title": "Lecture 12 - Parallel and Concurrent Programming",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2012%20-%20Parallel%20and%20Concurrent%20Programming.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 13 - Objects",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2013%20-%20Objects.pdf",
+          "size": "446 KB"
+        },
+        {
+          "title": "Lecture 14 - Lazy Evaluation",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2014%20-%20Lazy%20Evaluation.pdf",
+          "size": "545 KB"
+        },
+        {
+          "title": "Lecture 15 - Additional Topics",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2015%20-%20Additional%20Topics.pdf",
+          "size": "407 KB"
+        },
+        {
+          "title": "Lecture 16 - Course Recap",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Lectures/CPL%20Lecture%2016%20-%20Course%20Recap.pdf",
+          "size": "975 KB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Cementing Week 2 Solutions",
+          "section": "Cementing Solutions",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Cementing%20Solutions/CPL%20Cementing%20Week%202%20Solutions.pdf",
+          "size": "86 KB"
+        },
+        {
+          "title": "Cementing Week 4 Solutions",
+          "section": "Cementing Solutions",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Cementing%20Solutions/CPL%20Cementing%20Week%204%20Solutions.pdf",
+          "size": "110 KB"
+        },
+        {
+          "title": "Cementing Week 6 Solutions",
+          "section": "Cementing Solutions",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Cementing%20Solutions/CPL%20Cementing%20Week%206%20Solutions.pdf",
+          "size": "129 KB"
+        },
+        {
+          "title": "Cementing Week 7 Solutions",
+          "section": "Cementing Solutions",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Cementing%20Solutions/CPL%20Cementing%20Week%207%20Solutions.pdf",
+          "size": "84 KB"
+        },
+        {
+          "title": "Cementing Week 8 Solutions",
+          "section": "Cementing Solutions",
+          "url": "https://lightspace.study/courses/concepts-of-programming-languages/read/CPL%20Cementing%20Solutions/CPL%20Cementing%20Week%208%20Solutions.pdf",
+          "size": "88 KB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Programming Languages - Application and Interpretation"
+        }
+      ]
+    }
+  ]
+}

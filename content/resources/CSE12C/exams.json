@@ -1,0 +1,161 @@
+{
+  "course": "CSE12C",
+  "title": "Data Management",
+  "available": true,
+  "summary": "These are the exams of the two predecessors; the format of the CSE12C exam itself has not been published. IDM ended in 2024-25 with one 180-minute WebLab exam, mostly multiple choice plus SQL queries you type and test. The WDT DB midterm took 90 minutes, with an EER design on paper and the rest on WebLab or paper. Across both sets, SQL, query optimisation and data modelling carry about 62 percent of the points.",
+  "basis": {
+    "papers": [
+      { "name": "Endterm 2025 (IDM)", "year": 2025, "kind": "endterm", "questions": 8, "points": 666, "minutes": 180 },
+      { "name": "Resit 2025 (IDM)", "year": 2025, "kind": "resit", "questions": 8, "points": 815, "minutes": 180 },
+      { "name": "Resit 2023 (IDM)", "year": 2023, "kind": "resit", "questions": 7, "points": 61, "minutes": 120 },
+      { "name": "Midterm 2025 (WDT DB)", "year": 2025, "kind": "midterm", "questions": 5, "points": 117, "minutes": 90 },
+      { "name": "Midterm Resit 2024 (WDT DB)", "year": 2024, "kind": "resit", "questions": 5, "points": 124, "minutes": 90 },
+      { "name": "Midterm 2024 (WDT DB)", "year": 2024, "kind": "midterm", "questions": 5, "points": 67, "minutes": 90 }
+    ],
+    "note": "Three latest complete papers per set; IDM split 2023-24 into two half-course exams, so Resit 2023 is the third. Each paper is scaled to 100, averaged per set, and the sets are combined 13 to 8 by content lectures (IDM to WDT DB). Some splits inside WebLab tasks are estimated. WDT DB years are academic years (Midterm 2025 was sat in December 2024). The archive lists 14 more papers (7 IDM, 7 WDT DB incl. 2 mocks); the IDM text also holds the 2023-24 halves."
+  },
+  "format": {
+    "mode": "Not published for CSE12C. IDM 2024-25: computer exam on WebLab in an exam hall. WDT DB 2024-25: EER design on a paper answer sheet, all other tasks on WebLab.",
+    "duration": "Not published for CSE12C. IDM: 180 minutes in 2024-25, 120 minutes up to 2022-23. WDT DB midterm: 90 minutes.",
+    "structure": "IDM 2024-25: eight WebLab task folders, one per topic (storage, indexing, relational algebra, SQL, query optimisation, transactions, logging, CAP), mostly multiple choice, plus four SQL queries to write and one AI-written query to judge. IDM 2022-23: seven written tasks. WDT DB: five parts, an EER design scenario, EER-to-relational conversion, SQL, FDs and normalisation, and JDBC or mixed short questions.",
+    "grading": "Not published for CSE12C. IDM: the final exam was 100 percent of the grade, pass mark 5.8, labs optional per the official description. WDT DB: the database midterm and the web endterm each counted 50 percent, each needed at least 5 and the course 5.8; the assignments were ungraded. Both offered a resit in the next quarter.",
+    "aids": "Not published for CSE12C. IDM 2024-25: one handwritten A4 cheat sheet, a simple calculator and the WebLab calculator. IDM 2022-23 papers: pens only. WDT DB midterms 2023 to 2025: pens only."
+  },
+  "topicWeights": [
+    {
+      "topic": "SQL: querying and defining data",
+      "share": 26,
+      "appearsIn": 6,
+      "asks": "Four or five queries from plain-English requests with joins, GROUP BY with HAVING, set operators and 'never' or 'all' conditions; judging and fixing a ChatGPT query; describing what a query returns; comparing a comma join with JOIN ... ON."
+    },
+    {
+      "topic": "Query processing and optimisation",
+      "share": 19,
+      "appearsIn": 3,
+      "asks": "An operator tree with an appendix of statistics: records and blocks of each intermediate result, reduction factors, relation versus index scan, the cheapest join algorithm, join order, greedy heuristics, and whether 1/#dv is accurate."
+    },
+    {
+      "topic": "Data models, ER modelling and relational schemas",
+      "share": 17,
+      "appearsIn": 3,
+      "asks": "A scenario of about a page to model in Chen EER notation (16 to 30 points), converting a given EER diagram to relations with keys, and short design arguments: email as key, weak entity or not, inheritance or not, conceptual before logical."
+    },
+    {
+      "topic": "Functional dependencies and normalisation",
+      "share": 8,
+      "appearsIn": 3,
+      "asks": "Multiple-choice FD and key questions, FDs that hold in a given table or follow from a scenario, then candidate keys, the normal form and a 2NF and 3NF decomposition of one relation."
+    },
+    {
+      "topic": "Transactions, concurrency control and recovery",
+      "share": 8,
+      "appearsIn": 3,
+      "asks": "Disk values before and after recovery for an undo, redo or undo/redo log with a crash point; 2PC behaviour after a coordinator crash; whether a schedule is conflict serialisable; arguments about serial execution."
+    },
+    {
+      "topic": "Indexing: hash, B+-trees and kd-trees",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "Choosing a hash index, B+-tree, kd-tree or no index per query or workload, B+-tree index access cost, hash overflow without rehashing, and why B+-trees have high fan-out."
+    },
+    {
+      "topic": "Relational algebra",
+      "share": 6,
+      "appearsIn": 3,
+      "asks": "Writing three algebra expressions (2022-23) or picking all correct ones (2025), true-or-false algebra and SQL equivalences, and bounding the size of a result."
+    },
+    {
+      "topic": "Storage media, RAID and record layout",
+      "share": 5,
+      "appearsIn": 3,
+      "asks": "Row store or column store for three or four given queries, and the RAID level for a stated goal."
+    },
+    {
+      "topic": "Distributed data, CAP and NoSQL",
+      "share": 2,
+      "appearsIn": 2,
+      "asks": "CAP scenarios (online retailer, social feed, shared editing, banking) to classify, and which statements hold for AP and CP systems."
+    },
+    {
+      "topic": "Database applications: JDBC, SQL injection and persistence",
+      "share": 2,
+      "appearsIn": 3,
+      "asks": "A JDBC method built by string concatenation: what it returns, how to inject into it, how to fix it; preventing SQL injection; the impedance mismatch."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Multiple choice",
+      "share": 31,
+      "description": "Single or multiple answer on WebLab, often without partial points: index and storage choices, algebra equivalences, logging outcomes, 2PC, CAP and FD checks."
+    },
+    {
+      "type": "Writing SQL",
+      "share": 19,
+      "description": "Type a query that must run and return exactly the asked result schema; on paper it is graded with a rubric that subtracts per mistake."
+    },
+    {
+      "type": "Schema design",
+      "share": 15,
+      "description": "Draw an EER schema for a scenario, or convert a given EER diagram into relations with primary and foreign keys."
+    },
+    {
+      "type": "Cost and size estimation",
+      "share": 11,
+      "description": "Compute records, blocks and scan or join costs for parts of an operator tree, typed or picked from numeric options."
+    },
+    {
+      "type": "Short explanation or argument",
+      "share": 10,
+      "description": "A few sentences that take a position and back it with arguments, for example on design choices, serial execution or how a progress bar would estimate query time."
+    },
+    {
+      "type": "Reading and judging queries",
+      "share": 6,
+      "description": "Say what a given query returns, whether two queries give the same result set, or whether an AI-written query is correct, and fix it."
+    },
+    {
+      "type": "Normalisation and FD analysis",
+      "share": 5,
+      "description": "Derive FDs and candidate keys, name the normal form and decompose step by step into 2NF and 3NF."
+    },
+    {
+      "type": "Writing relational algebra",
+      "share": 3,
+      "description": "Express English requests as algebra expressions with joins, selections, grouping and set difference."
+    }
+  ],
+  "recurring": [
+    "Every IDM paper has a cost-based optimisation task on one operator tree with an appendix of byte sizes, block size and column statistics; it is the largest single task.",
+    "Every IDM paper asks you to choose row store or column store per query, and to choose an index type per attribute or workload.",
+    "Every IDM paper has a log trace with a crash point and asks what is on disk and what recovery does; 2PC and CAP questions are on both 2025 papers.",
+    "IDM SQL tasks since 2022-23 include a query written by ChatGPT that you must judge and, if wrong, repair.",
+    "Every WDT DB midterm opens with a scenario to model in EER (Santa's wish lists in 2024-25, recipes in the 2024 resit), followed by an EER-to-relational conversion.",
+    "Every WDT DB midterm has one relation with a set of FDs: find the candidate keys, name the normal form, decompose to 2NF and 3NF.",
+    "The question whether a comma join with WHERE and JOIN ... ON give the same result set is on all three WDT DB papers and on Endterm 2025 (IDM).",
+    "SQL injection is on all three WDT DB papers: attack and fix a JDBC login method, define the attack, or name a defence."
+  ],
+  "trends": [
+    "IDM moved from 120-minute written papers (up to 2022-23) to a midterm and endterm of 90 minutes each in 2023-24, and to one 180-minute WebLab exam in 2024-25.",
+    "The 2025 IDM papers are almost entirely multiple choice except the SQL folder; earlier papers asked for written calculations, algebra and arguments.",
+    "Conceptual modelling and normalisation were IDM tasks in 2019; by 2022 they had moved to the WDT DB midterm, and in CSE12C both halves are one course again.",
+    "WDT DB added a WebLab part in 2024-25, with SQL queries that are run and auto-checked, while the EER design stayed on paper."
+  ],
+  "strategy": [
+    "Spend the most hours on SQL, query optimisation and EER modelling: together they carry about 62 percent of the points in the predecessor papers.",
+    "On WebLab, use the spec test: [[a syntax error, an empty result or a wrong column name means 0 points]], so name result columns exactly as asked with AS.",
+    "Read the whole appendix before the optimisation task: byte sizes, block size, sort order and index costs decide every number.",
+    "For EER design, model only what the scenario asks for, mark keys and cardinalities on every relationship, and write down assumptions where the text is open.",
+    "In argument questions give as many distinct arguments as asked; the rubrics give nothing for a bare stance such as 'it depends'.",
+    "Budget time: the IDM 2025 papers had 666 and 815 points in 180 minutes, so a 15-point multiple-choice question is worth three to four minutes.",
+    "Prepare your own cheat sheet if one is allowed again: cost formulas, reduction factors, logging rules, normal form definitions and SQL syntax."
+  ],
+  "pitfalls": [
+    "Duplicates and ordering: Midterm 2025 (WDT DB) subtracted 10 of 100 points for duplicate rows and 15 for a wrong order; Midterm 2024 (WDT DB) gave no partial points at all.",
+    "Decomposing straight to 3NF: Midterm Resit 2024 gave [[no points for the 2NF step if it was skipped]].",
+    "Using two single-attribute B+-tree indexes as if they were one kd-tree earned 0 points in Resit 2023.",
+    "In logging questions where the crash comes before a flush, the model answer is that the COMMIT record [[may or may not be in the log]]; cover both cases.",
+    "Linking a weak entity to each owner separately instead of to the relationship it depends on: the Midterm 2025 model answer warns against exactly this.",
+    "Treating EXISTS and a join, or UNION ALL and OR, as equivalent: [[they differ in duplicates]], which is exactly what the equivalence questions test."
+  ]
+}

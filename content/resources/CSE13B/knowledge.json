@@ -1,0 +1,295 @@
+{
+  "course": "CSE13B",
+  "title": "Software Design and Engineering",
+  "ects": 5,
+  "summary": "How to build software that is right for its users and stays maintainable: eliciting requirements, choosing an architecture and design patterns, measuring code quality, and testing systematically with JUnit, Mockito, jqwik and Selenium. The course merges two predecessors, Software Quality and Testing (testing) and Software Engineering Methods (requirements, design and process). Both were taught as flipped classrooms with weekly WebLab exercises, and both were graded by one WebLab exam.",
+  "basis": {
+    "lectures": 21,
+    "description": "Slides of CSE1110 Software Quality and Testing (9 content lectures) and CSE2115 Software Engineering Methods (12 content lectures; Domain Driven Design, Agility at Scale and Technical Debt have no slides here and count as one average SEM lecture each), plus the past papers of both. Guest, recap and Q&A lectures are left out.",
+    "caveat": "CSE13B is new in the 2026-27 curriculum (year 1, quarter 3) and merges CSE1110 SQT and CSE2115 SEM, which was a year-2 course before; its own content and assessment have not been published. SEM lectures carry about twice as many slides as SQT lectures, so time shares weigh each set by its number of content lectures (12 SEM, 9 SQT) and use slide counts only within a set."
+  },
+  "topics": [
+    {
+      "name": "Requirements engineering and UML",
+      "lectures": [
+        "Lecture 1 - Introduction and Requirements Engineering",
+        "Lecture 2 - Requirements Engineering and UML"
+      ],
+      "timeShare": 6,
+      "importance": "essential",
+      "know": [
+        "Stakeholders, why missing one is costly, and how to find underrepresented ones",
+        "Elicitation techniques: interviews, questionnaires, scenarios, use cases and contextual inquiry, and when each fits",
+        "[[User requirements (natural language, for customers)]] versus [[system requirements (detailed, for developers and tenders)]]",
+        "Functional versus non-functional requirements, the categories of non-functional ones, and ethical requirements",
+        "SMART requirements and verifiability; prioritisation with [[MoSCoW]] and with the [[Kano model]] and its categories",
+        "UML notation: use case diagrams with include and extend, sequence diagrams with alt fragments and activations, class diagrams with composition versus shared aggregation, component diagrams with provided and required interfaces; activity diagrams only to read"
+      ],
+      "do": [
+        "Classify a stated requirement as user or system and as functional or non-functional, and justify both",
+        "Extract and classify all requirements from a client scenario, and say which ones are too vague to verify",
+        "Draw a use case, sequence or class diagram in PlantUML from a short text"
+      ],
+      "pitfalls": [
+        "Calling a constraint on the technology or the process (such as written in Java/Spring) functional: the model answers class it as a [[non-functional system requirement]]",
+        "Mixing up include and extend in use case diagrams, or UML composition with DDD aggregates",
+        "Using PlantUML's extends or implements keywords, which the recap warns draw the wrong arrows"
+      ]
+    },
+    {
+      "name": "Software architecture and software at scale",
+      "lectures": [
+        "Lecture 3 - Software Architecture",
+        "Lecture 11 - Software at Scale",
+        "Lecture 12 - Software at Scale Part 2"
+      ],
+      "timeShare": 13,
+      "importance": "important",
+      "know": [
+        "Architecture as the [[significant decisions that are costly to change]], and architectural views (context, functional, information)",
+        "The C4 model's four levels ([[context, container, component, code]]) and which audience each serves",
+        "The patterns client-server, layered (three-tier), MVC, pipe-and-filter, microservices, publish-subscribe and event-driven, each with its quality attributes",
+        "The CAP theorem and eventual consistency",
+        "Finding and reproducing production problems: Sentry error and performance tracking, performance checks in CI, impersonation, staging environments, local copies of production data",
+        "Scaling: caching results and (partial) pages, the [[scale cube (X, Y and Z axes)]], load balancers, microservices and fault tolerance",
+        "Deployment: Docker images versus containers, Docker versus virtual machines, the cloud, infrastructure as code and serverless"
+      ],
+      "do": [
+        "Pick the architectural pattern that fits a scenario best and explain why the alternatives fit worse",
+        "Name advantages and drawbacks of a pattern, for example why pipe-and-filter is extensible but slow to respond",
+        "Explain two ways to reproduce a production issue and compare their costs and privacy risks"
+      ],
+      "pitfalls": [
+        "Choosing microservices by reflex: the model answers reject them for a small team and moderate load",
+        "Confusing publish-subscribe (an architecture across components) with the Observer pattern (inside one component)",
+        "Thinking serverless means no server, or that a Docker container (rather than an image) is the blueprint"
+      ]
+    },
+    {
+      "name": "Design patterns and domain-driven design",
+      "lectures": [
+        "Lecture 4 - Design Patterns",
+        "Lecture 6 - Domain Driven Design (no slides in the archive)"
+      ],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "Cohesion and coupling, and the SOLID principles, including the open-closed and Liskov substitution principles",
+        "Behavioural patterns: [[Iterator, Strategy, Chain of Responsibility, Observer]]",
+        "Structural patterns: [[Adapter, Facade, Proxy, Decorator, Composite]]",
+        "Creational patterns: [[Factory Method, Abstract Factory, Builder, Singleton]]; and Factory Method versus Builder",
+        "DDD strategic design: bounded contexts classed as core, supporting or generic, and upstream and downstream relations",
+        "DDD building blocks: [[entities versus value objects (identity versus attributes)]], [[aggregates with a single root]], services, ubiquitous language, and keeping associations few and one-directional"
+      ],
+      "do": [
+        "Choose the pattern that fits a scenario and say why the near-misses do not",
+        "Draw the class diagram of a pattern applied to a scenario, with fields, methods, visibility and the right associations",
+        "Split a scenario into bounded contexts, describe their interactions and argue against alternative splits",
+        "Group the classes of a domain model into aggregates and pick their roots"
+      ],
+      "pitfalls": [
+        "Reaching for Factory Method or Adapter when behaviour must vary at run time: the model answer for a format switch is Strategy",
+        "Treating a DDD aggregate as a database grouping or a max/mean computation; [[outside classes may only reference the root]]",
+        "Renaming classes in a diagram: the WebLab spec tests match the names given in the question"
+      ]
+    },
+    {
+      "name": "Testing principles and specification-based testing",
+      "lectures": [
+        "Lecture 1 - Effective and Systematic Software Testing",
+        "Lecture 2 - Specification-based testing"
+      ],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "Testing principles: exhaustive testing is impossible, the pesticide paradox, defects cluster, testing is context-dependent, absence of errors is a fallacy",
+        "The testing pyramid ([[unit, integration, system, manual]]) and the trade-offs between speed, realism and flakiness",
+        "The seven steps of specification-based testing: [[understand the requirement, explore the program, identify partitions, analyse boundaries, devise, automate and augment]]",
+        "Equivalence partitioning with the category-partition method, and combining partitions without an explosion of tests",
+        "Boundary analysis with [[on points, off points, in points and out points]]",
+        "Parameterised tests in JUnit 5"
+      ],
+      "do": [
+        "Derive partitions and boundary cases from a written specification and turn them into a JUnit test suite",
+        "Choose the on and off points for a condition such as value greater than 100 or value at most 2.0",
+        "Judge statements about testing principles and the testing pyramid"
+      ],
+      "pitfalls": [
+        "Testing only the happy path: domain-testing tasks are graded by meta-tests that plant bugs in edge cases such as empty or single-element input",
+        "Using random inputs in specification-based tests, which the exam Q&A rules out"
+      ]
+    },
+    {
+      "name": "Structural testing, coverage and mutation testing",
+      "lectures": [
+        "Lecture 3 - Structural testing"
+      ],
+      "timeShare": 6,
+      "importance": "essential",
+      "know": [
+        "Line, block, branch, condition, branch plus condition, path and MC/DC coverage, and the subsumption relations between them",
+        "Control flow graphs and how a compound condition splits into separate branches",
+        "Why [[high coverage does not prove a suite is good]], while low coverage shows what is untested",
+        "Mutation testing: mutants, [[killed and surviving mutants, mutation score, equivalent mutants]] and typical mutation operators",
+        "Using coverage after specification-based testing to find what the suite missed"
+      ],
+      "do": [
+        "Work out the minimum number of tests for full branch coverage of a method with nested loops and conditions",
+        "Select an MC/DC test set for a boolean expression of four conditions ([[n plus 1 tests]])",
+        "Create a mutant that the given suite kills, a non-equivalent mutant that survives, and a test that kills it"
+      ],
+      "pitfalls": [
+        "Forgetting the false branch of a loop condition when counting tests for branch coverage",
+        "Submitting an equivalent mutant as a surviving one: the grader first checks that a counterexample input exists"
+      ]
+    },
+    {
+      "name": "Design by contract and property-based testing",
+      "lectures": [
+        "Lecture 4 - Designing contracts",
+        "Lecture 5 - Property-based testing"
+      ],
+      "timeShare": 13,
+      "importance": "important",
+      "know": [
+        "Preconditions, postconditions and class invariants, and the invariant rule for public methods",
+        "Defensive versus cooperative checking, and assertions versus if-statements with exceptions ([[assertions can be disabled]])",
+        "Contracts and inheritance: [[a subclass may weaken preconditions and strengthen postconditions and invariants]], not the reverse (Liskov)",
+        "Contracts versus input validation",
+        "Property-based testing with jqwik: [[@Property, @ForAll, Arbitraries, @Provide and @Example]]",
+        "Common property patterns: round-tripping, invariants, idempotence, hard to compute but easy to verify, differential and metamorphic testing"
+      ],
+      "do": [
+        "State pre- and postconditions and invariants for a given method or class",
+        "Decide whether a subclass contract keeps the subclass substitutable",
+        "Write jqwik properties with generators that cover the input space without filter or Assume, plus the exception cases"
+      ],
+      "pitfalls": [
+        "Writing example-based tests in a PBT task: penalised, and the Q&A says they earn nothing",
+        "Narrowing inputs with filter, Assume.that or Math.random: each carried a 50-point penalty in a past PBT task; build the right arbitrary instead",
+        "Thinking an overriding method may strengthen its precondition"
+      ]
+    },
+    {
+      "name": "Test doubles and design for testability",
+      "lectures": [
+        "Lecture 6 - Test Doubles and Mocks",
+        "Lecture 7 - Design for Testability"
+      ],
+      "timeShare": 6,
+      "importance": "essential",
+      "know": [
+        "[[Dummies, fakes, stubs, mocks and spies]], and when a stub is enough",
+        "Mockito: [[mock, when and thenReturn, verify with times and never]], and ArgumentCaptor",
+        "What to mock (slow or external dependencies) and what not to (the class under test, entities, value objects, exceptions)",
+        "Separating domain code from infrastructure: [[ports and adapters (hexagonal architecture)]]",
+        "Dependency injection versus the dependency inversion principle, controllability and observability",
+        "Why static methods and hidden dependencies such as the system clock hurt testability, and how to inject them instead"
+      ],
+      "do": [
+        "Test a service class with mocked repositories and gateways, stubbing returns and verifying interactions",
+        "Refactor a class so its dependencies come in through the constructor and can be replaced in tests"
+      ],
+      "pitfalls": [
+        "Mocking the class under test (a 100-point penalty in past tasks) or data classes (10 points each)",
+        "Using spies when the task forbids them (a 20-point penalty), or verifying calls whose result you already assert",
+        "Calling when on an object that is not a mock"
+      ]
+    },
+    {
+      "name": "Larger tests, test code quality and TDD",
+      "lectures": [
+        "Lecture 9 - Larger Tests",
+        "Lecture 10 - Test code quality"
+      ],
+      "timeShare": 10,
+      "importance": "essential",
+      "know": [
+        "When to test several classes together, and the cost of integration and system tests: flakiness, timeouts, data pollution",
+        "SQL testing: setting up and cleaning the database, and applying category-partition and MC/DC to queries",
+        "Web testing with Selenium WebDriver: locating elements, interacting, waiting, and the [[Page Object pattern]]",
+        "Test code quality: [[DAMP over DRY]], naming tests after behaviour, clear failure messages, AssertJ, no logic in tests, testing via public APIs",
+        "Test smells and testing state rather than interactions",
+        "Test-driven development: the [[red-green-refactor cycle]] and its effect on design (asked only as theory)"
+      ],
+      "do": [
+        "Write Selenium system tests for a described web page",
+        "Write tests for an SQL data-access class against prepared tables",
+        "Spot the smell in a test and rewrite it"
+      ],
+      "pitfalls": [
+        "Leaving a failing test in a submission: [[a suite with one failing test scores zero]], so fix it or comment it out",
+        "Using mocks in a system-test task; the exam Q&A asks you to follow the instructions on which technique to use"
+      ]
+    },
+    {
+      "name": "Code metrics and technical debt",
+      "lectures": [
+        "Lecture 4 - Design Patterns (cohesion and coupling part)",
+        "Lecture 9 - Technical Debt (no slides in the archive)"
+      ],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "Cyclomatic complexity as [[decision points plus one]], or [[edges minus nodes plus two]] on the control flow graph",
+        "Cohesion and LCOM, coupling between objects",
+        "Code smells: long method, feature envy, magic numbers, low cohesion, switch statements against the open-closed principle",
+        "Refactorings: extract method, move method, extract class, introduce parameter object, replacing conditionals with polymorphism or a map",
+        "Technical debt, self-admitted technical debt and the broken windows theory"
+      ],
+      "do": [
+        "Compute the cyclomatic complexity of a method with nested loops and conditions",
+        "Compute LCOM for a class and say whether it points to a smell",
+        "Pick the refactoring that fixes a described smell and say what it does to coupling and cohesion"
+      ],
+      "pitfalls": [
+        "Applying extract class or move method to a method that already uses most of its class's fields: the model answer says this only raises coupling"
+      ]
+    },
+    {
+      "name": "Open source, agile at scale, sustainability and AI",
+      "lectures": [
+        "Lecture 1 - Introduction and Requirements Engineering (history part)",
+        "Lecture 5 - Working with Open-source Software",
+        "Lecture 7 - Professional Agility at Scale (no slides in the archive)",
+        "Lecture 10 - Sustainable SE (in the slide text, not listed)",
+        "Lecture 14 - GenAI for Development"
+      ],
+      "timeShare": 19,
+      "importance": "important",
+      "know": [
+        "The software crisis, The Mythical Man-Month and No Silver Bullet",
+        "The Open Source Definition, [[permissive versus copyleft licences]], common myths, supply-chain risks, and why companies contribute changes upstream",
+        "Product criteria (functionality, licence, non-functional properties, popularity, documentation, code quality, build) and process criteria (governance, workflow, releases, support, issue handling, contributions) for choosing open source software",
+        "Agile frameworks [[Scrum, Kanban, ScrumBan and XP]], scaling frameworks [[SAFe, LeSS, Scrum@Scale and Spotify]], and VUCA",
+        "Energy versus power, measuring energy and carbon, tracing overhead, and the finding that energy changes tend to hurt maintainability",
+        "Generative AI in development: [[zero-shot and few-shot prompting]], prompt engineering, and the ethical, legal (licensing, data leaks) and security risks"
+      ],
+      "do": [
+        "Assess whether an open source system suits an organisation, naming two product and two process criteria",
+        "Tell the agile and scaling frameworks apart from a short list of their traits",
+        "Argue which considerations limit using AI-generated code in a given setting, such as copyleft licences or patient data"
+      ],
+      "pitfalls": [
+        "Proposing to filter AI output to avoid licensed code: the model answer gives partial points only, because it guarantees nothing"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Object-oriented programming in Java: interfaces, inheritance, polymorphism, generics and collections",
+    "Writing and running JUnit tests in an IDE",
+    "Boolean logic and control flow, to reason about branches and conditions",
+    "Basic SQL (SELECT, JOIN, WHERE) for the database-testing tasks",
+    "The structure of an HTML page (elements, ids, forms) for Selenium"
+  ],
+  "practical": "Not published for CSE13B. In both predecessors the WebLab exercises were optional and ungraded but written in the exam style: in SQT the tool Andy scores your tests on coverage, mutation score, meta-tests that plant bugs, and code checks. SEM added special lab sessions on requirements and teamwork, and its pass/fail Oral Presentations module with mandatory attendance and a group presentation, plus pass/fail peer review.",
+  "studyAdvice": [
+    "On the predecessor papers about 42 percent of the points came from writing test code that compiles and passes. Practise the WebLab domain-testing, mocking, PBT, Selenium and SQL tasks until you can do one in 30 to 40 minutes.",
+    "Design patterns and DDD carry the most points on the SEM side (about 30 percent there). Learn the 13 patterns the recap lists, with a scenario and a class diagram for each.",
+    "Learn PlantUML now: class and sequence diagrams were drawn in it on the 2024-25 SEM papers, and only its documentation was allowed.",
+    "Do not skip the three SEM lectures without slides here (Domain Driven Design, Agility at Scale, Technical Debt): together they were 15 of the 44 points on each 2024-25 SEM paper. The SEM WebLab exercises in the archive cover DDD (entities, value objects, aggregates, bounded contexts).",
+    "Learn jqwik properly: PBT tasks were worth 10 to 20 points, example-based answers earn nothing, and filter or Assume carried heavy penalties.",
+    "Make short notes for the many small multiple-choice topics (open source, agile frameworks, sustainability, generative AI); each is a few points, but together they were about a fifth of the SEM points.",
+    "Use the textbook Effective Software Testing chapter by chapter, as SQT did: each lecture followed one chapter."
+  ]
+}

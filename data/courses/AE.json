@@ -1,0 +1,243 @@
+{
+  "programme": "AE",
+  "academicYear": "2026-2027",
+  "courses": [
+    {
+      "code": "AE1108-I",
+      "name": "Aerospace Materials",
+      "year": 1,
+      "quarters": [2],
+      "professors": ["R Benedictus"]
+    },
+    {
+      "code": "AE1108-II",
+      "name": "Aerospace Mechanics of Materials",
+      "year": 1,
+      "quarters": [3],
+      "professors": ["D M J Peeters"]
+    },
+    {
+      "code": "AE1110-I",
+      "name": "Introduction to Aerospace Engineering-I",
+      "year": 1,
+      "quarters": [1],
+      "professors": ["J M Hoekstra", "F Scarano", "J A Melkert"]
+    },
+    {
+      "code": "AE1110-II",
+      "name": "Introduction to Aerospace Engineering-II",
+      "year": 1,
+      "quarters": [2],
+      "professors": ["R C Alderliesten", "E Mooij"]
+    },
+    {
+      "code": "AE1111-II",
+      "name": "Engineering Drawing",
+      "year": 1,
+      "quarters": [1, 2],
+      "professors": ["D M J Peeters", "E J Bos"]
+    },
+    {
+      "code": "AE1205",
+      "name": "Programming & Scientific Computing in Python for AE1",
+      "year": 1,
+      "quarters": [4],
+      "professors": ["J Ellerbroek"]
+    },
+    {
+      "code": "WI1421LR",
+      "name": "Calculus I",
+      "year": 1,
+      "quarters": [1, 2],
+      "professors": [
+        "M B van Hoven",
+        "V Vaniushkina",
+        "Balagué Guardia",
+        "T Akkaya",
+        "V Lenz",
+        "S Jain",
+        "H Yoldas",
+        "M V Gnann",
+        "A Geyer",
+        "C O Smet"
+      ]
+    },
+    {
+      "code": "WI1402LR",
+      "name": "Calculus II",
+      "year": 1,
+      "quarters": [3],
+      "professors": [
+        "M B van Hoven",
+        "S Aerts",
+        "T Akkaya",
+        "T M L Janssen",
+        "P M Visser",
+        "V Vaniushkina",
+        "N D Verhulst",
+        "Balagué Guardia"
+      ]
+    },
+    {
+      "code": "WI1403LR",
+      "name": "Linear Algebra",
+      "year": 1,
+      "quarters": [4],
+      "professors": ["V Vaniushkina"]
+    },
+    {
+      "code": "AE1241",
+      "name": "Physics",
+      "year": 1,
+      "quarters": [3, 4],
+      "professors": ["A Bombelli"]
+    },
+    {
+      "code": "AE1130-I",
+      "name": "Statics",
+      "year": 1,
+      "quarters": [1],
+      "professors": ["B Caglar", "I Uriol Balbin", "C D Rans"]
+    },
+    {
+      "code": "AE1130-II",
+      "name": "Dynamics",
+      "year": 1,
+      "quarters": [2],
+      "professors": ["X Wang", "S Giovani Pereira Castro"]
+    },
+    {
+      "code": "AE1222-I",
+      "name": "Design & Construction",
+      "year": 1,
+      "quarters": [3, 4],
+      "professors": ["O K Bergsma"]
+    },
+    {
+      "code": "AE1222-II",
+      "name": "Aerospace Design & Systems Engineering Elements I",
+      "year": 1,
+      "quarters": [3, 4],
+      "professors": ["I Akay", "J A M Vanhamel", "M F M Hoogreef"]
+    },
+    {
+      "code": "AE2111-I",
+      "name": "Systems Design",
+      "year": 2,
+      "quarters": [1, 2],
+      "professors": ["S J Watson"]
+    },
+    {
+      "code": "AE2111-II",
+      "name": "Aerospace Design & Systems Engineering Elements II",
+      "year": 2,
+      "quarters": [1],
+      "professors": ["A Cervone"]
+    },
+    {
+      "code": "AE2130-I",
+      "name": "Aerodynamics I",
+      "year": 2,
+      "quarters": [1],
+      "professors": ["A Sciacchitano"]
+    },
+    {
+      "code": "AE2130-II",
+      "name": "Low-speed Wind Tunnel Test",
+      "year": 2,
+      "quarters": [2],
+      "professors": ["M Kotsonis"]
+    },
+    {
+      "code": "AE2130-III",
+      "name": "Aerodynamics II",
+      "year": 2,
+      "quarters": [2],
+      "professors": ["F F J Schrijer"]
+    },
+    {
+      "code": "AE2135-I",
+      "name": "Structural Analysis & Design",
+      "year": 2,
+      "quarters": [2],
+      "professors": ["C D Rans"]
+    },
+    {
+      "code": "AE2135-II",
+      "name": "Vibrations",
+      "year": 2,
+      "quarters": [2],
+      "professors": ["V Yaghoubi Nasrabadi"]
+    },
+    {
+      "code": "AE2220-I",
+      "name": "Applied Numerical Analysis",
+      "year": 2,
+      "quarters": [3],
+      "professors": ["R P Dwight"]
+    },
+    {
+      "code": "AE2220-II",
+      "name": "Computational Modelling",
+      "year": 2,
+      "quarters": [4],
+      "professors": ["S J Hulshoff"]
+    },
+    {
+      "code": "AE2224-I",
+      "name": "Test, Analysis & Simulation",
+      "year": 2,
+      "quarters": [3, 4],
+      "professors": ["J Sun"]
+    },
+    {
+      "code": "AE2224-II",
+      "name": "Artificial Intelligence for Aerospace Engineering",
+      "year": 2,
+      "quarters": [3],
+      "professors": ["B Giovanardi"]
+    },
+    {
+      "code": "AE2230-I",
+      "name": "Flight & Orbital Mechanics",
+      "year": 2,
+      "quarters": [3],
+      "professors": ["C Varriale"]
+    },
+    {
+      "code": "AE2230-II",
+      "name": "Propulsion & Power",
+      "year": 2,
+      "quarters": [3],
+      "professors": ["A Cervone"]
+    },
+    {
+      "code": "AE2235-I",
+      "name": "Aerospace Systems and Control Theory",
+      "year": 2,
+      "quarters": [4],
+      "professors": ["C C Visser"]
+    },
+    {
+      "code": "AE2235-II",
+      "name": "Signal Analysis and Telecommunication Principles",
+      "year": 2,
+      "quarters": [4],
+      "professors": ["M Mulder"]
+    },
+    {
+      "code": "WI2180-I",
+      "name": "Differential Equations",
+      "year": 2,
+      "quarters": [1],
+      "professors": ["A B T Barbaro"]
+    },
+    {
+      "code": "WI2180-II",
+      "name": "Probability and Statistics",
+      "year": 2,
+      "quarters": [1],
+      "professors": ["N Kleijn"]
+    }
+  ]
+}

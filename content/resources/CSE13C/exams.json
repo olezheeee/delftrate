@@ -1,0 +1,130 @@
+{
+  "course": "CSE13C",
+  "title": "Algorithms and Data Structures",
+  "available": true,
+  "summary": "You sit two finals that count equally: a written Analysis exam and a two-hour Implementation exam in WebLab. Analysis has 15 multiple-choice questions and 3 open questions, each half of its grade, and the open part barely changes: a recurrence from Java code, an unfolding, and a design or comparison question. Implementation has four Java tasks, nearly always including a custom linked structure and a graph algorithm. Both grades must reach 5.0; the midterms in week 5 are practice only.",
+  "basis": {
+    "papers": [
+      { "name": "Analysis Resit 2025", "year": 2025, "kind": "resit", "questions": 18, "points": 30, "minutes": 120 },
+      { "name": "Analysis Endterm 2025", "year": 2025, "kind": "endterm", "questions": 18, "points": 30, "minutes": 120 },
+      { "name": "Analysis Resit 2024", "year": 2024, "kind": "resit", "questions": 18, "points": 30, "minutes": 90 },
+      { "name": "Implementation Endterm 2025", "year": 2025, "kind": "endterm", "questions": 4, "points": null, "minutes": 120 },
+      { "name": "Implementation Resit 2025", "year": 2025, "kind": "resit", "questions": 4, "points": null, "minutes": 120 },
+      { "name": "Implementation Resit 2024", "year": 2024, "kind": "resit", "questions": 4, "points": null, "minutes": 120 }
+    ],
+    "note": "Shares weigh the two tracks 50/50, as the grade does. Analysis is counted by printed points; Implementation papers print task weights, not points (25 each; 2.5, 2.5, 1.5 and 2.5 of 9; 30, 30, 10 and 30), and each paper counts equally. Implementation Resit 2024 is the WebLab practice copy. The archive has 12 more Analysis papers as text (Analysis Midterm 2019 is listed without text) and 13 more Implementation papers back to 2019."
+  },
+  "format": {
+    "mode": "Analysis: written on paper with answer sheets, closed book except a cheat sheet. Implementation: Java 17 in WebLab on campus computers, IntelliJ optional.",
+    "duration": "Analysis 120 minutes in 2025 (90 in 2023-24); Implementation 120 minutes",
+    "structure": "Analysis: 15 one-point multiple-choice questions, then three open questions worth 15 points together, usually 5 each: a recurrence from a Java method, unfolding a recurrence, and an applied design or comparison. Implementation: four programming tasks, some graded by spec tests and some by hand with a rubric that also checks the required complexity.",
+    "grading": "Analysis and Implementation must each be at least 5.0; the course grade is their average and must be at least 5.8. Midterms do not count. Each part has its own resit and the better result per part is kept. Partial results do not carry over to a later year.",
+    "aids": "Analysis: one hand-written double-sided A4 cheat sheet (a template is on Brightspace). Implementation: only the Java API documentation inside WebLab."
+  },
+  "topicWeights": [
+    {
+      "topic": "Graphs and graph algorithms",
+      "share": 21,
+      "appearsIn": 6,
+      "asks": "A graph task in every Implementation paper (topological sort with a tie rule, Dijkstra with an edge limit or train departure times). In Analysis: Dijkstra label counts, valid topological orders, the number of MSTs, representation choice, and once a 5-point comparison of a matrix and an edge list."
+    },
+    {
+      "topic": "Complexity analysis and recursion",
+      "share": 20,
+      "appearsIn": 3,
+      "asks": "Analysis only, 12 of 30 points every time: two open questions (base case and recurrence for a recursive method that calls Java collections, and unfolding a recurrence to a closed form) plus multiple-choice on bounds and on recurrences for time or space."
+    },
+    {
+      "topic": "Arrays, lists, stacks and queues",
+      "share": 18,
+      "appearsIn": 6,
+      "asks": "An Implementation task in every paper on a new linked structure (Linked Matrix, Special Queue, up-down doubly linked list) with O(1) pointer work. In Analysis: worst-case versus amortised appends, deleting from linked lists, and which ADT fits given rules."
+    },
+    {
+      "topic": "Sorting and selection",
+      "share": 17,
+      "appearsIn": 5,
+      "asks": "Counting swaps or comparisons on a given array, stability and constraint questions, radix sort with d digits, and an open question on sorting a nearly sorted list with a heap. In Implementation: recursive merge sort on arrays and a quick sort that switches to insertion sort."
+    },
+    {
+      "topic": "Search trees: BST, AVL, (2,4) and red-black",
+      "share": 12,
+      "appearsIn": 4,
+      "asks": "Rebalancing in (2,4), AVL and red-black trees, valid in-order sequences, AVL height bounds and choosing a structure for ordered operations, plus a BST task (add, contains, sorted list) in Implementation Endterm 2025."
+    },
+    {
+      "topic": "Trees, priority queues and heaps",
+      "share": 6,
+      "appearsIn": 4,
+      "asks": "Bottom-up heapify traces and swap counts, merging sorted lists with a heap, and an ArrayList heap with add and removeSecondLowest in O(log n) in Implementation Endterm 2025."
+    },
+    {
+      "topic": "Maps and hash tables",
+      "share": 6,
+      "appearsIn": 5,
+      "asks": "A hash-table trace in each Analysis paper (linear probing with DEFUNCT slots, chain lengths), and in Implementation a hash set with separate chaining or a map that mixes chaining with linear probing."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Writing code: data structures",
+      "share": 27,
+      "description": "Java methods for a variant of a linked list, queue, heap, BST or hash map, within a stated time bound and often without the Java library."
+    },
+    {
+      "type": "Multiple choice",
+      "share": 25,
+      "description": "Four options on one concept: a tight bound, the outcome of a trace on a heap, hash table, tree or graph, or the best structure for a set of operations."
+    },
+    {
+      "type": "Writing code: algorithms",
+      "share": 23,
+      "description": "A sorting, topological sort or shortest-path algorithm in Java with a twist on the textbook version, graded on tests or by hand."
+    },
+    {
+      "type": "Recurrence from code",
+      "share": 9,
+      "description": "Give the base case and recurrence for the runtime of a recursive Java method, naming the input size and justifying each term by line numbers."
+    },
+    {
+      "type": "Unfolding a recurrence",
+      "share": 8,
+      "description": "Expand a given recurrence step by step, find the number of steps to the base case and write the closed form."
+    },
+    {
+      "type": "Design and comparison",
+      "share": 8,
+      "description": "Describe an algorithm or choose between two structures or representations, with the time complexity of each step and a conclusion."
+    }
+  ],
+  "recurring": [
+    "Every Analysis paper ends with the same three open questions: a recurrence from a method (5 or 6 points), an unfolding (5) and an applied design or comparison (4 or 5).",
+    "The recursive method in question 16 calls TreeSet, LinkedList, ArrayList or Collections.sort, so the bound depends on knowing what each call costs for the stated implementation.",
+    "All three analysed Analysis papers have a (2,4) tree question and a hash-table trace in the multiple-choice part.",
+    "All three analysed Implementation papers have a linked structure with extra pointers and a graph algorithm; the 2023-24 final had a Folded Linked List and Connected Components.",
+    "Implementation tasks change a textbook method slightly: remove the second lowest from a heap, sort on several array indices, or combine two collision schemes.",
+    "Hand-graded tasks state a required complexity and are checked for it, not only for passing tests."
+  ],
+  "trends": [
+    "Up to 2023-24 the course ran in quarter 2 with finals in January; from 2024-25 it ran in quarter 3 with finals in April and resits in June.",
+    "The Analysis exam went from 90 to 120 minutes in 2025 with the same 15 plus 3 layout.",
+    "The 2022 Analysis papers were larger (18 or 19 multiple-choice points and 20 or 25 open points) and asked for formal Big-Oh or Big-Omega proofs and an induction proof; recent papers replace these with a design question.",
+    "Implementation task weights are no longer always equal: the 2025 resit gave the hash map task 1.5 of 9."
+  ],
+  "strategy": [
+    "Practise the unfolding until it is routine: points go to the first expansions, the simplification, the pattern after k steps, the choice of k and the base case, so write every step with its label.",
+    "For the recurrence question, state the input size first, then give one term per group of lines and say which lines it covers.",
+    "Put a table of operation costs per structure and per Java class on your cheat sheet; most multiple-choice questions and question 16 lean on it.",
+    "Sit at least two past Implementation papers in WebLab with a two-hour timer, and include the linked-structure and graph tasks every time.",
+    "In hand-graded tasks the rubric gives a point per step (for a heap: parent index, swap, moving up, stop condition), so a clean partial solution still scores.",
+    "In design questions give the complexity of every step, consider preprocessing such as sorting first, and end with a clear choice.",
+    "Train your weaker track hardest: [[below 5.0 on either final means no grade]], whatever the other one is."
+  ],
+  "pitfalls": [
+    "Skipping steps in an unfolding: if the result is wrong, all the skipped steps lose their points, and too few visible steps gives zero.",
+    "Missing a hidden cost, such as get(i) on a linked list inside a loop or sorting a list of size n^2, which takes [[n^2 log(n^2)]].",
+    "Passing the spec tests during the exam but breaking a rule (forbidden library, extra fields, wrong complexity): the shown scores are only indicative and the hand grading deducts.",
+    "Leaving the final version in IntelliJ: [[only the code saved in WebLab before the timer ends is graded]].",
+    "Answering with an amortised bound when the question asks for the worst case of a single operation, as with appending to a full dynamic array."
+  ]
+}
