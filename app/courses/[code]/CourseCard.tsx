@@ -6,16 +6,23 @@
 // Between the professor block and the sliders sits "Resources" (Resources.tsx): the study
 // material and the two booklets of the course.
 //
-// This is a basic outline. Still to do (Pack 4 and Pack 5): the final look of the card,
-// ranks and study tips, and posting the rating through submit_rating().
+// Still to do (Pack 4): the final look of the card, ranks and study tips.
 import Link from "next/link";
-import { useState, type CSSProperties } from "react";
+import { startTransition, useActionState, useState, type CSSProperties } from "react";
 import { programmeName } from "@/lib/auth/programmes";
 import type { CourseDetails } from "@/lib/course-sheet-data";
 import { PROFESSOR_CRITERIA, SUBJECT_CRITERIA, type CourseSheet } from "@/lib/course-sheet";
 import type { CourseResources } from "@/lib/resources";
+import {
+  ratingLockMessage,
+  startingValues,
+  type OwnRating,
+  type RatingInput,
+  type RatingLock,
+} from "@/lib/rating";
 import { VERDICT_LABELS } from "@/lib/score";
 import styles from "./CourseCard.module.css";
+import { submitRating, type RatingState } from "./actions";
 import { Resources, type BookletSummary } from "./Resources";
 
 const MIN_VOTES_NOTE = "Not enough votes yet";
@@ -73,11 +80,13 @@ function Slider({
   criterion,
   value,
   onChange,
+  disabled,
 }: {
   id: string;
   criterion: Criterion;
   value: number | null;
   onChange: (value: number) => void;
+  disabled?: boolean;
 }) {
   const shown = value ?? 5;
   return (
@@ -96,6 +105,7 @@ function Slider({
         max={10}
         step={0.5}
         value={shown}
+        disabled={disabled}
         aria-valuetext={value === null ? "Not rated yet" : `${one(value)} out of 10`}
         style={{ "--p": `${shown * 10}%` } as CSSProperties}
         onChange={(event) => onChange(Number(event.target.value))}
@@ -109,21 +119,56 @@ function Slider({
   );
 }
 
+// A student who rated a professor of this course comes back to that professor, so their
+// own values are the first thing they see. Otherwise the sheet's own choice.
+function startProfessor(sheet: CourseSheet, own: OwnRating): string | null {
+  const rated = sheet.professors.filter((p) => own.professors[p.id] !== undefined);
+  if (rated.length === 0 || rated.some((p) => p.id === sheet.startProfessorId)) return sheet.startProfessorId;
+  return rated[0].id;
+}
+
+// useActionState rethrows a failed call while rendering, which would replace the page with
+// an error screen and lose the sliders. A failed call becomes a note under the form. It
+// does not say nothing was saved: the call can also fail after the database saved it.
+async function post(previous: RatingState, input: RatingInput): Promise<RatingState> {
+  try {
+    return await submitRating(previous, input);
+  } catch (error) {
+    console.error("Posting the rating failed.", error);
+    return { error: "We could not confirm that your rating was saved. Check your connection and reload the page." };
+  }
+}
+
 export function CourseCard({
   course,
   sheet,
   resources,
   booklets,
+  ownRating,
+  lock,
 }: {
   course: CourseDetails;
   sheet: CourseSheet;
   resources: CourseResources | null;
   booklets: BookletSummary;
+  ownRating: OwnRating;
+  lock: RatingLock | null;
 }) {
-  const [professorId, setProfessorId] = useState(sheet.startProfessorId);
-  const [rating, setRating] = useState<Record<string, number>>({});
+  const [professorId, setProfessorId] = useState(() => startProfessor(sheet, ownRating));
+  const [rating, setRating] = useState<Record<string, number>>(() => startingValues(ownRating));
+  const [state, submit, pending] = useActionState(post, {});
+  // The professor of the last post, until a slider moves or another professor is picked.
+  // The "saved" or error note belongs to that post, so it goes away after either. While a
+  // post is running both are ignored, so its answer always shows.
+  const [postedFor, setPostedFor] = useState<string | null>(null);
 
-  const professor = sheet.professors.find((p) => p.id === professorId) ?? null;
+  // After a refresh the picked professor can be gone (hidden or unlinked meanwhile): fall
+  // back to the one the sheet starts on.
+  const professor =
+    sheet.professors.find((p) => p.id === professorId) ??
+    sheet.professors.find((p) => p.id === sheet.startProfessorId) ??
+    sheet.professors[0] ??
+    null;
   const combined = professor?.combined ?? null;
   // A professor's three values are kept under that professor, so they stay behind when
   // another professor is picked.
@@ -133,7 +178,38 @@ export function CourseCard({
     ...(professor ? PROFESSOR_CRITERIA.map(professorKey) : []),
   ];
   const left = keys.filter((key) => rating[key] === undefined).length;
-  const set = (key: string) => (value: number) => setRating((current) => ({ ...current, [key]: value }));
+  // Ignored while a post is running, so the answer that comes back belongs to what was sent.
+  // The sliders are not disabled for that: a disabled slider would lose the keyboard focus.
+  const set = (key: string) => (value: number) => {
+    if (pending) return;
+    setPostedFor(null);
+    setRating((current) => ({ ...current, [key]: value }));
+  };
+  const saved = professor ? ownRating.professors[professor.id] : undefined;
+  const rated = saved !== undefined;
+  // The sliders show exactly what is saved for this professor: posting would change nothing.
+  const unchanged =
+    saved !== undefined &&
+    ownRating.subject !== null &&
+    SUBJECT_CRITERIA.every((criterion) => rating[criterion.key] === ownRating.subject?.[criterion.key]) &&
+    PROFESSOR_CRITERIA.every((criterion) => rating[professorKey(criterion)] === saved[criterion.key]);
+  const canPost = lock === null && professor !== null && left === 0 && !pending && !unchanged;
+  // `state` holds the previous answer until the running post returns, so wait for it. A post
+  // for a professor who has since left the sheet (hidden, say) still shows its answer, on
+  // whichever professor the card fell back to.
+  const postedGone = postedFor !== null && !sheet.professors.some((p) => p.id === postedFor);
+  const showResult = !pending && postedFor !== null && (postedFor === professor?.id || postedGone);
+
+  // The line under the sliders, most important first.
+  function status(): string {
+    if (lock !== null) return ratingLockMessage(lock, course.programme);
+    if (pending) return "Saving your rating…";
+    if (showResult && state.error) return state.error;
+    if (showResult && state.saved) return "Rating saved.";
+    if (left > 0) return `${left} ${left === 1 ? "slider" : "sliders"} left.`;
+    if (unchanged) return "This is your saved rating. Move a slider to change it.";
+    return "Ready to post.";
+  }
 
   return (
     <main className={styles.card}>
@@ -202,7 +278,11 @@ export function CourseCard({
                   type="button"
                   className={styles.pill}
                   aria-pressed={p.id === professor.id}
-                  onClick={() => setProfessorId(p.id)}
+                  onClick={() => {
+                    if (pending) return;
+                    setPostedFor(null);
+                    setProfessorId(p.id);
+                  }}
                 >
                   {p.name}
                 </button>
@@ -224,8 +304,29 @@ export function CourseCard({
           </h2>
           <span className={styles.legend}>0 to 10, half-point steps</span>
         </div>
-        {/* Outline only: nothing is saved yet. Posting goes through submit_rating() (Pack 5). */}
-        <form onSubmit={(event) => event.preventDefault()} noValidate>
+        {/* The sliders are controlled inputs, so the form posts a plain object from onSubmit. */}
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!canPost) return;
+            setPostedFor(professor.id);
+            startTransition(() =>
+              submit({
+                courseId: course.id,
+                professorId: professor.id,
+                values: {
+                  difficulty: rating.difficulty,
+                  exam_level: rating.exam_level,
+                  interest: rating.interest,
+                  engagement: rating[`${professor.id}:engagement`],
+                  understanding: rating[`${professor.id}:understanding`],
+                  approachability: rating[`${professor.id}:approachability`],
+                },
+              }),
+            );
+          }}
+          noValidate
+        >
           <h3 className={styles.group}>The subject</h3>
           {SUBJECT_CRITERIA.map((criterion) => (
             <Slider
@@ -234,6 +335,7 @@ export function CourseCard({
               criterion={criterion}
               value={rating[criterion.key] ?? null}
               onChange={set(criterion.key)}
+              disabled={lock !== null}
             />
           ))}
           {professor && (
@@ -246,18 +348,24 @@ export function CourseCard({
                   criterion={criterion}
                   value={rating[professorKey(criterion)] ?? null}
                   onChange={set(professorKey(criterion))}
+                  disabled={lock !== null}
                 />
               ))}
             </>
           )}
           <div className={styles.formFoot}>
             <p role="status">
-              {left > 0
-                ? `${left} ${left === 1 ? "slider" : "sliders"} left.`
-                : "Posting ratings is not open yet."}
+              {status()}
             </p>
-            <button type="submit" className={styles.post} disabled>
-              Post rating
+            {/* Not disabled while saving or once saved, only marked so: disabling the focused
+                button would drop the keyboard focus to the top of the page. */}
+            <button
+              type="submit"
+              className={styles.post}
+              disabled={lock !== null || professor === null || left > 0}
+              aria-disabled={!canPost || undefined}
+            >
+              {pending ? "Saving…" : rated ? "Update rating" : "Post rating"}
             </button>
           </div>
         </form>

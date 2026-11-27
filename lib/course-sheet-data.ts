@@ -1,6 +1,7 @@
 // Reads one course with its professors and averages, as the signed-in user. Uses the
 // Supabase server client, so the component that calls it must sit inside <Suspense>.
 import { buildCourseSheet, type CourseSheet } from "./course-sheet";
+import type { OwnRating } from "./rating";
 import type { ProfessorStatsRow, SubjectStatsRow } from "./score";
 import { createClient } from "./supabase/server";
 
@@ -59,6 +60,48 @@ export async function getCourseSheet(
       links.data.flatMap((link) => (link.professors ? [link.professors] : [])),
       (subject.data[0] as SubjectStatsRow | undefined) ?? null,
       professors.data as ProfessorStatsRow[],
+    ),
+  };
+}
+
+// The signed-in user's own rating of this course, to start the sliders from.
+export async function getOwnRating(courseId: string, userId: string): Promise<OwnRating> {
+  const supabase = await createClient();
+  // The user_id filter is explicit even though the access rules already return only the
+  // user's own rows: an admin must not be different.
+  const [subject, professors] = await Promise.all([
+    supabase
+      .from("subject_ratings")
+      .select("difficulty, exam_level, interest")
+      .eq("course_id", courseId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+    supabase
+      .from("professor_ratings")
+      .select("professor_id, engagement, understanding, approachability")
+      .eq("course_id", courseId)
+      .eq("user_id", userId),
+  ]);
+  if (subject.error) throw new Error(`Your subject rating could not be read: ${subject.error.message}`);
+  if (professors.error) throw new Error(`Your professor ratings could not be read: ${professors.error.message}`);
+
+  return {
+    subject: subject.data
+      ? {
+          difficulty: Number(subject.data.difficulty),
+          exam_level: Number(subject.data.exam_level),
+          interest: Number(subject.data.interest),
+        }
+      : null,
+    professors: Object.fromEntries(
+      professors.data.map((row) => [
+        row.professor_id,
+        {
+          engagement: Number(row.engagement),
+          understanding: Number(row.understanding),
+          approachability: Number(row.approachability),
+        },
+      ]),
     ),
   };
 }

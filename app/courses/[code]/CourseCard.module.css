@@ -253,6 +253,11 @@
 .slider[data-set] input {
   --track: linear-gradient(to right, var(--accent) var(--p), hsl(0 0% 100% / 0.14) var(--p));
 }
+/* Locked: a course the student may not rate. */
+.slider input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 .slider input::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 6px;
@@ -322,7 +327,9 @@
   font-weight: 500;
   cursor: pointer;
 }
-.post:disabled {
+/* aria-disabled: the button can be pressed in vain while it keeps the keyboard focus. */
+.post:disabled,
+.post[aria-disabled="true"] {
   opacity: 0.35;
   cursor: not-allowed;
 }
