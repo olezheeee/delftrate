@@ -15,8 +15,8 @@
       "timeShare": 9,
       "importance": "essential",
       "know": [
-        "Working directory, staging area (index) and repository, and how add, reset, commit and checkout move changes between them",
-        "History as a graph of commits identified by SHA hashes; a branch is only a movable pointer to a commit",
+        "[[Working directory, staging area (index) and repository]], and how add, reset, commit and checkout move changes between them",
+        "History as a graph of commits identified by SHA hashes; [[a branch is only a movable pointer to a commit]]",
         "Trunk-based development versus feature branches, and why feature branches keep unfinished work out of main",
         "Two-way versus three-way merge: knowing the common base version is what lets Git resolve most conflicts automatically",
         "Remotes such as origin, remote-tracking branches, and the fetch, pull and push cycle",
@@ -40,12 +40,12 @@
       "timeShare": 4,
       "importance": "important",
       "know": [
-        "The steps of a build: resolve dependencies, compile, run unit tests, package, verify, deploy, report",
+        "The steps of a build: [[resolve dependencies, compile, run unit tests, package, verify, deploy, report]]",
         "Why manual builds fail: no reproducibility, no traceability, human error, and the it-works-on-my-machine problem",
         "The build server as a neutral third party; GitLab pipelines and jobs, and where to read a failing build log",
         "Maven and its pom.xml: project structure, plugins, main class and dependencies",
-        "The two team rules: a green main build has top priority, and whatever you value should be able to fail the build",
-        "Checkstyle, and the course requirement that each team picks at least 10 rules and enforces them in the build"
+        "The two team rules: [[a green main build has top priority]], and [[whatever you value should be able to fail the build]]",
+        "Checkstyle, and the course requirement that each team picks [[at least 10 rules]] and enforces them in the build"
       ],
       "do": [
         "Read a pipeline log and find why a build failed",
@@ -63,25 +63,25 @@
       "timeShare": 17,
       "importance": "essential",
       "know": [
-        "The code of conduct: topics it must cover (ambition, planning, communication, decisions, broken agreements, escalation) and why every agreement must be SMART",
+        "The code of conduct: topics it must cover (ambition, planning, communication, decisions, broken agreements, escalation) and why [[every agreement must be SMART]]",
         "Three influence principles that make agreements stick: consensus (group norms), consistency (written, public, voluntary commitments) and liking",
         "Meeting roles: the chair prepares the agenda and leads, the minute taker records decisions and actions, participants prepare too",
         "Setting a purpose for each agenda item (inform, inventory, brainstorm, discuss, decide) and stating what, why and how",
         "Content, process and relation as three levels present in every interaction, and frames of reference behind one-sided stories",
         "Active listening, summarising, questioning and the use of silence; the risk of groupthink",
-        "The AID model for feedback: Action (an observed fact), Impact (its effect on you, from the I perspective), Desired change; feedback versus complaining"
+        "The AID model for feedback: [[Action]] (an observed fact), [[Impact]] (its effect on you, from the I perspective), [[Desired change]]; feedback versus complaining"
       ],
       "do": [
         "Write SMART team agreements with a clear procedure for when to involve the TA or lecturers",
         "Prepare an agenda from the template with a time estimate for every item, and chair a meeting to it",
-        "Take minutes that end in an action list saying who does what by when",
+        "Take minutes that end in an action list saying [[who does what by when]]",
         "Write a Buddycheck tip in AID form and a top backed by an observable fact"
       ],
       "pitfalls": [
         "Feedback that interprets or labels (you are sloppy) instead of describing a concrete, recent action fails the AID check",
         "Writing the impact as the whole team being blocked or as blame; the rubric wants your own observed effect",
         "Tops that praise a personal quality rather than a concrete performance fail",
-        "Leaving role rotation too late: everyone must have chaired and taken minutes at least once, and there are only about six TA meetings"
+        "Leaving role rotation too late: [[everyone must have chaired and taken minutes at least once]], and there are only about six TA meetings"
       ]
     },
     {
@@ -90,8 +90,8 @@
       "timeShare": 4,
       "importance": "essential",
       "know": [
-        "The dependency inversion principle: high-level and low-level code both depend on an abstraction",
-        "Dependency injection: a component receives the components it depends on (DOCs) from outside instead of creating them",
+        "The dependency inversion principle: [[high-level and low-level code both depend on an abstraction]]",
+        "Dependency injection: [[a component receives the components it depends on (DOCs) from outside]] instead of creating them",
         "The strategy pattern as dependency inversion in action, and how a framework such as Guice wires the objects for you",
         "Constructor injection (always valid, easy to test, long constructors) versus field injection (shorter, needs reflection, fields empty in the constructor); setter injection combines the drawbacks",
         "Why static fields, static methods and hand-made singletons make code hard to use and hard to test"
@@ -112,7 +112,7 @@
       "importance": "essential",
       "know": [
         "Controllers with request mappings for GET, POST, PUT and DELETE, path variables, request parameters and request bodies",
-        "The Spring component model: @Component, @Controller and @RestController, @Service, @Repository, @Configuration with @Bean, and component scanning",
+        "The Spring component model: [[@Component, @Controller and @RestController, @Service, @Repository]], @Configuration with @Bean, and component scanning",
         "Bean scopes (application, session, request) and why Spring manages component lifetimes for you",
         "Persistence with JPA: @Entity classes, JpaRepository interfaces with custom queries, and the database console for inspection",
         "Testing controllers and services as plain unit tests with injected test doubles",
@@ -139,7 +139,7 @@
         "Controllers, fx:id and FXML field injection, and implementing Initializable to finish set-up",
         "The template project: Guice with MyFXML injects dependencies into controllers, and MainCtrl switches scenes to avoid cyclic dependencies between them",
         "JSON types and why you design proper Java classes instead of thinking about the wire format",
-        "Object mapping with Jackson: ObjectMapper, a no-argument constructor for the mapper, equals and hashCode on shared classes",
+        "Object mapping with Jackson: ObjectMapper, [[a no-argument constructor for the mapper, equals and hashCode on shared classes]]",
         "Calling the server from the client with the Jersey (JAX-RS) client in ServerUtils, with data classes shared through the commons module"
       ],
       "do": [
@@ -159,10 +159,10 @@
       "importance": "important",
       "know": [
         "The waterfall model and its limits, and the agile movement as the response",
-        "Scrum roles: Scrum Master, Product Owner, developers",
+        "Scrum roles: [[Scrum Master, Product Owner, developers]]",
         "Scrum artefacts and events: product backlog, sprint planning and sprint backlog, sprint, daily scrum, sprint review, retrospective",
         "Estimating with story points and planning poker on a Fibonacci scale, and filling a sprint to the team's average velocity",
-        "Sprint boards with a shared definition of done, and burndown charts",
+        "Sprint boards with a shared [[definition of done]], and burndown charts",
         "Scrum as adapted for this course: a fixed backlog, one-week sprints, the TA meeting as review and planning, the retrospective among students only"
       ],
       "do": [
@@ -181,11 +181,11 @@
       "importance": "important",
       "know": [
         "Understanding the domain: the client's terminology, stakeholders and their conflicting needs",
-        "User requirements versus system requirements, and functional versus non-functional requirements (product, organisational, external)",
-        "User stories in the form as a role, I want something, so that some goal; epics, and acceptance criteria",
+        "User requirements versus system requirements, and [[functional versus non-functional requirements]] (product, organisational, external)",
+        "User stories in the form [[as a role, I want something, so that some goal]]; epics, and acceptance criteria",
         "Use cases with actor, preconditions, main scenario and alternate flows for failure cases",
         "Requirements engineering as an incremental process: details emerge, mock-ups help, products are always underspecified",
-        "A user story is not a task: one story splits into several technical tasks of about one 3 to 4 hour work session"
+        "[[A user story is not a task]]: one story splits into several technical tasks of about one 3 to 4 hour work session"
       ],
       "do": [
         "Break a user story from the backlog into concrete technical tasks (UI, data model, endpoint, validation, tests)",
@@ -201,12 +201,12 @@
       "timeShare": 20,
       "importance": "important",
       "know": [
-        "Disability as a mismatch between a person and their environment, and physical, conceptual, economic, cultural and social exclusion",
+        "Disability as [[a mismatch between a person and their environment]], and physical, conceptual, economic, cultural and social exclusion",
         "Seven universal design principles: use that is equitable and flexible, simple and intuitive operation, information every user can perceive, tolerance for error, low physical effort, and enough size and space for approach and use",
         "Equal versus equitable treatment",
         "Multiple modalities (text, colour, icon, shape, location), sufficient colour contrast and WCAG contrast levels AA and AAA",
-        "Good error messages: visible, saying what went wrong, why, and how to fix it; anticipating user errors and system errors such as an unreachable server",
-        "Fitts's law: target size and distance decide how quickly a target can be hit",
+        "Good error messages: visible, saying [[what went wrong, why, and how to fix it]]; anticipating user errors and system errors such as an unreachable server",
+        "Fitts's law: [[target size and distance decide how quickly a target can be hit]]",
         "Keyboard access, avoiding keyboard deadlocks, and information architecture (content, context, users)"
       ],
       "do": [
@@ -225,10 +225,10 @@
       "timeShare": 13,
       "importance": "essential",
       "know": [
-        "GitLab as a collaboration platform on top of Git: merge requests are a forge feature, not git merge or git pull",
+        "GitLab as a collaboration platform on top of Git: merge requests are [[a forge feature, not git merge or git pull]]",
         "Why every change to main is reviewed: catching mistakes, knowledge transfer, quality and style checks",
         "Developer rules: small, focused merge requests from up-to-date branches, one shared formatter, refactorings agreed with the team",
-        "Reviewer rules: look at meaning as well as syntax, a review is a conversation, review within two to three days, approve only what is ready",
+        "Reviewer rules: look at meaning as well as syntax, a review is a conversation, [[review within two to three days]], approve only what is ready",
         "Draft merge requests, approvals reset by new commits, and not closing or merging someone else's merge request",
         "Issues with a clear title, context, actions and acceptance criteria; assignees, labels, /estimate and /spend time tracking",
         "Weekly milestones and boards, with coarse plans further out and finer ones close by"

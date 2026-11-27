@@ -31,6 +31,14 @@ source, and we say so wherever we show it.
   from the material. `basis` says what a booklet rests on and where it had to estimate.
   A course without past papers has `available: false` and no numbers.
 - **Plain text.** No Markdown, LaTeX or links in a booklet: the page shows the text as it is.
+- **One mark: what to know by heart.** In a line of a list (what to know, what to be able
+  to do, the pitfalls, the exam lists) the bit a student has to memorise stands between
+  `[[` and `]]`: `"Taylor coefficients: [[the coefficient of x^n is f^(n)(0)/n!]]"`. The
+  page draws a highlighter over it. Mark a formula, the defining words of a definition, a
+  named rule with its condition, a fixed list; not a skill or a piece of advice. At most
+  three marks in a line, never the whole line, and no more than a quarter of the text of a
+  booklet: a highlighter used on everything says nothing. Nowhere else (names, lecture
+  names, summaries) may a mark stand.
 - The two booklets come as a pair, carry the same `title`, and the exam booklet weighs the
   topics of the knowledge booklet (or `Other`).
 

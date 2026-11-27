@@ -22,7 +22,7 @@
     "Earlier editions already put a week-long Research Methods Bootcamp and the Information Literacy module before the project starts"
   ],
   "strategy": [
-    "Read the rubric before you start: 40 percent is content (related work, method, scientific approach, interpretation, responsible engineering), so a well-written paper about thin work cannot score well",
+    "Read the rubric before you start: [[40 percent is content]] (related work, method, scientific approach, interpretation, responsible engineering), so a well-written paper about thin work cannot score well",
     "For content above sufficient, discuss and criticise many sources and derive your question from them, and argue for your method against alternatives",
     "Use the two feedback rounds: v1 for your peers and supervisor, v2 for your responsible professor; v2 is the last chance for feedback on writing",
     "Keep your research plan alive: the rubric rewards a plan that you refine and use to decide what to do, not one written once in week 1",
@@ -32,11 +32,11 @@
     "Run your paper through the ACS checklist and your poster through the poster checklist before each submission"
   ],
   "pitfalls": [
-    "Missing a deadline: no extensions are given, and a failed project cannot be repaired within the same edition",
+    "Missing a deadline: [[no extensions are given]], and a failed project cannot be repaired within the same edition",
     "A related-work section that only lists who did what, without comparing sources or showing the gap your question fills",
     "Conclusions not tied back to the research question, or claims the results do not support, which costs points under interpretation of results",
     "A Responsible Research section with only a passing remark: some reflection is the bar for sufficient, while excellent needs a worked-out discussion of reproducibility and integrity challenges",
     "Writing with others or copying structure: the paper must be your own work, and uncited code, data or AI help counts as plagiarism",
-    "Not finishing the Information Literacy module, without which you get no final grade at all"
+    "Not finishing the [[Information Literacy module]], without which you get [[no final grade at all]]"
   ]
 }

@@ -161,7 +161,7 @@
     "Every paper has a 2-point question with an excerpt from a research paper or another course's proof (Wiles, Algorithm Design): name the two techniques used and cite the lines.",
     "Translations go both ways in every paper; endterms add sets, functions and cardinality such as \"more books than students\".",
     "A Tarski world or formal structure with a bounded domain size appears in every paper.",
-    "Number proofs forbid modular arithmetic but let you write n as kx + r, so division into cases by remainder is the expected route.",
+    "Number proofs [[forbid modular arithmetic]] but let you write n as kx + r, so division into cases by remainder is the expected route.",
     "Since 2024 every endterm and resit has a 4 to 5-point invariant proof about a game or a mixing process, marked on initialisation, iteration, eventual falsity and post-condition.",
     "Endterms and resits always pair a TREE function to evaluate with one you must write yourself.",
     "Every paper ends with a 3-point coati-kingdom puzzle, and the story continues from one paper to the next."
@@ -173,7 +173,7 @@
   ],
   "strategy": [
     "Make question 1 safe: practise 8-row tables in a fixed row order, new operators read from a table, and a DNF taken from the true rows.",
-    "Learn the proof templates exactly as the rubrics score them: base case, hypothesis for an arbitrary k, use of the hypothesis, conclusion; for invariants the four parts.",
+    "Learn the proof templates exactly as the rubrics score them: [[base case, hypothesis for an arbitrary k, use of the hypothesis, conclusion]]; for invariants the four parts.",
     "Work through the 2024 and 2025 papers against the clock; the question order hardly changes, so you can plan minutes per block.",
     "For predicate logic, write out your predicates and constants first and reread your English translation aloud: it must sound like normal English.",
     "For TREE functions write the empty-tree and leaf cases first, then sum over the children; check your function on the example tree in the question.",
@@ -182,7 +182,7 @@
   ],
   "pitfalls": [
     "Assuming the claim: \"take an arbitrary k such that the claim holds\" in a direct proof, or the full claim as induction hypothesis, both lose points.",
-    "A contradiction proof must start from \"there exists\" a counterexample, not from an arbitrary element.",
+    "A contradiction proof must start from [[\"there exists\" a counterexample]], not from an arbitrary element.",
     "Translations into English that keep \"there exists an x such that\" are marked wrong.",
     "Tarski worlds lose a point each for a domain size outside the bounds, unshaped objects or duplicate names.",
     "Relation questions: swapping two property names costs a point, and each failing property needs its own counterexample.",

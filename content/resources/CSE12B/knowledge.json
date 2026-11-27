@@ -15,12 +15,12 @@
       "timeShare": 13,
       "importance": "essential",
       "know": [
-        "Usability as effective, efficient and satisfying task completion (ISO 9241-11), and how user experience is wider than usability",
-        "PACT: People, Activities, Contexts and Technologies, and what each part asks you to describe",
+        "Usability as [[effective, efficient and satisfying task completion]] (ISO 9241-11), and how user experience is wider than usability",
+        "PACT: [[People, Activities, Contexts and Technologies]], and what each part asks you to describe",
         "People: user characteristics (age, domain and computer experience, frequency of use, freedom of choice, direct or indirect use), novice, occasional and expert users, user classes",
         "Personas and scenarios: a specific person for each core user class, and a short story of how and why they use the system in a given context",
-        "Hierarchical task analysis: task and subtask hierarchy, plan types (fixed sequence, optional, waiting, cycles, time-sharing, discretionary) and refining heuristics",
-        "Contexts as physical, social and organisational; visibility, affordance and perceived affordance as properties of the technology"
+        "Hierarchical task analysis: task and subtask hierarchy, plan types ([[fixed sequence, optional, waiting, cycles, time-sharing, discretionary]]) and refining heuristics",
+        "Contexts as [[physical, social and organisational]]; visibility, affordance and perceived affordance as properties of the technology"
       ],
       "do": [
         "Write a PACT analysis for a short client brief with distinct user groups, activities, contexts and technologies",
@@ -39,10 +39,10 @@
       "know": [
         "Requirement elicitation (ethnography, contextual inquiry, interviews, surveys, focus groups) versus analysis (scenarios, task analysis, card sorting)",
         "Information architecture: organising content and designing navigation, shaped by content, context and users",
-        "Organisation structures: hierarchy (hub and spoke, nested doll), database, linear, hypertext and hybrid, and when each fits",
-        "Exact schemes (alphabetical, chronological, geographical) versus inexact ones (topic, task, audience), and the risk of hybrid schemes",
+        "Organisation structures: [[hierarchy (hub and spoke, nested doll), database, linear, hypertext and hybrid]], and when each fits",
+        "Exact schemes ([[alphabetical, chronological, geographical]]) versus inexact ones ([[topic, task, audience]]), and the risk of hybrid schemes",
         "Labelling systems that are specific, predictable and consistent; open versus closed card sorting",
-        "Global, local, contextual and supplemental navigation (site map, index, breadcrumbs, search)"
+        "[[Global, local, contextual and supplemental]] navigation (site map, index, breadcrumbs, search)"
       ],
       "do": [
         "Choose an organisation structure and scheme for a website or app and defend it",
@@ -60,10 +60,10 @@
       "timeShare": 5,
       "importance": "essential",
       "know": [
-        "Benyon's twelve design principles in four groups: learning and remembering (affordance, visibility, familiarity, consistency), being in control (feedback, navigation, control), safety (constraints, recovery) and suitability (style, flexibility, conviviality)",
-        "The System Usability Scale: ten Likert items, a score out of 100, 68 as the average, and why comparing systems tells you most",
+        "[[Benyon's twelve design principles]] in four groups: learning and remembering (affordance, visibility, familiarity, consistency), being in control (feedback, navigation, control), safety (constraints, recovery) and suitability (style, flexibility, conviviality)",
+        "The System Usability Scale: [[ten Likert items, a score out of 100, 68 as the average]], and why comparing systems tells you most",
         "Human research ethics at TU Delft: HREC approval, the risk checklist and mitigation plan",
-        "Informed consent: purpose, what participants do, risks including re-identification, mitigation, and separate tick boxes per consent point",
+        "Informed consent: purpose, what participants do, risks including re-identification, mitigation, and [[separate tick boxes per consent point]]",
         "Minimal-risk rules for student studies: no vulnerable groups, no identifiable recordings, no sensitive topics, no deception, anonymised secure storage"
       ],
       "do": [
@@ -81,10 +81,10 @@
       "timeShare": 2,
       "importance": "essential",
       "know": [
-        "Five kinds of exclusion: physical, conceptual, economic, cultural and social, each with a typical example",
-        "Universal design's seven principles: equitable use, use that is flexible, simple and intuitive, information that is perceptible, error tolerance, low physical effort, and enough size and space to approach and use",
+        "Five kinds of exclusion: [[physical, conceptual, economic, cultural and social]], each with a typical example",
+        "[[Universal design's seven principles]]: equitable use, use that is flexible, simple and intuitive, information that is perceptible, error tolerance, low physical effort, and enough size and space to approach and use",
         "The guidelines under perceptible information and tolerance for error (redundant modes, contrast, legibility, warnings, fail-safe features)",
-        "Inclusivity analysis: a user characteristic is fixed or changing, common or rare, and its solution cheap or expensive; the tree says whether inclusion is mandatory, recommended or optional",
+        "Inclusivity analysis: a user characteristic is [[fixed or changing, common or rare]], and its solution [[cheap or expensive]]; the tree says whether inclusion is mandatory, recommended or optional",
         "WCAG as the web accessibility standard, and the difference between usable design and inclusive design"
       ],
       "do": [
@@ -103,12 +103,12 @@
       "timeShare": 14,
       "importance": "important",
       "know": [
-        "A prototype as a concrete but partial representation of a design, and why teams prototype",
+        "A prototype as a [[concrete but partial representation of a design]], and why teams prototype",
         "Fidelity: low (sketches, storyboards, paper, PICTIVE), medium (wireframes, scripted simulations) and high, with the trade-offs of each",
-        "Horizontal prototypes (the whole surface, little depth), vertical prototypes (a few features in depth) and scenario prototypes (one fixed script)",
+        "[[Horizontal prototypes (the whole surface, little depth)]], [[vertical prototypes (a few features in depth)]] and scenario prototypes (one fixed script)",
         "Throwaway, incremental and evolutionary prototypes",
         "Why low fidelity often beats high fidelity early on: users focus on the big picture and developers stay unattached",
-        "Wizard of Oz: a hidden human simulates the intelligence of a system that does not exist yet"
+        "Wizard of Oz: [[a hidden human simulates the intelligence]] of a system that does not exist yet"
       ],
       "do": [
         "Choose the fidelity and kind of prototype for a stage and audience, and justify it",
@@ -128,9 +128,9 @@
         "Expert evaluation with usability experts or experts on the users: cheap and quick, but simulated and without real users",
         "Cognitive walkthrough: task, action sequence, anticipated users and goals, and the four questions asked at every step",
         "Heuristic evaluation (Nielsen): experts check the interface on their own against heuristics; it works on paper prototypes",
-        "Nielsen's ten heuristics, and the course's twelve design principles used as an alternative list",
-        "Three to five evaluators, or until saturation; five find about 75 percent of the problems",
-        "The severity matrix: severity set by impact and frequency, with cost added when choosing what to fix"
+        "[[Nielsen's ten heuristics]], and the course's twelve design principles used as an alternative list",
+        "[[Three to five evaluators]], or until saturation; [[five find about 75 percent of the problems]]",
+        "The severity matrix: [[severity set by impact and frequency]], with cost added when choosing what to fix"
       ],
       "do": [
         "Run a cognitive walkthrough on a login or booking flow and record where users will fail",
@@ -150,11 +150,11 @@
       "know": [
         "Research question types (descriptive, comparative, evaluative, defining, explaining, designing) and what makes a question focused, feasible and specific",
         "Qualitative versus quantitative evaluation; cooperative evaluation, think-aloud, co-discovery, interviews and thematic analysis",
-        "Independent, dependent and confounding variables; lab versus field studies",
+        "[[Independent, dependent and confounding variables]]; lab versus field studies",
         "Within-subject versus between-subject and mixed designs, learning effects and counterbalancing",
         "Inclusion and exclusion criteria, sample size and power; subjective (questionnaire), behavioural and physiological measures",
-        "Questionnaire quality: Cronbach's alpha (0.7 as a rough minimum), ceiling effects, reusing validated scales",
-        "Significance as a false-positive rate below 5 percent, p-hacking, and why a non-significant result does not prove there is no difference"
+        "Questionnaire quality: [[Cronbach's alpha (0.7 as a rough minimum)]], ceiling effects, reusing validated scales",
+        "Significance as a [[false-positive rate below 5 percent]], p-hacking, and why [[a non-significant result does not prove there is no difference]]"
       ],
       "do": [
         "Design a controlled experiment comparing two versions of a system: question, variables, participants, design, measures, procedure and analysis",
@@ -173,10 +173,10 @@
       "importance": "useful",
       "know": [
         "The five levels of adaptivity (Browne et al.), from changing output on input to reasoning about its own interaction models",
-        "Domain models at physical, conceptual and intentional level, and user models",
+        "Domain models at [[physical, conceptual and intentional level]], and user models",
         "Emotion as discrete categories (Ekman, Plutchik) or as valence and arousal",
         "A Wizard of Oz protocol: what the wizard can observe, what it can do, and how observation leads to action",
-        "Layered evaluation: collect input, interpret it, model the state of the world, decide on adaptation, apply it, each with its own criteria"
+        "Layered evaluation: [[collect input, interpret it, model the state of the world, decide on adaptation, apply it]], each with its own criteria"
       ],
       "do": [
         "Say which layer a described evaluation targets and which criteria fit it",
@@ -194,8 +194,8 @@
       "know": [
         "Text, voice and hybrid conversational interfaces, and why they spread: speed, hands-free and screen-free use",
         "Their challenges: high expectations, accents and language, narrow query range, poor discoverability without a GUI",
-        "What makes a good conversation (common ground, trust, active listening, humour) and how people see agent conversations as mostly functional",
-        "Conversational styles (high involvement versus high considerateness) and the research findings on worker engagement",
+        "What makes a good conversation ([[common ground, trust, active listening, humour]]) and how people see agent conversations as mostly functional",
+        "Conversational styles ([[high involvement versus high considerateness]]) and the research findings on worker engagement",
         "Crowd-powered conversational systems as an extension of Wizard of Oz, their latency and privacy problems, and trust in human-AI interaction"
       ],
       "do": [

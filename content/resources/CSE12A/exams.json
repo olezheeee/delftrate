@@ -120,19 +120,19 @@
     "The Taylor series of an antiderivative of a function such as e^(x^2) or e^(-x^3), then an integral approximated to an error below a given value, appeared in Endterm 2024, Endterm 2025 and Resit 2025.",
     "A gradient and directional derivative at a point is a short question in Endterm 2024, Resit 2024 and Endterm 2025.",
     "Both midterms ask for the inverse of a quadratic on a restricted domain together with its domain, a limit of a recursive sequence, and a vertical-asymptote or all-asymptotes question.",
-    "The midterms include at least one integral that is 0 because the integrand is odd on a symmetric interval.",
+    "The midterms include at least one integral that [[is 0 because the integrand is odd on a symmetric interval]].",
     "Complex roots of z^n = c, given as a + bi, in polar form or as dots in the plane, appear on every endterm and resit."
   ],
   "trends": [
     "Midterms moved from 16 questions worth mostly 1 point (Midterm 2023) to 13 or 14 questions of 2 and 4 points (2024 and 2025).",
-    "The formula sheet has been phased out: it came with the 2023-24 papers, while Midterm 2025 banned it and the 2025 endterm and resit mention none, so the standard series must be known by heart.",
+    "The formula sheet has been phased out: it came with the 2023-24 papers, while Midterm 2025 banned it and the 2025 endterm and resit mention none, so [[the standard series must be known by heart]].",
     "From 2025 the endterm and resit are bilingual, with a Dutch version after the English one."
   ],
   "strategy": [
     "Work through all six recent papers under time: 2 hours for a midterm, 3 for an endterm, without a calculator or notes.",
     "For short answers, check every result once by another route (for example by substitution or a second method), since only the final answer counts.",
     "Skip a short question that stalls you and come back to it; the open part carries about two thirds of the endterm points.",
-    "For open questions, write the argument in sentences: name each test and check its conditions, as the grading guide gives points for each step.",
+    "For open questions, write the argument in sentences: [[name each test and check its conditions]], as the grading guide gives points for each step.",
     "Learn the fixed procedures for the recurring open questions so you can do them quickly: interval of convergence, extremes on a region, double integral, series approximation.",
     "If you cannot finish part a), still describe how you would do part b); the papers ask for that and it can earn points."
   ],

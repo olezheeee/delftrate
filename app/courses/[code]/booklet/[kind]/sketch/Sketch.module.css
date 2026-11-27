@@ -193,7 +193,7 @@
 .slice:hover .pencil {
   stroke-width: 2.6;
 }
-.mark {
+.sign {
   fill: var(--ink);
   font-size: 17px;
   font-weight: 700;
@@ -244,7 +244,7 @@
   height: 36px;
   flex: none;
 }
-.badge .mark {
+.badge .sign {
   font-size: 16px;
   stroke-width: 4px;
 }
@@ -374,16 +374,39 @@
   left: 0;
   font-weight: 700;
 }
-.lines[data-mark="dash"] li::before {
+.lines[data-sign="dash"] li::before {
   content: "–";
 }
-.lines[data-mark="arrow"] li::before {
+.lines[data-sign="arrow"] li::before {
   content: "→";
 }
-.lines[data-mark="warning"] li::before {
+.lines[data-sign="warning"] li::before {
   content: "!";
   left: 0.3em;
 }
+/* What to know by heart: a highlighter pulled over the words, a little uneven as a hand
+   does it. Each line of a mark that runs on gets a stroke of its own. The words are also a
+   little heavier, so that the mark is still there on a black-and-white print. */
+.lines mark {
+  margin: 0 -0.12em;
+  padding: 0.08em 0.26em 0.1em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M1.5 4.4C18 2.6 34 4.9 52 3.3S86 2.9 99 4.6L98.2 16.3C82 17.9 64 15.6 46 17.1S14 16 0.8 17.2Z' fill='%23ffe14d' fill-opacity='0.82'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+  color: inherit;
+  font-weight: 600;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+/* Where the system sets the colours, its own marker colours keep the words readable. */
+@media (forced-colors: active) {
+  .lines mark {
+    background: Mark;
+    color: MarkText;
+  }
+}
+
 /* The one kind of box on the sheet: what to watch out for. */
 .box {
   margin-top: 22px;

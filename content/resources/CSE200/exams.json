@@ -21,7 +21,7 @@
     "From 2026-27 the course code is CSE200 instead of CSE2000, and the entry requirements are new: CSE11B, CSE100, CSE13B and CSE12B plus the mandatory SP Bootcamp."
   ],
   "strategy": [
-    "Plan by the weights: the product is the largest part (35 percent), judged on systematic quality assurance with several methods, sound architecture and workflows, fit with the client's problem, and documentation.",
+    "Plan by the weights: the [[product is the largest part (35 percent)]], judged on systematic quality assurance with several methods, sound architecture and workflows, fit with the client's problem, and documentation.",
     "Exploration is a fifth of the grade: make the problem analysis, the risks, the justified requirements and the research behind your design choices visible in the report, since the committee reads them there.",
     "The process grade rewards a plan you follow and adjust, your own initiative, critical reflection on your choices and good contact with TA, client and coach; keep planning records and meeting notes as evidence.",
     "The difficulty of the assignment and the novelty of the solution count in the grade, so explain in the report and presentation what made the problem hard.",
@@ -30,9 +30,9 @@
     "Rehearse the presentation so it covers research, design and product, the demo runs smoothly, and every member can answer questions on any part of the work."
   ],
   "pitfalls": [
-    "A partial grade below 5.0 fails the whole team, however good the other parts are, and only the report has a second chance, capped at 6.0.",
-    "Report killer criteria: a plagiarism issue, a missing AI declaration, a missing required part, missing assignment content or exceeding the word limit makes the report insufficient at once, and the new version counts as the resit.",
-    "The report fails if more than two of its ten criteria score poor, or more than four score mediocre or lower, even when the total looks fine.",
+    "A [[partial grade below 5.0 fails the whole team]], however good the other parts are, and only the report has a second chance, [[capped at 6.0]].",
+    "Report killer criteria: [[a plagiarism issue, a missing AI declaration, a missing required part, missing assignment content or exceeding the word limit]] makes the report insufficient at once, and the new version counts as the resit.",
+    "The report fails if [[more than two of its ten criteria score poor, or more than four score mediocre or lower]], even when the total looks fine.",
     "Too few or badly handled sources: fewer than 10 references or fewer than 5 scientific ones, citations that do not match the list, or a mix of styles.",
     "Leaving out appendices the guide asks for: the full requirements table with which ones were met, and a division-of-labour overview of at most one A4.",
     "The Q&A criterion asks that all members answer clearly and show they master the work, so a team where one person does the talking loses points; a student who contributed too little can also get a lower grade than the team."

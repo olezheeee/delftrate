@@ -1,6 +1,5 @@
-// Booklet 1, drawn by hand: what a student should know, topic by topic, with where the
-// hours go. The same content as KnowledgeBookletView; only the look differs. For a course
-// with past papers: its diagrams set lecture time against exam points.
+// Booklet 1: what a student should know, topic by topic, with where the hours go. Drawn by
+// hand: ink on a white sheet, the diagrams in coloured pencil.
 import {
   HOURS_PER_ECTS,
   OTHER_TOPIC,
@@ -10,10 +9,9 @@ import {
   type Importance,
   type KnowledgeBooklet,
 } from "@/lib/resources";
-import { courseHref, plural, scaleMax } from "../parts";
 import { pencil } from "./colours";
-import { Badge, Bar, Pie, Swatch } from "./figures";
-import { Lines, Rests, Section, Sheet } from "./parts";
+import { Badge, Bar, Pie, Swatch, scaleMax } from "./figures";
+import { Lines, Rests, Section, Sheet, courseHref, plural } from "./parts";
 import styles from "./Sketch.module.css";
 
 const IMPORTANCE: Record<Importance, string> = {
@@ -23,7 +21,9 @@ const IMPORTANCE: Record<Importance, string> = {
 };
 
 export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBooklet; exams: ExamBooklet }) {
-  // With past papers every topic has an exam share and a number of hours.
+  // With past papers a topic has a share of the exam points and a suggested number of
+  // hours. Without them (a project) there is only the lecture time.
+  const counted = exams.available;
   const statistics = topicStatistics(knowledge, exams).map((row) => ({
     ...row,
     examShare: row.examShare ?? 0,
@@ -39,48 +39,57 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
       code={knowledge.course}
       title={knowledge.title}
       about="what to know"
-      other={{ href: `${courseHref(knowledge.course)}/booklet/exams`, label: "The exam booklet" }}
+      other={{
+        href: `${courseHref(knowledge.course)}/booklet/exams`,
+        label: counted ? "The exam booklet" : "The assessment booklet",
+      }}
       intro={
         <>
           <p className={styles.lead}>{knowledge.summary}</p>
           <p>
             {knowledge.ects} EC is about {hours} hours of study. This booklet covers{" "}
-            {plural(knowledge.basis.lectures, "lecture", "lectures")} in {plural(knowledge.topics.length, "topic", "topics")},
-            and counts exam points from {papers} {papersNoun(exams)}.
+            {plural(knowledge.basis.lectures, "lecture", "lectures")} in {plural(knowledge.topics.length, "topic", "topics")}
+            {counted && `, and counts exam points from ${papers} ${papersNoun(exams)}`}.
           </p>
         </>
       }
     >
-      <Section title={`Where the ${hours} hours go`}>
+      <Section title={counted ? `Where the ${hours} hours go` : "Where the lecture time goes"}>
         <div className={styles.figure}>
           <Pie
-            label={`Circle diagram of the suggested study hours per topic, out of ${hours}`}
+            label={
+              counted
+                ? `Circle diagram of the suggested study hours per topic, out of ${hours}`
+                : "Circle diagram of the share of the lecture time per topic"
+            }
             slices={statistics.map((row, index) => ({
-              title: `${row.name}: about ${row.hours} hours`,
-              mark: String(index + 1),
-              value: row.hours,
+              title: counted ? `${row.name}: about ${row.hours} hours` : `${row.name}: ${row.timeShare}% of the lecture time`,
+              sign: String(index + 1),
+              value: counted ? row.hours : row.timeShare,
               pencil: pencil(index),
             }))}
           />
           <div>
-            <ul className={styles.legend} aria-label="Legend">
-              <li>
-                <Swatch dense={false} />
-                Lecture time
-              </li>
-              <li>
-                <Swatch dense />
-                Exam points
-              </li>
-            </ul>
+            {counted && (
+              <ul className={styles.legend} aria-label="Legend">
+                <li>
+                  <Swatch dense={false} />
+                  Lecture time
+                </li>
+                <li>
+                  <Swatch dense />
+                  Exam points
+                </li>
+              </ul>
+            )}
             <ol className={styles.rows}>
               {statistics.map((row, index) => (
                 <li key={row.name} className={styles.row}>
-                  <Badge mark={String(index + 1)} pencil={pencil(index)} label={`Topic ${index + 1}`} />
+                  <Badge sign={String(index + 1)} pencil={pencil(index)} label={`Topic ${index + 1}`} />
                   <div>
                     <div className={styles.rowHead}>
                       <a href={`#topic-${index + 1}`}>{row.name}</a>
-                      <span>about {row.hours} h</span>
+                      {counted && <span>about {row.hours} h</span>}
                     </div>
                     <dl className={styles.bars}>
                       <div>
@@ -95,18 +104,20 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
                           />
                         </dd>
                       </div>
-                      <div>
-                        <dt>Exam</dt>
-                        <dd>
-                          <Bar
-                            label={`${row.name}: ${row.examShare}% of the exam points`}
-                            value={row.examShare}
-                            max={max}
-                            pencil={pencil(index)}
-                            dense
-                          />
-                        </dd>
-                      </div>
+                      {counted && (
+                        <div>
+                          <dt>Exam</dt>
+                          <dd>
+                            <Bar
+                              label={`${row.name}: ${row.examShare}% of the exam points`}
+                              value={row.examShare}
+                              max={max}
+                              pencil={pencil(index)}
+                              dense
+                            />
+                          </dd>
+                        </div>
+                      )}
                     </dl>
                   </div>
                 </li>
@@ -114,12 +125,20 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
             </ol>
           </div>
         </div>
-        <p className={styles.note}>
-          The circle divides the {hours} hours ({knowledge.ects} EC of {HOURS_PER_ECTS} hours) over the topics. A
-          topic&apos;s part is the mean of two shares: its share of the lecture material, and its share of the points in{" "}
-          {papers} {papersNoun(exams)}
-          {outside ? ", leaving out the exam points that belong to no topic" : ""}. Take it as a starting point.
-        </p>
+        {counted ? (
+          <p className={styles.note}>
+            The circle divides the {hours} hours ({knowledge.ects} EC of {HOURS_PER_ECTS} hours) over the topics. A
+            topic&apos;s part is the mean of two shares: its share of the lecture material, and its share of the points
+            in {papers} {papersNoun(exams)}
+            {outside ? ", leaving out the exam points that belong to no topic" : ""}. Take it as a starting point.
+          </p>
+        ) : (
+          <p className={styles.note}>
+            The circle shows each topic&apos;s share of the lecture material. There are no past papers to count exam
+            points from, so no study time is suggested: the shares say how the taught sessions are divided, not where
+            the hours of the course go.
+          </p>
+        )}
       </Section>
 
       <Section title={`The ${plural(knowledge.topics.length, "topic", "topics")}`}>
@@ -129,12 +148,12 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
             return (
               <li key={topic.name} className={styles.topic} id={`topic-${index + 1}`}>
                 <div className={styles.topicHead}>
-                  <Badge mark={String(index + 1)} pencil={pencil(index)} label={`Topic ${index + 1}`} />
+                  <Badge sign={String(index + 1)} pencil={pencil(index)} label={`Topic ${index + 1}`} />
                   <h3>{topic.name}</h3>
                 </div>
                 <p className={styles.meta}>
-                  {IMPORTANCE[topic.importance]}. {topic.timeShare}% of the lecture time, {row.examShare}% of the exam
-                  points, about {row.hours} hours of study.
+                  {IMPORTANCE[topic.importance]}. {topic.timeShare}% of the lecture time
+                  {counted && `, ${row.examShare}% of the exam points, about ${row.hours} hours of study`}.
                 </p>
                 {topic.lectures.length > 0 && <p className={styles.meta}>{topic.lectures.join("; ")}</p>}
                 <div className={styles.columns}>
@@ -144,11 +163,11 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
                   </div>
                   <div>
                     <h4>Be able to</h4>
-                    <Lines items={topic.do} mark="arrow" />
+                    <Lines items={topic.do} sign="arrow" />
                     {topic.pitfalls.length > 0 && (
                       <div className={styles.box}>
                         <h4>Watch out</h4>
-                        <Lines items={topic.pitfalls} mark="warning" />
+                        <Lines items={topic.pitfalls} sign="warning" />
                       </div>
                     )}
                   </div>
@@ -172,7 +191,7 @@ export function SketchKnowledge({ knowledge, exams }: { knowledge: KnowledgeBook
       )}
 
       <Section title="How to study it">
-        <Lines items={knowledge.studyAdvice} mark="arrow" />
+        <Lines items={knowledge.studyAdvice} sign="arrow" />
       </Section>
 
       <Rests>

@@ -108,8 +108,8 @@
   "strategy": [
     "Sit both practice exams on Weblab in full, under time, before the real one; they share their build and many questions with the endterm.",
     "Leave enough time for the three implementation questions. Copy the example from the task into a quick test and check the output before you submit.",
-    "Read each code spec closely: mean or sum, minimise or maximise, which distance, and which index wins a tie. The model solutions follow the spec literally.",
-    "Keep paper and a calculator at hand for the calculations, and know sigmoid(0) = 0.5, sigmoid(1) = 0.731 and sigmoid(-1) = 0.269 by heart.",
+    "Read each code spec closely: [[mean or sum, minimise or maximise, which distance, and which index wins a tie]]. The model solutions follow the spec literally.",
+    "Keep paper and a calculator at hand for the calculations, and know [[sigmoid(0) = 0.5, sigmoid(1) = 0.731 and sigmoid(-1) = 0.269]] by heart.",
     "Watch for questions that ask for the FALSE statement; the endterm mixes three of them in among the ones that ask for the true one.",
     "In open calculation questions write out each step and state any assumption you make, such as how you break a tie on the boundary.",
     "Check before the exam that you are enrolled in the right Weblab edition of the course, as the introduction lecture warns."

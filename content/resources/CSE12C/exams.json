@@ -143,7 +143,7 @@
   ],
   "strategy": [
     "Spend the most hours on SQL, query optimisation and EER modelling: together they carry about 62 percent of the points in the predecessor papers.",
-    "On WebLab, use the spec test: a syntax error, an empty result or a wrong column name means 0 points, so name result columns exactly as asked with AS.",
+    "On WebLab, use the spec test: [[a syntax error, an empty result or a wrong column name means 0 points]], so name result columns exactly as asked with AS.",
     "Read the whole appendix before the optimisation task: byte sizes, block size, sort order and index costs decide every number.",
     "For EER design, model only what the scenario asks for, mark keys and cardinalities on every relationship, and write down assumptions where the text is open.",
     "In argument questions give as many distinct arguments as asked; the rubrics give nothing for a bare stance such as 'it depends'.",
@@ -152,10 +152,10 @@
   ],
   "pitfalls": [
     "Duplicates and ordering: Midterm 2025 (WDT DB) subtracted 10 of 100 points for duplicate rows and 15 for a wrong order; Midterm 2024 (WDT DB) gave no partial points at all.",
-    "Decomposing straight to 3NF: Midterm Resit 2024 gave no points for the 2NF step if it was skipped.",
+    "Decomposing straight to 3NF: Midterm Resit 2024 gave [[no points for the 2NF step if it was skipped]].",
     "Using two single-attribute B+-tree indexes as if they were one kd-tree earned 0 points in Resit 2023.",
-    "In logging questions where the crash comes before a flush, the model answer is that the COMMIT record may or may not be in the log; cover both cases.",
+    "In logging questions where the crash comes before a flush, the model answer is that the COMMIT record [[may or may not be in the log]]; cover both cases.",
     "Linking a weak entity to each owner separately instead of to the relationship it depends on: the Midterm 2025 model answer warns against exactly this.",
-    "Treating EXISTS and a join, or UNION ALL and OR, as equivalent: they differ in duplicates, which is exactly what the equivalence questions test."
+    "Treating EXISTS and a join, or UNION ALL and OR, as equivalent: [[they differ in duplicates]], which is exactly what the equivalence questions test."
   ]
 }

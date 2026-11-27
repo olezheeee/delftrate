@@ -17,15 +17,15 @@
       "know": [
         "Why software raises ethical questions: society depends on it, it can empower or harm, non-developers cannot spot its flaws, and data use falls under rules such as the GDPR",
         "Real failures used as warnings: the Dutch child benefits scandal (Toeslagenaffaire), the Rotterdam fraud algorithm, COMPAS and Amazon's hiring system",
-        "Mediation theory: technology is not neutral, it shapes moral perceptions, opens or closes options for action, and changes values",
+        "Mediation theory: [[technology is not neutral]], it shapes moral perceptions, opens or closes options for action, and changes values",
         "Ethics as ongoing support for decisions during the project, not a verdict from experts and not just a checklist to tick off",
-        "What your report must cover: data and privacy, risks to users, stakeholders and non-users, bias in data or processes, and mediation effects",
+        "What your report must cover: [[data and privacy, risks to users, stakeholders and non-users, bias in data or processes, and mediation effects]]",
         "The steps: watch the required ethics lecture and read the ethics checklist on Brightspace, draft the section in the draft report, get written feedback, revise for the final report"
       ],
       "do": [
         "Answer the four question groups for your own project: who it serves, who is affected and whose data it uses, who is responsible for what, and what the software does once in use",
         "Write an ethics chapter that names concrete risks of your product and says how your design reduces each one",
-        "Apply the three mediation questions (perception, action, values) to your product, as the lecture does with Brightspace"
+        "Apply the three mediation questions ([[perception, action, values]]) to your product, as the lecture does with Brightspace"
       ],
       "pitfalls": [
         "Treating the ethics part as a checklist exercise; the lecture asks you to reason about how the technology changes behaviour and values",
@@ -40,9 +40,9 @@
       "know": [
         "The seven writing goals, from summarising literature and structuring the report to writing for readers with little time and writing as a team",
         "The writing assignments in order: project plan, table of contents, individual introduction, improved group introduction, first chapters, draft report, self-assessment, final report",
-        "What the final upload contains: the report as one PDF, a document listing the changes you made after the draft feedback, and a document explaining your use of AI tools",
-        "The draft cycle: hand in a draft and say where you want feedback, assess it yourselves with the rubric, bring at least three questions to the online draft meeting",
-        "The report is 15 percent of the course grade, graded by the writing lecturer, and attendance at the writing sessions is mandatory"
+        "What the final upload contains: the report as one PDF, a [[document listing the changes]] you made after the draft feedback, and a [[document explaining your use of AI tools]]",
+        "The draft cycle: hand in a draft and say where you want feedback, assess it yourselves with the rubric, bring [[at least three questions]] to the online draft meeting",
+        "The report is [[15 percent of the course grade]], graded by the writing lecturer, and [[attendance at the writing sessions is mandatory]]"
       ],
       "do": [
         "Agree early on roles (an editor, who uploads), a writing schedule and how you give each other feedback",
@@ -59,12 +59,12 @@
       "timeShare": 13,
       "importance": "essential",
       "know": [
-        "The hard minimum: at least 10 sources in the final report, 5 of them scientific, in APA or IEEE style; uncited material counts as plagiarism",
-        "APA puts author and year in the text, (Jones, 2019); IEEE uses a bracketed number, [5]; both let you name the author in the sentence",
-        "IEEE numbers sources in the order you first cite them, and the list holds only sources you actually cite",
+        "The hard minimum: [[at least 10 sources in the final report, 5 of them scientific]], in APA or IEEE style; uncited material counts as plagiarism",
+        "[[APA puts author and year in the text]], (Jones, 2019); [[IEEE uses a bracketed number]], [5]; both let you name the author in the sentence",
+        "[[IEEE numbers sources in the order you first cite them]], and the list holds only sources you actually cite",
         "How to point to a page, paragraph, figure, table, equation, appendix or section in IEEE, for example [5, p. 17] or [5, Sec. 2.3]",
         "The details to check per entry: what goes in italics, how titles are written, how many authors and initials, page numbers and the DOI",
-        "Software you used, such as GitLab or Google Analytics, goes in a footnote rather than the reference list"
+        "Software you used, such as GitLab or Google Analytics, goes in [[a footnote rather than the reference list]]"
       ],
       "do": [
         "Back up every claim about the client's context or the problem with a citation, as in the problem-analysis examples",
@@ -85,10 +85,10 @@
         "The three readers: a CEO without CS background (summary, introduction, problem, conclusion, visuals), a technical CTO (requirements, method, design, implementation, testing) and a new development team (conclusion, appendices)",
         "The required parts: title page with the whole committee, preface, summary, contents, introduction, chapters on problem analysis, research, requirements, methodology, design, ethics, implementation, testing and discussion, conclusion, references, appendices",
         "A good table of contents: complete, correctly formatted, with clear, descriptive, short and consistent titles from which the storyline is visible",
-        "The introduction in three parts: why (reason), what (objective) and how (approach and structure of the report)",
+        "The introduction in three parts: [[why (reason), what (objective) and how (approach and structure of the report)]]",
         "Ways to open the introduction: a striking fact or figure, a clarifying example, or a relevant quote, each backed by a source",
         "A chapter introduction states the chapter's purpose and announces its sections; the objective needs a clear end point and the chapters are the steps towards it",
-        "The 12,000-word limit counts from the introduction to the conclusion; put the full requirements table with status and the division of labour (max one A4) in appendices"
+        "The [[12,000-word limit counts from the introduction to the conclusion]]; put the full requirements table with status and the division of labour (max one A4) in appendices"
       ],
       "do": [
         "Draft a table of contents early and review another group's for formatting and titles",
@@ -106,10 +106,10 @@
       "timeShare": 14,
       "importance": "important",
       "know": [
-        "A paragraph covers one topic, announced in its first sentence, the topic sentence, either as an announcement or as a statement",
+        "A paragraph covers [[one topic, announced in its first sentence, the topic sentence]], either as an announcement or as a statement",
         "Coherence inside a paragraph through transition words, and between paragraphs through bridges and signposts",
-        "List rules: announce the list and its length, two to six bullets, the same sentence structure for every item",
-        "Figures carry a caption below and tables a caption above; both are numbered in order, referred to in the text and readable on their own",
+        "List rules: [[announce the list and its length, two to six bullets, the same sentence structure for every item]]",
+        "[[Figures carry a caption below and tables a caption above]]; both are numbered in order, referred to in the text and readable on their own",
         "In the text around a visual, say what it shows, how it shows it and why that matters",
         "Common style problems: passive style, comma splices, subject and verb not agreeing, informal words; and the rule to write small counts in words"
       ],
@@ -131,10 +131,10 @@
       "importance": "important",
       "know": [
         "The preface: educational context, a reading guide and thanks, the only place for a personal tone, plus the required footnote with course, word count and how you used generative AI",
-        "The summary stands alone: reason, objective and main requirements, outcome, how you got there, limitations and recommendations, without references or pointers to chapters",
-        "Summary form: actions in the past tense, facts in the present tense, short on background, one A4 advised and two at most",
+        "The summary stands alone: reason, objective and main requirements, outcome, how you got there, limitations and recommendations, [[without references or pointers to chapters]]",
+        "Summary form: [[actions in the past tense, facts in the present tense]], short on background, [[one A4 advised and two at most]]",
         "The conclusion restates the aim and method, answers the question, argues from the chapters, gives implications and recommendations, and ends with a strong final sentence",
-        "Conclusion rules: no new information, concise (one to two pages), readable without the rest of the report",
+        "Conclusion rules: [[no new information, concise (one to two pages), readable without the rest of the report]]",
         "Recommendations follow from the conclusion and are feasible, specific and encouraging; a few go in a final paragraph announced with their number, many get their own chapter"
       ],
       "do": [
@@ -156,8 +156,8 @@
         "The four teamwork sessions: effective communication, meeting skills and Core Quadrants, feedback and Buddycheck, respect for differences",
         "Observation versus interpretation, and checking whether the other person really understood you and is also satisfied",
         "Habits that make communication fail (waiting for your turn instead of listening, letting bias lead, ignoring other views) and those that help (active listening, checking assumptions, summarising, asking questions, nonverbal awareness)",
-        "The three levels of interaction, content, process and relation (McClelland), and how a problem can sit on any of them",
-        "Closed questions that start with a verb versus open questions that start with who, what, which, when, why or how; summarising and silence as listening tools",
+        "The three levels of interaction, [[content, process and relation]] (McClelland), and how a problem can sit on any of them",
+        "[[Closed questions that start with a verb]] versus [[open questions that start with who, what, which, when, why or how]]; summarising and silence as listening tools",
         "Team values and the norms that show them, written down in the code of conduct, including ambition level and work-life balance"
       ],
       "do": [

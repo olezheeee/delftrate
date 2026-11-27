@@ -16,18 +16,18 @@
       "importance": "essential",
       "know": [
         "The OS as resource manager and as a layer that hides hardware details, and the step from batch processing to multiprogramming to time sharing",
-        "Which hardware made each step possible: magnetic tape for batch work, a programmable timer for time sharing",
-        "Dual-mode execution: user mode versus kernel mode, the mode bit (MSR) and x86 protection rings",
+        "Which hardware made each step possible: [[magnetic tape for batch work, a programmable timer for time sharing]]",
+        "Dual-mode execution: [[user mode versus kernel mode]], the mode bit (MSR) and x86 protection rings",
         "System calls, exceptions and interrupts: who raises each, and why each enters the kernel",
         "How the mode bit changes when the kernel is entered and how a return-from-interrupt instruction switches back to user mode",
-        "Monolithic, modular and microkernel designs, and where device drivers live in each"
+        "[[Monolithic, modular and microkernel]] designs, and where device drivers live in each"
       ],
       "do": [
         "Walk through a system call or an exception step by step, stating the processor mode at each step",
         "Compare multiprogramming with time sharing, and argue for or against putting a driver inside the kernel"
       ],
       "pitfalls": [
-        "Mixing up exceptions (raised because the running code did something wrong) with interrupts (raised by a device to signal an event)",
+        "Mixing up [[exceptions (raised because the running code did something wrong)]] with [[interrupts (raised by a device to signal an event)]]",
         "Saying when the mode bit is set but forgetting the switch back to user mode at the end of the handler"
       ]
     },
@@ -37,12 +37,12 @@
       "timeShare": 9,
       "importance": "essential",
       "know": [
-        "From program to process: the ELF format, loading, the process control block and the states running, ready and blocked",
-        "fork, exec, wait and waitpid, exit, and the role of init as the first process",
+        "From program to process: the ELF format, loading, the process control block and the states [[running, ready and blocked]]",
+        "[[fork, exec, wait and waitpid, exit]], and the role of init as the first process",
         "Signals, pipes and other IPC: shared memory, sockets, files",
         "FIFO, SJF, SRT, priority and round-robin scheduling, and what each one optimises or sacrifices",
-        "Multilevel feedback queues and Linux niceness; why static priorities can starve jobs and how ageing fixes it",
-        "Real-time scheduling with rate-monotonic and earliest-deadline-first, and the CPU utilisation condition for meeting deadlines",
+        "Multilevel feedback queues and Linux niceness; why [[static priorities can starve jobs and how ageing fixes it]]",
+        "Real-time scheduling with [[rate-monotonic and earliest-deadline-first]], and the CPU utilisation condition for meeting deadlines",
         "Multiprocessor scheduling and the Linux schedulers up to CFS"
       ],
       "do": [
@@ -52,7 +52,7 @@
         "Say which state transitions are possible and what event causes each"
       ],
       "pitfalls": [
-        "Allowing blocked to running or ready to blocked: a blocked process always goes back through ready",
+        "Allowing blocked to running or ready to blocked: [[a blocked process always goes back through ready]]",
         "In round-robin, letting a task keep the CPU after it finishes early instead of switching at once"
       ]
     },
@@ -65,10 +65,10 @@
         "Threads versus processes, the thread control block, and user-level, kernel-level and hybrid (N to M) threads with their trade-offs",
         "POSIX threads and higher-level options: thread pools, OpenMP, Grand Central Dispatch",
         "Race conditions, the Too Much Milk solutions, safety versus liveness, and Peterson's algorithm",
-        "Locks from disabling interrupts and from atomic instructions (test-and-set, compare-and-swap); spinlocks versus sleeping mutexes, ticket locks, the bakery algorithm and futexes",
+        "Locks from disabling interrupts and from atomic instructions ([[test-and-set, compare-and-swap]]); spinlocks versus sleeping mutexes, ticket locks, the bakery algorithm and futexes",
         "Condition variables, monitors (Mesa versus Hoare signalling) and semaphores, used on the producer-consumer queue",
-        "Priority inversion and its fixes, and Amdahl's law S(n) = 1 / ((1 - P) + P/n)",
-        "Deadlock: the four conditions, resource allocation graphs, prevention by lock ordering, avoidance with the Banker's algorithm, detection and recovery; deadlock versus livelock and starvation"
+        "Priority inversion and its fixes, and [[Amdahl's law S(n) = 1 / ((1 - P) + P/n)]]",
+        "Deadlock: [[the four conditions]], resource allocation graphs, [[prevention by lock ordering, avoidance with the Banker's algorithm]], detection and recovery; deadlock versus livelock and starvation"
       ],
       "do": [
         "Write pseudocode with semaphores or mutexes that forces an order between processes",
@@ -77,7 +77,7 @@
         "Choose between a spinlock and a kernel mutex for a given level of contention, and explain why"
       ],
       "pitfalls": [
-        "Checking a condition variable with if instead of a while loop",
+        "Checking a [[condition variable]] with if instead of a [[while loop]]",
         "Assuming more threads always means more speed: Amdahl's law caps the speed-up"
       ]
     },
@@ -87,10 +87,10 @@
       "timeShare": 9,
       "importance": "important",
       "know": [
-        "The goals of protection, the least-privilege principle and the access matrix model with domains and owner and control rights",
-        "Ways to store the matrix: access lists, capability lists, lock and key",
+        "The goals of protection, the [[least-privilege principle]] and the access matrix model with domains and owner and control rights",
+        "Ways to store the matrix: [[access lists, capability lists, lock and key]]",
         "Threats: viruses, worms, ransomware, buffer overflows, port scanning, denial of service, and why humans are the weakest link (phishing, social engineering)",
-        "Buffer-overflow defences: a non-executable stack, stack canaries, compiler-inserted bounds checks",
+        "Buffer-overflow defences: [[a non-executable stack, stack canaries, compiler-inserted bounds checks]]",
         "Authentication with passwords and one-way functions, symmetric keys, Diffie-Hellman key exchange, firewalls"
       ],
       "do": [
@@ -107,11 +107,11 @@
       "timeShare": 12,
       "importance": "essential",
       "know": [
-        "Heap allocation with first fit, best fit, worst fit and buddy allocation, and external versus internal fragmentation",
+        "Heap allocation with [[first fit, best fit, worst fit and buddy allocation]], and external versus internal fragmentation",
         "Address spaces, relocation and translation; segmentation and its limits; paging",
-        "Page tables: simple forward-mapped, multi-level, hashed and inverted, plus the TLB",
+        "Page tables: [[simple forward-mapped, multi-level, hashed and inverted]], plus the TLB",
         "Page faults and how the MMU and the OS handle them together, and the effective access time formula with its simplifications",
-        "Page replacement: optimal, FIFO, LRU, clock and second-chance clock; local versus global replacement",
+        "Page replacement: [[optimal, FIFO, LRU, clock and second-chance clock]]; local versus global replacement",
         "Working sets, page-fault frequency, thrashing and swapping as load control"
       ],
       "do": [
@@ -132,9 +132,9 @@
       "importance": "essential",
       "know": [
         "Device access by polling, by interrupts and by DMA, and when each suits a device",
-        "Hard disk access time as seek time plus rotational delay plus transfer time, and disk capacity",
-        "Disk-head scheduling: FIFO, SSTF, SCAN, C-SCAN, LOOK and C-LOOK",
-        "RAID 0, 1, 3, 5 and 10: striping, mirroring and parity, with their read and write speeds",
+        "Hard disk access time as [[seek time plus rotational delay plus transfer time]], and disk capacity",
+        "Disk-head scheduling: [[FIFO, SSTF, SCAN, C-SCAN, LOOK and C-LOOK]]",
+        "RAID 0, 1, 3, 5 and 10: [[striping, mirroring and parity]], with their read and write speeds",
         "SSDs: the flash translation layer, garbage collection, write amplification, over-provisioning and wear",
         "Buffered standard I/O versus Unix I/O, blocking versus non-blocking, and asynchronous APIs (POSIX aio, Linux aio, io_uring)"
       ],
@@ -144,8 +144,8 @@
         "Pick polling, interrupts or DMA for a described device and defend the choice"
       ],
       "pitfalls": [
-        "Turning SCAN or C-SCAN at the last request: in the model solutions they sweep to the disk edge, and C-SCAN counts the jump back",
-        "Using a full rotation instead of half a rotation as the average rotational delay"
+        "Turning SCAN or C-SCAN at the last request: in the model solutions they [[sweep to the disk edge]], and [[C-SCAN counts the jump back]]",
+        "Using a full rotation instead of [[half a rotation as the average rotational delay]]"
       ]
     },
     {
@@ -155,10 +155,10 @@
       "importance": "important",
       "know": [
         "Files, their attributes and operations; file descriptor table, open file table (with its reference count) and vnode table, and how fork shares open files",
-        "Directory structures, mounting, hard links versus soft links, and why hard links to directories are not allowed",
-        "Block allocation: contiguous, linked, FAT and indexed with the UNIX inode (direct, single, double and triple indirect blocks)",
+        "Directory structures, mounting, hard links versus soft links, and why [[hard links to directories are not allowed]]",
+        "Block allocation: contiguous, linked, FAT and indexed with the UNIX inode ([[direct, single, double and triple indirect blocks]])",
         "Free-space management with bitmaps and linked lists",
-        "Consistency: fsck, journaling in ext3, extents in ext4, and the ideas behind ReiserFS, XFS, ZFS and NTFS"
+        "Consistency: fsck, [[journaling in ext3, extents in ext4]], and the ideas behind ReiserFS, XFS, ZFS and NTFS"
       ],
       "do": [
         "Derive the maximum file size from the block size, address size and inode layout",
@@ -175,9 +175,9 @@
       "timeShare": 9,
       "importance": "useful",
       "know": [
-        "Shared-memory (UMA) and distributed shared-memory (NUMA) systems",
+        "[[Shared-memory (UMA) and distributed shared-memory (NUMA)]] systems",
         "Write-through versus write-back caches, and how private caches can hold stale copies",
-        "Snooping protocols and the MESI states modified, exclusive, shared and invalid",
+        "Snooping protocols and the MESI states [[modified, exclusive, shared and invalid]]",
         "Coherence versus memory consistency, and weak consistency",
         "Why spinning on a shared lock causes cache-line traffic, and the fix of spinning on the cached copy with plain loads before trying an atomic exchange"
       ],
@@ -194,9 +194,9 @@
       "importance": "important",
       "know": [
         "The path from MS-DOS to NT-based Windows and how NT's design differs from Unix",
-        "The layers: hardware abstraction layer, kernel, executive and its managers (object, I/O, virtual memory, security reference monitor)",
-        "Subsystems (Win32, WinRT/UWP, WSL) that translate their API calls into the native NT API",
-        "Threads as the unit of scheduling, priority boosts for the focused window, for threads woken from I/O and for servers handling a request",
+        "The layers: [[hardware abstraction layer, kernel, executive]] and its managers (object, I/O, virtual memory, security reference monitor)",
+        "Subsystems ([[Win32, WinRT/UWP, WSL]]) that translate their API calls into the native NT API",
+        "[[Threads as the unit of scheduling]], priority boosts for the focused window, for threads woken from I/O and for servers handling a request",
         "Stacked and filter drivers, the registry, NTFS recovery, and why the window manager runs in kernel mode"
       ],
       "do": [
@@ -211,9 +211,9 @@
       "timeShare": 6,
       "importance": "important",
       "know": [
-        "Why virtual machines are used, and the three goals safety, fidelity and performance",
+        "Why virtual machines are used, and the three goals [[safety, fidelity and performance]]",
         "Type 1 and type 2 hypervisors, full emulation versus trap-and-emulate",
-        "Why some instruction sets cannot be virtualised by trap-and-emulate alone, and the fixes: binary translation, hardware assistance, para-virtualisation",
+        "Why some instruction sets cannot be virtualised by trap-and-emulate alone, and the fixes: [[binary translation, hardware assistance, para-virtualisation]]",
         "Two-level address translation (nested or extended page tables) and I/O virtualisation",
         "Containers versus virtual machines, with Docker and Kubernetes as examples"
       ],
@@ -222,7 +222,7 @@
         "Weigh para-virtualisation against pure virtualisation, and containers against VMs"
       ],
       "pitfalls": [
-        "Calling para-virtualisation a hardware feature: the guest is modified and knows it runs on a hypervisor"
+        "Calling para-virtualisation a hardware feature: [[the guest is modified and knows it runs on a hypervisor]]"
       ]
     }
   ],

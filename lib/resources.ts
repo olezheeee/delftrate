@@ -144,12 +144,60 @@ function record(value: unknown, path: string, allowed: readonly string[]): Recor
 // Booklets are shown as plain text: no Markdown, no LaTeX, no links.
 const MARKUP = /\*\*|`|\$\$|\\\(|\\frac|https?:\/\//;
 
-function text(value: unknown, path: string, max: number, plain = true): string {
+// The one exception to plain text. In a line of a list, the bit to know by heart may stand
+// between [[ and ]]: "The coefficient of x^n is [[f^(n)(0)/n!]]". The page draws a
+// highlighter over it. A line has at most three, and they are parts of it, never all of it.
+// A mark may itself end in a bracket ("[[E[XY] = E[X]E[Y]]]"): it closes at the last two.
+const MARKED = /\[\[(.*?)\]\](?!\])/g;
+const MARK_SIGN = /\[\[|\]\]/;
+const MARKS_PER_LINE = 3;
+
+export type MarkedPart = { text: string; marked: boolean };
+
+// A line cut into the parts to highlight and the parts between them, in order.
+export function markedParts(line: string): MarkedPart[] {
+  const parts: MarkedPart[] = [];
+  let at = 0;
+  for (const match of line.matchAll(MARKED)) {
+    if (match.index > at) parts.push({ text: line.slice(at, match.index), marked: false });
+    if (match[1] !== "") parts.push({ text: match[1], marked: true });
+    at = match.index + match[0].length;
+  }
+  if (at < line.length) parts.push({ text: line.slice(at), marked: false });
+  return parts;
+}
+
+// The line as it reads, without the signs of the marks.
+export function withoutMarks(line: string): string {
+  return markedParts(line)
+    .map((part) => part.text)
+    .join("");
+}
+
+function checkMarks(value: string, path: string): void {
+  const marks = [...value.matchAll(MARKED)].map((match) => match[1]);
+  if (MARK_SIGN.test(value.replace(MARKED, ""))) fail(path, "has a [[ without its ]], or the other way round");
+  for (const mark of marks) {
+    if (mark.trim() === "") fail(path, "has an empty [[mark]]");
+    if (mark.trim() !== mark) fail(path, `must not have a space at the edge of a mark: "[[${mark}]]"`);
+    if (mark.includes("[[")) fail(path, "must not have a mark inside a mark");
+  }
+  if (marks.length > MARKS_PER_LINE) fail(path, `must have at most ${MARKS_PER_LINE} marks (it has ${marks.length})`);
+  if (marks.length > 0 && marks.join("") === withoutMarks(value)) {
+    fail(path, "must not be marked as a whole: mark the bit to know by heart");
+  }
+}
+
+function text(value: unknown, path: string, max: number, plain = true, marks = false): string {
   if (typeof value !== "string") fail(path, "must be text");
   const trimmed = value.trim();
   if (trimmed === "") fail(path, "must not be empty");
   if (trimmed !== value) fail(path, "must not start or end with a space");
-  if (value.length > max) fail(path, `must be at most ${max} characters (it has ${value.length})`);
+  if (marks) checkMarks(value, path);
+  else if (plain && MARK_SIGN.test(value)) fail(path, "must not carry [[marks]]: they are for the lines of a list");
+  // The length is that of the text as it reads.
+  const length = marks ? withoutMarks(value).length : value.length;
+  if (length > max) fail(path, `must be at most ${max} characters (it has ${length})`);
   if (plain && MARKUP.test(value)) fail(path, "must be plain text: no Markdown, LaTeX or links");
   return value;
 }
@@ -200,8 +248,9 @@ function list<T>(
   return value.map((item, index) => each(item, `${path}[${index}]`));
 }
 
-function lines(value: unknown, path: string, min: number, max: number, length = 260): string[] {
-  return list(value, path, min, max, (item, at) => text(item, at, length));
+// The lines of a list. They may carry [[marks]], except where `marks` is false.
+function lines(value: unknown, path: string, min: number, max: number, length = 260, marks = true): string[] {
+  return list(value, path, min, max, (item, at) => text(item, at, length, true, marks));
 }
 
 function unique(names: string[], path: string): void {
@@ -285,7 +334,7 @@ export function parseKnowledgeBooklet(value: unknown): KnowledgeBooklet {
     if (name === OTHER_TOPIC) fail(`${path}.name`, `must not be "${OTHER_TOPIC}": name what the topic is`);
     return {
       name,
-      lectures: lines(topic.lectures, `${path}.lectures`, 0, 12, 90),
+      lectures: lines(topic.lectures, `${path}.lectures`, 0, 12, 90, false),
       timeShare: whole(topic.timeShare, `${path}.timeShare`, 1, 100),
       importance: oneOf(topic.importance, `${path}.importance`, IMPORTANCE),
       know: lines(topic.know, `${path}.know`, 3, 8),

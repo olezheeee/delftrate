@@ -7,6 +7,7 @@ import {
   HOURS_PER_ECTS,
   crossCheck,
   isCourseCode,
+  markedParts,
   parseExamBooklet,
   parseKnowledgeBooklet,
   parseResources,
@@ -22,6 +23,15 @@ const courses = readdirSync(ROOT).filter((name) => statSync(join(ROOT, name)).is
 function read(code: string, file: string): unknown {
   const path = join(ROOT, code, file);
   return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : undefined;
+}
+
+// How much of a set of lines is marked as "know this by heart": the number of marks, and
+// their share of the characters.
+function marked(lines: string[]): { marks: number; share: number } {
+  const parts = lines.flatMap((line) => markedParts(line));
+  const all = parts.reduce((sum, part) => sum + part.text.length, 0);
+  const inMarks = parts.filter((part) => part.marked);
+  return { marks: inMarks.length, share: all === 0 ? 0 : inMarks.reduce((sum, part) => sum + part.text.length, 0) / all };
 }
 
 it("has a folder per course, named by its course code", () => {
@@ -63,6 +73,28 @@ describe.each(courses)("%s", (code) => {
     if (knowledge && exams?.available) {
       const hours = topicStatistics(knowledge, exams).reduce((sum, row) => sum + (row.hours ?? 0), 0);
       expect(hours, "the suggested hours add up to the course").toBe(knowledge.ects * HOURS_PER_ECTS);
+    }
+  });
+
+  // A highlighter that is used on everything says nothing. The booklet of what to know
+  // marks some things to know by heart, and neither booklet marks more than a quarter.
+  it(`${code}: marks what to know by heart, and not too much of it`, () => {
+    const rawKnowledge = read(code, "knowledge.json");
+    const rawExams = read(code, "exams.json");
+    if (rawKnowledge !== undefined) {
+      const knowledge = parseKnowledgeBooklet(rawKnowledge);
+      const found = marked([
+        ...knowledge.topics.flatMap((topic) => [...topic.know, ...topic.do, ...topic.pitfalls]),
+        ...knowledge.prerequisites,
+        ...knowledge.studyAdvice,
+      ]);
+      expect(found.marks, "knowledge.json: marks").toBeGreaterThanOrEqual(5);
+      expect(found.share, "knowledge.json: share of the text that is marked").toBeLessThanOrEqual(0.25);
+    }
+    if (rawExams !== undefined) {
+      const exams = parseExamBooklet(rawExams);
+      const found = marked([...exams.recurring, ...exams.trends, ...exams.strategy, ...exams.pitfalls]);
+      expect(found.share, "exams.json: share of the text that is marked").toBeLessThanOrEqual(0.25);
     }
   });
 });

@@ -127,12 +127,12 @@
   ],
   "strategy": [
     "Expect the unknown CSE13B format to borrow from both: practise writing tests on WebLab under time pressure and answering SEM-style multiple choice.",
-    "For every test-writing task, run your tests before moving on: one failing or non-compiling test turns the whole answer into zero, so fix or comment it out.",
+    "For every test-writing task, run your tests before moving on: [[one failing or non-compiling test turns the whole answer into zero]], so fix or comment it out.",
     "Move on from a task once you have a solid set of tests; the SQT Q&A advises coming back later rather than hunting for a perfect score.",
-    "Answer every SEM-style single-choice question: under the guessing correction a blank costs as much as a wrong answer, and ruling out options raises your odds.",
+    "Answer every SEM-style single-choice question: under the guessing correction [[a blank costs as much as a wrong answer]], and ruling out options raises your odds.",
     "Motivate every open answer in a few sentences, with the alternative you rejected; unmotivated answers got no points.",
     "Learn PlantUML class and sequence syntax before the exam and use the class names from the question, as the spec tests match names.",
-    "Plan about 1.8 minutes per point on a 100-point, 3-hour paper; a 20-point programming task deserves about 35 minutes."
+    "Plan about [[1.8 minutes per point]] on a 100-point, 3-hour paper; a 20-point programming task deserves about 35 minutes."
   ],
   "pitfalls": [
     "Mocking the class under test cost 100 points of a task; mocking data classes or exceptions cost 10, using a spy 20.",

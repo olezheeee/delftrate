@@ -116,14 +116,14 @@
     "Work through the six papers from 2023 to 2025 under timed conditions; the question pattern hardly changes between years",
     "Write the proof templates on your cheat sheet: pumping lemma with all splits, dovetailing, reduction from A_TM, NP verifier with time bounds",
     "Learn the Sipser procedures step by step: rubrics give points for intermediate steps and take them away when the result is not a valid DFA or CNF",
-    "For a reduction question, check the direction first: from the known undecidable or NP-hard problem to the new one",
+    "For a reduction question, check the direction first: [[from the known undecidable or NP-hard problem to the new one]]",
     "When you build a small instance for a reduction, keep it tiny and check it by hand; the follow-up questions build on it",
     "Start every true-or-false answer with the verdict, then give the theorem or the smallest counterexample you can find",
-    "Read the cover conventions and each question's assumptions: P is not NP unless stated, the tape is bounded on the left, and missing transitions often go to an omitted reject state"
+    "Read the cover conventions and each question's assumptions: [[P is not NP unless stated, the tape is bounded on the left]], and missing transitions often go to an omitted reject state"
   ],
   "pitfalls": [
     "Reducing from L to the undecidable problem instead of the other way round costs a point, and the rest is graded as if that direction were meant",
-    "A pumping-lemma proof that handles one split, or forgets i = 0 or an empty x, loses the points per split and per contradiction",
+    "A pumping-lemma proof that handles one split, or forgets [[i = 0 or an empty x]], loses the points per split and per contradiction",
     "Proving NP membership without giving the time complexity of each check",
     "Claiming a problem is in TIME(n^2) from a Java running time, without the cost of simulating it on a single-tape DTM",
     "Running the subset construction and ending with a machine that is still not a DFA",

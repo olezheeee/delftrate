@@ -21,12 +21,12 @@
       "timeShare": 22,
       "importance": "essential",
       "know": [
-        "Data, information and knowledge; what a DBMS adds: data independence, views, integrity, transactions, and the parts of a DBMS",
+        "Data, information and knowledge; what a DBMS adds: [[data independence, views, integrity, transactions]], and the parts of a DBMS",
         "Data models versus schemas versus instances; the relational, document, key-value and graph models for the same data",
         "Chen EER notation as used in the exam: entity, weak entity, key, multi-valued, composite and derived attributes, identifying relationships, total participation, cardinalities",
         "Binary, ternary and recursive relationship types, and when a ternary relationship cannot be split into binary ones",
-        "Specialisation and generalisation (disjoint or overlapping, total or partial) and when inheritance is worth modelling",
-        "The relational model formally: domains, relations as sets of tuples, superkeys, candidate and primary keys, entity and referential integrity",
+        "Specialisation and generalisation ([[disjoint or overlapping, total or partial]]) and when inheritance is worth modelling",
+        "The relational model formally: domains, relations as sets of tuples, superkeys, candidate and primary keys, [[entity and referential integrity]]",
         "Mapping rules from EER to relations: entities, 1:1, 1:N and N:M relationships, attributes on relationships, n-ary relationships, weak entities, multi-valued attributes and the variants for inheritance"
       ],
       "do": [
@@ -48,11 +48,11 @@
       "timeShare": 4,
       "importance": "essential",
       "know": [
-        "Update, insert and delete anomalies caused by redundancy, and lossless decomposition as the cure",
-        "Functional dependencies, Armstrong's axioms (reflexivity, augmentation, transitivity) and the derived rules union, decomposition and pseudotransitivity",
+        "[[Update, insert and delete anomalies]] caused by redundancy, and lossless decomposition as the cure",
+        "Functional dependencies, [[Armstrong's axioms (reflexivity, augmentation, transitivity)]] and the derived rules union, decomposition and pseudotransitivity",
         "Attribute closure, the closure F+ and a minimal cover of a set of FDs",
         "Superkey, candidate key and primary key in terms of FDs",
-        "1NF (atomic values, three ways to remove multi-valued attributes), 2NF (no partial dependency on a key) and 3NF (no transitive dependency); BCNF and higher forms are not examined"
+        "1NF (atomic values, three ways to remove multi-valued attributes), [[2NF (no partial dependency on a key)]] and [[3NF (no transitive dependency)]]; BCNF and higher forms are not examined"
       ],
       "do": [
         "Find all candidate keys of a relation from a set of FDs, using closures",
@@ -76,15 +76,15 @@
       "importance": "essential",
       "know": [
         "SELECT, FROM, WHERE, ORDER BY, DISTINCT, LIKE patterns, and the logical evaluation order of a query",
-        "Inner joins, self joins, and the outer joins LEFT, RIGHT and FULL; a comma join with a WHERE condition gives the same result set as JOIN ... ON",
+        "Inner joins, self joins, and the outer joins LEFT, RIGHT and FULL; [[a comma join with a WHERE condition gives the same result set as JOIN ... ON]]",
         "Aggregates COUNT, SUM, AVG, MIN and MAX with GROUP BY and HAVING, and how NULL behaves in aggregates and in three-valued logic",
-        "Set operators UNION, INTERSECT and EXCEPT, and bag versus set semantics",
-        "Subqueries: IN, NOT IN, EXISTS, NOT EXISTS, ANY and ALL, correlated versus uncorrelated, and the WITH clause",
+        "Set operators [[UNION, INTERSECT and EXCEPT]], and bag versus set semantics",
+        "Subqueries: [[IN, NOT IN, EXISTS, NOT EXISTS, ANY and ALL]], correlated versus uncorrelated, and the WITH clause",
         "DDL and DML: CREATE TABLE with NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY and reaction policies; INSERT, UPDATE, DELETE, ALTER and DROP"
       ],
       "do": [
         "Write a correct query from a plain-English request on a given schema, with the exact result schema asked for",
-        "Express 'never', 'all' and 'at least two different' requests with EXCEPT, NOT EXISTS, self joins or HAVING COUNT(DISTINCT ...)",
+        "Express 'never', 'all' and 'at least two different' requests with EXCEPT, NOT EXISTS, self joins or [[HAVING COUNT(DISTINCT ...)]]",
         "Read a query and describe its result in plain English, or spot why it fails",
         "Judge whether an AI-generated query is correct and repair it"
       ],
@@ -99,10 +99,10 @@
       "timeShare": 8,
       "importance": "important",
       "know": [
-        "The impedance mismatch between objects and relations",
+        "The [[impedance mismatch]] between objects and relations",
         "JDBC: driver types, connections, Statement versus PreparedStatement, ResultSet and transactions with commit and rollback",
-        "SQL injection: how concatenated input changes a query, and how prepared statements (and hashing with salt for passwords) defend against it",
-        "Surrogate key generation: sequences, hi-low keys and UUID types 1, 2 and 4, with their trade-offs",
+        "SQL injection: how concatenated input changes a query, and how [[prepared statements (and hashing with salt for passwords)]] defend against it",
+        "Surrogate key generation: [[sequences, hi-low keys and UUID types 1, 2 and 4]], with their trade-offs",
         "JPA: entities as annotated POJOs, relationship annotations, the EntityManager, JPQL, and the schema a provider generates (without indexes)"
       ],
       "do": [
@@ -122,7 +122,7 @@
       "know": [
         "Selection, projection, rename, union, intersection, difference, Cartesian product, theta join, equi-join and natural join",
         "Aggregation and grouping as an extended operator",
-        "Set semantics in relational algebra versus bag semantics in SQL",
+        "[[Set semantics in relational algebra]] versus [[bag semantics in SQL]]",
         "Algebraic equivalences: commuting and cascading selections, associativity of joins, pushing selections through joins"
       ],
       "do": [
@@ -131,7 +131,7 @@
         "Bound the number of result tuples of an expression on relations of given sizes"
       ],
       "pitfalls": [
-        "Assuming SQL and algebra give the same result: UNION ALL keeps duplicates, while an OR in one query does not"
+        "Assuming SQL and algebra give the same result: [[UNION ALL keeps duplicates]], while an OR in one query does not"
       ]
     },
     {
@@ -141,9 +141,9 @@
       "importance": "important",
       "know": [
         "The memory hierarchy and its cost, capacity and access-time trade-offs",
-        "Hard disk structure, seek time, rotational latency and transfer time; why random I/O is expensive and the I/O model of computation",
+        "Hard disk structure, [[seek time, rotational latency and transfer time]]; why random I/O is expensive and the I/O model of computation",
         "SSDs and non-volatile memory compared with spinning disks",
-        "RAID 0, 1, 0+1, 2, 3, 4 and 5: striping, mirroring and parity, with their read speed, write speed and fault tolerance",
+        "RAID 0, 1, 0+1, 2, 3, 4 and 5: [[striping, mirroring and parity]], with their read speed, write speed and fault tolerance",
         "Files, blocks, fixed and variable length records, blobs, and blocking factor",
         "Row stores versus column stores, and which workloads (OLTP or OLAP) each serves"
       ],
@@ -163,14 +163,14 @@
       "importance": "important",
       "know": [
         "Primary versus secondary indexes, dense versus sparse, and why not every attribute is indexed",
-        "Hash indexes: buckets, collisions, overflow lists and rehashing; good for point queries only",
+        "Hash indexes: buckets, collisions, overflow lists and rehashing; [[good for point queries only]]",
         "B+-trees: structure, fan-out, search, range queries, insertion with splits and its cost",
         "Multidimensional indexing: multiple-key indexes and kd-trees, with range and nearest-neighbour queries"
       ],
       "do": [
         "Choose a hash index, B+-tree, kd-tree or no index for each attribute of a query or workload",
         "Compute the height or fan-out of a B+-tree from block, key and pointer sizes",
-        "Explain why high fan-out reduces disk seeks"
+        "Explain why [[high fan-out reduces disk seeks]]"
       ],
       "pitfalls": [
         "Treating two single-attribute B+-trees as one kd-tree: the rubric gives 0 points for combining them in one index scan"
@@ -188,10 +188,10 @@
       "importance": "essential",
       "know": [
         "From SQL to canonical and annotated operator trees; heuristic versus cost-based optimisation; pipelining versus materialisation",
-        "The algebraic equivalences and the greedy heuristic: break and push selections, break and push or introduce projections, turn products plus selections into joins",
-        "Cost of a relation scan (number of blocks), binary search (log2 of the blocks) and index scan (matching records times index cost plus one)",
+        "The algebraic equivalences and the greedy heuristic: [[break and push selections, break and push or introduce projections, turn products plus selections into joins]]",
+        "Cost of a [[relation scan (number of blocks)]], [[binary search (log2 of the blocks)]] and [[index scan (matching records times index cost plus one)]]",
         "Block nested loop, index nested loop, sort-merge and hash joins, with the block-access cost formula of each including writing the result",
-        "Reduction factors: 1/#dv for equality, a range fraction for comparisons, multiplied for independent conditions; join size |R| times |S| divided by the larger #dv",
+        "Reduction factors: [[1/#dv for equality]], a range fraction for comparisons, multiplied for independent conditions; [[join size |R| times |S| divided by the larger #dv]]",
         "Join order: Catalan numbers of tree shapes, left-deep trees, dynamic programming with a cost table and greedy join ordering"
       ],
       "do": [
@@ -201,7 +201,7 @@
         "Improve a join order or apply the greedy heuristics to a plan"
       ],
       "pitfalls": [
-        "Applying 1/#dv blindly: it assumes uniform data, so it is wrong for unique names or for birth dates before 1945",
+        "Applying 1/#dv blindly: [[it assumes uniform data]], so it is wrong for unique names or for birth dates before 1945",
         "Ignoring the appendix rules on byte sizes, block size, sort order and index costs, which every calculation depends on"
       ]
     },
@@ -215,12 +215,12 @@
       "timeShare": 11,
       "importance": "important",
       "know": [
-        "ACID; schedules; the anomalies dirty read, non-repeatable read, phantom read, lost update, write skew and read skew; isolation levels",
+        "ACID; schedules; the anomalies [[dirty read, non-repeatable read, phantom read, lost update, write skew and read skew]]; isolation levels",
         "Conflicting operations, conflict equivalence and conflict serialisability tested with a conflict (precedence) graph",
         "Locking schedulers, lock conversion, two-phase locking and its weak points, deadlocks, and MVCC",
         "Steal and force buffer policies and the recovery types they lead to",
         "Undo logging, redo logging and undo/redo logging: their rules, recovery procedures and checkpoints",
-        "Two-phase commit: the prepare and commit phases, votes, and blocking when the coordinator fails"
+        "Two-phase commit: the [[prepare and commit phases]], votes, and [[blocking when the coordinator fails]]"
       ],
       "do": [
         "Draw the conflict graph of a schedule and decide whether it is conflict serialisable",
@@ -229,7 +229,7 @@
         "Predict the behaviour of 2PC participants after a coordinator or participant failure"
       ],
       "pitfalls": [
-        "Claiming to know whether the COMMIT record reached the log when the crash comes before a flush: the model answer is that it may or may not be there, so give both cases"
+        "Claiming to know whether the COMMIT record reached the log when the crash comes before a flush: the model answer is that [[it may or may not be there, so give both cases]]"
       ]
     },
     {
@@ -242,9 +242,9 @@
       "importance": "important",
       "know": [
         "BASE transactions versus ACID, and eventual consistency",
-        "The CAP theorem: consistency, availability and partition tolerance, and why a partitioned system must give up one of the first two",
+        "The CAP theorem: [[consistency, availability and partition tolerance]], and why [[a partitioned system must give up one of the first two]]",
         "Where relational systems struggle: extreme scale, availability demands and new data models",
-        "Aggregate-oriented models: key-value, document and column-family stores, graph databases and schemaless designs",
+        "Aggregate-oriented models: [[key-value, document and column-family stores]], graph databases and schemaless designs",
         "Application databases versus integration databases, scaling out and distributed relational databases"
       ],
       "do": [

@@ -15,9 +15,9 @@
       "timeShare": 6,
       "importance": "important",
       "know": [
-        "The pre-history: mechanical calculators, the Jacquard loom as the first programmable machine, Babbage's Difference and Analytical Engines, and Ada Lovelace as the first programmer",
+        "The pre-history: mechanical calculators, the [[Jacquard loom as the first programmable machine]], Babbage's Difference and Analytical Engines, and [[Ada Lovelace as the first programmer]]",
         "Electro-mechanical and early electronic machines (ASCC/Harvard Mark I, ENIAC) and the practical problems that made them hard to use: size, power, failing valves, rewiring to reprogram",
-        "Atanasoff's digital computer, the stored-program (Von Neumann) idea, the transistor, the microprocessor and the IBM PC",
+        "Atanasoff's digital computer, the [[stored-program (Von Neumann) idea]], the transistor, the microprocessor and the IBM PC",
         "The multi-computing generation: networked machines and the roots of the Internet",
         "Rough dates of landmarks such as the first computer bug, the mouse, the Apple computer and the Internet",
         "Why war and military funding sped up computing, and why performance is the thread through the whole history"
@@ -36,12 +36,12 @@
       "timeShare": 12,
       "importance": "essential",
       "know": [
-        "The x86-64 general-purpose registers, their 32, 16 and 8-bit partial names, and the instruction suffixes b, w, l and q for operand size",
-        "AT&T syntax (source first, destination second) versus Intel syntax, and the addressing modes: immediate, register, direct, indirect and base plus offset",
+        "The x86-64 general-purpose registers, their 32, 16 and 8-bit partial names, and the instruction [[suffixes b, w, l and q for operand size]]",
+        "AT&T syntax ([[source first, destination second]]) versus Intel syntax, and the addressing modes: immediate, register, direct, indirect and base plus offset",
         "The stack: push and pop, how %rsp moves, and how call and ret save and follow the return address",
-        "Stack frames: the prologue (push %rbp, then copy %rsp to %rbp), local variables at negative offsets from %rbp, and the epilogue",
-        "The System V calling convention: arguments in %rdi, %rsi, %rdx, %rcx, %r8, %r9, then on the stack; the return value in %rax; callee-saved versus caller-saved registers",
-        "Why the stack must be 16-byte aligned before calling a C function such as printf or scanf",
+        "Stack frames: the prologue ([[push %rbp, then copy %rsp to %rbp]]), local variables at negative offsets from %rbp, and the epilogue",
+        "The System V calling convention: [[arguments in %rdi, %rsi, %rdx, %rcx, %r8, %r9]], then on the stack; [[the return value in %rax]]; callee-saved versus caller-saved registers",
+        "Why the stack must be [[16-byte aligned before calling a C function]] such as printf or scanf",
         "Assembler directives (.text, .data, .bss, .quad, .asciz, .global) and conditional jumps for if-then-else and loops"
       ],
       "do": [
@@ -62,9 +62,9 @@
       "importance": "essential",
       "know": [
         "The Boolean algebra laws, including De Morgan, and how a truth table becomes a sum of products",
-        "The gates AND, OR, NOT, NAND, NOR and XOR, and why NAND and NOR are universal",
-        "Karnaugh maps for four variables: Gray-code order, wrap-around groups, corners and don't-cares, and how they give a minimal sum of products",
-        "CMOS gates: PMOS transistors in the pull-up network, NMOS in the pull-down network, and why this uses almost no power compared with resistors",
+        "The gates AND, OR, NOT, NAND, NOR and XOR, and why [[NAND and NOR are universal]]",
+        "Karnaugh maps for four variables: [[Gray-code order, wrap-around groups, corners and don't-cares]], and how they give a minimal sum of products",
+        "CMOS gates: [[PMOS transistors in the pull-up network, NMOS in the pull-down network]], and why this uses almost no power compared with resistors",
         "Propagation delay and transition time in networks of gates",
         "Building blocks: half and full adder, multiplexer, SR latch, gated latch, D flip-flop, shift register, counter",
         "Combinational versus sequential circuits and the role of the clock",
@@ -90,16 +90,16 @@
       "know": [
         "Positional number systems and converting between radices by largest power or by repeated division, and the shortcut between radix 2, 4, 8 and 16 by grouping bits",
         "Unsigned binary and BCD",
-        "Signed formats: sign and magnitude, one's complement, two's complement and excess-x (biased), with the range and the zeros of each",
-        "Sign extension, and addition and overflow detection in each signed format, including the end-around carry in one's complement",
+        "Signed formats: [[sign and magnitude, one's complement, two's complement and excess-x (biased)]], with the range and the zeros of each",
+        "Sign extension, and addition and overflow detection in each signed format, including the [[end-around carry in one's complement]]",
         "Fixed-point fractions and converting a decimal fraction to binary",
-        "IEEE 754 single precision: sign bit, 8-bit exponent with bias 127, 23-bit mantissa with a hidden bit, and how custom formats change these widths and the bias",
-        "The trade-off between fixed and floating point: range against precision"
+        "IEEE 754 single precision: [[sign bit, 8-bit exponent with bias 127, 23-bit mantissa with a hidden bit]], and how custom formats change these widths and the bias",
+        "The trade-off between fixed and floating point: [[range against precision]]"
       ],
       "do": [
         "Convert numbers between radices, including odd ones such as radix 4, 7, 12 and 36, showing every step",
         "Decode a mix of BCD, sign and magnitude, one's complement, two's complement and excess-x values and add them up",
-        "Subtract in two's complement by adding the negated number and dropping the carry",
+        "Subtract in two's complement by [[adding the negated number and dropping the carry]]",
         "Encode a decimal number in a custom floating-point format with a given exponent bias, and decode one back",
         "Work out the largest, smallest or lost precision of a format after bits are removed"
       ],
@@ -117,8 +117,8 @@
       "know": [
         "Memory organisation from the ISA's point of view: byte and word addressability, alignment, and big versus little endian",
         "Three, two, one and zero-address instructions, and how each handles an expression",
-        "Accumulator, stack, register-memory and register-register architectures",
-        "Addressing modes: immediate, direct, register, indirect and index, and what each costs in instruction bits",
+        "[[Accumulator, stack, register-memory and register-register]] architectures",
+        "Addressing modes: [[immediate, direct, register, indirect and index]], and what each costs in instruction bits",
         "CISC versus RISC characteristics (and the extreme of MISC), with the arguments for and against each, including the frequency of instruction use",
         "How the bits of an instruction are split between opcode, register fields, memory addresses and immediate values"
       ],
@@ -139,10 +139,10 @@
       "timeShare": 9,
       "importance": "important",
       "know": [
-        "Instruction execution in stages: fetch, decode and operand fetch, execute, write back",
-        "The single-bus CISC-style BPU and the RISC-style BPU, and the registers PC, IR, MAR, MDR, X, Y and Z",
+        "Instruction execution in stages: [[fetch, decode and operand fetch, execute, write back]]",
+        "The single-bus CISC-style BPU and the RISC-style BPU, and the registers [[PC, IR, MAR, MDR, X, Y and Z]]",
         "Tri-state gates on the bus, the register file with RF in and RF out, and which bus connections are one-way",
-        "Control signals such as PC out, MAR in, READ, WMFC and END, and the step counter that sequences them",
+        "Control signals such as [[PC out, MAR in, READ, WMFC and END]], and the step counter that sequences them",
         "Hardwired control versus microprogrammed control: the control store in ROM, microinstructions and microroutines",
         "Horizontal versus vertical encoding of microinstructions and how many bits each needs",
         "How waiting for memory (WMFC and MFC) stops the step counter"
@@ -170,8 +170,8 @@
         "Synchronous buses (including multi-cycle transfers) and asynchronous buses with handshake signals",
         "Program-controlled I/O with polling, as in the video terminal example",
         "Interrupts: the execution flow, the interrupt service routine, and the cost of the extra work",
-        "Handling several devices: polling, vectored interrupts, priorities and daisy chaining of the grant line",
-        "Direct memory access: why it is needed, what the DMA controller does, and how it affects throughput rather than latency"
+        "Handling several devices: [[polling, vectored interrupts, priorities and daisy chaining]] of the grant line",
+        "Direct memory access: why it is needed, what the DMA controller does, and how it affects [[throughput rather than latency]]"
       ],
       "do": [
         "Work out which addresses a device answers to when some address lines are not connected",
@@ -180,7 +180,7 @@
         "Choose between polling, interrupts and DMA for a described device"
       ],
       "pitfalls": [
-        "Getting the daisy-chain sum wrong: count the CPU's grant delay once, then one forwarding delay for each device up to and including the one being served",
+        "Getting the daisy-chain sum wrong: [[count the CPU's grant delay once, then one forwarding delay for each device]] up to and including the one being served",
         "Giving bus transfer times in the wrong unit when the question asks for nanoseconds"
       ]
     },
@@ -190,9 +190,9 @@
       "timeShare": 4,
       "importance": "important",
       "know": [
-        "How one bit is stored: the SRAM cell of cross-coupled transistors with a word line and two bit lines",
+        "How one bit is stored: the [[SRAM cell of cross-coupled transistors with a word line and two bit lines]]",
         "Memory arrays split into rows and columns, and the row and column address pins this needs",
-        "The cost of a memory chip in pins: address, data and control lines",
+        "The cost of a memory chip in pins: [[address, data and control lines]]",
         "How the number of address lines relates to word size and byte addressability",
         "Building larger memories from smaller chips",
         "Interleaved versus flat memory banks, and which address bits select the bank in each"
@@ -213,11 +213,11 @@
       "timeShare": 10,
       "importance": "essential",
       "know": [
-        "The memory hierarchy and why caches work: temporal and spatial locality",
-        "Average access time c + (1 - h) m, with hit ratio h, cache time c and memory time m",
-        "Direct-mapped, fully associative and set-associative mapping, and how an address splits into tag, set or block, and word fields",
+        "The memory hierarchy and why caches work: [[temporal and spatial locality]]",
+        "Average access time [[c + (1 - h) m]], with hit ratio h, cache time c and memory time m",
+        "Direct-mapped, fully associative and set-associative mapping, and how an address splits into [[tag, set or block, and word fields]]",
         "Thrashing in a direct-mapped cache and how block size changes the hit ratio",
-        "Replacement policies: LRU, LFU, FIFO and random",
+        "Replacement policies: [[LRU, LFU, FIFO and random]]",
         "Virtual memory: pages and frames, the page table and its control bits, page faults, swap space and the TLB",
         "Page tables per process for protection, and how the page table size limits the number of processes that fit in RAM"
       ],
@@ -239,14 +239,14 @@
       "timeShare": 10,
       "importance": "essential",
       "know": [
-        "Execution time T = N times S divided by R, and how an n-stage pipeline divides it by up to n",
-        "The four-stage pipeline (Fetch, Decode, Execute, Writeback) with its interstage buffers",
+        "Execution time [[T = N times S divided by R]], and how an n-stage pipeline divides it by up to n",
+        "The four-stage pipeline ([[Fetch, Decode, Execute, Writeback]]) with its interstage buffers",
         "Stalls from cache misses, data dependencies, branches and long operations, and operand forwarding",
         "Branch prediction, and the average extra cycles per instruction from miss rates and penalties",
         "Latency versus throughput of a pipeline, and which stage limits it",
         "Superscalar execution and out-of-order execution",
-        "Amdahl's law: Tp = Ts times (fs + fp / p), and the speedup it limits",
-        "Flynn's taxonomy (SISD, SIMD, MISD, MIMD), GPUs as SIMD, shared-memory multiprocessors and NUMA"
+        "Amdahl's law: [[Tp = Ts times (fs + fp / p)]], and the speedup it limits",
+        "Flynn's taxonomy ([[SISD, SIMD, MISD, MIMD]]), GPUs as SIMD, shared-memory multiprocessors and NUMA"
       ],
       "do": [
         "Schedule an everyday multi-step process (printing an exam, releasing songs, streaming music) as a pipeline and compute its latency, throughput and number of workers needed",
@@ -255,7 +255,7 @@
         "Compare a many-core CPU with a slower GPU using Amdahl's law and find the break-even fraction"
       ],
       "pitfalls": [
-        "Forgetting that the slowest stage sets the throughput of a pipeline",
+        "Forgetting that [[the slowest stage sets the throughput]] of a pipeline",
         "Adding cache miss penalties without weighting them by how many instructions access data"
       ]
     }

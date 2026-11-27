@@ -135,7 +135,7 @@
     "Static versus dynamic binding: an open question on the midterm and the endterm, and a multiple-choice question on the resit.",
     "Equality in every paper: a Student class compared in JUnit tests, a record with its own equals, and equals and hashCode required in all programming model classes.",
     "A stack-and-heap question on a String array that is copied, asking how many objects exist.",
-    "A design multiple-choice question: strings, composition or subclasses for a car, a phone or a SIM card. Composition wins each time.",
+    "A design multiple-choice question: strings, composition or subclasses for a car, a phone or a SIM card. [[Composition wins each time]].",
     "Programming scenarios follow one template: a file with several item types, a menu that prints everything, two or three filters, a reset that must not re-read the file, and quit.",
     "The same rubric blocks each year: compilation, class design, equals and hashCode, file reading, interface, features, code style, JUnit tests.",
     "A thread question in both 2024-25 theory papers and in Programming Endterm 2025."
@@ -148,7 +148,7 @@
   ],
   "strategy": [
     "Do the practice theory exams on WebLab under time; the real papers reuse their question styles, and some questions return almost unchanged.",
-    "Learn one exact definition of static and dynamic binding with an example of each; it is worth 2.5 points and the graders list the wrong claims they punish.",
+    "Learn [[one exact definition of static and dynamic binding]] with an example of each; it is worth 2.5 points and the graders list the wrong claims they punish.",
     "In the programming exam, first get a compiling skeleton of model classes and a reader, then the menu, then the filters, and add tests as you go.",
     "Stop coding 5 to 10 minutes before the end to check that sources and tests compile and to hand in the zip.",
     "Let the user enter the file name: hardcoding it costs 0.5 points.",
@@ -156,7 +156,7 @@
     "On multiple choice, tick only what you can justify, and read select all that apply questions option by option."
   ],
   "pitfalls": [
-    "A programming project with one compile error scores a 1, whatever else works.",
+    "A programming project with [[one compile error scores a 1]], whatever else works.",
     "Printing the auto-generated toString or re-reading the file for option 1 loses interface points.",
     "Open answers lose points for every incorrect extra claim, such as saying binding means determining the type.",
     "A coding answer that does not compile on WebLab scores 0 for that exercise; check for missing imports and types.",

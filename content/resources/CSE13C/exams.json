@@ -118,13 +118,13 @@
     "Sit at least two past Implementation papers in WebLab with a two-hour timer, and include the linked-structure and graph tasks every time.",
     "In hand-graded tasks the rubric gives a point per step (for a heap: parent index, swap, moving up, stop condition), so a clean partial solution still scores.",
     "In design questions give the complexity of every step, consider preprocessing such as sorting first, and end with a clear choice.",
-    "Train your weaker track hardest: below 5.0 on either final means no grade, whatever the other one is."
+    "Train your weaker track hardest: [[below 5.0 on either final means no grade]], whatever the other one is."
   ],
   "pitfalls": [
     "Skipping steps in an unfolding: if the result is wrong, all the skipped steps lose their points, and too few visible steps gives zero.",
-    "Missing a hidden cost, such as get(i) on a linked list inside a loop or sorting a list of size n^2, which takes n^2 log(n^2).",
+    "Missing a hidden cost, such as get(i) on a linked list inside a loop or sorting a list of size n^2, which takes [[n^2 log(n^2)]].",
     "Passing the spec tests during the exam but breaking a rule (forbidden library, extra fields, wrong complexity): the shown scores are only indicative and the hand grading deducts.",
-    "Leaving the final version in IntelliJ: only the code saved in WebLab before the timer ends is graded.",
+    "Leaving the final version in IntelliJ: [[only the code saved in WebLab before the timer ends is graded]].",
     "Answering with an amortised bound when the question asks for the worst case of a single operation, as with appending to a full dynamic array."
   ]
 }

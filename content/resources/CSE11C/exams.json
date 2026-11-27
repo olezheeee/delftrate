@@ -122,7 +122,7 @@
     "The papers from 2024 and 2025 lean on running stories and characters (Factorio, Charli %rcx, the COatis, the lecturers), sometimes carried from the midterm into the endterm."
   ],
   "strategy": [
-    "Spend about one minute per 45 points: 4000 points in 90 minutes means a 400-point question gets about nine minutes.",
+    "Spend about [[one minute per 45 points]]: 4000 points in 90 minutes means a 400-point question gets about nine minutes.",
     "Show every step. The cover says any answer without an explanation or calculation is not enough, and the rubrics give most points to intermediate steps.",
     "Answer only what is asked. Several rubrics take 35 to 100 points off for extra statements that are wrong.",
     "Strip the story first: find the technical task in each scenario (a K-map, an excess-x sum, a daisy chain) before you start calculating.",

@@ -24,7 +24,7 @@ export type PieSlice = {
   // What the slice is of, for the tooltip and for screen readers: "Complex numbers: 9%".
   title: string;
   // The number or letter written on it, the same as in the list beside the diagram.
-  mark: string;
+  sign: string;
   value: number;
   pencil: Pencil;
 };
@@ -75,7 +75,7 @@ export function Pie({ label, slices }: { label: string; slices: PieSlice[] }) {
         )}
       {parts.map((part, index) => {
         if (part.to <= part.from) return null;
-        // A slice too thin to write in gets its mark outside, with a tick to it.
+        // A slice too thin to write in gets its sign outside, with a tick to it.
         const inside = part.to - part.from >= 0.065;
         const at = onCircle(centre, inside ? radius * 0.64 : radius + 19, part.middle);
         return (
@@ -91,8 +91,8 @@ export function Pie({ label, slices }: { label: string; slices: PieSlice[] }) {
                 stroke={INK}
               />
             )}
-            <text x={at[0]} y={at[1]} className={styles.mark}>
-              {slices[index].mark}
+            <text x={at[0]} y={at[1]} className={styles.sign}>
+              {slices[index].sign}
             </text>
           </g>
         );
@@ -101,8 +101,13 @@ export function Pie({ label, slices }: { label: string; slices: PieSlice[] }) {
   );
 }
 
-// One bar of a bar chart. Its length is the value against the longest bar of the chart;
-// the number is written at its end. A value of nothing draws no bar.
+// The upper end of a bar chart's scale: the largest value, rounded up to a multiple of 5.
+export function scaleMax(values: number[]): number {
+  return Math.max(5, Math.ceil(Math.max(0, ...values) / 5) * 5);
+}
+
+// One bar of a bar chart. Its length is the value against the upper end of the chart's
+// scale; the number is written at its end. A value of nothing draws no bar.
 export function Bar({
   label,
   value,
@@ -148,15 +153,15 @@ export function Bar({
 
 // The number of a topic or the letter of a kind of question, in a ring coloured like its
 // slice and its bars.
-export function Badge({ mark, pencil, label }: { mark: string; pencil: Pencil; label?: string }) {
+export function Badge({ sign, pencil, label }: { sign: string; pencil: Pencil; label?: string }) {
   const centre: Point = [18, 18];
-  const seed = seedOf(`badge ${mark} ${pencil.colour}`);
+  const seed = seedOf(`badge ${sign} ${pencil.colour}`);
   return (
-    <svg className={styles.badge} viewBox="0 0 36 36" role="img" aria-label={label ?? mark}>
+    <svg className={styles.badge} viewBox="0 0 36 36" role="img" aria-label={label ?? sign}>
       <Fill corners={slice(centre, 13.5, 0, 1)} pencil={pencil} seed={seed} gap={3.2} angle={-41} />
       <path d={arc(centre, 14.5, 0, 1, { seed, rough: 0.7 })} className={styles.pen} stroke={INK} />
-      <text x="18" y="18" className={styles.mark} aria-hidden="true">
-        {mark}
+      <text x="18" y="18" className={styles.sign} aria-hidden="true">
+        {sign}
       </text>
     </svg>
   );

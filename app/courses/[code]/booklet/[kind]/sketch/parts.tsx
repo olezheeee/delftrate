@@ -1,11 +1,19 @@
 // Pieces both hand-drawn booklets are built from.
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { markedParts } from "@/lib/resources";
 import { PrintButton } from "../PrintButton";
-import { courseHref } from "../parts";
 import { Underline } from "./figures";
 import { hand } from "./font";
 import styles from "./Sketch.module.css";
+
+export function plural(count: number, one: string, many: string): string {
+  return `${count} ${count === 1 ? one : many}`;
+}
+
+export function courseHref(code: string): string {
+  return `/courses/${encodeURIComponent(code)}`;
+}
 
 // The sheet of paper with the top of a booklet on it: the way back, the way across to the
 // other booklet, the title and the opening lines.
@@ -61,13 +69,16 @@ export function Section({ id, title, children }: { id?: string; title: string; c
   );
 }
 
-// A plain list. The mark in front says what kind of line it is: a dash for a thing to
+// A plain list. The sign in front says what kind of line it is: a dash for a thing to
 // know, an arrow for a thing to do, an exclamation mark for a thing to watch out for.
-export function Lines({ items, mark = "dash" }: { items: string[]; mark?: "dash" | "arrow" | "warning" }) {
+// What a line marks as "know this by heart" gets the highlighter.
+export function Lines({ items, sign = "dash" }: { items: string[]; sign?: "dash" | "arrow" | "warning" }) {
   return (
-    <ul className={styles.lines} data-mark={mark}>
+    <ul className={styles.lines} data-sign={sign}>
       {items.map((item, index) => (
-        <li key={index}>{item}</li>
+        <li key={index}>
+          {markedParts(item).map((part, at) => (part.marked ? <mark key={at}>{part.text}</mark> : part.text))}
+        </li>
       ))}
     </ul>
   );
