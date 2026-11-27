@@ -1,0 +1,141 @@
+{
+  "course": "CSE11C",
+  "title": "Computer Organisation",
+  "available": true,
+  "summary": "Two closed-book written exams of 90 minutes and 4000 points each: a midterm in week 5 on history, logic circuits, data representation, ISAs and assembly, and an endterm in week 10 on the processor, I/O, memory, caches, virtual memory, pipelining and parallelism. The resit covers both halves in one 180-minute paper of 8000 points. Every question is open, most are wrapped in a short story, and about two thirds of the points are calculations.",
+  "basis": {
+    "papers": [
+      { "name": "Resit 2025", "year": 2025, "kind": "resit", "questions": 22, "points": 8000, "minutes": 180 },
+      { "name": "Endterm 2025", "year": 2025, "kind": "endterm", "questions": 11, "points": 4000, "minutes": 90 },
+      { "name": "Midterm 2025", "year": 2025, "kind": "midterm", "questions": 11, "points": 4000, "minutes": 90 },
+      { "name": "Resit 2024", "year": 2024, "kind": "resit", "questions": 22, "points": 8000, "minutes": 180 },
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 11, "points": 4000, "minutes": 90 },
+      { "name": "Midterm 2024", "year": 2024, "kind": "midterm", "questions": 11, "points": 4000, "minutes": 90 }
+    ],
+    "note": "The archive lists 14 papers (2020 to 2025); the text also holds a midterm dated October 2022 that is not listed, so 9 more papers exist. Names follow the academic year: the endterm dated November 2024 is Endterm 2025. All six have solutions and rubrics. Shares are by printed points over 32000; each question went to one topic and one type by its main part."
+  },
+  "format": {
+    "mode": "Written, on campus, closed book, with answers in fixed boxes on a separate answer sheet",
+    "duration": "90 minutes for the midterm and the endterm; 180 minutes for the resit",
+    "structure": "Midterm and endterm: 11 open questions of 200 to 500 points, adding up to 4000. The resit is the midterm and endterm side by side: 22 questions, 8000 points. Questions follow the order of the lectures and most have two to five sub-questions. Every answer needs an explanation or the calculation behind it.",
+    "grading": "Final grade is total points divided by 1000. Each exam gives at most 4000 points and you need at least 4000 exam points in total. The rest comes from bonus labs, self-study, lecture quizzes and tutorials. The three mandatory labs give no points but must be passed. The resit replaces both exams.",
+    "aids": "None: no books, notes, calculator or smart watch."
+  },
+  "topicWeights": [
+    {
+      "topic": "Data representation",
+      "share": 19,
+      "appearsIn": 4,
+      "asks": "Four questions on every midterm and resit: radix conversions including odd radices, a sum of values given in BCD, sign and magnitude, one's and two's complement and excess-x, two's complement subtraction, and encoding or decoding a custom floating-point format."
+    },
+    {
+      "topic": "Caches and virtual memory",
+      "share": 14,
+      "appearsIn": 4,
+      "asks": "Tag, set and offset bits for a set-associative cache; LRU versus LFU traces; hit ratios of a loop under direct and associative mapping; and the size of full page tables and how many processes fit in RAM."
+    },
+    {
+      "topic": "Logic circuits and Boolean algebra",
+      "share": 13,
+      "appearsIn": 4,
+      "asks": "A Karnaugh map from a verbal specification with don't-cares; a CMOS circuit to draw or analyse; a gate-level design such as a seven-segment decoder or a byte swapper; proving two circuits equal."
+    },
+    {
+      "topic": "Pipelining and parallelism",
+      "share": 12,
+      "appearsIn": 4,
+      "asks": "Scheduling an everyday process as a pipeline (latency, throughput, number of people), extra cycles from cache misses and branch mispredictions, and an Amdahl's law calculation on every endterm and resit."
+    },
+    {
+      "topic": "Instruction set architectures",
+      "share": 9,
+      "appearsIn": 4,
+      "asks": "Code for an expression in a zero, two or three-address ISA, counting opcodes from the bit budget of an instruction, and comparing accumulator, stack, CISC, RISC and MISC designs."
+    },
+    {
+      "topic": "Input/output and interrupts",
+      "share": 9,
+      "appearsIn": 4,
+      "asks": "Which addresses still reach a device when address lines are ignored, timing along a daisy chain of interrupting devices, and the time to move data over a synchronous bus."
+    },
+    {
+      "topic": "Basic processing unit and control",
+      "share": 8,
+      "appearsIn": 4,
+      "asks": "Write or read a microroutine for a CISC instruction, count clock ticks, explain tri-state gates and one-way bus connections, and argue CISC against RISC or hardwired against microprogrammed control."
+    },
+    {
+      "topic": "Memory organisation",
+      "share": 8,
+      "appearsIn": 4,
+      "asks": "Fill in the organisation, address pins or data pins of a memory chip from a figure, build a memory from smaller chips, choose bank bits for interleaving, and once an SRAM cell."
+    },
+    {
+      "topic": "Assembly programming (x86-64)",
+      "share": 5,
+      "appearsIn": 4,
+      "asks": "One question of 400 to 450 points on every midterm and resit: trace x86-64 code and draw the stack, find what uncommented code computes, or fix a recursive subroutine."
+    },
+    {
+      "topic": "History of computing",
+      "share": 3,
+      "appearsIn": 4,
+      "asks": "The first question of every midterm and resit, 200 to 300 points: order inventions in time, name problems of early machines, name a pioneer or a feature of a computer generation."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Calculation or conversion",
+      "share": 64,
+      "description": "Work out a number by hand with all steps shown: conversions, bit fields, memory and page table sizes, cache hits and misses, interrupt and pipeline timings, Amdahl speedups."
+    },
+    {
+      "type": "Logic and circuit design",
+      "share": 14,
+      "description": "Fill and group a Karnaugh map, draw a gate or CMOS circuit, or prove two circuits equal with truth tables or algebra."
+    },
+    {
+      "type": "Code and microroutines",
+      "share": 13,
+      "description": "Trace, explain or fix x86-64 assembly, write stack-machine or three-address code for an expression, or write and read microroutines."
+    },
+    {
+      "type": "Short explanation",
+      "share": 9,
+      "description": "A few sentences on history, on a design choice such as CISC or RISC, tri-state gates or cache mapping, or on why a method works."
+    }
+  ],
+  "recurring": [
+    "Question 1 of every midterm and resit is about the history lecture and is worth 200 to 300 points.",
+    "Every midterm and resit asks you to add up a list of values written in mixed formats (radices, BCD, one's and two's complement, excess-x) and to encode or decode a custom floating-point number with its own exponent bias.",
+    "The last midterm question is an x86-64 assembly trace of about 400 points, usually about the stack.",
+    "A daisy chain of interrupting devices with given grant, forwarding and handler times, and an address decoder with ignored lines, come back on every endterm and resit.",
+    "Each endterm and resit has a figure of a memory chip with missing rows, columns or data pins to fill in.",
+    "Pipelining is asked through everyday processes (printing an exam, writing exam questions, releasing songs, streaming music) rather than CPU stages alone.",
+    "Virtual memory questions give the RAM size, page size and control bits, and ask how many processes with full page tables fit.",
+    "Amdahl's law appears on every endterm and resit, once as a CPU against GPU comparison."
+  ],
+  "trends": [
+    "The oldest papers in the archive (Midterm 2020 and Endterm 2020) were entirely multiple choice; from 2021 every question is open and needs a worked answer.",
+    "Midterm 2022 had 13 questions; every midterm and endterm after it has 11.",
+    "All three resits in the archive (2023 to 2025) are one 180-minute, 8000-point paper covering both halves.",
+    "The papers from 2024 and 2025 lean on running stories and characters (Factorio, Charli %rcx, the COatis, the lecturers), sometimes carried from the midterm into the endterm."
+  ],
+  "strategy": [
+    "Spend about one minute per 45 points: 4000 points in 90 minutes means a 400-point question gets about nine minutes.",
+    "Show every step. The cover says any answer without an explanation or calculation is not enough, and the rubrics give most points to intermediate steps.",
+    "Answer only what is asked. Several rubrics take 35 to 100 points off for extra statements that are wrong.",
+    "Strip the story first: find the technical task in each scenario (a K-map, an excess-x sum, a daisy chain) before you start calculating.",
+    "Drill the repeat exercises from the past papers in the archive: mixed-format sums, custom floating point, K-maps, microroutines, chip pin counts, cache traces, page table sizes and Amdahl.",
+    "Practise powers of two and long division by hand, since no calculator is allowed.",
+    "Questions are not ordered by difficulty, so take the ones you can do quickly first, and return to long ones such as the assembly trace."
+  ],
+  "pitfalls": [
+    "Small slips cost 25 to 50 points each; one wrong cache or block size early on is penalised again in every later part.",
+    "Confusing microinstructions with machine instructions, or swapping horizontal and vertical encoding, are named penalties in the endterm rubrics.",
+    "Leaving out the instruction fetch steps or the END signal in a microroutine.",
+    "Giving a bus transfer time in the wrong unit: the Endterm 2025 rubric took points off when it was not in nanoseconds as asked.",
+    "In daisy-chain questions, counting the CPU's grant time twice.",
+    "Giving a formula from a wrong Karnaugh map earns only part of the points, so check the map against the specification first."
+  ]
+}

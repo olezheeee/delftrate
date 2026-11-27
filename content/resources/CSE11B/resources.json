@@ -1,0 +1,228 @@
+{
+  "course": "CSE11B",
+  "source": {
+    "name": "Lightspace",
+    "title": "Introduction to Programming",
+    "url": "https://lightspace.study/courses/introduction-to-programming",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Java Full Course – BroCode",
+          "url": "https://www.youtube.com/watch?v=xk4_1vDrzzo"
+        },
+        {
+          "title": "Java Tutorial – Telusko",
+          "url": "https://youtube.com/playlist?list=PLsyeobzWxl7pe_IiTfNyr55kwJPWbgxB5"
+        },
+        {
+          "title": "OOP in Java – Telusko",
+          "url": "https://youtube.com/playlist?list=PLsyeobzWxl7oa1WO9n4cP3OY9nOtUcZIg"
+        },
+        {
+          "title": "2017 Theory & Programming",
+          "url": "https://www.youtube.com/watch?v=ZX9vV4r52_4"
+        },
+        {
+          "title": "2018 Programming",
+          "url": "https://www.youtube.com/watch?v=apQAhdadk4Y&t=2368s"
+        },
+        {
+          "title": "TA solving a mock",
+          "url": "https://www.youtube.com/watch?v=-lHrB8LS82o"
+        },
+        {
+          "title": "Java API docs",
+          "url": "https://weblab.tudelft.nl/docs/java/22/api/index.html"
+        },
+        {
+          "title": "Java Pub House podcast",
+          "url": "https://open.spotify.com/show/0laUgleS6VdmeeCk7hRemf"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 0 - Introduction",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%200%20-%20Introduction.pdf",
+          "size": "899 KB"
+        },
+        {
+          "title": "Lecture 1 - First Steps",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%201%20-%20First%20Steps.pdf",
+          "size": "468 KB"
+        },
+        {
+          "title": "Lecture 2 - Programming Structures",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%202%20-%20Programming%20Structures.pdf",
+          "size": "294 KB"
+        },
+        {
+          "title": "Lecture 3 - Methods",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%203%20-%20Methods.pdf",
+          "size": "250 KB"
+        },
+        {
+          "title": "Lecture 4 - Classes",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%204%20-%20Classes.pdf",
+          "size": "668 KB"
+        },
+        {
+          "title": "Lecture 5 - Arrays",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%205%20-%20Arrays.pdf",
+          "size": "415 KB"
+        },
+        {
+          "title": "Lecture 6 - Container Classes",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%206%20-%20Container%20Classes.pdf",
+          "size": "770 KB"
+        },
+        {
+          "title": "Lecture 7 - Class Composition & Libraries",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%207%20-%20Class%20Composition%20%26%20Libraries.pdf",
+          "size": "586 KB"
+        },
+        {
+          "title": "Lecture 8 - Unit Tests",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%208%20-%20Unit%20Tests.pdf",
+          "size": "1010 KB"
+        },
+        {
+          "title": "Lecture 9 - Inheritance",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%209%20-%20Inheritance.pdf",
+          "size": "369 KB"
+        },
+        {
+          "title": "Lecture 10 - Polymorphism",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2010%20-%20Polymorphism.pdf",
+          "size": "320 KB"
+        },
+        {
+          "title": "Lecture 11 - Equality & Hashcodes",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2011%20-%20Equality%20%26%20Hashcodes.pdf",
+          "size": "751 KB"
+        },
+        {
+          "title": "Lecture 12 - Exceptions",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2012%20-%20Exceptions.pdf",
+          "size": "342 KB"
+        },
+        {
+          "title": "Lecture 13 - Debugging",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2013%20-%20Debugging.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 14 - Code Quality, Strings & Generics",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2014%20-%20Code%20Quality%2C%20Strings%20%26%20Generics.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 15 - Input Output Part 1",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2015%20-%20Input%20Output%20Part%201.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 16 - Input Output Part 2",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2016%20-%20Input%20Output%20Part%202.pdf",
+          "size": "692 KB"
+        },
+        {
+          "title": "Lecture 17 - Functional Java",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2017%20-%20Functional%20Java.pdf",
+          "size": "336 KB"
+        },
+        {
+          "title": "Lecture 18 - Program Design",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2018%20-%20Program%20Design.pdf",
+          "size": "277 KB"
+        },
+        {
+          "title": "Lecture 19 - Modern Java",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2019%20-%20Modern%20Java.pdf",
+          "size": "374 KB"
+        },
+        {
+          "title": "Lecture 20 - Threads",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2020%20-%20Threads.pdf",
+          "size": "489 KB"
+        },
+        {
+          "title": "Lecture 21 - Exam Practice",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Lectures/IP%20Lecture%2021%20-%20Exam%20Practice.pdf",
+          "size": "665 KB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Programming Endterm 2021",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Endterm%202021.pdf",
+          "size": "334 KB"
+        },
+        {
+          "title": "Programming Endterm 2022",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Endterm%202022.pdf",
+          "size": "753 KB"
+        },
+        {
+          "title": "Programming Endterm 2024",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Endterm%202024.pdf",
+          "size": "406 KB"
+        },
+        {
+          "title": "Programming Endterm 2025",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Endterm%202025.pdf",
+          "size": "369 KB"
+        },
+        {
+          "title": "Programming Mock 2024",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Mock%202024.pdf",
+          "size": "320 KB"
+        },
+        {
+          "title": "Programming Mock 2025",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Mock%202025.pdf",
+          "size": "279 KB"
+        },
+        {
+          "title": "Programming Resit 2024",
+          "section": "Programming Exams",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Programming%20Exams/IP%20Programming%20Resit%202024.pdf",
+          "size": "393 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "url": "https://lightspace.study/courses/introduction-to-programming/read/IP%20Notes.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Introduction to Java Programming and Data Structures"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "course": "CSE22A",
+  "title": "Machine Learning",
+  "ects": 5,
+  "summary": "A classical, mathematical introduction to machine learning: Bayes decision theory, generative classifiers built from density estimates, discriminative linear and non-linear models, evaluation, clustering and PCA, and a block on fairness and ethics. Each of the eight weeks has two lectures, reading from Bishop's Pattern Recognition and Machine Learning, practice questions on Weblab and a Python notebook in a four-hour lab. The whole grade comes from one digital exam on Weblab that mixes theory questions with Python implementation questions.",
+  "basis": {
+    "lectures": 15,
+    "description": "Slides of the 13 CSE2510 lectures of 2024-25 and the two guest lectures (ethics, and CNNs), the CSE2510 Weblab exercises with model answers, and three exam papers. Time shares count slides with content, without the course organisation slides of Lecture 1, empty slides and repeated animation frames.",
+    "caveat": "The material comes from CSE2510 Machine Learning. From 2026-27 the course is CSE22A and moves from quarter 1 to quarter 2 of year 2; the content is said to be unchanged. The ethics guest lecture is largely discussion, so its slides overstate how much examinable content it holds, and Lectures 1 and 2 overlap in places."
+  },
+  "topics": [
+    {
+      "name": "Foundations and Bayes decision theory",
+      "lectures": ["Lecture 1 - Introduction to Machine Learning", "Lecture 2 - Basics"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Objects, features, classes and the feature space; supervised tasks (classification, regression) versus unsupervised ones (clustering, dimensionality reduction)",
+        "Generalisation, the i.i.d. assumption and the no-free-lunch theorem as the reason the course covers many classifiers",
+        "The prior p(y), the class-conditional density p(x|y), the posterior p(y|x) and Bayes' rule that links them through p(x)",
+        "The Bayes classifier: choose the class with the largest p(x|y) p(y); its boundary lies where the prior-weighted densities cross",
+        "The Bayes error as the lowest error any classifier can reach on a problem, and type I and type II errors",
+        "Misclassification costs, conditional risk and the rule that minimises the total risk"
+      ],
+      "do": [
+        "Given two 1D class densities and priors, compute a posterior, place the Bayes decision boundary and work out the Bayes error as areas",
+        "Name the task type of a described application and count its features, classes and objects",
+        "Move a decision boundary when the two kinds of mistake carry different costs"
+      ],
+      "pitfalls": [
+        "Swapping the names prior, class-conditional and posterior: a Weblab and practice exam question tests exactly this",
+        "Adding up the error areas of both classes without first weighting each by its class prior"
+      ]
+    },
+    {
+      "name": "Parametric density-based classifiers",
+      "lectures": ["Lecture 3 - Parametric Densities", "Lecture 4 - Normal-density Based Classification"],
+      "timeShare": 14,
+      "importance": "important",
+      "know": [
+        "Histogram density estimates and why the number of cells explodes with the dimension: the curse of dimensionality",
+        "The univariate and multivariate Gaussian, and maximum likelihood estimates of the mean and the covariance matrix",
+        "Plug-in Bayes rule: priors from class frequencies, class-conditional densities from fitted Gaussians",
+        "QDA (a covariance matrix per class, quadratic boundary), LDA (one averaged covariance, linear boundary) and the nearest mean classifier (identity covariance)",
+        "Why a covariance matrix needs enough samples to be invertible, and how sharing or dropping it helps with few samples",
+        "Generative versus discriminative models, and mixtures of Gaussians for classes with several modes",
+        "Why classifiers that use Euclidean distance need feature scaling, such as zero-mean, unit-variance"
+      ],
+      "do": [
+        "Count the free parameters of QDA or LDA for a given dimension and number of classes",
+        "Find the nearest mean decision boundary for a small 1D data set",
+        "Implement a univariate Gaussian classifier in NumPy",
+        "Say how a change in class priors moves an LDA boundary"
+      ],
+      "pitfalls": [
+        "Counting a full covariance matrix as d times d parameters instead of d(d+1)/2, or giving LDA one covariance per class",
+        "Thinking a change of priors can bend the LDA boundary: it only shifts, and stays linear"
+      ]
+    },
+    {
+      "name": "Classifier evaluation",
+      "lectures": ["Lecture 5 - Evaluation"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "Apparent (training) error versus true error, and why the gap between them signals overfitting",
+        "Test-set error estimates and their variance, and the trade-off between training set size and test set size",
+        "k-fold cross-validation, leave-one-out, bootstrapping, and double (nested) cross-validation for tuning hyperparameters",
+        "Learning curves, feature curves and the bias-variance decomposition of the squared error",
+        "Confusion matrices, ROC curves and the area under the ROC curve"
+      ],
+      "do": [
+        "Compute a leave-one-out error for a nearest mean classifier on four points",
+        "Work out fold sizes in nested cross-validation",
+        "Match learning or feature curves to NMC, LDA and QDA by their complexity",
+        "Read a confusion matrix and trace an ROC curve from classifier outputs at several thresholds"
+      ],
+      "pitfalls": [
+        "Calling the cross-validation error unbiased: each fold trains on fewer objects, so it is slightly pessimistic",
+        "Confusing more test objects (a steadier estimate of the same error) with more training objects (a lower error)",
+        "Taking the inner validation fold from the whole data set instead of from the outer training part"
+      ]
+    },
+    {
+      "name": "Non-parametric methods and Naive Bayes",
+      "lectures": ["Lecture 6 - Non Parametric Density Estimation"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "Parametric versus non-parametric density estimation",
+        "Parzen (kernel) density estimation, the role of the width h, and the Parzen classifier",
+        "k-nearest neighbour density estimation and classification, the effect of k, tie-breaking and distance measures",
+        "Pros and cons of Parzen and k-NN: no training step, but sensitive to scaling and costly at prediction time",
+        "Naive Bayes: the conditional independence assumption, continuous and discrete versions, missing values and the zero-frequency problem"
+      ],
+      "do": [
+        "Compute a Parzen estimate at a point for a box kernel",
+        "Predict k-NN labels for a few query points with k = 1 and k = 3",
+        "Implement a k-NN majority vote in NumPy",
+        "Train a discrete Naive Bayes classifier by hand from a small table"
+      ],
+      "pitfalls": [
+        "Forgetting the 1/h and 1/n factors in the Parzen estimate",
+        "Believing Gaussian Naive Bayes always gives a linear boundary: with different variances per class it does not",
+        "Thinking a larger k makes the k-NN boundary more complex: it makes it smoother"
+      ]
+    },
+    {
+      "name": "Linear discriminative models",
+      "lectures": ["Lecture 7 - Linear Discriminative Classifiers", "Lecture 8 - Linear Discriminative Classifiers Part 2"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Empirical risk minimisation: a hypothesis class, a loss function and minimising the average loss on the training data",
+        "Linear regression with squared loss, its closed-form solution, and gradient descent and stochastic gradient descent",
+        "What the learning rate does, and why gradient descent uses only first derivatives and may stop in a local minimum",
+        "Logistic regression: h(x) = sigmoid(w^T x), the negative log-likelihood, its gradient and the boundary where w^T x = 0",
+        "Hard-margin and soft-margin support vector classifiers: margin, support vectors, hinge loss and the 1/2 ||w||^2 term",
+        "Multi-class schemes: one-versus-rest (K classifiers) and one-versus-one (K(K-1)/2 classifiers) and their ambiguous regions"
+      ],
+      "do": [
+        "Write the loss and its gradient for linear or logistic regression in NumPy",
+        "Compute sigmoid outputs by hand, for instance at w^T x = 0, 1 or -1",
+        "Find the SVM weight vector, bias and support vectors for two to seven points",
+        "Run a few gradient descent steps on a small problem"
+      ],
+      "pitfalls": [
+        "Mixing up mean and sum, or the sign when the task asks to maximise the log-likelihood rather than minimise the negative",
+        "Expecting logistic regression weights to settle on separable data: their norm keeps growing",
+        "Thinking an SVM estimates p(y|x): it only finds a separating hyperplane"
+      ]
+    },
+    {
+      "name": "Fairness and ethics",
+      "lectures": ["Lecture 9 - Fairness", "Guest Lecture - Ethics and Machine Learning"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Where disparities enter the machine learning loop: measurement, learning, action and feedback, with self-fulfilling predictions",
+        "The independence criterion (equal positive rates per group) and the separation criterion (equal error rates, checkable on ROC curves)",
+        "Why dropping a sensitive attribute does not remove discrimination: other features act as proxies",
+        "Limits of statistical fairness notions: groups can look fair while individual decisions are not, and criteria conflict",
+        "Normative versus descriptive ethics, and utilitarianism, deontology (duty ethics) and virtue ethics",
+        "Epistemic versus non-epistemic values, moral agency and responsibility, and positionality"
+      ],
+      "do": [
+        "Recognise which ethical theory a statement describes",
+        "Judge a fairness claim as true or false and justify it in two or three sentences",
+        "Explain what independence or separation costs a decision maker such as a bank"
+      ],
+      "pitfalls": [
+        "Claiming independence lets a lender make more profit than separation: it forces equal acceptance rates, which costs money",
+        "Treating a satisfied fairness criterion as proof that the model is fair"
+      ]
+    },
+    {
+      "name": "Decision trees and ensembles",
+      "lectures": ["Lecture 10 - Decision Trees"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "Tree learning: assigning values to leaves, choosing splits, stopping and pruning",
+        "Impurity measures: entropy, Gini index and classification error; information gain and gain ratio",
+        "Splitting on continuous features with thresholds, and which feature transformations leave the tree unchanged",
+        "Classifier combining: Condorcet's jury theorem, bagging, random subspaces and random forests",
+        "Pros and cons of trees: readable rules, no scaling needed, high variance"
+      ],
+      "do": [
+        "Compute entropy, Gini index and information gain for a split by hand",
+        "Implement impurity, split impurity and gain functions in NumPy for discrete or continuous features",
+        "Choose the best feature and threshold on a small table"
+      ],
+      "pitfalls": [
+        "Missing the empty or pure node case: 0 log 0 must count as 0",
+        "Thinking rescaling or flipping the sign of a feature changes the tree: monotone transformations do not, squaring can"
+      ]
+    },
+    {
+      "name": "Neural networks and convolution",
+      "lectures": ["Lecture 11 - Multilayer Perceptrons", "Guest Lecture - CNN"],
+      "timeShare": 11,
+      "importance": "important",
+      "know": [
+        "The perceptron, its loss and training rule, and why it cannot learn XOR",
+        "Multilayer perceptrons: hidden layers, activation functions (step, logistic, ReLU) and the forward pass",
+        "Backpropagation as the efficient way to compute the gradient, with a forward and a backward pass; training itself uses (stochastic) gradient descent",
+        "Image convolution with a kernel, feature maps, ReLU and max pooling in a convolutional network"
+      ],
+      "do": [
+        "Compute hidden and output values of a small MLP for a given input, including limits at very large inputs",
+        "Find the largest value of a binary image after convolution with a 3 by 3 kernel",
+        "Build logic gates from perceptrons"
+      ],
+      "pitfalls": [
+        "Calling backpropagation the training algorithm or an initialisation method: it only computes the gradient",
+        "Forgetting the bias node when computing an output by hand"
+      ]
+    },
+    {
+      "name": "Clustering and PCA",
+      "lectures": ["Lecture 12 - Clustering", "Lecture 13 - PCA"],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "Distance and similarity measures, hard versus soft clustering, and why cluster evaluation is hard",
+        "The k-means algorithm, its sum of squared errors, local optima, restarts and the elbow method for choosing k",
+        "Agglomerative clustering with single, complete and average linkage, the shapes each produces, and dendrograms",
+        "Why reduce dimensions: visualisation, redundant features, intrinsic dimensionality and the curse of dimensionality",
+        "PCA: centre the data, compute the covariance matrix, take its eigenvectors; eigenvalues give the variance explained",
+        "Reconstruction from principal components, scree plots, and PCA as a step before classification"
+      ],
+      "do": [
+        "Run one k-means iteration by hand with Euclidean or Manhattan distance",
+        "Implement point-to-centroid assignment and the average within-cluster squared error in NumPy",
+        "Pick the first merge of agglomerative clustering from a distance table",
+        "Compute a 2 by 2 covariance matrix, its eigenvalues and the share of variance per component"
+      ],
+      "pitfalls": [
+        "Choosing k by the smallest sum of squared errors: it always falls as k grows",
+        "Dividing by N - 1 when the maximum likelihood covariance is asked, or skipping the centring step",
+        "Ignoring the tie-breaking rule in an assignment task (for example the highest index), which fails the tests"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Calculus: partial derivatives, gradients and the chain rule, for gradient descent and backpropagation",
+    "Linear algebra: matrix and vector products, inverses, determinants, eigenvalues and eigenvectors",
+    "Probability and statistics: conditional probability, Bayes' rule, the Gaussian, mean, variance and covariance, maximum likelihood",
+    "Python with NumPy: array indexing, broadcasting and vectorised operations"
+  ],
+  "practical": "Each week has optional, ungraded practice questions on Weblab and a Python notebook with insight and implementation questions, worked on in a four-hour lab with TAs. Notebook answers are not published, so check your work with the TAs. The introduction lecture of 2024-25 says one exam question is based directly on a lab assignment, and the exam's implementation questions are in the style of the notebooks.",
+  "studyAdvice": [
+    "Make every weekly Weblab exercise: several questions in the endterm and the practice exams are the same as, or close to, Weblab exercises on Parzen estimates, dendrograms, PCA covariance and fairness statements.",
+    "Spend the most hours on linear discriminative models and on clustering and PCA: together they carry about a third of the exam questions, and both supply an implementation question.",
+    "Practise the three implementation patterns from an empty file: an impurity and gain function for trees, a loss and gradient for linear or logistic regression, and a k-means step. Read each spec for mean or sum, distance and tie rules.",
+    "Make a table of every classifier: generative or discriminative, linear or not, parametric or not, sensitive to scaling or not, and how complex it is. Many multiple-choice questions test exactly these properties.",
+    "Drill the small hand calculations until they are quick: sigmoid values, SVM on a few points, MLP forward pass, LDA and QDA parameter counts, Parzen and k-NN, and a covariance matrix.",
+    "Do not leave ethics to the last evening: it is about one in eight exam questions. Learn the three ethical theories and the independence and separation criteria.",
+    "Read the Bishop sections set for each week before the lectures, and get used to the notation early, as the course itself advises."
+  ]
+}

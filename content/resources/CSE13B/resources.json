@@ -1,0 +1,216 @@
+{
+  "course": "CSE13B",
+  "source": {
+    "name": "Lightspace",
+    "title": "Software Design and Engineering",
+    "url": "https://lightspace.study/courses/software-design-and-engineering",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "SQT Summary",
+          "url": "https://dutchdevil.notion.site/SQT-Summary-d9aaec1860d742e3b76607977f6c2590"
+        },
+        {
+          "title": "JUnit 5 Crash Course",
+          "url": "https://www.youtube.com/watch?v=flpmSXVTqBI"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Guest Lecture - bol.com",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Guest%20Lecture%20-%20bol.com.pdf",
+          "size": "11 MB"
+        },
+        {
+          "title": "Lecture 1 - Introduction and Requirements Engineering",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%201%20-%20Introduction%20and%20Requirements%20Engineering.pdf",
+          "size": "8 MB"
+        },
+        {
+          "title": "Lecture 2 - Requirements Engineering and UML",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%202%20-%20Requirements%20Engineering%20and%20UML.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 3 - Software Architecture",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%203%20-%20Software%20Architecture.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 4 - Design Patterns",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%204%20-%20Design%20Patterns.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 5 - Working with Open-source Software",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%205%20-%20Working%20with%20Open-source%20Software.pdf",
+          "size": "17 MB"
+        },
+        {
+          "title": "Lecture 11 - Software at Scale",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%2011%20-%20Software%20at%20Scale.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 12 - Software at Scale Part 2",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%2012%20-%20Software%20at%20Scale%20Part%202.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 13 - Introduction to ML4SE",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%2013%20-%20Introduction%20to%20ML4SE.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 14 - GenAI for Development",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%2014%20-%20GenAI%20for%20Development.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 15 - Recap and Q&A",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Lectures/SEM%20Lecture%2015%20-%20Recap%20and%20Q%26A.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 1 - Effective and Systematic Software Testing",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%201%20-%20Effective%20and%20Systematic%20Software%20Testing.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 2 - Specification-based testing",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%202%20-%20Specification-based%20testing.pdf",
+          "size": "516 KB"
+        },
+        {
+          "title": "Lecture 3 - Structural testing",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%203%20-%20Structural%20testing.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 4 - Designing contracts",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%204%20-%20Designing%20contracts.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 5 - Property-based testing",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%205%20-%20Property-based%20testing.pdf",
+          "size": "690 KB"
+        },
+        {
+          "title": "Lecture 6 - Test Doubles and Mocks",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%206%20-%20Test%20Doubles%20and%20Mocks.pdf",
+          "size": "334 KB"
+        },
+        {
+          "title": "Lecture 7 - Design for Testability",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%207%20-%20Design%20for%20Testability.pdf",
+          "size": "500 KB"
+        },
+        {
+          "title": "Lecture 9 - Larger Tests",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%209%20-%20Larger%20Tests.pdf",
+          "size": "939 KB"
+        },
+        {
+          "title": "Lecture 10 - Test code quality",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%2010%20-%20Test%20code%20quality.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 11 - Exam Q&A",
+          "section": "From SQT",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SQT/SQT%20Lectures/SQT%20Lecture%2011%20-%20Exam%20Q%26A.pdf",
+          "size": "280 KB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2020",
+          "section": "From SEM / Endterms",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Exams/SEM%20Endterms/SEM%20Endterm%202020.pdf",
+          "size": "503 KB"
+        },
+        {
+          "title": "Endterm 2021",
+          "section": "From SEM / Endterms",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Exams/SEM%20Endterms/SEM%20Endterm%202021.pdf",
+          "size": "294 KB"
+        },
+        {
+          "title": "Endterm 2022",
+          "section": "From SEM / Endterms",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Exams/SEM%20Endterms/SEM%20Endterm%202022.pdf",
+          "size": "843 KB"
+        },
+        {
+          "title": "Endterm 2023",
+          "section": "From SEM / Endterms",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Exams/SEM%20Endterms/SEM%20Endterm%202023.pdf",
+          "size": "762 KB"
+        },
+        {
+          "title": "Resit 2021",
+          "section": "From SEM / Resits",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Exams/SEM%20Resits/SEM%20Resit%202021.pdf",
+          "size": "157 KB"
+        },
+        {
+          "title": "Resit 2022",
+          "section": "From SEM / Resits",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Exams/SEM%20Resits/SEM%20Resit%202022.pdf",
+          "size": "209 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "section": "From SEM",
+          "url": "https://lightspace.study/courses/software-design-and-engineering/read/From%20SEM/SEM%20Notes.pdf",
+          "size": "4 MB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Effective Software Testing - A Developer's Guide",
+          "section": "From SQT"
+        }
+      ]
+    }
+  ]
+}

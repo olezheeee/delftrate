@@ -1,0 +1,365 @@
+{
+  "course": "CSE12C",
+  "source": {
+    "name": "Lightspace",
+    "title": "Data Management",
+    "url": "https://lightspace.study/courses/data-management",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Introduction to SQL – Socratica",
+          "url": "https://youtube.com/playlist?list=PLi01XoE8jYojRqM4qGBF1U90Ee1Ecb5tt"
+        },
+        {
+          "title": "SQL Full Course for Beginners",
+          "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+        },
+        {
+          "title": "Relational Algebra – Unary",
+          "url": "https://youtu.be/8PJGw123zeE"
+        },
+        {
+          "title": "Relational Algebra – Binary",
+          "url": "https://youtu.be/sJtuZq-LEQM"
+        },
+        {
+          "title": "A Database mock exam solved",
+          "url": "https://www.youtube.com/watch?v=G-fvTLw9u7I"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Introduction",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%201%20-%20Introduction.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 2 - SQL",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%202%20-%20SQL.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 3 - API Persistance",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%203%20-%20API%20Persistance.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 4 - Towards Query Processing",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%204%20-%20Towards%20Query%20Processing.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 5 - Storage",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%205%20-%20Storage.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 6 - Logical Storage Indexing",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%206%20-%20Logical%20Storage%20Indexing.pdf",
+          "size": "1021 KB"
+        },
+        {
+          "title": "Lecture 7 - Indexing",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%207%20-%20Indexing.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 8 - Query Processing Part 1",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%208%20-%20Query%20Processing%20Part%201.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 9 - Query Processing Part 2",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%209%20-%20Query%20Processing%20Part%202.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 10 - Query Processing Part 3",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%2010%20-%20Query%20Processing%20Part%203.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 11 - Transactions Concurrency",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%2011%20-%20Transactions%20Concurrency.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 12 - Recovery Distributed Transactions",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%2012%20-%20Recovery%20Distributed%20Transactions.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 13 - NoSQL",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Lectures/IDM%20Lecture%2013%20-%20NoSQL.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 1 - Introduction",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%201%20-%20Introduction.pdf",
+          "size": "8 MB"
+        },
+        {
+          "title": "Lecture 2 - Modelling-ER",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%202%20-%20Modelling-ER.pdf",
+          "size": "8 MB"
+        },
+        {
+          "title": "Lecture 3 - More on ER",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%203%20-%20More%20on%20ER.pdf",
+          "size": "9 MB"
+        },
+        {
+          "title": "Lecture 4 - SQL Part 1",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%204%20-%20SQL%20Part%201.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 5 - SQL Part 2",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%205%20-%20SQL%20Part%202.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 6 - Relational Model",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%206%20-%20Relational%20Model.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Lecture 7 - Database Normalization",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%207%20-%20Database%20Normalization.pdf",
+          "size": "7 MB"
+        },
+        {
+          "title": "Lecture 8 - JDBC",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%208%20-%20JDBC.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 9 - QA",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lectures/WDT%20DB%20Lecture%209%20-%20QA.pdf",
+          "size": "939 KB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2019",
+          "section": "From IDM / Endterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Endterms/IDM%20Endterm%202019.pdf",
+          "size": "683 KB"
+        },
+        {
+          "title": "Endterm 2022",
+          "section": "From IDM / Endterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Endterms/IDM%20Endterm%202022.pdf",
+          "size": "574 KB"
+        },
+        {
+          "title": "Endterm 2023 Solutions",
+          "section": "From IDM / Endterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Endterms/IDM%20Endterm%202023%20Solutions.pdf",
+          "size": "8 MB"
+        },
+        {
+          "title": "Endterm 2024",
+          "section": "From IDM / Endterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Endterms/IDM%20Endterm%202024.pdf",
+          "size": "963 KB"
+        },
+        {
+          "title": "Resit 2019",
+          "section": "From IDM / Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Resits/IDM%20Resit%202019.pdf",
+          "size": "608 KB"
+        },
+        {
+          "title": "Resit 2022",
+          "section": "From IDM / Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Resits/IDM%20Resit%202022.pdf",
+          "size": "559 KB"
+        },
+        {
+          "title": "Resit 2023",
+          "section": "From IDM / Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Resits/IDM%20Resit%202023.pdf",
+          "size": "505 KB"
+        },
+        {
+          "title": "Resit 2024",
+          "section": "From IDM / Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Exams/IDM%20Resits/IDM%20Resit%202024.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Midterm Resit 2020",
+          "section": "From WDT DB / Midterm Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterm%20Resits/WDT%20DB%20Midterm%20Resit%202020.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Midterm Resit 2022",
+          "section": "From WDT DB / Midterm Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterm%20Resits/WDT%20DB%20Midterm%20Resit%202022.pdf",
+          "size": "353 KB"
+        },
+        {
+          "title": "Midterm Resit 2023",
+          "section": "From WDT DB / Midterm Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterm%20Resits/WDT%20DB%20Midterm%20Resit%202023.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Midterm Resit 2024",
+          "section": "From WDT DB / Midterm Resits",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterm%20Resits/WDT%20DB%20Midterm%20Resit%202024.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Midterm 2022",
+          "section": "From WDT DB / Midterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterms/WDT%20DB%20Midterm%202022.pdf",
+          "size": "332 KB"
+        },
+        {
+          "title": "Midterm 2023",
+          "section": "From WDT DB / Midterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterms/WDT%20DB%20Midterm%202023.pdf",
+          "size": "813 KB"
+        },
+        {
+          "title": "Midterm 2024",
+          "section": "From WDT DB / Midterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterms/WDT%20DB%20Midterm%202024.pdf",
+          "size": "5 MB"
+        },
+        {
+          "title": "Midterm 2025 Solutions",
+          "section": "From WDT DB / Midterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterms/WDT%20DB%20Midterm%202025%20Solutions.pdf",
+          "size": "927 KB"
+        },
+        {
+          "title": "Mock 1",
+          "section": "From WDT DB / Midterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterms/WDT%20DB%20Mock%201.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Mock 2",
+          "section": "From WDT DB / Midterms",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Exams/WDT%20DB%20Midterms/WDT%20DB%20Mock%202.pdf",
+          "size": "967 KB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Assignment 1 Task 1 Solutions",
+          "section": "From IDM / Assignment Solutions",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Assignment%20Solutions/IDM%20Assignment%201%20Task%201%20Solutions.pdf",
+          "size": "409 KB"
+        },
+        {
+          "title": "Assignment 2 Solutions",
+          "section": "From IDM / Assignment Solutions",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Assignment%20Solutions/IDM%20Assignment%202%20Solutions.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Assignment 3 Solutions",
+          "section": "From IDM / Assignment Solutions",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Assignment%20Solutions/IDM%20Assignment%203%20Solutions.pdf",
+          "size": "505 KB"
+        },
+        {
+          "title": "Lab Assignment 1 Solutions",
+          "section": "From WDT DB / Lab Assignment Solutions",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lab%20Assignment%20Solutions/WDT%20DB%20Lab%20Assignment%201%20Solutions.pdf",
+          "size": "466 KB"
+        },
+        {
+          "title": "Lab Assignment 2 Solutions",
+          "section": "From WDT DB / Lab Assignment Solutions",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lab%20Assignment%20Solutions/WDT%20DB%20Lab%20Assignment%202%20Solutions.pdf",
+          "size": "479 KB"
+        },
+        {
+          "title": "Lab Assignment 3 Solutions",
+          "section": "From WDT DB / Lab Assignment Solutions",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Lab%20Assignment%20Solutions/WDT%20DB%20Lab%20Assignment%203%20Solutions.pdf",
+          "size": "426 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "section": "From IDM",
+          "url": "https://lightspace.study/courses/data-management/read/From%20IDM/IDM%20Notes.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Notes",
+          "section": "From WDT DB",
+          "url": "https://lightspace.study/courses/data-management/read/From%20WDT%20DB/WDT%20DB%20Notes.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Database Systems the Complete Book",
+          "section": "From IDM"
+        },
+        {
+          "title": "SQL Cheat Sheet",
+          "section": "From IDM"
+        },
+        {
+          "title": "Fundamentals of Database Systems",
+          "section": "From WDT DB"
+        },
+        {
+          "title": "SQL Cheat Sheet",
+          "section": "From WDT DB"
+        }
+      ]
+    }
+  ]
+}

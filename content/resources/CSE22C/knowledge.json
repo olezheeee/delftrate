@@ -1,0 +1,249 @@
+{
+  "course": "CSE22C",
+  "title": "Concepts of Programming Languages",
+  "ects": 5,
+  "summary": "How programming language features work, learnt by building them: each week you extend a definitional interpreter in Scala for a small teaching language called Paret, adding functions, scoping, mutation, types, objects and laziness. Lectures also cover parallel programming with OpenMP and concurrency abstractions such as locks, STM and futures. The weekly WebLab interpreter assignments are a pass/fail requirement, and the grade comes entirely from one computer exam in WebLab.",
+  "basis": {
+    "lectures": 14,
+    "description": "Slides of Lectures 2 to 15 of CSE2120 (2024-25) as text, the WebLab exercises and Cementing tasks, and seven past WebLab exams. Lecture 1 (motivation and organisation) and the Course Recap, which has no slide text, are not counted. Time shares count content slides, with repeated animation frames counted once.",
+    "caveat": "The material is from CSE2120, the old code. From 2026-27 the course is CSE22C and runs in quarter 2 instead of quarter 3; the content is said to be unchanged. Slide counts understate laziness: its deck is short, yet it is examined in every paper. The scoping share is inflated by long step-by-step environment animations, and Lecture 3 holds two near-identical decks, counted once."
+  },
+  "topics": [
+    {
+      "name": "Syntax, parsing and abstract syntax",
+      "lectures": ["Lecture 2 - Syntax & Parsing", "Lecture 3 - Syntax & Parsing Part 2"],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "Concrete syntax (the program text) versus abstract syntax (the tree that keeps only the structure), and what a parser does between them",
+        "Grammars in BNF and in the SDF context-free syntax notation used for Paret, where each production names the AST constructor it builds",
+        "Ambiguity and how priorities and associativity remove it",
+        "Algebraic data types in Scala: sealed abstract classes and case classes as an inductive definition of the AST",
+        "Pattern matching in Scala: literals, wildcards, variables, guards, list patterns and nested patterns"
+      ],
+      "do": [
+        "Decide whether a program parses under a given grammar and, if it does, write its AST in flat constructor form",
+        "Explain why a program fails to parse, naming the production that is missing or ambiguous",
+        "Define case classes for a small grammar and write a parser or recursive function over them"
+      ],
+      "pitfalls": [
+        "Reading a grammar too loosely: check exactly how identifiers, literals and separators are defined before deciding that a program parses",
+        "Old exams write Paret with parentheses (S-expressions); the course now uses a different surface syntax for the same structures"
+      ]
+    },
+    {
+      "name": "Semantics, interpreters and desugaring",
+      "lectures": ["Lecture 4 - Semantic Transformations"],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "Static versus dynamic semantics, and operational, denotational and axiomatic ways of giving meaning",
+        "Big-step semantics: reading inference rules of the form environment, expression evaluates to value",
+        "The pipeline parse, desugar into a small core language, then interpret into values (NumV, BoolV, closures)",
+        "Interpretation versus compilation",
+        "Desugaring: rewriting extended syntax (and, or, multi-armed conditionals) into core syntax, and why that keeps the interpreter small",
+        "Short-circuit evaluation and the laws that and and or must satisfy",
+        "The lab's style rules: structural recursion, no for or var"
+      ],
+      "do": [
+        "Write the interp function in Scala by pattern matching on the core AST, throwing the right exception on errors",
+        "Write a desugar function that maps every extended construct to core syntax, recursively",
+        "Evaluate a program by hand with given big-step rules and spot which rule makes the result differ from the lab"
+      ],
+      "pitfalls": [
+        "Using non-structural (generative) recursion; the exam deducts points for it"
+      ]
+    },
+    {
+      "name": "Higher-order functions and currying",
+      "lectures": ["Lecture 5 - Higher-Order Functions"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "Functions as values: lambdas, anonymous functions, and functions that take or return functions",
+        "map, filter and fold, and how they differ",
+        "Scala functions: def versus val, function types such as Int => Int => Int, functions inside functions",
+        "Currying and partial application, and three ways to curry a function in Scala",
+        "How objects can emulate lambdas (Java functional interfaces) and how lambdas can emulate objects"
+      ],
+      "do": [
+        "Recognise whether a given recursive function over a tree or list is a map, a fold or something else",
+        "Translate between a Java method or JavaScript function and a Paret lambda",
+        "Write a desugarer that turns multi-argument functions and applications into curried single-argument ones"
+      ],
+      "pitfalls": [
+        "Calling something a fold when no accumulator is threaded through; applying a function to each element on its own is a map"
+      ]
+    },
+    {
+      "name": "Substitution, environments and scoping",
+      "lectures": ["Lecture 5 - Higher-Order Functions", "Lecture 6 - Functions and Environments", "Lecture 7 - Function Abstraction"],
+      "timeShare": 24,
+      "importance": "essential",
+      "know": [
+        "Substitution-based evaluation of let and lambda, free and bound variables, name shadowing and name capture",
+        "Environments as delayed substitution: a list of bindings from names to values",
+        "Closures (ClosV with parameters, body and the defining environment) and why lexical scoping needs them",
+        "Static (lexical) versus dynamic scoping, and that let behaves like applying a lambda",
+        "Laws of a language, such as beta reduction, and checking an interpreter against them",
+        "Recursion without built-in recursion: passing the function to itself, and fixed-point combinators such as Z"
+      ],
+      "do": [
+        "Evaluate a program under static and under dynamic scoping and give both results",
+        "Trace an environment-based interpreter step by step, writing the environment at each subexpression",
+        "Implement functions, let-bound functions and pattern matching in an environment-based interpreter",
+        "Rewrite a recursive program so it works without letrec"
+      ],
+      "pitfalls": [
+        "Evaluating a function body in the caller's environment instead of the closure's environment: that gives dynamic scoping",
+        "Assuming name capture cannot happen in a substitution interpreter; any construct that binds names can cause it"
+      ]
+    },
+    {
+      "name": "Mutation, state and memory",
+      "lectures": ["Lecture 8 - Mutation and State", "Lecture 14 - Lazy Evaluation"],
+      "timeShare": 16,
+      "importance": "essential",
+      "know": [
+        "Boxes (box, unbox, set-box) as first-class memory locations, versus mutable variables with assignment and seq",
+        "The store-passing interpreter: the environment maps names to locations, the store maps locations to values, and every interp call returns a value and a new store",
+        "letrec with a store: bind the names to placeholder locations first, then fill them",
+        "Pass-by-value versus pass-by-reference",
+        "Side effects, evaluation order, and pure versus impure languages",
+        "Garbage collection: mark-and-sweep, reference counting, copying collectors, and Rust ownership and borrowing as an alternative"
+      ],
+      "do": [
+        "Predict the result of a program with mutation, stating which store each step sees",
+        "Implement variables, assignment, while loops or a pass-by-reference operator in a store-passing interpreter",
+        "Desugar sequencing or loops into core constructs that use the store"
+      ],
+      "pitfalls": [
+        "Expecting a callee's assignment to its parameter to change the caller's variable under pass-by-value"
+      ]
+    },
+    {
+      "name": "Type checking and type inference",
+      "lectures": ["Lecture 9 - Type Checking", "Lecture 15 - Additional Topics"],
+      "timeShare": 11,
+      "importance": "essential",
+      "know": [
+        "Type safety and the slogan that well-typed programs cannot go wrong; static versus dynamic checks",
+        "A type checker as a function typeOf from expression and type environment to type, and the typing rules behind it",
+        "Typing lambdas, applications, lists and letrec, and why letrec needs annotations while let does not",
+        "Parametric polymorphism, and what cannot be typed without it",
+        "Type inference by generating constraints with type variables and solving them by unification; let polymorphism",
+        "Subtyping (records, function types), union and intersection types, nullability and dependent types"
+      ],
+      "do": [
+        "Decide whether a program type checks, and whether a type-safe program can still fail at run time",
+        "Implement typeOf for new constructs (records, named arguments, parity of numbers, nullable types)",
+        "Infer the type of a small expression by writing and unifying its constraints"
+      ],
+      "pitfalls": [
+        "Mixing up a program that fails to type check with one that type checks but crashes at run time; multiple-choice questions turn on this difference"
+      ]
+    },
+    {
+      "name": "Parallel programming",
+      "lectures": ["Lecture 10 - Parallel Computing Part 1", "Lecture 11 - Parallel Computing Part 2"],
+      "timeShare": 11,
+      "importance": "important",
+      "know": [
+        "Task, data and pipelined parallelism",
+        "OpenMP: parallel regions, parallel for, critical, barriers, nowait, private, shared and firstprivate variables",
+        "Static versus dynamic loop scheduling",
+        "Speedup, efficiency and Amdahl's law, and its limits",
+        "Data dependences (true, anti and output) and loop-carried dependences after loop normalisation"
+      ],
+      "do": [
+        "Decide whether a loop can be parallelised and add the right OpenMP pragma",
+        "Compute speedup, efficiency or the Amdahl bound for a given serial fraction and core count",
+        "Find the dependences in a loop and say which iterations conflict"
+      ],
+      "pitfalls": [
+        "Parallelising a loop that has a loop-carried dependence, which changes its result"
+      ]
+    },
+    {
+      "name": "Concurrency",
+      "lectures": ["Lecture 12 - Parallel and Concurrent Programming"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "Concurrency versus parallelism, threads and preemption",
+        "Race conditions, deadlock, starvation, fairness and Heisenbugs, with dining philosophers as the example",
+        "Critical sections and locks, and the problems locks bring",
+        "Atomic read-modify-write operations such as Java's AtomicInteger",
+        "Software transactional memory (transactions, retry, composition), futures and promises, async/await and coroutines",
+        "Avoiding races by design: Rust's ownership rules and pure languages"
+      ],
+      "do": [
+        "Judge whether a given Java class is safe under concurrent use and name the interleaving that breaks it",
+        "Fix an unsafe class with a lock, synchronized or an atomic type",
+        "Write a short sequence of calls that triggers the failure"
+      ],
+      "pitfalls": [
+        "Saying code is unsafe without naming the non-atomic step or the interleaving; model answers require it"
+      ]
+    },
+    {
+      "name": "Objects",
+      "lectures": ["Lecture 13 - Objects"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "The functional versus object-oriented way of splitting operations and data variants",
+        "Classes, constructors, self, inheritance and subtyping in Scala",
+        "Late binding of self and dynamic dispatch",
+        "Delegation and message forwarding, and JavaScript's prototype delegation",
+        "Objects as functions with state, and desugaring classes or objects into lambdas and records",
+        "How objects are laid out in memory: stack versus heap"
+      ],
+      "do": [
+        "Evaluate a program with objects, delegation and late binding of self",
+        "Implement objects with fields and methods in an interpreter, or desugar classes into core syntax"
+      ],
+      "pitfalls": [
+        "Looking up a method or field in the parent when late binding means self still refers to the child object",
+        "There is no mandatory lab assignment on objects, yet it is exam material"
+      ]
+    },
+    {
+      "name": "Lazy evaluation",
+      "lectures": ["Lecture 14 - Lazy Evaluation"],
+      "timeShare": 2,
+      "importance": "essential",
+      "know": [
+        "Call-by-value, call-by-name and call-by-need",
+        "Thunks: a suspended expression with its environment",
+        "Strictness points: places such as arithmetic and conditions that force a thunk",
+        "Memoisation in call-by-need: a thunk is evaluated at most once",
+        "Infinite lazy lists in Scala and in Paret"
+      ],
+      "do": [
+        "Count how many times an argument is evaluated under each strategy",
+        "Implement call-by-name or call-by-need in an interpreter with thunks and a strict function",
+        "Desugar a lazy list construct into core syntax"
+      ],
+      "pitfalls": [
+        "Forgetting to force a thunk at a strictness point, so a thunk value leaks into arithmetic",
+        "Counting evaluations under call-by-need as if it were call-by-name"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Object-oriented programming in Java (Introduction to Programming)",
+    "Testing your code and writing readable, maintainable code (Software Quality and Testing)",
+    "Recursion over lists and trees",
+    "Reading a grammar"
+  ],
+  "practical": "Every week a mandatory WebLab assignment extends a Paret interpreter in Scala: arithmetic, functions and environments, mutation with a store, type checking and more. You may resubmit as often as you like before the lab deadline, with automatic feedback; if all but one are passed you can request a repair with extra work. The lab is pass/fail and individual. Optional exercises are marked Basis, Exam Level or Extra, and the Wednesday Cementing sessions give one larger task a week.",
+  "studyAdvice": [
+    "Do the mandatory interpreter assignments yourself and properly: about three quarters of the exam points are for Scala code of the same kind, in the same WebLab setting.",
+    "Get closures, environments and the store right first. Scoping, mutation, laziness and objects all build on the same interpreter, and together they carry most exam points.",
+    "Practise writing type checkers: one programming question per paper is a type checker for a new construct.",
+    "Work the Exam Level exercises on WebLab; recent papers reuse their themes (currying, recursion without recursion, safety of concurrent classes).",
+    "Revise parallel programming and concurrency for the theory part: both 2025 papers had three-part questions on each.",
+    "Sit at least two past papers in WebLab under exam conditions, three hours and only the Scala API, and keep to functional style throughout."
+  ]
+}

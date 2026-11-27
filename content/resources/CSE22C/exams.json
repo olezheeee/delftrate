@@ -1,0 +1,75 @@
+{
+  "course": "CSE22C",
+  "title": "Concepts of Programming Languages",
+  "available": true,
+  "summary": "One three-hour computer exam in WebLab, closed book apart from the Scala API. About a quarter of the points come from a folder of short open and multiple-choice theory questions; the rest from four Scala programming assignments in which you extend a lab-style Paret interpreter, desugarer or type checker. Scoping and type checking carry the most points, and laziness and parsing come back in every paper.",
+  "basis": {
+    "papers": [
+      { "name": "Resit 2025", "year": 2025, "kind": "resit", "questions": 10, "points": 100, "minutes": 180 },
+      { "name": "Endterm 2025", "year": 2025, "kind": "endterm", "questions": 11, "points": 100, "minutes": 180 },
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 10, "points": 100, "minutes": 180 },
+      { "name": "Endterm 2023", "year": 2023, "kind": "endterm", "questions": 11, "points": 100, "minutes": 180 },
+      { "name": "Endterm 2022", "year": 2022, "kind": "endterm", "questions": 11, "points": 100, "minutes": 180 },
+      { "name": "Resit 2021", "year": 2021, "kind": "resit", "questions": 15, "points": 100, "minutes": 180 }
+    ],
+    "note": "The archive's file list does not show these papers separately; all come from one exam text file. It holds seven papers; Resit 2018 (TI2606) is left out. Papers up to 2024 are labelled Practice on WebLab but are real exams. Points are WebLab weights out of 100; a question is one named WebLab assignment. Weights inside theory folders are not shown, so they were split evenly over the parts (an estimate)."
+  },
+  "format": {
+    "mode": "Digital exam in WebLab on campus computers, closed book; you write Scala in the browser or in IntelliJ",
+    "duration": "3 hours",
+    "structure": "Since 2022: one theory folder (20 to 30 points) with six or seven small parts, roughly one per topic, mixing short open answers and multiple choice, then four Scala programming assignments of 15 to 20 points each. Resit 2021 had ten multiple-choice questions (15 points) and five programming tasks (85 points). You may do the parts in any order.",
+    "grading": "The exam is 100 percent of the grade if the mandatory lab is passed; a failed lab gives a 1. WebLab sets the minimum to pass at 5.75. Spec test scores shown during the exam are only indicative: staff may add tests or grade by hand. The resit is in the next quarter.",
+    "aids": "Only the Scala API documentation linked from the exam, and IntelliJ from 2023 on. No books or notes."
+  },
+  "topicWeights": [
+    { "topic": "Substitution, environments and scoping", "share": 20, "appearsIn": 6, "asks": "Implement let-bound functions, functions with pattern matching or a language mixing static and dynamic scoping; in the theory part, give a program's result under each scoping rule, spot name capture, or make a recursive program work without letrec." },
+    { "topic": "Type checking and type inference", "share": 20, "appearsIn": 6, "asks": "One type checker per paper for a new construct: records with structural subtyping, nullable types, named arguments, parity of numbers, functions, or inference. Theory parts ask whether a program type checks and why letrec needs annotations." },
+    { "topic": "Mutation, state and memory", "share": 12, "appearsIn": 5, "asks": "Extend a store-passing interpreter with while loops or a pass-by-reference operator, or desugar while or seq; theory parts compare boxes with mutable variables or ask for a program's result with mutation." },
+    { "topic": "Lazy evaluation", "share": 11, "appearsIn": 6, "asks": "Implement call-by-name or an interpreter that supports several evaluation strategies with thunks, or desugar lazy lists; short questions count how often an argument is evaluated under call-by-name or call-by-need." },
+    { "topic": "Syntax, parsing and abstract syntax", "share": 10, "appearsIn": 6, "asks": "Decide whether given programs parse under a grammar and write the AST in flat form, or say why not; older papers also had a full parser to write (matrices, a typed language)." },
+    { "topic": "Objects", "share": 10, "appearsIn": 5, "asks": "Desugar classes, implement mutable objects with fields and methods, or combine substitution with objects; theory parts trace delegation and late binding of self or explain dynamic dispatch." },
+    { "topic": "Semantics, interpreters and desugaring", "share": 7, "appearsIn": 3, "asks": "Read a set of big-step rules with one wrong rule, give the result and name the faulty rule; also a fractions interpreter (2025) and a matrix desugarer (2021)." },
+    { "topic": "Concurrency", "share": 4, "appearsIn": 4, "asks": "Judge whether versions of a small Java class are safe under concurrent use, explain the interleaving that breaks one, and write a call sequence that triggers the failure." },
+    { "topic": "Higher-order functions and currying", "share": 3, "appearsIn": 3, "asks": "Desugar multi-argument functions and applications into curried form (Resit 2025), a currying question in the theory part, and recognising a map over a tree." },
+    { "topic": "Parallel programming", "share": 2, "appearsIn": 2, "asks": "Only in 2025: parallelise a loop with OpenMP, reason about a two-thread version, and find the dependences in a loop." },
+    { "topic": "Other", "share": 1, "appearsIn": 1, "asks": "Endterm 2023 asked why it makes sense to have many programming languages." }
+  ],
+  "questionTypes": [
+    { "type": "Writing an interpreter", "share": 38, "description": "Fill in the interp function of a lab-style Scala template for new constructs, graded by hidden spec tests." },
+    { "type": "Short open and multiple choice", "share": 23, "description": "The theory folder: predict a result, give an AST, explain a rule, judge thread safety or pick an option; open answers must be motivated." },
+    { "type": "Writing a type checker", "share": 19, "description": "Implement typeOf, and sometimes a subtyping check, for a new construct, throwing the type exception the spec names." },
+    { "type": "Writing a desugarer", "share": 14, "description": "Translate extended syntax such as classes, while loops, lazy lists or curried calls into the core language, by structural recursion." },
+    { "type": "Writing a parser", "share": 6, "description": "Turn the reader's S-expressions into the extended AST and reject malformed input, such as matrices with rows of unequal length (Endterm 2023 and Resit 2021 only)." }
+  ],
+  "recurring": [
+    "Every paper has a type checker assignment worth 17 to 20 points for a construct you have not seen in the lab.",
+    "Every paper tests laziness, either as a programming assignment (call-by-name, several evaluation strategies, lazy lists) or as a question on how often an expression is evaluated.",
+    "Every paper has a parsing item: does this program parse under this grammar, and what is its AST.",
+    "Scoping appears in every paper, often by asking for a program's result under static and under dynamic scoping.",
+    "The programming templates are built on the lab interpreters, so the language of a given lab week is often the starting point.",
+    "Both 2025 papers gave big-step rules with one rule changed and asked for the result and the faulty rule.",
+    "From 2023 on the theory part has a concurrency item on whether a small Java class is thread safe."
+  ],
+  "trends": [
+    "The theory share grew from 15 points (2021) to 20 (2022, 2023), 25 (2024) and 30 (2025).",
+    "Parallel programming with OpenMP appears only in the 2025 papers, set by Taico Aerts and Soham Chakraborty; the 2024 paper was set with Casper Bach Poulsen and has none.",
+    "Paret moved from parenthesised S-expression syntax to a keyword and infix syntax; questions on material that has left the course are marked Old Material, among them the parser for a typed language.",
+    "The Scala API given in the exam moved from Scala 2.12 to Scala 3.6.4."
+  ],
+  "strategy": [
+    "Prepare by redoing the mandatory lab interpreters until you can write them without looking: the exam templates start from them.",
+    "Sit old papers in WebLab under exam conditions; read the note on syntax differences first so the old S-expression syntax does not slow you down.",
+    "With about 1.8 minutes per point, give the 30-point theory folder roughly 50 minutes and each programming task 30 to 35.",
+    "Save often: WebLab grades the last saved version, and you can do the parts in any order.",
+    "Run the given tests and add your own; code that does not compile against the provided tests also fails every spec test.",
+    "If a desugaring will not work, write your idea as a comment in the code: it can still earn partial points.",
+    "Motivate every open answer in a sentence or two, and for concurrency name the interleaving or the missing atomicity."
+  ],
+  "pitfalls": [
+    "Unmotivated answers to open questions get no points.",
+    "Concurrency answers that do not mention atomicity or the interleaving of operations do not get full points.",
+    "Using for or var, or non-structural recursion, costs points; a working solution that fails the style checks gets only partial points.",
+    "Trusting the spec test score shown during the exam: it is not final, and the tests may change in grading.",
+    "Evaluating a function body in the caller's environment instead of the closure's, which gives dynamic scoping where lexical scoping was asked."
+  ]
+}

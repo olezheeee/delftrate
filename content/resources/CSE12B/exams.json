@@ -1,0 +1,109 @@
+{
+  "course": "CSE12B",
+  "title": "Human Computer Interaction & AI-Assisted Prototyping",
+  "available": true,
+  "summary": "Nobody has seen an exam of CSE12B yet, and its assessment has not been published. What the archive has are three short practice sets from the predecessor CSE3500, 39 points in all: multiple-choice and open questions on PACT analysis, requirements, prototyping, heuristic evaluation with the design principles, and inclusivity. CSE3500 itself combined a closed-book written exam with a group report, each half of the grade.",
+  "basis": {
+    "papers": [
+      { "name": "General Exam Practice Solutions", "year": null, "kind": "practice", "questions": 3, "points": 14, "minutes": null },
+      { "name": "Expert Analysis Practice Solutions", "year": null, "kind": "practice", "questions": 8, "points": 15, "minutes": null },
+      { "name": "Inclusivity Practice Solutions", "year": null, "kind": "practice", "questions": 8, "points": 10, "minutes": null }
+    ],
+    "note": "Three CSE3500 practice sets with model answers and printed points; shares are by those 39 points. They are example questions, not full papers. The expert set is one scenario with eight lettered parts, counted as eight questions like the inclusivity set. The archive also files five papers of the old Web and Database Technology course under this course; they examine web technology, not HCI, and are not counted."
+  },
+  "format": {
+    "mode": "Not published for CSE12B. Its predecessor CSE3500 had an on-campus written exam on paper, closed book, with answer boxes under each question.",
+    "duration": "Not published for CSE12B; the CSE3500 exam lasted 3 hours",
+    "structure": "Unknown for CSE12B. CSE3500 announced a mix of multiple-choice and open questions; its practice sets use short design scenarios followed by check-all-that-apply questions, single-answer multiple choice and open questions of 1 to 10 points.",
+    "grading": "Not published for CSE12B. In CSE3500 the exam (learning objective 1 only) and the group report each counted 50 percent; you needed at least a 5 on both and an average of at least 5.8, with an exam resit in quarter 4.",
+    "aids": "Unknown for CSE12B. In CSE3500 only a pen was allowed, no pencils."
+  },
+  "topicWeights": [
+    {
+      "topic": "Usability and the PACT framework",
+      "share": 26,
+      "appearsIn": 1,
+      "asks": "One 10-point PACT analysis of a client brief for an online shop: three user groups, three activities, two contexts and two supporting technologies, a point for each distinct aspect."
+    },
+    {
+      "topic": "Accessibility and inclusive design",
+      "share": 26,
+      "appearsIn": 1,
+      "asks": "Classify short cases by type of exclusion, place a user characteristic as fixed or changing, common or rare, cheap or expensive, and give two ways to apply perceptible information or tolerance for error."
+    },
+    {
+      "topic": "Design principles, UX and research ethics",
+      "share": 20,
+      "appearsIn": 1,
+      "asks": "For four described problems in an app, name the closest design principle (from Benyon's twelve) and justify it with its definition."
+    },
+    {
+      "topic": "Expert evaluation",
+      "share": 18,
+      "appearsIn": 1,
+      "asks": "Pros and cons of heuristic evaluation on a paper prototype, what changes when end users do it, how many evaluators to recruit and why, and the two factors of the severity matrix."
+    },
+    {
+      "topic": "Requirements and information architecture",
+      "share": 5,
+      "appearsIn": 1,
+      "asks": "A check-all-that-apply question on what matters when surveying a large group of stakeholders for design input."
+    },
+    {
+      "topic": "Envisionment and prototyping",
+      "share": 5,
+      "appearsIn": 1,
+      "asks": "A check-all-that-apply question on which kind of prototype (throwaway, evolutionary, horizontal, vertical) suits an early stakeholder meeting."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Multiple choice",
+      "share": 26,
+      "description": "Check-all-that-apply or single-answer questions of 1 or 2 points, with plausible distractors that swap or stretch definitions."
+    },
+    {
+      "type": "Scenario analysis",
+      "share": 26,
+      "description": "A structured analysis of a design brief, such as a full PACT analysis, marked per distinct aspect."
+    },
+    {
+      "type": "Name and justify a principle",
+      "share": 20,
+      "description": "Match a described usability problem to one design principle and explain the match: a point for the name, a point for the reason."
+    },
+    {
+      "type": "Short explanation",
+      "share": 18,
+      "description": "Explain a method choice in a sentence or two: advantages, disadvantages, how many evaluators, which criteria."
+    },
+    {
+      "type": "Apply a principle to a design",
+      "share": 10,
+      "description": "Give two concrete ways to use a named universal design principle on a described interface or object."
+    }
+  ],
+  "recurring": [
+    "Every question hangs on a short scenario: a company survey, a toy, a furniture webshop, a medication app, a password page, building signs.",
+    "Open answers are marked per distinct correct element, so the points tell you how many separate items to give.",
+    "The course's fixed lists are the answer key: the twelve design principles, the universal design guidelines, the five exclusion types, the PACT parts.",
+    "Justification counts as much as the answer: the principle questions give one point for the name and one for the reason.",
+    "Prototyping and requirements are tested with check-all-that-apply questions whose wrong options mix up definitions."
+  ],
+  "trends": [],
+  "strategy": [
+    "Treat this as preparation for the predecessor's style only: check the CSE12B course page for the real format as soon as it appears.",
+    "Make flash cards of the fixed lists with a one-line definition each; most practice points ask you to apply a definition to a case.",
+    "Practise PACT analyses and design principle matching on everyday apps you use: these two kinds of question carry nearly half the practice points.",
+    "For every open answer, give exactly as many distinct items as there are points, each with a short reason.",
+    "On check-all-that-apply questions, test each option on its own against the slide definition rather than looking for one right answer.",
+    "Do not skip controlled experiments, adaptive systems and conversational interfaces: no practice set covers them, but they are in the lectures and the CSE3500 exam tested understanding of all course concepts."
+  ],
+  "pitfalls": [
+    "Naming the principle without saying why it fits, or explaining without naming it: each half is a separate point.",
+    "Giving overlapping user groups or activities in a PACT analysis; only distinct aspects score.",
+    "Mixing up horizontal and vertical prototypes, a swap the practice distractors are built on.",
+    "Adding cost to the severity rating: the model answer names impact and frequency, with cost considered only when choosing what to fix.",
+    "Choosing the more thorough-sounding option on survey questions, such as letting every stakeholder speak to the design team, when the model answer favours clear and useful questions."
+  ]
+}

@@ -60,3 +60,12 @@ textarea {
   text-transform: uppercase;
   color: hsl(var(--fg) / 0.55);
 }
+
+/* On paper a page is black on white. Pages with a print layout (the booklets) set the rest. */
+@media print {
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

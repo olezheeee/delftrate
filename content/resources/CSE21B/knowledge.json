@@ -1,0 +1,213 @@
+{
+  "course": "CSE21B",
+  "title": "Algorithm Design",
+  "ects": 5,
+  "summary": "How to design an efficient algorithm for a new problem, prove it correct and bound its running time, using four paradigms: greedy, divide and conquer, dynamic programming and network flow. The course follows Kleinberg and Tardos, chapters 4 to 7, with lectures, skill-circuit exercises on WebLab and tutorials. You are graded on two written exams (proofs, traces, recurrences) and one three-hour programming exam in Java on WebLab.",
+  "basis": {
+    "lectures": 16,
+    "description": "Slides of all 16 CSE2310 lectures of 2024-25 as text, the CSE2310 assignments and peer-review exercises, and the past papers. Time shares count content slides of Lectures 1 to 14; course organisation, asides and the two written-exam preparation lectures (15 and 16) are left out.",
+    "caveat": "The material is from CSE2310, taught in quarter 2; from 2026-27 the course is CSE21B in year 2, quarter 1, with the same content. Slide counts understate network flow: it had 4 of the 14 content lectures (about 29 percent of the lecture slots) but much of it was worked on the blackboard, while the divide and conquer and dynamic programming slides build up examples frame by frame."
+  },
+  "topics": [
+    {
+      "name": "Asymptotics, graphs and proof foundations",
+      "lectures": ["Lecture 1 - Course Introduction & Greedy Algorithms"],
+      "timeShare": 4,
+      "importance": "useful",
+      "know": [
+        "Big-O, Big-Omega and Big-Theta, how polynomials, logarithms and exponentials compare, and what a tight bound means",
+        "Graph representations, BFS and DFS, connected components and bipartiteness testing, all in O(n + m)",
+        "DAGs and topological ordering: every DAG has a node without incoming edges, and a graph is a DAG exactly when it has a topological order",
+        "Proof by induction, by contradiction and by counterexample, as used in every later correctness proof"
+      ],
+      "do": [
+        "Give a tight bound for nested loops and for loops that halve or double a counter",
+        "Compute a topological order and prove the lemmas behind the algorithm"
+      ],
+      "pitfalls": [
+        "Giving a loose upper bound when a tight one is asked: the written papers ask for tight bounds and deduct for slower algorithms"
+      ]
+    },
+    {
+      "name": "Greedy scheduling, caching and Huffman codes",
+      "lectures": [
+        "Lecture 1 - Course Introduction & Greedy Algorithms",
+        "Lecture 2 - Greedy Algorithms",
+        "Lecture 4 - Greedy Algorithms Q&A"
+      ],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "Interval scheduling (earliest finish time first) and interval partitioning (by start time, as many resources as the depth)",
+        "Minimising maximum lateness: earliest deadline first, schedules without idle time, and inversions",
+        "Optimal offline caching with farthest-in-future eviction, and why least-recently-used can be worse",
+        "Huffman codes: prefix codes as full binary trees, merging the two lowest frequencies, and why the lowest two are siblings at the deepest level",
+        "The two proof patterns: greedy stays ahead (induction on a measure) and the exchange argument (swap adjacent inversions without making the solution worse)",
+        "How to measure a running time experimentally and compare it with the analysis"
+      ],
+      "do": [
+        "Disprove a proposed sorting rule with a small counterexample, then find the rule that works",
+        "Write a complete exchange-argument or stays-ahead proof with notation for the greedy and an optimal solution",
+        "Trace farthest-in-future eviction or build a Huffman tree and code table by hand",
+        "Implement a greedy algorithm in O(n log n) with sorting or a priority queue"
+      ],
+      "pitfalls": [
+        "Defining an inversion without the inequality between the two jobs, a mistake the marking notes list often",
+        "Ending an exchange proof without a valid contradiction, or with an assumption whose negation does not say that greedy is optimal",
+        "Swapping in the greedy order instead of turning an optimal solution into the greedy one: the marking notes cap that at partial credit"
+      ]
+    },
+    {
+      "name": "Minimum spanning trees, shortest paths and clustering",
+      "lectures": ["Lecture 3 - Greedy Algorithms"],
+      "timeShare": 9,
+      "importance": "important",
+      "know": [
+        "Dijkstra's algorithm for non-negative edge weights and its O(m log n) running time with a heap",
+        "The cut property (the cheapest edge across any cut is in every MST, with distinct weights) and the cycle property (the most expensive edge on a cycle is in no MST)",
+        "Prim (Prim-Jarnik) and Kruskal, and why each is correct by one of the two properties",
+        "Union-find with union by size or rank, and Kruskal in O(m log n)",
+        "k-clustering of maximum spacing: run Kruskal and stop at k components, or delete the k - 1 most expensive MST edges"
+      ],
+      "do": [
+        "Apply the cut or cycle property to a cut or cycle you choose and state what it says about the MST",
+        "Run Prim, Kruskal or Dijkstra by hand and give the order in which edges or nodes are added",
+        "Find the optimal k-clustering of a small graph and its spacing",
+        "Implement Kruskal with a union-find structure for a clustering or MST question"
+      ],
+      "pitfalls": [
+        "Using the cycle property on an edge that is not the heaviest of its cycle, or stating the cut property for an edge that does not cross the cut"
+      ]
+    },
+    {
+      "name": "Divide and conquer and recurrences",
+      "lectures": [
+        "Lecture 5 - Divide and Conquer Part 1",
+        "Lecture 6 - Divide and Conquer Part 2",
+        "Lecture 7 - Divide and Conquer Part 3 (Exam Prep)"
+      ],
+      "timeShare": 28,
+      "importance": "important",
+      "know": [
+        "The three steps divide, solve and combine, and how the cost of the combine step sets the running time",
+        "Mergesort, counting inversions and fast exponentiation by repeated squaring",
+        "The master theorem for T(n) = a T(n/b) + f(n): compare f(n) with n to the power log_b a, the three cases, and the regularity condition",
+        "Unrolling a recurrence as a recursion tree when the master theorem does not apply",
+        "Course examples: prefix sums, the longest common prefix of n strings, maximum subarray, quickselect for the k-th largest element",
+        "Book topics that also appear on papers: closest pair of points and Karatsuba integer multiplication"
+      ],
+      "do": [
+        "Solve a recurrence with the master theorem, naming a, b, f(n), the case and the result, for example T(n) = 8T(n/2) + n^3 gives Theta(n^3 log n)",
+        "Design a divide and conquer algorithm for a new problem and state its recurrence",
+        "Count the multiplications fast exponentiation needs for a given exponent",
+        "Implement a recursive solution that returns extra information from each half, such as the minimum, the maximum and the best answer"
+      ],
+      "pitfalls": [
+        "Skipping the step that compares f(n) with n to the power log_b a: each step of the master method earns its own point",
+        "Returning only the answer from each recursive call when the combine step needs more information, so the merge becomes too slow"
+      ]
+    },
+    {
+      "name": "Dynamic programming",
+      "lectures": [
+        "Lecture 8 - Dynamic Programming Part 1",
+        "Lecture 9 - Dynamic Programming Part 2",
+        "Lecture 10 - Dynamic Programming Part 3"
+      ],
+      "timeShare": 36,
+      "importance": "essential",
+      "know": [
+        "Overlapping subproblems as the difference with divide and conquer; memoisation versus iterative (bottom-up) filling",
+        "Weighted interval scheduling with the predecessor p(j): OPT(j) = max(OPT(j - 1), v_j + OPT(p(j)))",
+        "0/1 knapsack and subset sum with a second parameter for remaining capacity, in O(nW) pseudo-polynomial time",
+        "Sequence alignment with gap and mismatch costs, and the RNA secondary structure recurrence over intervals",
+        "Course examples: maximum subarray, the bitcoin and euro trading days, longest path in a DAG, word segmentation",
+        "Recovering the solution from a filled table by walking back through the choices",
+        "Space saving: keep only the rows or entries the recurrence looks back at; Bellman-Ford for shortest paths with negative edges"
+      ],
+      "do": [
+        "Write a recursive OPT function with base cases, recursive cases and the initial call for a new problem",
+        "Add a parameter to a known recurrence for an extra constraint (at most k items of a type, at least K days of work)",
+        "Fill a memoisation table by hand and trace back which items or intervals were chosen",
+        "State the time and the minimal space of the iterative version, and the loop order that fills it",
+        "Implement an iterative solution in Java, and reconstruct a solution from a given table"
+      ],
+      "pitfalls": [
+        "Base cases that do not match the initial call, or that return plus infinity where a maximum is taken",
+        "Forgetting how to call the function after adding a parameter, which costs its own point",
+        "Filling a two-index interval table in the wrong order: the outer loop must grow the interval length"
+      ]
+    },
+    {
+      "name": "Flow networks, cuts and Ford-Fulkerson",
+      "lectures": [
+        "Lecture 11 - Network Flow Part 1",
+        "Lecture 12 - Network Flow Part 2",
+        "Lecture 13 - Network Flow Part 3"
+      ],
+      "timeShare": 5,
+      "importance": "essential",
+      "know": [
+        "Flow networks, capacity and conservation constraints, s-t cuts and their capacity",
+        "The flow value lemma, weak duality (any flow is at most any cut) and the max-flow min-cut theorem",
+        "Residual graphs with forward and backward edges, augmenting paths, and the integrality theorem",
+        "Ford-Fulkerson in O(mC), capacity scaling in O(m^2 log C), and Edmonds-Karp with BFS in O(nm^2)",
+        "Finding a minimum cut from a maximum flow: the nodes reachable from s in the residual graph"
+      ],
+      "do": [
+        "Run Ford-Fulkerson or the scaling version by hand and show the flow after each phase",
+        "Read a minimum cut and its capacity off a given maximum flow",
+        "Change one capacity so a given flow is no longer maximum, and show the augmenting path",
+        "Give a tight running time for building a network and running Ford-Fulkerson on it"
+      ],
+      "pitfalls": [
+        "In the scaling version, using edges whose residual capacity is below the current delta"
+      ]
+    },
+    {
+      "name": "Network flow modelling and circulations",
+      "lectures": [
+        "Lecture 12 - Network Flow Part 2",
+        "Lecture 13 - Network Flow Part 3",
+        "Lecture 14 - Network Flow Part 4"
+      ],
+      "timeShare": 4,
+      "importance": "essential",
+      "know": [
+        "Bipartite matching and assignment models: source to one side, capacities as limits, and reading the assignment off edges with flow 1",
+        "Circulations with supplies and demands, and lower bounds on edges",
+        "Removing lower bounds: subtract the lower bound from the capacity and adjust the demands at both ends, then add a super source and sink",
+        "Min-cut models for two-way splits: image segmentation and project selection, where the cut capacity equals the cost to minimise",
+        "Course and book applications: baseball elimination, the train allocation and judo camp problems, edge-disjoint paths, survey design",
+        "The provided Java library: maximizeFlow and hasCirculation on Graph, Node and Edge classes"
+      ],
+      "do": [
+        "Model a word problem as a network: nodes, edges, capacities and lower bounds, and how the answer follows from the flow",
+        "Prove that a model is correct in both directions, or that the minimum cut equals the optimum",
+        "Turn a circulation with lower bounds into an ordinary max-flow instance, showing the steps",
+        "Implement a model with the library in WebLab and return a yes or no answer or an assignment"
+      ],
+      "pitfalls": [
+        "Adding only an infinite edge from t to s when lower bounds appear, and losing the requirement that every item is assigned",
+        "Giving a zero circulation as a counterexample when two different non-zero circulations are needed",
+        "Dropping one of several bounds in a model: the reference code tests versions that ignore one bound"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Algorithms and Data Structures: graphs, BFS and DFS, sorting, heaps and asymptotic analysis",
+    "Reasoning and Logic: proof by induction and by contradiction",
+    "Java programming fluent enough to write an algorithm from scratch under time pressure",
+    "Basic logarithm and sum rules, such as 1 + 2 + 4 + ... + 2^(k-1) = 2^k - 1"
+  ],
+  "practical": "There are no graded labs. Each module has a skill circuit on WebLab with implementation exercises at exam level that are checked automatically, written assignments with peer and TA review, and Acing AD sessions with old exam problems. A network flow library (Graph, Node, Edge, maximizeFlow, hasCirculation) is built in the tutorials and handed out in the programming exam.",
+  "studyAdvice": [
+    "Split your time evenly between written and programming practice: each half counts for 50 percent, and a half below 5 caps your grade at that mark.",
+    "Revise greedy and divide and conquer before the first written exam (week 5); the second covers only dynamic programming and network flow.",
+    "Give network flow more time than its slides suggest: it had four lectures, and a modelling task appears on every analysed paper, with lower bounds on five of the six.",
+    "Learn the two greedy proof templates by heart and practise writing them out with full notation; each costs 5 points on a resit.",
+    "For dynamic programming, practise the full chain: define the subproblem, write OPT with base cases and the initial call, fill a table by hand, then code it iteratively.",
+    "Do the skill-circuit programming exercises in WebLab under a time limit; the exam gives no book or notes, only the Java API.",
+    "Work through old written papers first without the book, then check with it, as the course page advises."
+  ]
+}

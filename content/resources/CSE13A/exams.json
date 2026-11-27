@@ -1,0 +1,135 @@
+{
+  "course": "CSE13A",
+  "title": "Linear Algebra",
+  "available": true,
+  "summary": "A midterm on Lectures 1 to 10, which is optional and can only raise your grade, and an endterm on the whole course; the resit replaces the endterm and ignores the midterm. All are closed book without a calculator. Midterms are 10 or 11 short calculations. Endterms and resits combine 10 to 15 calculation questions (multiple choice in 2022 and 2023, short answers in boxes in 2024) with two academic reasoning statements to prove or refute.",
+  "basis": {
+    "papers": [
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 13, "points": 42, "minutes": 120 },
+      { "name": "Midterm 2024", "year": 2024, "kind": "midterm", "questions": 10, "points": 30, "minutes": 90 },
+      { "name": "Endterm 2023", "year": 2023, "kind": "endterm", "questions": 12, "points": 36, "minutes": null },
+      { "name": "Resit 2023", "year": 2023, "kind": "resit", "questions": 12, "points": 36, "minutes": null },
+      { "name": "Midterm 2023", "year": 2023, "kind": "midterm", "questions": 11, "points": 33, "minutes": 120 },
+      { "name": "Resit 2022", "year": 2022, "kind": "resit", "questions": 17, "points": 38, "minutes": 180 }
+    ],
+    "note": "The archive lists 11 papers. Four older ones are not analysed: Endterm 2022, Midterm 2020 (13 multiple-choice questions, no answers), Resit 2019 and Endterm 2019. Resit 2024 is listed but its text is not in the material. The two 2023 endterm-style papers print no title or date; which is the endterm and which the resit is inferred from their order in the archive. Shares are by printed points over 215 points."
+  },
+  "format": {
+    "mode": "Written and closed book on paper: short answers in boxes or multiple-choice letters on an answer sheet, with proofs and counterexamples written out",
+    "duration": "90 minutes (Midterm 2024) or 120 minutes (Midterm 2023, Endterm 2024); 180 minutes for Resit 2022",
+    "structure": "Midterms: 10 or 11 short-answer questions of 2 to 4 points on Lectures 1 to 10. Endterms and resits: 15 multiple-choice questions of 2 points and 2 academic reasoning statements of 4 points (2022); 10 multiple-choice and 2 academic reasoning questions of 3 points each (2023); 11 short-answer questions of 2 to 4 points and 2 statements of 3 points (2024).",
+    "grading": "Official description: final grade 0.2 x midterm + 0.8 x endterm when the midterm is higher and the endterm is at least 5.0, otherwise the endterm alone. The Lecture 1 slides give 0.25 and 0.75 instead and a pass at 5.8. The midterm has no resit; the resit counts 100 percent. The 2024 papers grade as 1 + 9 x points / maximum.",
+    "aids": "None: calculators, smartwatches and formula sheets are not allowed."
+  },
+  "topicWeights": [
+    {
+      "topic": "Matrix algebra and inverses",
+      "share": 15,
+      "appearsIn": 6,
+      "asks": "Solving a matrix equation with inverses and transposes for X, a 3 x 3 inverse or the matrix X with AX = D, a high power from a relation like A^3 = 3A, whether AB = BA can hold, and a counterexample to (A + B)(A - B) = A^2 - B^2."
+    },
+    {
+      "topic": "Subspaces, bases, dimension and rank",
+      "share": 14,
+      "appearsIn": 6,
+      "asks": "Coordinates of a vector relative to a basis, the Rank Theorem, the parameter giving dim Nul A a set value, bases of Col A or of a subspace given by an equation, the subspace test, and a true/false on Nul A versus Col A."
+    },
+    {
+      "topic": "Orthogonality, projections and Gram-Schmidt",
+      "share": 13,
+      "appearsIn": 4,
+      "asks": "One row or column of a projection matrix, a basis of W^perp or (Col A)^perp, the best approximation in a plane, an orthogonal basis by Gram-Schmidt, and proofs on projections or on ||u - v|| = ||u + v||."
+    },
+    {
+      "topic": "Linear systems, spans and linear independence",
+      "share": 12,
+      "appearsIn": 6,
+      "asks": "The parameter values for which a system is consistent or inconsistent, recognising reduced echelon form, parameters making vectors dependent, intersections of lines or spans, and proving a derived set independent."
+    },
+    {
+      "topic": "Eigenvalues and diagonalisation",
+      "share": 11,
+      "appearsIn": 4,
+      "asks": "The parameter for which a matrix is diagonalisable, eigenvalues and an eigenspace basis of PCP^-1, which statements always hold for given multiplicities, a characteristic polynomial, A^10 through PDP^-1, and a true/false on row-equivalent matrices."
+    },
+    {
+      "topic": "Determinants",
+      "share": 10,
+      "appearsIn": 6,
+      "asks": "A 4 x 4 or 5 x 5 determinant by cofactor expansion, the determinant after permuting, scaling or combining rows or columns, and possible values of det(A) from equations such as A^2 = I or A^3 = -5(A^T)^-1."
+    },
+    {
+      "topic": "Complex eigenvalues and dynamical systems",
+      "share": 10,
+      "appearsIn": 4,
+      "asks": "The general solution or one coordinate of x_(k+1) = A x_k, classifying the origin, P and C with A = PCP^-1 for complex eigenvalues, and a proof that an attractor for A stays one for A^2."
+    },
+    {
+      "topic": "Linear transformations and standard matrices",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "The standard matrix of a rotation combined with a reflection, and the parameter for which a vector lies in the range of T; midterms and Resit 2023 only."
+    },
+    {
+      "topic": "Least-squares problems",
+      "share": 5,
+      "appearsIn": 4,
+      "asks": "The least-squares line through four points, all least-squares solutions of an inconsistent system, or the least-squares error."
+    },
+    {
+      "topic": "Symmetric matrices",
+      "share": 3,
+      "appearsIn": 2,
+      "asks": "An orthogonal eigenvector basis of R^3 for a symmetric matrix, and a counterexample showing that being similar to a symmetric matrix is not enough for orthogonal diagonalisation."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Short-answer calculation",
+      "share": 46,
+      "description": "Compute a value, matrix, basis or parameter and write only the result in a box, or DNE when it does not exist; every midterm question and most of the 2024 endterm."
+    },
+    {
+      "type": "Multiple-choice calculation",
+      "share": 42,
+      "description": "Usually eight options, A to H, where you still have to compute the answer, sometimes only one row, column or entry of a larger result."
+    },
+    {
+      "type": "Academic reasoning (proof or counterexample)",
+      "share": 12,
+      "description": "Decide whether a statement is true or false, then give a proof or an explicit numerical counterexample with every requested quantity worked out."
+    }
+  ],
+  "recurring": [
+    "A parameter question on a linear system (for which h is it consistent, inconsistent or uniquely solvable) opens most papers; four of the six have one.",
+    "Solving a matrix equation for X with inverses and transposes appears on four of the six papers.",
+    "Coordinates of a vector relative to a given basis appear on four papers, often with DNE as a possible answer.",
+    "The standard matrix of a rotation combined with a reflection in R^2 appears on both midterms and on Resit 2023.",
+    "Every endterm and resit has a dynamical system question and a least-squares question; most have one on a projection matrix.",
+    "Each endterm and resit ends with two academic reasoning statements; of the eight, four are true and four false.",
+    "Questions come back with new or even the same numbers: Resit 2022 and Resit 2023 ask for a row of the projection matrix onto the span of the same two vectors."
+  ],
+  "trends": [
+    "The endterm moved from 15 multiple-choice questions plus two 4-point proofs in 2022, to 10 multiple-choice and two proofs of 3 points each in 2023, to 11 short-answer questions in boxes in 2024.",
+    "The 2022 resit lasted three hours; the 2024 endterm lasted two hours and the 2024 midterm 90 minutes.",
+    "The 2024 endterm puts about 74 percent of its points on Lectures 11 to 20, against about 47 percent on Resit 2022.",
+    "The older papers were all multiple choice apart from true/false sections: about 20 questions plus three or four statements in 2019, and a 13-question multiple-choice midterm in 2020. Resit 2019 also asked about LU decomposition, which neither the analysed papers nor the current slides cover."
+  ],
+  "strategy": [
+    "Work the archive papers in full under time and without a calculator; the 2024 papers give about 3 minutes per point.",
+    "Verify instead of computing where you can: on multiple choice, test a candidate eigenvector, least-squares solution or inverse by one multiplication.",
+    "Use structure to save time: expand determinants along rows or columns with zeros, and read eigenvalues of PCP^-1 straight from C.",
+    "For a parameter question, row reduce with the parameter in place and check separately every value that makes a pivot zero.",
+    "On academic reasoning, write TRUE or FALSE, then a full proof or an explicit numerical counterexample with all the quantities the question asks for; keep the Recall, Try, Answer steps from Lectures 7 and 17.",
+    "Memorise the rotation and reflection matrices and the composition order, so the transformation questions take a minute.",
+    "Take the midterm seriously even though it is optional: it can only raise your grade and it tests the first half in the same box format."
+  ],
+  "pitfalls": [
+    "Writing only TRUE or FALSE earns 0 on academic reasoning; a counterexample without the requested bases or eigenvalues lost a point on Resit 2022.",
+    "Giving the squared least-squares error: Resit 2023 gave 1 of 3 points for 38 instead of sqrt(38).",
+    "Pairing C for one complex eigenvalue with the eigenvector of the other: the 2024 endterm solutions mark that P as incorrect.",
+    "Choosing columns of the echelon form as a basis of Col A instead of the matching columns of A.",
+    "Using det(cA) = c det(A) for an n x n matrix; it is c^n det(A).",
+    "Classifying the origin as an attractor or saddle when an eigenvalue has absolute value 1: then it is none of these."
+  ]
+}

@@ -95,12 +95,27 @@ afterEach(async () => {
 });
 
 describe("a signed-out visitor", () => {
-  it("reads the programmes and nothing else", async () => {
+  it("reads the programmes and the courses, and nothing else", async () => {
     expect(await rows(null, "select id from public.programmes order by id")).toEqual([{ id: "AE" }, { id: "CSE" }]);
+    // The calendar on the home page is public: code, name, programme, year and quarters.
+    expect(
+      await rows(null, "select code, name, programme_id, year, quarters from public.courses order by code"),
+    ).toMatchObject([
+      { code: "AE1", programme_id: "AE", quarters: [] },
+      { code: "CSE1", programme_id: "CSE", quarters: [] },
+    ]);
+    // Those five columns and no others: not the internal id, not when the row was made.
+    for (const columns of ["id", "created_at", "*"]) {
+      await expect(rows(null, `select ${columns} from public.courses`), columns).rejects.toThrow(/permission denied/);
+    }
+    await expect(rows(null, "update public.courses set name = 'x'")).rejects.toThrow(/permission denied/);
+    await expect(rows(null, "delete from public.courses")).rejects.toThrow(/permission denied/);
+    await expect(
+      rows(null, "insert into public.courses (code, name, programme_id, year) values ('X1', 'x', 'AE', 1)"),
+    ).rejects.toThrow(/permission denied/);
 
     for (const table of [
       "profiles",
-      "courses",
       "professors",
       "course_professors",
       "subject_ratings",
@@ -157,6 +172,93 @@ describe("profiles", () => {
     // Someone else's row is simply not there to update.
     await rows(student, "update public.profiles set year = 5 where id = $1", [other]);
     expect(await one("select year from public.profiles where id = $1", [other])).toBe(1);
+  });
+});
+
+describe("cancelling an unfinished registration", () => {
+  const cancel = (userId: string | null) =>
+    rows(userId, "select public.cancel_unfinished_registration() as removed");
+  const accounts = () => one<number>("select count(*)::int from auth.users");
+
+  it("removes the caller's own account while it has no profile, and no other account", async () => {
+    const fresh = await one<string>("insert into auth.users default values returning id");
+    const stranger = await one<string>("insert into auth.users default values returning id");
+    const before = await accounts();
+
+    expect(await cancel(fresh)).toEqual([{ removed: true }]);
+    expect(await accounts()).toBe(before - 1);
+    expect(await one("select count(*)::int from auth.users where id = $1", [fresh])).toBe(0);
+    expect(await one("select count(*)::int from auth.users where id = $1", [stranger])).toBe(1);
+
+    // A second call finds nothing left to remove.
+    expect(await cancel(fresh)).toEqual([{ removed: false }]);
+  });
+
+  it("never removes an account that has a profile", async () => {
+    const before = await accounts();
+    expect(await cancel(student)).toEqual([{ removed: false }]);
+    expect(await cancel(admin)).toEqual([{ removed: false }]);
+    expect(await accounts()).toBe(before);
+    expect(await rows(student, "select id from public.profiles")).toEqual([{ id: student }]);
+  });
+
+  it("is closed to a signed-out visitor", async () => {
+    await expect(cancel(null)).rejects.toThrow(/permission denied/);
+  });
+});
+
+describe("confirming an email address", () => {
+  // Supabase Auth writes to auth.users as the owner of that table, not through the API roles.
+  const unconfirmed = () =>
+    one<string>("insert into auth.users (encrypted_password) values ('set-by-a-stranger') returning id");
+  const password = (id: string) =>
+    one<string | null>("select encrypted_password from auth.users where id = $1", [id]);
+
+  it("forgets the password the account had before", async () => {
+    const id = await unconfirmed();
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    expect(await password(id)).toBeNull();
+  });
+
+  it("keeps a password that is set in the same write", async () => {
+    const id = await unconfirmed();
+    await db.query(
+      "update auth.users set email_confirmed_at = now(), encrypted_password = 'chosen-by-a-lead' where id = $1",
+      [id],
+    );
+    expect(await password(id)).toBe("chosen-by-a-lead");
+  });
+
+  it("leaves the password alone before and after the confirmation", async () => {
+    const id = await unconfirmed();
+    // Not confirmed yet: other changes to the account do not touch the password.
+    await db.query("update auth.users set email = 'someone@example.com' where id = $1", [id]);
+    expect(await password(id)).toBe("set-by-a-stranger");
+
+    // Confirmed, then the owner saves a password: it stays through every later change.
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    await db.query("update auth.users set encrypted_password = 'chosen-by-the-owner' where id = $1", [id]);
+    await db.query(
+      "update auth.users set email_confirmed_at = now() + interval '1 day', email = 'other@example.com' where id = $1",
+      [id],
+    );
+    expect(await password(id)).toBe("chosen-by-the-owner");
+  });
+});
+
+describe("the quarters of a course", () => {
+  const setQuarters = (value: string) =>
+    db.query("update public.courses set quarters = $1::smallint[] where id = $2", [value, cse]);
+
+  it("accepts one to four different quarters, and none at all", async () => {
+    for (const value of ["{}", "{1}", "{2,3}", "{1,2,3,4}"]) await setQuarters(value);
+    expect(await one("select quarters from public.courses where id = $1", [cse])).toEqual([1, 2, 3, 4]);
+  });
+
+  it("refuses a quarter that does not exist, a repeated one, an empty one and a nested list", async () => {
+    for (const value of ["{0}", "{5}", "{1,1}", "{1,NULL}", "{{1,2},{3,4}}"]) {
+      await expect(setQuarters(value), value).rejects.toThrow(/courses_quarters_valid/);
+    }
   });
 });
 
@@ -537,7 +639,8 @@ describe("the seed data", () => {
   async function cards(userId: string) {
     const read = (sql: string) => as(seeded, userId, (tx) => tx.query<Row>(sql)).then((r) => r.rows);
     const number = (v: unknown) => (v === null ? null : Number(v));
-    const courses = await read("select id, code from public.courses");
+    // Only the example courses: the curriculum courses in the seed have no votes.
+    const courses = await read("select id, code from public.courses where id::text like '00000000-0000-4000-a000-%'");
     const professors = await read("select id, name from public.professors");
     const subjects = await read("select * from public.course_subject_stats()");
     const blocks = await read("select * from public.course_professor_stats()");
@@ -593,13 +696,47 @@ describe("the seed data", () => {
     expect(await cards(seedStudent)).toEqual(EXPECTED);
   });
 
+  it("holds the curriculum of both programmes, every course with its quarters", async () => {
+    const perYear = await as(seeded, null, (tx) =>
+      tx.query<Row>(
+        `select programme_id, year, count(*)::int as courses from public.courses
+         where quarters <> '{}' group by programme_id, year order by programme_id, year`,
+      ),
+    );
+    expect(perYear.rows).toEqual([
+      { programme_id: "AE", year: 1, courses: 15 },
+      { programme_id: "AE", year: 2, courses: 17 },
+      { programme_id: "AE", year: 3, courses: 5 },
+      { programme_id: "CSE", year: 1, courses: 12 },
+      { programme_id: "CSE", year: 2, courses: 8 },
+      { programme_id: "CSE", year: 3, courses: 1 },
+    ]);
+  });
+
+  it("links the study guide lecturers to their first-year CSE courses", async () => {
+    const linked = await as(seeded, seedStudent, (tx) =>
+      tx.query<Row>(
+        `select c.code, array_agg(p.name order by p.name) as lecturers
+         from public.course_professors l
+         join public.courses c on c.id = l.course_id
+         join public.professors p on p.id = l.professor_id
+         where c.code in ('CSE11C', 'CSE12C', 'CSE11B') group by c.code order by c.code`,
+      ),
+    );
+    expect(linked.rows).toEqual([
+      { code: "CSE11C", lecturers: ["A. Asadi PhD", "Dr. A.J. Power"] },
+      { code: "CSE12C", lecturers: ["Dr. A.J. Power"] },
+    ]);
+  });
+
   it("gives an admin the same published scores, although an admin receives more rows", async () => {
     expect(await cards(seedAdmin)).toEqual(EXPECTED);
   });
 
   it("hides the hidden professor from the student", async () => {
     const names = await as(seeded, seedStudent, (tx) => tx.query<Row>("select name from public.professors"));
-    expect(names.rows).toHaveLength(7);
+    // 7 visible example professors and the 9 lecturers of the first-year CSE courses.
+    expect(names.rows).toHaveLength(16);
     expect(names.rows).not.toContainEqual({ name: "Dr. Hiroshi Tanabe" });
   });
 
@@ -611,12 +748,30 @@ describe("the seed data", () => {
     const { rows: found } = await taken.query<Row>(
       "select (select count(*) from public.courses)::int as courses, (select name from public.courses where code = 'CSE1001') as name, (select count(*) from public.manual_votes m join public.courses c on c.id = m.course_id where c.code = 'CSE1001')::int as votes",
     );
-    expect(found).toEqual([{ courses: 7, name: "The real one", votes: 0 }]);
+    // 7 example courses (one of them skipped, the real one counted) and 58 from the curriculum.
+    expect(found).toEqual([{ courses: 65, name: "The real one", votes: 0 }]);
+    await taken.close();
+  });
+
+  it("gives its lecturers to its own courses only, not to a real course with the same code", async () => {
+    const taken = await createTestDatabase();
+    await taken.query("insert into public.courses (code, name, programme_id, year) values ('CSE11C', 'The real one', 'CSE', 1)");
+    await taken.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
+
+    const { rows: found } = await taken.query<Row>(
+      `select c.code, c.name, count(l.professor_id)::int as lecturers
+       from public.courses c left join public.course_professors l on l.course_id = c.id
+       where c.code in ('CSE11C', 'CSE12C') group by c.code, c.name order by c.code`,
+    );
+    expect(found).toEqual([
+      { code: "CSE11C", name: "The real one", lecturers: 0 },
+      { code: "CSE12C", name: "Data Management", lecturers: 1 },
+    ]);
     await taken.close();
   });
 
   it("can be loaded twice without adding anything", async () => {
-    const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses");
+    const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses, (select count(*) from public.course_professors)::int as links");
     const before = (await count()).rows;
     await seeded.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
     expect((await count()).rows).toEqual(before);
