@@ -23,9 +23,9 @@
         "Elementary row operations, echelon and reduced echelon form, pivot positions, basic and free variables",
         "A system has no, exactly one or infinitely many solutions; it is inconsistent exactly when an echelon form of the augmented matrix has a row 0 ... 0 | b with b not 0",
         "The three equivalent forms of one problem: a system of equations, a vector equation x1 a1 + ... + xn an = b, and a matrix equation Ax = b",
-        "Span and its picture in R^2 and R^3 (a line or plane through the origin); Ax = b is solvable for every b exactly when A has a pivot in every row",
-        "Ax = 0 is always consistent; its solutions in parametric vector form; the solutions of Ax = b are one particular solution plus all solutions of Ax = 0",
-        "Linear independence: x1 v1 + ... + xp vp = 0 has only the trivial solution; shortcuts: more vectors than entries, or a set containing 0, is always dependent"
+        "Span and its picture in R^2 and R^3 (a line or plane through the origin); Ax = b is solvable for every b exactly when [[A has a pivot in every row]]",
+        "Ax = 0 is always consistent; its solutions in parametric vector form; the solutions of Ax = b are [[one particular solution plus all solutions of Ax = 0]]",
+        "Linear independence: [[x1 v1 + ... + xp vp = 0 has only the trivial solution]]; shortcuts: more vectors than entries, or a set containing 0, is always dependent"
       ],
       "do": [
         "Find the values of a parameter h for which a system is inconsistent, has one solution or has infinitely many",
@@ -45,10 +45,10 @@
       "timeShare": 7,
       "importance": "important",
       "know": [
-        "The definition T(u + v) = T(u) + T(v) and T(cu) = cT(u), and its consequences: T(0) = 0 and T keeps linear combinations",
+        "The definition [[T(u + v) = T(u) + T(v) and T(cu) = cT(u)]], and its consequences: T(0) = 0 and T keeps linear combinations",
         "Domain, codomain and range; b is in the range of T(x) = Ax exactly when Ax = b is consistent",
-        "The standard matrix A = [T(e1) ... T(en)]: its columns are the images of the standard basis vectors",
-        "The rotation matrix [cos t, -sin t; sin t, cos t] and the reflections in the axes and in the lines y = x and y = -x",
+        "The standard matrix A = [T(e1) ... T(en)]: [[its columns are the images of the standard basis vectors]]",
+        "The [[rotation matrix]] [cos t, -sin t; sin t, cos t] and the reflections in the axes and in the lines y = x and y = -x",
         "The matrix of first S, then T is the product (matrix of T)(matrix of S)"
       ],
       "do": [
@@ -58,8 +58,8 @@
         "Show that a map is not linear, for example because T(0) is not 0"
       ],
       "pitfalls": [
-        "Multiplying the matrices in the order the maps are named: the map applied first stands on the right",
-        "Taking T(0) = 0 as proof of linearity: it is necessary but not sufficient, as one of the Lecture 4 true/false slides shows",
+        "Multiplying the matrices in the order the maps are named: [[the map applied first stands on the right]]",
+        "Taking T(0) = 0 as proof of linearity: it is [[necessary but not sufficient]], as one of the Lecture 4 true/false slides shows",
         "Using the counter-clockwise rotation matrix for a clockwise rotation: use minus the angle"
       ]
     },
@@ -74,10 +74,10 @@
       "importance": "essential",
       "know": [
         "Sum, scalar multiple, transpose and the product AB by the column rule and the row-column rule, and when a product is defined",
-        "(AB)C = A(BC), (AB)^T = B^T A^T, (AB)^-1 = B^-1 A^-1 and (A^T)^-1 = (A^-1)^T",
+        "(AB)C = A(BC), [[(AB)^T = B^T A^T, (AB)^-1 = B^-1 A^-1]] and (A^T)^-1 = (A^-1)^T",
         "What fails for matrices: AB = BA, cancelling (AB = AC does not give B = C), and AB = 0 does not force A = 0 or B = 0",
-        "The inverse of a 2 x 2 matrix through ad - bc, and row reducing [A I] to [I A^-1] for larger matrices",
-        "The Invertible Matrix Theorem: for a square A, invertible equals n pivots, independent columns, columns spanning R^n, only the trivial solution of Ax = 0, Ax = b solvable for every b"
+        "The inverse of a 2 x 2 matrix through [[ad - bc]], and row reducing [A I] to [I A^-1] for larger matrices",
+        "The [[Invertible Matrix Theorem]]: for a square A, invertible equals n pivots, independent columns, columns spanning R^n, only the trivial solution of Ax = 0, Ax = b solvable for every b"
       ],
       "do": [
         "Solve a matrix equation such as (XB^-1)^T = C for X and simplify to a product of A, B, C, their inverses and transposes",
@@ -96,11 +96,11 @@
       "timeShare": 11,
       "importance": "essential",
       "know": [
-        "The subspace test: contains 0, closed under sums and scalar multiples; a line not through the origin or the set of unit vectors is not a subspace",
-        "Col A and Nul A; a basis of Col A is formed by the pivot columns of A itself, a basis of Nul A comes from the parametric vector form of Ax = 0",
+        "The subspace test: [[contains 0, closed under sums and scalar multiples]]; a line not through the origin or the set of unit vectors is not a subspace",
+        "Col A and Nul A; a basis of Col A is formed by [[the pivot columns of A itself]], a basis of Nul A comes from the parametric vector form of Ax = 0",
         "A basis is an independent spanning set, and a subspace has many bases",
         "Coordinates [x]_B relative to a basis B, and back from [x]_B to x",
-        "Dimension, rank A = dim Col A, and the Rank Theorem: rank A + dim Nul A = number of columns",
+        "Dimension, rank A = dim Col A, and the Rank Theorem: [[rank A + dim Nul A = number of columns]]",
         "The Basis Theorem: in a p-dimensional subspace, p independent vectors, or p vectors that span, form a basis"
       ],
       "do": [
@@ -121,8 +121,8 @@
       "importance": "essential",
       "know": [
         "Cofactor expansion along any row or column, with the checkerboard of signs; the determinant of a triangular matrix is the product of its diagonal",
-        "Row operations: a replacement keeps det, a swap changes its sign, scaling a row by k multiplies it by k; the same holds for columns",
-        "det(AB) = det(A) det(B), det(A^T) = det(A), det(A^-1) = 1/det(A), and det(cA) = c^n det(A) for an n x n matrix",
+        "Row operations: [[a replacement keeps det, a swap changes its sign, scaling a row by k multiplies it by k]]; the same holds for columns",
+        "det(AB) = det(A) det(B), det(A^T) = det(A), det(A^-1) = 1/det(A), and [[det(cA) = c^n det(A)]] for an n x n matrix",
         "A is invertible exactly when det(A) is not 0"
       ],
       "do": [
@@ -147,11 +147,11 @@
       "importance": "essential",
       "know": [
         "Av = lambda v with v not 0; the eigenspace of lambda is Nul(A - lambda I)",
-        "The characteristic equation det(A - lambda I) = 0 and algebraic multiplicity; a triangular matrix has its diagonal entries as eigenvalues",
+        "The characteristic equation [[det(A - lambda I) = 0]] and algebraic multiplicity; a triangular matrix has its diagonal entries as eigenvalues",
         "0 is an eigenvalue exactly when A is not invertible; eigenvectors for distinct eigenvalues are independent",
         "Similar matrices, A = PBP^-1, share the characteristic polynomial and so the eigenvalues",
-        "A = PDP^-1 exists exactly when A has n independent eigenvectors, so when every geometric multiplicity equals the algebraic one; n distinct eigenvalues are enough",
-        "Powers through a diagonalisation: A^k = P D^k P^-1"
+        "A = PDP^-1 exists exactly when [[A has n independent eigenvectors]], so when every geometric multiplicity equals the algebraic one; n distinct eigenvalues are enough",
+        "Powers through a diagonalisation: [[A^k = P D^k P^-1]]"
       ],
       "do": [
         "Compute the eigenvalues and a basis of each eigenspace of a 2 x 2 or 3 x 3 matrix",
@@ -172,10 +172,10 @@
       "timeShare": 10,
       "importance": "important",
       "know": [
-        "Complex eigenvalues of a real matrix come in conjugate pairs, with conjugate eigenvectors",
-        "For a real 2 x 2 matrix with eigenvalue a - bi (b not 0) and eigenvector v: A = PCP^-1 with P = [Re v, Im v] and C = [a, -b; b, a], a rotation combined with a scaling by r = sqrt(a^2 + b^2)",
-        "For diagonalisable A the system x_(k+1) = A x_k has general solution x_k = c1 lambda1^k v1 + ... + cn lambdan^k vn",
-        "The origin is an attractor if every |lambda| < 1, a repeller if every |lambda| > 1, a saddle point if there are some of each; an eigenvalue with |lambda| = 1 makes it none of these",
+        "Complex eigenvalues of a real matrix [[come in conjugate pairs]], with conjugate eigenvectors",
+        "For a real 2 x 2 matrix with eigenvalue a - bi (b not 0) and eigenvector v: A = PCP^-1 with P = [Re v, Im v] and C = [a, -b; b, a], a rotation combined with a scaling by [[r = sqrt(a^2 + b^2)]]",
+        "For diagonalisable A the system x_(k+1) = A x_k has general solution [[x_k = c1 lambda1^k v1 + ... + cn lambdan^k vn]]",
+        "The origin is an [[attractor if every |lambda| < 1, a repeller if every |lambda| > 1, a saddle point if there are some of each]]; an eigenvalue with |lambda| = 1 makes it none of these",
         "With complex eigenvalues the trajectories spiral inwards when r < 1, outwards when r > 1, and stay on an ellipse when r = 1"
       ],
       "do": [
@@ -201,11 +201,11 @@
       "importance": "essential",
       "know": [
         "Inner product, length, distance and unit vectors; u and v are orthogonal when u . v = 0",
-        "The orthogonal complement W^perp, with (Row A)^perp = Nul A, (Col A)^perp = Nul A^T and dim W + dim W^perp = n",
-        "Orthogonal and orthonormal bases; coordinates relative to an orthogonal basis are c_i = (y . u_i)/(u_i . u_i)",
+        "The orthogonal complement W^perp, with [[(Row A)^perp = Nul A, (Col A)^perp = Nul A^T]] and dim W + dim W^perp = n",
+        "Orthogonal and orthonormal bases; coordinates relative to an orthogonal basis are [[c_i = (y . u_i)/(u_i . u_i)]]",
         "U has orthonormal columns exactly when U^T U = I; a square such U is an orthogonal matrix, with inverse U^T",
         "Projection onto a line and onto W given an orthogonal basis; y = y-hat + z with y-hat in W and z in W^perp, and y-hat is the point of W closest to y",
-        "The projection matrix P = U U^T for an orthonormal basis in the columns of U; P^2 = P, so its eigenvalues are 0 and 1",
+        "The projection matrix [[P = U U^T]] for an orthonormal basis in the columns of U; P^2 = P, so its eigenvalues are 0 and 1",
         "The Gram-Schmidt process, which turns any basis of a subspace into an orthogonal one"
       ],
       "do": [
@@ -226,8 +226,8 @@
       "importance": "important",
       "know": [
         "A least-squares solution x-hat minimises ||b - Ax||, and x-hat is one exactly when A x-hat is the projection of b onto Col A",
-        "The normal equations A^T A x = A^T b; the solution is unique exactly when the columns of A are independent, so when A^T A is invertible",
-        "The least-squares error ||b - A x-hat||",
+        "The normal equations [[A^T A x = A^T b]]; the solution is [[unique exactly when the columns of A are independent]], so when A^T A is invertible",
+        "The least-squares error [[||b - A x-hat||]]",
         "Linear models: design matrix X, parameter vector beta and observation vector y, for the line y = beta0 + beta1 x and for other curves such as a parabola",
         "Residuals: the vertical differences between the data and the fitted curve"
       ],
@@ -248,9 +248,9 @@
       "timeShare": 3,
       "importance": "important",
       "know": [
-        "A real symmetric matrix (A^T = A) has real eigenvalues, and eigenvectors for different eigenvalues are orthogonal",
+        "A real symmetric matrix (A^T = A) has real eigenvalues, and [[eigenvectors for different eigenvalues are orthogonal]]",
         "Orthogonally diagonalisable means A = PDP^T with P an orthogonal matrix",
-        "The spectral theorem: a real matrix is orthogonally diagonalisable exactly when it is symmetric",
+        "The spectral theorem: a real matrix is [[orthogonally diagonalisable exactly when it is symmetric]]",
         "The method: eigenvalues, a basis of each eigenspace, Gram-Schmidt inside each eigenspace, then normalise"
       ],
       "do": [

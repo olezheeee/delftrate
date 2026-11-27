@@ -16,8 +16,8 @@
       "importance": "useful",
       "know": [
         "Big-O, Big-Omega and Big-Theta, how polynomials, logarithms and exponentials compare, and what a tight bound means",
-        "Graph representations, BFS and DFS, connected components and bipartiteness testing, all in O(n + m)",
-        "DAGs and topological ordering: every DAG has a node without incoming edges, and a graph is a DAG exactly when it has a topological order",
+        "Graph representations, BFS and DFS, connected components and bipartiteness testing, [[all in O(n + m)]]",
+        "DAGs and topological ordering: [[every DAG has a node without incoming edges]], and [[a graph is a DAG exactly when it has a topological order]]",
         "Proof by induction, by contradiction and by counterexample, as used in every later correctness proof"
       ],
       "do": [
@@ -38,11 +38,11 @@
       "timeShare": 14,
       "importance": "essential",
       "know": [
-        "Interval scheduling (earliest finish time first) and interval partitioning (by start time, as many resources as the depth)",
-        "Minimising maximum lateness: earliest deadline first, schedules without idle time, and inversions",
-        "Optimal offline caching with farthest-in-future eviction, and why least-recently-used can be worse",
-        "Huffman codes: prefix codes as full binary trees, merging the two lowest frequencies, and why the lowest two are siblings at the deepest level",
-        "The two proof patterns: greedy stays ahead (induction on a measure) and the exchange argument (swap adjacent inversions without making the solution worse)",
+        "Interval scheduling ([[earliest finish time first]]) and interval partitioning ([[by start time, as many resources as the depth]])",
+        "Minimising maximum lateness: [[earliest deadline first]], schedules without idle time, and inversions",
+        "Optimal offline caching with [[farthest-in-future eviction]], and why least-recently-used can be worse",
+        "Huffman codes: prefix codes as full binary trees, [[merging the two lowest frequencies]], and why the lowest two are siblings at the deepest level",
+        "The two proof patterns: [[greedy stays ahead]] (induction on a measure) and the [[exchange argument]] (swap adjacent inversions without making the solution worse)",
         "How to measure a running time experimentally and compare it with the analysis"
       ],
       "do": [
@@ -63,11 +63,11 @@
       "timeShare": 9,
       "importance": "important",
       "know": [
-        "Dijkstra's algorithm for non-negative edge weights and its O(m log n) running time with a heap",
-        "The cut property (the cheapest edge across any cut is in every MST, with distinct weights) and the cycle property (the most expensive edge on a cycle is in no MST)",
+        "Dijkstra's algorithm for [[non-negative edge weights]] and its [[O(m log n)]] running time with a heap",
+        "The cut property ([[the cheapest edge across any cut is in every MST]], with distinct weights) and the cycle property ([[the most expensive edge on a cycle is in no MST]])",
         "Prim (Prim-Jarnik) and Kruskal, and why each is correct by one of the two properties",
-        "Union-find with union by size or rank, and Kruskal in O(m log n)",
-        "k-clustering of maximum spacing: run Kruskal and stop at k components, or delete the k - 1 most expensive MST edges"
+        "Union-find with union by size or rank, and [[Kruskal in O(m log n)]]",
+        "k-clustering of maximum spacing: [[run Kruskal and stop at k components]], or delete the k - 1 most expensive MST edges"
       ],
       "do": [
         "Apply the cut or cycle property to a cut or cycle you choose and state what it says about the MST",
@@ -91,7 +91,7 @@
       "know": [
         "The three steps divide, solve and combine, and how the cost of the combine step sets the running time",
         "Mergesort, counting inversions and fast exponentiation by repeated squaring",
-        "The master theorem for T(n) = a T(n/b) + f(n): compare f(n) with n to the power log_b a, the three cases, and the regularity condition",
+        "The master theorem for [[T(n) = a T(n/b) + f(n)]]: [[compare f(n) with n to the power log_b a]], the three cases, and the regularity condition",
         "Unrolling a recurrence as a recursion tree when the master theorem does not apply",
         "Course examples: prefix sums, the longest common prefix of n strings, maximum subarray, quickselect for the k-th largest element",
         "Book topics that also appear on papers: closest pair of points and Karatsuba integer multiplication"
@@ -118,12 +118,12 @@
       "importance": "essential",
       "know": [
         "Overlapping subproblems as the difference with divide and conquer; memoisation versus iterative (bottom-up) filling",
-        "Weighted interval scheduling with the predecessor p(j): OPT(j) = max(OPT(j - 1), v_j + OPT(p(j)))",
-        "0/1 knapsack and subset sum with a second parameter for remaining capacity, in O(nW) pseudo-polynomial time",
+        "Weighted interval scheduling with the predecessor p(j): [[OPT(j) = max(OPT(j - 1), v_j + OPT(p(j)))]]",
+        "0/1 knapsack and subset sum with a second parameter for remaining capacity, in [[O(nW) pseudo-polynomial time]]",
         "Sequence alignment with gap and mismatch costs, and the RNA secondary structure recurrence over intervals",
         "Course examples: maximum subarray, the bitcoin and euro trading days, longest path in a DAG, word segmentation",
         "Recovering the solution from a filled table by walking back through the choices",
-        "Space saving: keep only the rows or entries the recurrence looks back at; Bellman-Ford for shortest paths with negative edges"
+        "Space saving: keep only the rows or entries the recurrence looks back at; [[Bellman-Ford for shortest paths with negative edges]]"
       ],
       "do": [
         "Write a recursive OPT function with base cases, recursive cases and the initial call for a new problem",
@@ -135,7 +135,7 @@
       "pitfalls": [
         "Base cases that do not match the initial call, or that return plus infinity where a maximum is taken",
         "Forgetting how to call the function after adding a parameter, which costs its own point",
-        "Filling a two-index interval table in the wrong order: the outer loop must grow the interval length"
+        "Filling a two-index interval table in the wrong order: [[the outer loop must grow the interval length]]"
       ]
     },
     {
@@ -149,10 +149,10 @@
       "importance": "essential",
       "know": [
         "Flow networks, capacity and conservation constraints, s-t cuts and their capacity",
-        "The flow value lemma, weak duality (any flow is at most any cut) and the max-flow min-cut theorem",
+        "The flow value lemma, weak duality ([[any flow is at most any cut]]) and the [[max-flow min-cut theorem]]",
         "Residual graphs with forward and backward edges, augmenting paths, and the integrality theorem",
-        "Ford-Fulkerson in O(mC), capacity scaling in O(m^2 log C), and Edmonds-Karp with BFS in O(nm^2)",
-        "Finding a minimum cut from a maximum flow: the nodes reachable from s in the residual graph"
+        "[[Ford-Fulkerson in O(mC), capacity scaling in O(m^2 log C)]], and [[Edmonds-Karp with BFS in O(nm^2)]]",
+        "Finding a minimum cut from a maximum flow: [[the nodes reachable from s in the residual graph]]"
       ],
       "do": [
         "Run Ford-Fulkerson or the scaling version by hand and show the flow after each phase",
@@ -176,8 +176,8 @@
       "know": [
         "Bipartite matching and assignment models: source to one side, capacities as limits, and reading the assignment off edges with flow 1",
         "Circulations with supplies and demands, and lower bounds on edges",
-        "Removing lower bounds: subtract the lower bound from the capacity and adjust the demands at both ends, then add a super source and sink",
-        "Min-cut models for two-way splits: image segmentation and project selection, where the cut capacity equals the cost to minimise",
+        "Removing lower bounds: [[subtract the lower bound from the capacity and adjust the demands at both ends]], then add a super source and sink",
+        "Min-cut models for two-way splits: image segmentation and project selection, where [[the cut capacity equals the cost to minimise]]",
         "Course and book applications: baseball elimination, the train allocation and judo camp problems, edge-disjoint paths, survey design",
         "The provided Java library: maximizeFlow and hasCirculation on Graph, Node and Edge classes"
       ],

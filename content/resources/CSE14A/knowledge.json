@@ -18,9 +18,9 @@
         "Sample space, events as subsets, and the definition of a probability function on finite and infinite sample spaces",
         "Union, intersection and complement, the sum rule and the complement rule, and the difference between probabilistic and statistical reasoning",
         "Permutations and combinations for counting equally likely outcomes",
-        "Conditional probability P(A|B) = P(A and B) / P(B) and the multiplication rule, also for three or more events",
-        "The law of total probability over a partition and Bayes' rule, with prior, likelihood and posterior",
-        "Independence of two events and mutual independence of more than two, and why pairwise independence is not enough"
+        "Conditional probability [[P(A|B) = P(A and B) / P(B)]] and the multiplication rule, also for three or more events",
+        "The [[law of total probability]] over a partition and [[Bayes' rule]], with prior, likelihood and posterior",
+        "Independence of two events and mutual independence of more than two, and why [[pairwise independence is not enough]]"
       ],
       "do": [
         "Solve a test-and-disease or classifier problem with Bayes' rule, using a tree or a table",
@@ -39,10 +39,10 @@
       "timeShare": 14,
       "importance": "essential",
       "know": [
-        "Discrete versus continuous random variables; pmf, pdf and distribution function F, and how to get one from another (sum or integrate, difference or derivative)",
+        "Discrete versus continuous random variables; pmf, pdf and distribution function F, and how to get one from another ([[sum or integrate, difference or derivative]])",
         "Bernoulli, binomial, geometric and Poisson; uniform, exponential, Pareto and normal, with their parameters and what situation each one models",
-        "Memorylessness of the geometric and exponential distributions",
-        "Using the standard normal table, including P(Z <= -a) = 1 - P(Z <= a)",
+        "Memorylessness of the [[geometric and exponential]] distributions",
+        "Using the standard normal table, including [[P(Z <= -a) = 1 - P(Z <= a)]]",
         "Median and quantiles of a distribution and of a data set, the five-number summary and the boxplot",
         "Histogram as an estimate of a density, the empirical distribution function as an estimate of F, and sample mean, variance and standard deviation"
       ],
@@ -54,7 +54,7 @@
       ],
       "pitfalls": [
         "Drawing a mixture distribution function without its flat stretches and jumps, or letting it exceed 1",
-        "Using the wrong form of the Pareto or geometric distribution: in this course Par(alpha) lives on [1, infinity) and the geometric counts the trials up to and including the first success"
+        "Using the wrong form of the Pareto or geometric distribution: in this course Par(alpha) lives on [1, infinity) and the [[geometric counts the trials up to and including the first success]]"
       ]
     },
     {
@@ -63,12 +63,12 @@
       "timeShare": 10,
       "importance": "essential",
       "know": [
-        "E[X] as a sum over the pmf or an integral against the pdf, and the expectations and variances of the standard distributions",
+        "E[X] as a sum over the pmf or an integral against the pdf, and the [[expectations and variances of the standard distributions]]",
         "The change-of-variable formula E[g(X)] = integral of g(x) f(x) dx, without first finding the density of g(X)",
         "Finding the distribution function of Y = g(X) by rewriting P(g(X) <= y) as an event about X",
-        "Change of units: E[aX + b] = aE[X] + b and Var(aX + b) = a^2 Var(X); standardising a normal variable",
-        "Var(X) = E[X^2] - (E[X])^2, the standard deviation, and degenerate random variables",
-        "Jensen's inequality: for convex g, E[g(X)] >= g(E[X])"
+        "Change of units: [[E[aX + b] = aE[X] + b and Var(aX + b) = a^2 Var(X)]]; standardising a normal variable",
+        "[[Var(X) = E[X^2] - (E[X])^2]], the standard deviation, and degenerate random variables",
+        "Jensen's inequality: [[for convex g, E[g(X)] >= g(E[X])]]"
       ],
       "do": [
         "Compute E[X] or E[X^2] for a pmf whose constant must first be fixed so the probabilities add up to 1",
@@ -88,11 +88,11 @@
       "importance": "essential",
       "know": [
         "Joint pmf tables and joint densities, and marginals by summing rows and columns or integrating out a variable",
-        "Independence of random variables: the joint pmf or density factorises; stochastic versus physical independence",
-        "E[g(X, Y)] as a double sum or double integral, and E[XY] = E[X]E[Y] under independence",
-        "Covariance as E[XY] minus E[X]E[Y], the correlation coefficient and how both react to a change of units; the variance of a sum adds 2Cov(X, Y) to the two variances",
-        "Convolution for the sum of independent variables, the gamma distribution as a sum of exponentials, and generating functions for moments and sums",
-        "Covariance matrix, sample covariance matrix and the multivariate normal; a linear combination of jointly normal variables is normal"
+        "Independence of random variables: [[the joint pmf or density factorises]]; stochastic versus physical independence",
+        "E[g(X, Y)] as a double sum or double integral, and [[E[XY] = E[X]E[Y] under independence]]",
+        "[[Covariance as E[XY] minus E[X]E[Y]]], the correlation coefficient and how both react to a change of units; the [[variance of a sum adds 2Cov(X, Y)]] to the two variances",
+        "Convolution for the sum of independent variables, the [[gamma distribution as a sum of exponentials]], and generating functions for moments and sums",
+        "Covariance matrix, sample covariance matrix and the multivariate normal; a [[linear combination of jointly normal variables is normal]]"
       ],
       "do": [
         "Fill in a joint pmf table that has given marginals and a given covariance",
@@ -103,8 +103,8 @@
       ],
       "pitfalls": [
         "Multiplying marginals to fill a joint table when independence was not given",
-        "Calling X + Y normal because X and Y are each normal: that needs joint normality, as the lectures' 'wrong exam answer' shows",
-        "Taking the convolution limits from one density only; they come from where both densities are non-zero"
+        "Calling X + Y normal because X and Y are each normal: that [[needs joint normality]], as the lectures' 'wrong exam answer' shows",
+        "Taking the convolution limits from one density only; they come from [[where both densities are non-zero]]"
       ]
     },
     {
@@ -113,9 +113,9 @@
       "timeShare": 4,
       "importance": "important",
       "know": [
-        "Expectation and variance of a sum and of an average of n independent copies: nE[X], nVar(X), and Var(X)/n",
+        "Expectation and variance of a sum and of an average of n independent copies: [[nE[X], nVar(X), and Var(X)/n]]",
         "The law of large numbers, and why running averages of a Pareto variable with infinite expectation do not settle",
-        "Chebyshev's inequality P(|Y - E[Y]| >= a) <= Var(Y) / a^2",
+        "Chebyshev's inequality [[P(|Y - E[Y]| >= a) <= Var(Y) / a^2]]",
         "The central limit theorem for sums and for averages, and the rule of thumb for when n is large enough"
       ],
       "do": [
@@ -123,7 +123,7 @@
         "Bound a probability with Chebyshev and compare the bound with the exact value"
       ],
       "pitfalls": [
-        "Standardising a sum with sigma instead of sqrt(n) times sigma",
+        "Standardising a sum with sigma instead of [[sqrt(n) times sigma]]",
         "Thinking a Chebyshev bound above 1 is a mistake: it is correct, just useless"
       ]
     },
@@ -134,11 +134,11 @@
       "importance": "essential",
       "know": [
         "Model distribution, estimate versus estimator, and the sampling distribution of an estimator",
-        "Method of moments with one or two parameters, using the k-th moment E[X^k]",
-        "Bias E[T] - theta, unbiased estimators, and how to rescale a statistic to remove bias",
-        "Mean squared error MSE = Var(T) + bias^2, and comparing estimators by MSE",
+        "Method of moments with one or two parameters, using [[the k-th moment E[X^k]]]",
+        "Bias [[E[T] - theta]], unbiased estimators, and how to rescale a statistic to remove bias",
+        "Mean squared error [[MSE = Var(T) + bias^2]], and comparing estimators by MSE",
         "Likelihood and log-likelihood for discrete and continuous samples, and the maximum likelihood estimate",
-        "Properties of the MLE: asymptotically unbiased, asymptotically lowest variance, functionally invariant"
+        "Properties of the MLE: [[asymptotically unbiased, asymptotically lowest variance, functionally invariant]]"
       ],
       "do": [
         "Build an unbiased estimator from a count, a sum or a sum of squares, and compute its MSE",
@@ -150,7 +150,7 @@
       ],
       "pitfalls": [
         "Setting the derivative to zero when the support depends on the parameter: the lectures' warning example shows this fails",
-        "Forgetting that an unbiased estimator's MSE is just its variance, and computing a long expression instead"
+        "Forgetting that [[an unbiased estimator's MSE is just its variance]], and computing a long expression instead"
       ]
     },
     {
@@ -160,9 +160,9 @@
       "importance": "important",
       "know": [
         "What a confidence level means, critical values z_p and t_(m,p), and how to read the t table",
-        "The studentised mean and the t-interval for a normal mean with unknown variance, with n - 1 degrees of freedom",
-        "Large-sample intervals without normality, and the interval for a proportion with its condition of at least 5 successes and 5 failures",
-        "Pivots: inverting a quantity with a known distribution to get an interval, also for non-standard cases",
+        "The studentised mean and the t-interval for a normal mean with unknown variance, with [[n - 1 degrees of freedom]]",
+        "Large-sample intervals without normality, and the interval for a proportion with its condition of [[at least 5 successes and 5 failures]]",
+        "Pivots: [[inverting a quantity with a known distribution]] to get an interval, also for non-standard cases",
         "How width depends on confidence level and sample size, and choosing n for a required width"
       ],
       "do": [
@@ -186,7 +186,7 @@
         "The t-test for a mean (normal or large sample) and the asymptotic test for a proportion",
         "One-sided versus two-sided tests and their critical values",
         "Choosing the sample size for a given power, alpha, effect size and standard deviation",
-        "Multiple testing with the Bonferroni correction alpha / m, p-hacking, and the paired and unpaired two-sample t-tests"
+        "Multiple testing with the [[Bonferroni correction alpha / m]], p-hacking, and the paired and unpaired two-sample t-tests"
       ],
       "do": [
         "Carry out a t-test from a sample mean and standard deviation and state the conclusion",
@@ -207,8 +207,8 @@
       "know": [
         "The simple linear regression model, residuals, least squares and its link with maximum likelihood",
         "Multiple regression with a design matrix and the normal equations",
-        "Categorical explanatory variables with k - 1 dummy variables and a base category",
-        "Sums of squares, R^2 and adjusted R^2, and why R^2 never drops when you add a variable",
+        "Categorical explanatory variables with [[k - 1 dummy variables and a base category]]",
+        "Sums of squares, R^2 and adjusted R^2, and why [[R^2 never drops when you add a variable]]",
         "Residual plots to check the assumptions, heteroskedasticity, and transformations (a squared term, log of the response)",
         "t-tests and confidence intervals for coefficients, the F-test for all coefficients, and reading Python OLS output"
       ],

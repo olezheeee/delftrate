@@ -116,14 +116,14 @@
     "Write every intermediate step. The rubrics give half points or less for a bare correct answer on Hamming codes, CRCs and Base64.",
     "For multiple choice, read every option and pick the most specific correct one, as the instructions say.",
     "Check each answer against the exact rule the question sets: odd or even parity, bit numbering from the left, the tie-break in routing tables, encrypt or decrypt.",
-    "Use short, precise terms in explanations. A NAT answer needs internal address, internal port and external port; a Tor answer needs the order of the layers."
+    "Use short, precise terms in explanations. A NAT answer needs [[internal address, internal port and external port]]; a Tor answer needs the order of the layers."
   ],
   "pitfalls": [
     "Encrypting with the S-box or P-box when the question asks you to decrypt, or doing XOR and the box in the wrong order: both are capped at half points.",
     "Using the wrong parity in a Hamming code, or giving the codeword with no explanation of where the parity bits go.",
     "Giving paths instead of outgoing lines in a routing table, which costs points even when the costs are right.",
-    "Forgetting the 1 for the SYN when computing TCP sequence or acknowledgement numbers.",
-    "Computing fragments from the total size and the smallest MTU when the question has no MTU discovery; each network refragments what it receives.",
+    "Forgetting [[the 1 for the SYN]] when computing TCP sequence or acknowledgement numbers.",
+    "Computing fragments from the total size and the smallest MTU when the question has no MTU discovery; [[each network refragments what it receives]].",
     "In CSMA/CA timelines, letting a waiting station start a new backoff instead of resuming its paused one: a correct time with wrong reasoning scored zero."
   ]
 }

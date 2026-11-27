@@ -24,16 +24,16 @@
   ],
   "strategy": [
     "Treat the knock-out rules as the first deadline. By the end you need 600 lines of Java on main (100 or more in both client and server), 6 merged merge requests with code, 6 review comments of 100 or more characters on others' merge requests and 6 approvals.",
-    "Meet the weekly minimum in each project week: a finished merge request with Java code and a passing pipeline, 100 lines of Java, one meaningful comment and one approval. One missed week brings a warning; two in a row means a fail.",
-    "Implemented features: the basic requirements give 6 points (5 if one non-essential one is missing) and the extensions add their average score, at 1, 2 or 4 points each for sufficient, good or excellent. All basics and no extensions is a 6.0.",
+    "Meet the weekly minimum in each project week: a finished merge request with Java code and a passing pipeline, 100 lines of Java, one meaningful comment and one approval. One missed week brings a warning; [[two in a row means a fail]].",
+    "Implemented features: the basic requirements give 6 points (5 if one non-essential one is missing) and the extensions add their average score, at 1, 2 or 4 points each for sufficient, good or excellent. [[All basics and no extensions is a 6.0]].",
     "Usability is nine pass/fail checks, each worth one point above a base of 1: contrast, keyboard shortcuts, multi-modal cues, logical navigation, keyboard-only flows, multi-step undo, error messages, informative feedback and a delete confirmation.",
     "Technology checks framework use: dependencies injected by Spring and Guice, static only for constants, services, controllers and configuration kept apart on the server, UI separated from server calls on the client, and Jackson for all JSON.",
-    "Rubrics are incremental: you only reach good if you also meet sufficient, so fix the lower criteria before chasing the top ones.",
+    "Rubrics are incremental: [[you only reach good if you also meet sufficient]], so fix the lower criteria before chasing the top ones.",
     "Grading looks mostly at the last weeks, so act on each week's formative feedback; it uses the final rubric and is ready before your TA meeting.",
     "Rotate chair and minute taker from the first meeting, store each agenda in the repository before the lab, and demo only what is merged on main."
   ],
   "pitfalls": [
-    "Missing a submission or a deadline altogether: anything not handed in cannot be repaired, and missing more than one TA meeting without prior approval from the lecturers fails you.",
+    "Missing a submission or a deadline altogether: anything not handed in cannot be repaired, and [[missing more than one TA meeting]] without prior approval from the lecturers fails you.",
     "Teams with no or very few issues get insufficient on every Tasks and Planning item; user stories used as issues without being split score poor.",
     "Committing straight to main is insufficient for isolation, and branches shared between people or a separate dev branch go against the required workflow.",
     "Merge requests left unreviewed for days, or merged with a failing pipeline, cost points under code reviews and build server.",

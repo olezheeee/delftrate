@@ -21,12 +21,12 @@
       "importance": "essential",
       "know": [
         "Domain, range and inverse of a one-to-one function, and how restricting the domain decides which branch of the inverse you take",
-        "arcsin, arccos and arctan with their ranges, and how to turn expressions such as cos(2 arcsin(x)) into algebra with a right-angled triangle or a double-angle identity",
-        "Continuity, the intermediate value theorem, and the epsilon-delta definition of a limit, including one-sided limits",
-        "Techniques for 0/0: cancelling common factors, the square-root (conjugate) trick, the squeeze theorem and the standard limits such as sin(x)/x as x goes to 0",
+        "[[arcsin, arccos and arctan with their ranges]], and how to turn expressions such as cos(2 arcsin(x)) into algebra with a right-angled triangle or a double-angle identity",
+        "Continuity, the intermediate value theorem, and the [[epsilon-delta definition of a limit]], including one-sided limits",
+        "Techniques for 0/0: cancelling common factors, the square-root (conjugate) trick, the squeeze theorem and the [[standard limits such as sin(x)/x as x goes to 0]]",
         "Horizontal, vertical and oblique asymptotes, and why a factor that cancels gives a hole instead of a vertical asymptote",
-        "L'Hospital's rule, the conditions under which it may be used, and rewriting 0 times infinity, 1^infinity, 0^0 and infinity minus infinity into a quotient first",
-        "The exam conventions: a limit is a finite value, plus or minus infinity, or DNE"
+        "[[L'Hospital's rule, the conditions under which it may be used]], and rewriting 0 times infinity, 1^infinity, 0^0 and infinity minus infinity into a quotient first",
+        "The exam conventions: [[a limit is a finite value, plus or minus infinity, or DNE]]"
       ],
       "do": [
         "Compute limits at a point and at plus and minus infinity without a calculator",
@@ -37,7 +37,7 @@
       "pitfalls": [
         "Using l'Hospital where the limit of the quotient of derivatives does not exist: the Midterm 2025 model answer needs a squeeze argument instead",
         "Missing an oblique asymptote at minus infinity: when x is negative, taking x^3 inside a square root flips the sign",
-        "Writing infinity when the left and right limits differ, where the answer is DNE"
+        "Writing infinity when the left and right limits differ, where [[the answer is DNE]]"
       ]
     },
     {
@@ -50,11 +50,11 @@
       "importance": "essential",
       "know": [
         "The derivative as a limit of difference quotients, differentiability, and the product, quotient and chain rules",
-        "Tangent line and linearisation L(x) = f(a) + f'(a)(x - a), and differentials for estimating an error",
+        "Tangent line and linearisation [[L(x) = f(a) + f'(a)(x - a)]], and differentials for estimating an error",
         "Critical points, the extreme value theorem and the closed interval method for absolute extremes",
-        "The mean value theorem and its corollary that f' = 0 on an interval means f is constant",
-        "Implicit differentiation, logarithmic differentiation (as for x^x) and the derivatives of the inverse trigonometric functions",
-        "Newton's method: the iteration formula, its picture with tangent lines, and when it converges"
+        "The mean value theorem and its corollary that [[f' = 0 on an interval means f is constant]]",
+        "Implicit differentiation, logarithmic differentiation (as for x^x) and the [[derivatives of the inverse trigonometric functions]]",
+        "[[Newton's method: the iteration formula]], its picture with tangent lines, and when it converges"
       ],
       "do": [
         "Approximate a value such as the cube root of 217 with a well-chosen linearisation",
@@ -80,9 +80,9 @@
         "Riemann sums, the properties of the definite integral and both parts of the Fundamental Theorem of Calculus",
         "Standard antiderivatives and the substitution rule, including changing the bounds of a definite integral",
         "Integration by parts, the LIATE heuristic, integrals that return to themselves (e^x cos(x)) and reduction formulas",
-        "Even and odd functions: an odd integrand over a symmetric interval integrates to 0",
-        "Improper integrals of type 1 (infinite bound) and type 2 (unbounded integrand), the standard cases 1/x^p, and the comparison test",
-        "The exam convention: an integral is either its value or DIV"
+        "Even and odd functions: [[an odd integrand over a symmetric interval integrates to 0]]",
+        "Improper integrals of type 1 (infinite bound) and type 2 (unbounded integrand), [[the standard cases 1/x^p]], and the comparison test",
+        "The exam convention: [[an integral is either its value or DIV]]"
       ],
       "do": [
         "Evaluate an integral that needs a substitution followed by integration by parts",
@@ -92,7 +92,7 @@
       ],
       "pitfalls": [
         "Not splitting an integral at an asymptote inside the interval: the Midterm 2025 integral has both an infinite bound and an asymptote at u = 0",
-        "Treating an integral over the whole real line as one limit; both separate limits must exist"
+        "Treating an integral over the whole real line as one limit; [[both separate limits must exist]]"
       ]
     },
     {
@@ -107,20 +107,20 @@
       "importance": "essential",
       "know": [
         "Limits of explicit and recursive sequences, fixed points, simple iteration and the monotone convergence theorem",
-        "Series as limits of partial sums; geometric series and when they converge; p-series",
+        "Series as limits of partial sums; [[geometric series and when they converge]]; p-series",
         "The divergence test, integral test, comparison and limit comparison tests, alternating series test and ratio test, with the conditions of each",
         "Absolute convergence, conditional convergence and divergence (AC, CC or D)",
         "Error bounds on partial sums from the integral test, the alternating series test and comparison"
       ],
       "do": [
         "Prove a recursive sequence is monotone and bounded by induction, then find its limit as the correct fixed point",
-        "Classify a series as AC, CC or D and name the test and the conditions you checked",
+        "Classify a series as AC, CC or D and [[name the test and the conditions you checked]]",
         "Sum a geometric series, or a sum of two geometric series",
         "Approximate the sum of a series to a given error and justify the bound"
       ],
       "pitfalls": [
         "Choosing the wrong root of L = g(L) for a recursive sequence; check which fixed point the sequence can actually reach",
-        "Applying the alternating series test without checking that the terms decrease, or calling a series CC without showing that the absolute series diverges"
+        "Applying the alternating series test without [[checking that the terms decrease]], or calling a series CC without showing that the absolute series diverges"
       ]
     },
     {
@@ -133,11 +133,11 @@
       "timeShare": 9,
       "importance": "essential",
       "know": [
-        "Centre, radius and interval of convergence of a power series, found with the ratio test, and the separate check of both end points",
+        "Centre, radius and interval of convergence of a power series, found with the ratio test, and the [[separate check of both end points]]",
         "Building series from 1/(1 - x) by substitution, multiplication, differentiation and integration term by term",
-        "The Maclaurin series of e^x, sin(x), cos(x), ln(1 + x), arctan(x) and the binomial series, which you need to know by heart",
-        "Taylor coefficients: the coefficient of x^n is f^(n)(0)/n!",
-        "Taylor polynomials, Taylor's inequality and the Lagrange remainder"
+        "The [[Maclaurin series of e^x, sin(x), cos(x), ln(1 + x), arctan(x)]] and the binomial series, which you need to know by heart",
+        "Taylor coefficients: [[the coefficient of x^n is f^(n)(0)/n!]]",
+        "Taylor polynomials, [[Taylor's inequality and the Lagrange remainder]]"
       ],
       "do": [
         "Find the interval of convergence of a given power series, end points included or excluded with a reason",
@@ -164,7 +164,7 @@
         "Limits in two variables and how to show that one does not exist along different paths",
         "Partial derivatives, higher partials and Clairaut's theorem",
         "Tangent plane, linearisation in two variables and differentiability",
-        "The multivariable chain rule, the gradient, the directional derivative D_u f = grad f . u with u a unit vector, and the gradient as the direction of steepest ascent"
+        "The multivariable chain rule, the gradient, the directional derivative [[D_u f = grad f . u with u a unit vector]], and the gradient as [[the direction of steepest ascent]]"
       ],
       "do": [
         "Compute a gradient and a directional derivative at a point",
@@ -186,7 +186,7 @@
       "importance": "important",
       "know": [
         "Critical points as solutions of grad f = 0",
-        "The second derivatives test with D = f_xx f_yy - (f_xy)^2: local minimum, local maximum, saddle point or inconclusive",
+        "The second derivatives test with [[D = f_xx f_yy - (f_xy)^2]]: local minimum, local maximum, saddle point or inconclusive",
         "The extreme value theorem for closed and bounded regions",
         "The closed and bounded region method: interior critical points, each boundary piece as a one-variable problem, and the corner points"
       ],
@@ -210,10 +210,10 @@
       "importance": "important",
       "know": [
         "Arithmetic with complex numbers, the conjugate, and division by multiplying with the conjugate",
-        "Modulus, argument, polar form r(cos(theta) + i sin(theta)) and the exponential form r e^(i theta)",
-        "Euler's formula and De Moivre's rule, and how they give double and triple angle formulas",
-        "The n-th roots of a complex number: n roots on a circle, spaced 2 pi/n apart",
-        "The fundamental theorem of algebra and the fact that the non-real roots of a real polynomial come in conjugate pairs"
+        "Modulus, argument, polar form [[r(cos(theta) + i sin(theta))]] and the exponential form [[r e^(i theta)]]",
+        "[[Euler's formula and De Moivre's rule]], and how they give double and triple angle formulas",
+        "The n-th roots of a complex number: [[n roots on a circle, spaced 2 pi/n apart]]",
+        "The fundamental theorem of algebra and the fact that the [[non-real roots of a real polynomial come in conjugate pairs]]"
       ],
       "do": [
         "Solve equations such as (z - 2)^3 = -8 and give the roots as a + bi or draw them in the plane",
@@ -235,7 +235,7 @@
       "importance": "important",
       "know": [
         "The double integral as a limit of Riemann sums in two variables, and its meaning as volume",
-        "Fubini's theorem: iterated integrals over a rectangle in either order, and separable integrands",
+        "[[Fubini's theorem]]: iterated integrals over a rectangle in either order, and separable integrands",
         "Type I and type II regions, and how to describe a region with variable bounds",
         "Reversing the order of integration, and splitting a region that is neither type into simple pieces"
       ],

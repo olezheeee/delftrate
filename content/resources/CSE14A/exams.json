@@ -133,12 +133,12 @@
     "In open questions write the method before the numbers: name the distribution, the formula and the direction of the test, so you can earn marks even if the arithmetic slips.",
     "In multiple choice there is no partial credit: if your answer is not among the options, recompute rather than pick the nearest one.",
     "Look for shortcuts before integrating: symmetry, linearity, independence and Jensen. Several questions say in a hint that no hard integration is needed.",
-    "For tests on unusual statistics, first decide whether small or large values support H1, then write the p-value or rejection region as a probability under H0."
+    "For tests on unusual statistics, [[first decide whether small or large values support H1]], then write the p-value or rejection region as a probability under H0."
   ],
   "pitfalls": [
     "Filling a joint table by multiplying marginals when independence was not given; the solutions point this out explicitly.",
     "Using z or the wrong degrees of freedom in a t-interval or t-test; with n = 3 the critical value is t_(2, 0.025) = 4.303.",
-    "Setting the derivative of the likelihood to zero when the support depends on the parameter; check where the likelihood is zero first.",
+    "Setting the derivative of the likelihood to zero when the support depends on the parameter; [[check where the likelihood is zero first]].",
     "Using k dummies for k categories, or forgetting to define the new variables and the base category.",
     "Judging a larger regression model by R^2 alone, or testing five coefficients at 0.05 without the multiple-testing correction.",
     "Giving only a final answer to an open question: the cover page says working is required there."

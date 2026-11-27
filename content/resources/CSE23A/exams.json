@@ -122,17 +122,17 @@
   ],
   "trends": [],
   "strategy": [
-    "Prepare the three parts evenly: each counts for a third of the exam grade, whatever its number of points.",
+    "Prepare the three parts evenly: [[each counts for a third of the exam grade]], whatever its number of points.",
     "Drill the fixed exercises until they are routine: the C overflow block, CBC and counter mode diagrams, IND-CPA attacks on ECB or a fixed IV, Shamir with two points, Merkle proofs, an access control matrix with ACLs and capability lists.",
-    "Answer open questions in the elements a checklist would look for: name the mechanism, say why it works or fails, and give one concrete example.",
+    "Answer open questions in the elements a checklist would look for: [[name the mechanism, say why it works or fails, and give one concrete example]].",
     "In design questions, cover several layers (physical access, network segmentation, monitoring, people) and justify every measure, since points are given per distinct measure.",
     "Use the justification box for any multiple-choice item where two options look right, and keep it to one line per item.",
     "Read through all parts first and start with your strongest, as the exam instructions advise; plan about an hour per part."
   ],
   "pitfalls": [
-    "ASLR answers that only say memory is randomised: the checklist gives most points for explaining that buffer and code addresses become hard to locate.",
-    "Code injection answers that miss a step: both overwriting the return address and pointing it at the injected code are marked.",
-    "Treating W XOR X as protection against the overflow itself; it blocks executing injected code, not the overwrite.",
+    "ASLR answers that only say memory is randomised: the checklist gives most points for explaining that [[buffer and code addresses become hard to locate]].",
+    "Code injection answers that miss a step: both [[overwriting the return address and pointing it at the injected code]] are marked.",
+    "Treating W XOR X as protection against the overflow itself; [[it blocks executing injected code, not the overwrite]].",
     "Claiming input sanitisation and a hidden schema are enough against SQL injection; second-order injection still works.",
     "Network scanning answers that mention the kill chain but do not link scanning to a phase or give a practical example.",
     "A remote-work design that stops at a VPN, missing segmentation or monitoring and user education."

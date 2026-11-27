@@ -144,12 +144,75 @@ function record(value: unknown, path: string, allowed: readonly string[]): Recor
 // Booklets are shown as plain text: no Markdown, no LaTeX, no links.
 const MARKUP = /\*\*|`|\$\$|\\\(|\\frac|https?:\/\//;
 
-function text(value: unknown, path: string, max: number, plain = true): string {
+// The one exception to plain text. In a line of a list, the bit to know by heart may stand
+// between [[ and ]]: "The coefficient of x^n is [[f^(n)(0)/n!]]". The page draws a
+// highlighter over it. A line has at most three, and they are parts of it, never all of it.
+// A mark may itself end in a bracket ("[[E[XY] = E[X]E[Y]]]"): it closes at the last two.
+// Two brackets together are always read as the sign of a mark, so brackets that only meet
+// ("w[v[i]]", a list in a list) cannot be written that way; the checks say how instead.
+const MARKED = /\[\[(.*?)\]\](?!\])/g;
+const MARK_SIGN = /\[\[|\]\]/;
+const MARKS_PER_LINE = 3;
+const BRACKETS_THAT_MEET = 'Two brackets that only meet are written with a space between them: "w[v[i] ]"';
+
+export type MarkedPart = { text: string; marked: boolean };
+
+// A line cut into the parts to highlight and the parts between them, in order.
+export function markedParts(line: string): MarkedPart[] {
+  const parts: MarkedPart[] = [];
+  let at = 0;
+  for (const match of line.matchAll(MARKED)) {
+    if (match.index > at) parts.push({ text: line.slice(at, match.index), marked: false });
+    if (match[1] !== "") parts.push({ text: match[1], marked: true });
+    at = match.index + match[0].length;
+  }
+  if (at < line.length) parts.push({ text: line.slice(at), marked: false });
+  return parts;
+}
+
+// The line as it reads, without the signs of the marks.
+export function withoutMarks(line: string): string {
+  return markedParts(line)
+    .map((part) => part.text)
+    .join("");
+}
+
+function checkMarks(value: string, path: string): void {
+  const marks = [...value.matchAll(MARKED)].map((match) => match[1]);
+  if (MARK_SIGN.test(value.replace(MARKED, ""))) {
+    fail(path, `has a [[ without its ]], or the other way round. ${BRACKETS_THAT_MEET}`);
+  }
+  for (const mark of marks) {
+    if (mark.trim() === "") fail(path, "has an empty [[mark]]");
+    if (mark.trim() !== mark) fail(path, `must not have a space at the edge of a mark: "[[${mark}]]"`);
+    if (mark.includes("[[")) fail(path, "must not have a mark inside a mark");
+    // "[[1, 2], [3, 4]]" is a list in a list. Read as a mark it would highlight
+    // "1, 2], [3, 4": a bracket closed that was never opened, and one opened and never closed.
+    if (/^[^[]*\]/.test(mark) && /\[[^\]]*$/.test(mark)) {
+      fail(path, `has "[[${mark}]]", which reads as a mark but looks like a list in a list. ${BRACKETS_THAT_MEET}`);
+    }
+  }
+  if (marks.length > MARKS_PER_LINE) fail(path, `must have at most ${MARKS_PER_LINE} marks (it has ${marks.length})`);
+  // A line is marked as a whole also when only spaces and punctuation are left outside
+  // its marks: "[[All of]] [[it]]."
+  const words = (part: string) => part.replace(/[\s.,;:!?()'"-]/g, "");
+  if (marks.length > 0 && words(marks.join("")) === words(withoutMarks(value))) {
+    fail(path, "must not be marked as a whole: mark the bit to know by heart");
+  }
+}
+
+function text(value: unknown, path: string, max: number, plain = true, marks = false): string {
   if (typeof value !== "string") fail(path, "must be text");
   const trimmed = value.trim();
   if (trimmed === "") fail(path, "must not be empty");
   if (trimmed !== value) fail(path, "must not start or end with a space");
-  if (value.length > max) fail(path, `must be at most ${max} characters (it has ${value.length})`);
+  if (marks) checkMarks(value, path);
+  else if (plain && MARK_SIGN.test(value)) {
+    fail(path, `must not carry [[marks]]: they are for the lines of a list. ${BRACKETS_THAT_MEET}`);
+  }
+  // The length is that of the text as it reads.
+  const length = marks ? withoutMarks(value).length : value.length;
+  if (length > max) fail(path, `must be at most ${max} characters (it has ${length})`);
   if (plain && MARKUP.test(value)) fail(path, "must be plain text: no Markdown, LaTeX or links");
   return value;
 }
@@ -200,8 +263,9 @@ function list<T>(
   return value.map((item, index) => each(item, `${path}[${index}]`));
 }
 
-function lines(value: unknown, path: string, min: number, max: number, length = 260): string[] {
-  return list(value, path, min, max, (item, at) => text(item, at, length));
+// The lines of a list. They may carry [[marks]], except where `marks` is false.
+function lines(value: unknown, path: string, min: number, max: number, length = 260, marks = true): string[] {
+  return list(value, path, min, max, (item, at) => text(item, at, length, true, marks));
 }
 
 function unique(names: string[], path: string): void {
@@ -285,7 +349,7 @@ export function parseKnowledgeBooklet(value: unknown): KnowledgeBooklet {
     if (name === OTHER_TOPIC) fail(`${path}.name`, `must not be "${OTHER_TOPIC}": name what the topic is`);
     return {
       name,
-      lectures: lines(topic.lectures, `${path}.lectures`, 0, 12, 90),
+      lectures: lines(topic.lectures, `${path}.lectures`, 0, 12, 90, false),
       timeShare: whole(topic.timeShare, `${path}.timeShare`, 1, 100),
       importance: oneOf(topic.importance, `${path}.importance`, IMPORTANCE),
       know: lines(topic.know, `${path}.know`, 3, 8),
@@ -383,7 +447,8 @@ export function parseExamBooklet(value: unknown): ExamBooklet {
     },
     topicWeights,
     questionTypes,
-    recurring: lines(root.recurring, "recurring", available ? 3 : 0, 8, 320),
+    // What comes back in the papers: without papers there is nothing to say here.
+    recurring: lines(root.recurring, "recurring", available ? 3 : 0, available ? 8 : 0, 320),
     trends: lines(root.trends, "trends", 0, 5, 320),
     strategy: lines(root.strategy, "strategy", 3, 8, 320),
     pitfalls: lines(root.pitfalls, "pitfalls", available ? 2 : 0, 6, 320),

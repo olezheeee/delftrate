@@ -121,17 +121,17 @@
   "strategy": [
     "Master the calculation drills first: they are about a third of the points, repeat with new numbers each year and can be fully prepared.",
     "Practise without a calculator: page table sizes, inode limits and disk times all reduce to powers of two and simple millisecond sums.",
-    "Write out every step in the trace and calculation tables. The cover page says a correct answer without working gets no credit, while sound working can earn partial credit.",
+    "Write out every step in the trace and calculation tables. The cover page says a [[correct answer without working gets no credit]], while sound working can earn partial credit.",
     "Answer explanation questions in full sentences with as many distinct points as the marks: the model answers say their own short versions would not earn full marks.",
     "Plan about 1.8 minutes per point: 100 points in 180 minutes leaves time to check your tables.",
     "Fill in the optional helper tables, such as the last-used tracker for LRU: the markers use them to give partial credit if the main table is wrong.",
     "Make a one-page list of Windows and virtualisation facts; together they are about 13 percent of the points and the questions are short."
   ],
   "pitfalls": [
-    "The scheduling tables ask for response time, but the model answers measure it from arrival to completion, not to first run; check the definition used before you fill the table.",
-    "In disk-head scheduling the model answers let SCAN and C-SCAN run to the edge of the disk, and C-SCAN counts the jump back; LOOK and C-LOOK turn at the last request.",
-    "When counting metadata blocks, include the inode itself and every indirect block, also the one hanging under the doubly-indirect block.",
-    "Use the virtual address width for the number of page table entries; the physical width only matters for inverted tables and frame counts.",
+    "The scheduling tables ask for response time, but the model answers measure it [[from arrival to completion]], not to first run; check the definition used before you fill the table.",
+    "In disk-head scheduling the model answers let SCAN and C-SCAN run to the edge of the disk, and C-SCAN counts the jump back; [[LOOK and C-LOOK turn at the last request]].",
+    "When counting metadata blocks, include [[the inode itself and every indirect block]], also the one hanging under the doubly-indirect block.",
+    "[[Use the virtual address width for the number of page table entries]]; the physical width only matters for inverted tables and frame counts.",
     "In page replacement, start from the stated access history and clock hand position; a wrong starting state spoils every column after it.",
     "On an 'exactly ten aspects' style question, every aspect must be distinct and correct, so do not pad with repeats."
   ]

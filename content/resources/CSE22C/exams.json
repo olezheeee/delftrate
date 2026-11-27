@@ -59,16 +59,16 @@
   "strategy": [
     "Prepare by redoing the mandatory lab interpreters until you can write them without looking: the exam templates start from them.",
     "Sit old papers in WebLab under exam conditions; read the note on syntax differences first so the old S-expression syntax does not slow you down.",
-    "With about 1.8 minutes per point, give the 30-point theory folder roughly 50 minutes and each programming task 30 to 35.",
-    "Save often: WebLab grades the last saved version, and you can do the parts in any order.",
+    "With about [[1.8 minutes per point]], give the 30-point theory folder roughly 50 minutes and each programming task 30 to 35.",
+    "Save often: [[WebLab grades the last saved version]], and you can do the parts in any order.",
     "Run the given tests and add your own; code that does not compile against the provided tests also fails every spec test.",
     "If a desugaring will not work, write your idea as a comment in the code: it can still earn partial points.",
     "Motivate every open answer in a sentence or two, and for concurrency name the interleaving or the missing atomicity."
   ],
   "pitfalls": [
     "Unmotivated answers to open questions get no points.",
-    "Concurrency answers that do not mention atomicity or the interleaving of operations do not get full points.",
-    "Using for or var, or non-structural recursion, costs points; a working solution that fails the style checks gets only partial points.",
+    "Concurrency answers that do not mention [[atomicity or the interleaving of operations]] do not get full points.",
+    "Using [[for or var, or non-structural recursion]], costs points; a working solution that fails the style checks gets only partial points.",
     "Trusting the spec test score shown during the exam: it is not final, and the tests may change in grading.",
     "Evaluating a function body in the caller's environment instead of the closure's, which gives dynamic scoping where lexical scoping was asked."
   ]

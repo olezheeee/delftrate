@@ -18,9 +18,9 @@
       "importance": "important",
       "know": [
         "The seven OSI layers in order, what each of physical, data link, network, transport and application does, and that session and presentation have hardly any protocols of their own",
-        "The name of the unit each layer sends: bit, frame, packet, segment",
+        "The name of the unit each layer sends: [[bit, frame, packet, segment]]",
         "Which layers run on every router along a path and which run only on the two end hosts",
-        "How TCP/IP differs from OSI: physical and data link merged, no session or presentation layer",
+        "How TCP/IP differs from OSI: [[physical and data link merged, no session or presentation layer]]",
         "Connection-oriented versus connectionless service, and what state means in a protocol",
         "Propagation delay, transmission delay, round-trip time, bandwidth, throughput and goodput, each defined precisely"
       ],
@@ -30,7 +30,7 @@
         "Say what a single ping can and cannot tell you about route, delay and processing time"
       ],
       "pitfalls": [
-        "Confusing transmission delay (pushing all bits onto the wire) with propagation delay (one bit travelling to the other end)",
+        "Confusing [[transmission delay (pushing all bits onto the wire)]] with [[propagation delay (one bit travelling to the other end)]]",
         "Assuming reliability at the data link layer makes the end-to-end path reliable: routers can still drop packets"
       ]
     },
@@ -41,10 +41,10 @@
       "importance": "essential",
       "know": [
         "Parity bits, even versus odd parity, and Hamming distance",
-        "Parity words and the Internet checksum: add the blocks, wrap the carry back in, take the 1's complement",
-        "CRC: append as many zeros as the generator has bits minus one, divide with XOR, the remainder is the check value",
+        "Parity words and the Internet checksum: [[add the blocks, wrap the carry back in, take the 1's complement]]",
+        "CRC: [[append as many zeros as the generator has bits minus one, divide with XOR]], the remainder is the check value",
         "Parity blocks with a row and a column of parity bits, and how they locate and fix a single flipped bit",
-        "Hamming codes: parity bits at positions 1, 2, 4, 8 and so on counted from the left, each covering the positions whose binary index contains it",
+        "Hamming codes: [[parity bits at positions 1, 2, 4, 8]] and so on counted from the left, each covering the positions whose binary index contains it",
         "How many parity bits m data bits need, so that you can give the length of an (n, m) code",
         "Burst errors and why they shape the choice of detection method"
       ],
@@ -72,8 +72,8 @@
         "Sliding window with window size k, and how k limits throughput when the first ACK comes back late",
         "Go-back-N versus selective repeat: receiver buffer, what is resent, and when each is the better choice",
         "Cumulative and duplicate acknowledgements, and negative acknowledgements",
-        "Framing by byte count, byte stuffing with FLAG and ESC bytes, and bit stuffing after five 1s",
-        "Frame structure: header, payload, trailer"
+        "Framing by byte count, byte stuffing with FLAG and ESC bytes, and [[bit stuffing after five 1s]]",
+        "Frame structure: [[header, payload, trailer]]"
       ],
       "do": [
         "Compute throughput and goodput of a sliding window link from frame size, header share, bandwidth, k and the latency in each direction",
@@ -83,7 +83,7 @@
       ],
       "pitfalls": [
         "Not checking whether k frames are sent before the first ACK returns; that comparison decides the throughput formula",
-        "Removing escaped data bytes when unstuffing: drop the FLAG at each end and the ESC bytes, keep what was escaped"
+        "Removing escaped data bytes when unstuffing: [[drop the FLAG at each end and the ESC bytes, keep what was escaped]]"
       ]
     },
     {
@@ -94,13 +94,13 @@
       "timeShare": 15,
       "importance": "essential",
       "know": [
-        "ALOHA and slotted ALOHA, and why slots double the efficiency",
+        "ALOHA and slotted ALOHA, and why [[slots double the efficiency]]",
         "1-persistent, nonpersistent and p-persistent CSMA, and collision-free protocols: token ring, bit-map, binary countdown",
-        "CSMA/CD, the 2 tau collision detection time and why Ethernet needs a minimum frame size",
-        "Binary exponential backoff: after collision i, wait a random number of slots from 0 to 2 to the power i, minus 1",
+        "CSMA/CD, the [[2 tau collision detection time]] and why Ethernet needs a minimum frame size",
+        "Binary exponential backoff: after collision i, [[wait a random number of slots from 0 to 2 to the power i, minus 1]]",
         "Hidden and exposed terminals, MACA with RTS and CTS, and CSMA/CA in 802.11 with NAV, paused backoff and stop-and-wait ACKs",
         "802.11 infrastructure and ad-hoc mode, and why a frame can carry three or four addresses",
-        "Hubs versus switches, backward learning, and the Spanning Tree Protocol with the smallest ID as root"
+        "Hubs versus switches, backward learning, and the Spanning Tree Protocol with [[the smallest ID as root]]"
       ],
       "do": [
         "Trace a CSMA/CA timeline with several stations, backoffs and ACKs to find when a station may send",
@@ -125,8 +125,8 @@
         "Internet structure: hosts, routers, autonomous systems and Internet exchange points",
         "IPv4 and IPv6 addresses, their sizes and notation, including shortening IPv6 addresses",
         "The key IPv4 header fields (addresses, TTL, checksum, fragment fields) and what IPv6 changed",
-        "Transparent and nontransparent fragmentation and MTU discovery; IPv6 uses only MTU discovery",
-        "DHCP, ICMP and traceroute, ARP, and NAT mapping internal address plus port to an external port",
+        "Transparent and nontransparent fragmentation and MTU discovery; [[IPv6 uses only MTU discovery]]",
+        "DHCP, ICMP and traceroute, ARP, and NAT mapping [[internal address plus port to an external port]]",
         "Network-layer congestion control: provisioning, traffic-aware routing, throttling, ECN and RED"
       ],
       "do": [
@@ -135,7 +135,7 @@
         "Explain how NAT rewrites outgoing and incoming packets, and convert a prefix length to a subnet mask"
       ],
       "pitfalls": [
-        "Fragmenting the whole packet at once by the smallest MTU when there is no MTU discovery: each router splits the fragments it receives",
+        "Fragmenting the whole packet at once by the smallest MTU when there is no MTU discovery: [[each router splits the fragments it receives]]",
         "Describing NAT without ports: the rubric gives most points only for the internal address and port to external port mapping"
       ]
     },
@@ -147,11 +147,11 @@
       "timeShare": 5,
       "importance": "important",
       "know": [
-        "Forwarding versus routing, and what a routing table holds: destination, cost and outgoing line",
+        "Forwarding versus routing, and what a routing table holds: [[destination, cost and outgoing line]]",
         "Distance vector routing and the count-to-infinity problem",
         "Link state routing: flooding link state packets and computing shortest paths",
-        "IP prefixes, CIDR and longest prefix match",
-        "Intra-domain routing (OSPF, link state) versus inter-domain routing (BGP, path vector)"
+        "IP prefixes, CIDR and [[longest prefix match]]",
+        "Intra-domain routing ([[OSPF, link state]]) versus inter-domain routing ([[BGP, path vector]])"
       ],
       "do": [
         "Build a router's table from its neighbours' distance vectors and the link costs, using the stated tie-break",
@@ -174,9 +174,9 @@
       "importance": "essential",
       "know": [
         "Ports, Berkeley socket primitives, and multiplexing versus inverse multiplexing",
-        "UDP: the 8-byte header and why its checksum is optional",
-        "TCP header, three-way handshake, and which flags use up a sequence number (SYN and FIN do, a bare ACK does not)",
-        "Sequence and acknowledgement numbers count bytes; duplicate ACKs and fast retransmission",
+        "UDP: the [[8-byte header]] and why its checksum is optional",
+        "TCP header, three-way handshake, and which flags use up a sequence number ([[SYN and FIN do, a bare ACK does not]])",
+        "[[Sequence and acknowledgement numbers count bytes]]; duplicate ACKs and fast retransmission",
         "Clock-based initial sequence numbers, packet lifetime and the forbidden region",
         "Symmetric and asymmetric connection release, and the two-armies problem",
         "Flow control with the receiver window, silly-window syndrome, and congestion control: slow start, threshold, additive increase, TCP Tahoe and TCP Reno",
@@ -189,7 +189,7 @@
       ],
       "pitfalls": [
         "Forgetting the 1 that the SYN adds to the initial sequence number",
-        "Mixing up Tahoe (window back to 1) and Reno (window set to the new threshold) after a congestion signal"
+        "Mixing up [[Tahoe (window back to 1) and Reno (window set to the new threshold)]] after a congestion signal"
       ]
     },
     {
@@ -200,14 +200,14 @@
       "timeShare": 18,
       "importance": "essential",
       "know": [
-        "Confidentiality, integrity and availability; authentication; repudiation versus nonrepudiation",
+        "[[Confidentiality, integrity and availability]]; authentication; repudiation versus nonrepudiation",
         "Full, responsible and coordinated disclosure of vulnerabilities",
         "Stream and block ciphers, S-boxes and P-boxes, and the modes ECB, CBC and counter mode",
-        "Textbook RSA (n = p times q, c to the power d mod n), hybrid encryption and Diffie-Hellman",
+        "Textbook RSA ([[n = p times q, c to the power d mod n]]), hybrid encryption and Diffie-Hellman",
         "MACs versus digital signatures, cryptographic hash properties, hash-then-sign, and PKIs",
         "WEP and why it failed, WPA2 and WPA3; firewalls with signature- or anomaly-based detection, discard versus TCP reset",
         "IPsec and VPNs in transport and tunnel mode, Tor onion routing and onion services, TLS, DNS spoofing and DNSSEC",
-        "PGP (sign, then encrypt with a fresh symmetric key sent under the receiver's public key) and OTR"
+        "PGP ([[sign, then encrypt with a fresh symmetric key]] sent under the receiver's public key) and OTR"
       ],
       "do": [
         "Encrypt or decrypt a few 4-bit blocks with a given S-box or P-box in CBC or counter mode",
@@ -218,7 +218,7 @@
       "pitfalls": [
         "Applying the P-box forwards when decrypting; the rubric halves the points for it",
         "Doing XOR and S-box in the wrong order in CBC, or XOR-ing with the wrong block",
-        "Saying a relay uses its public key in Tor: the layers use the shared keys set up with each relay"
+        "Saying a relay uses its public key in Tor: the layers use [[the shared keys set up with each relay]]"
       ]
     },
     {
@@ -231,8 +231,8 @@
       "importance": "important",
       "know": [
         "DNS name space, name servers, resource records, recursive versus iterative lookups, and why DNS runs over UDP",
-        "Email: envelope, header and body; SMTP to send, IMAP or POP3 to read",
-        "Base64: three bytes become four 6-bit characters, with = padding",
+        "Email: envelope, header and body; [[SMTP to send, IMAP or POP3 to read]]",
+        "Base64: [[three bytes become four 6-bit characters, with = padding]]",
         "HTTP requests and status codes, URLs, persistent connections, pipelining versus multiplexing",
         "Video streaming: I, P and B frames, buffering, interleaving, and live and interactive streaming",
         "CDNs and DNS redirection, BitTorrent, Chord DHT finger tables, and the three kinds of blockchain"
@@ -240,7 +240,7 @@
       "do": [
         "Encode bytes in Base64 or decode a Base64 string, including padding",
         "Count the queries of an uncached DNS lookup, and say which server a CDN returns for a lookup",
-        "Fill in a Chord finger table: entry i is the successor of the node's position plus 2 to the power i, modulo the ring size"
+        "Fill in a Chord finger table: [[entry i is the successor of the node's position plus 2 to the power i, modulo the ring size]]"
       ],
       "pitfalls": [
         "Getting the padding wrong at the end of a Base64 string",

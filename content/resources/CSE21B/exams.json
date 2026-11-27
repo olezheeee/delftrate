@@ -134,7 +134,7 @@
     }
   ],
   "recurring": [
-    "Both analysed written resits have a 3-point master-method recurrence, marked in three steps (leaves, case, answer); the coverage tables on the papers list one on the recent midterms too.",
+    "Both analysed written resits have a 3-point master-method recurrence, marked in three steps ([[leaves, case, answer]]); the coverage tables on the papers list one on the recent midterms too.",
     "A greedy problem in two steps: disprove a suggested rule with an instance, then prove the correct rule with a 5-point exchange or stays-ahead argument.",
     "A 3-point DP table question on the 2025 endterm and resit: complete a partly given OPT, fill the table from index 0 and trace back the chosen intervals or edges.",
     "A known recurrence (weighted interval scheduling, subset sum, the restaurant shifts) is extended with an extra constraint, and you must update the call too.",
@@ -149,8 +149,8 @@
   ],
   "strategy": [
     "Prepare for the two halves separately: a strong written grade cannot rescue a programming grade below 5, or the other way round.",
-    "Memorise the proof templates for greedy (both styles) and the cut-capacity proof for min-cut models; they return almost word for word with new problems.",
-    "For every OPT you write, check that the base cases fit the initial call and that no maximum can return plus infinity.",
+    "Memorise the [[proof templates for greedy (both styles) and the cut-capacity proof]] for min-cut models; they return almost word for word with new problems.",
+    "For every OPT you write, check that [[the base cases fit the initial call]] and that no maximum can return plus infinity.",
     "In the programming exam, first get a correct solution, then make it asymptotically optimal; a slower one loses points, and partial steps still earn credit.",
     "Do not trust the spec tests: grading is manual, and a boolean task can pass many tests by always returning the same value.",
     "Practise coding network models with the supplied Graph, Node and Edge library, including demands and lower bounds, before the exam.",

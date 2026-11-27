@@ -20,9 +20,9 @@
       "know": [
         "Stakeholders, why missing one is costly, and how to find underrepresented ones",
         "Elicitation techniques: interviews, questionnaires, scenarios, use cases and contextual inquiry, and when each fits",
-        "User requirements (natural language, for customers) versus system requirements (detailed, for developers and tenders)",
+        "[[User requirements (natural language, for customers)]] versus [[system requirements (detailed, for developers and tenders)]]",
         "Functional versus non-functional requirements, the categories of non-functional ones, and ethical requirements",
-        "SMART requirements and verifiability; prioritisation with MoSCoW and with the Kano model and its categories",
+        "SMART requirements and verifiability; prioritisation with [[MoSCoW]] and with the [[Kano model]] and its categories",
         "UML notation: use case diagrams with include and extend, sequence diagrams with alt fragments and activations, class diagrams with composition versus shared aggregation, component diagrams with provided and required interfaces; activity diagrams only to read"
       ],
       "do": [
@@ -31,7 +31,7 @@
         "Draw a use case, sequence or class diagram in PlantUML from a short text"
       ],
       "pitfalls": [
-        "Calling a constraint on the technology or the process (such as written in Java/Spring) functional: the model answers class it as a non-functional system requirement",
+        "Calling a constraint on the technology or the process (such as written in Java/Spring) functional: the model answers class it as a [[non-functional system requirement]]",
         "Mixing up include and extend in use case diagrams, or UML composition with DDD aggregates",
         "Using PlantUML's extends or implements keywords, which the recap warns draw the wrong arrows"
       ]
@@ -46,12 +46,12 @@
       "timeShare": 13,
       "importance": "important",
       "know": [
-        "Architecture as the significant decisions that are costly to change, and architectural views (context, functional, information)",
-        "The C4 model's four levels (context, container, component, code) and which audience each serves",
+        "Architecture as the [[significant decisions that are costly to change]], and architectural views (context, functional, information)",
+        "The C4 model's four levels ([[context, container, component, code]]) and which audience each serves",
         "The patterns client-server, layered (three-tier), MVC, pipe-and-filter, microservices, publish-subscribe and event-driven, each with its quality attributes",
         "The CAP theorem and eventual consistency",
         "Finding and reproducing production problems: Sentry error and performance tracking, performance checks in CI, impersonation, staging environments, local copies of production data",
-        "Scaling: caching results and (partial) pages, the scale cube (X, Y and Z axes), load balancers, microservices and fault tolerance",
+        "Scaling: caching results and (partial) pages, the [[scale cube (X, Y and Z axes)]], load balancers, microservices and fault tolerance",
         "Deployment: Docker images versus containers, Docker versus virtual machines, the cloud, infrastructure as code and serverless"
       ],
       "do": [
@@ -75,11 +75,11 @@
       "importance": "essential",
       "know": [
         "Cohesion and coupling, and the SOLID principles, including the open-closed and Liskov substitution principles",
-        "Behavioural patterns: Iterator, Strategy, Chain of Responsibility, Observer",
-        "Structural patterns: Adapter, Facade, Proxy, Decorator, Composite",
-        "Creational patterns: Factory Method, Abstract Factory, Builder, Singleton; and Factory Method versus Builder",
+        "Behavioural patterns: [[Iterator, Strategy, Chain of Responsibility, Observer]]",
+        "Structural patterns: [[Adapter, Facade, Proxy, Decorator, Composite]]",
+        "Creational patterns: [[Factory Method, Abstract Factory, Builder, Singleton]]; and Factory Method versus Builder",
         "DDD strategic design: bounded contexts classed as core, supporting or generic, and upstream and downstream relations",
-        "DDD building blocks: entities versus value objects (identity versus attributes), aggregates with a single root, services, ubiquitous language, and keeping associations few and one-directional"
+        "DDD building blocks: [[entities versus value objects (identity versus attributes)]], [[aggregates with a single root]], services, ubiquitous language, and keeping associations few and one-directional"
       ],
       "do": [
         "Choose the pattern that fits a scenario and say why the near-misses do not",
@@ -89,7 +89,7 @@
       ],
       "pitfalls": [
         "Reaching for Factory Method or Adapter when behaviour must vary at run time: the model answer for a format switch is Strategy",
-        "Treating a DDD aggregate as a database grouping or a max/mean computation; outside classes may only reference the root",
+        "Treating a DDD aggregate as a database grouping or a max/mean computation; [[outside classes may only reference the root]]",
         "Renaming classes in a diagram: the WebLab spec tests match the names given in the question"
       ]
     },
@@ -103,10 +103,10 @@
       "importance": "essential",
       "know": [
         "Testing principles: exhaustive testing is impossible, the pesticide paradox, defects cluster, testing is context-dependent, absence of errors is a fallacy",
-        "The testing pyramid (unit, integration, system, manual) and the trade-offs between speed, realism and flakiness",
-        "The seven steps of specification-based testing: understand the requirement, explore the program, identify partitions, analyse boundaries, devise, automate and augment",
+        "The testing pyramid ([[unit, integration, system, manual]]) and the trade-offs between speed, realism and flakiness",
+        "The seven steps of specification-based testing: [[understand the requirement, explore the program, identify partitions, analyse boundaries, devise, automate and augment]]",
         "Equivalence partitioning with the category-partition method, and combining partitions without an explosion of tests",
-        "Boundary analysis with on points, off points, in points and out points",
+        "Boundary analysis with [[on points, off points, in points and out points]]",
         "Parameterised tests in JUnit 5"
       ],
       "do": [
@@ -129,13 +129,13 @@
       "know": [
         "Line, block, branch, condition, branch plus condition, path and MC/DC coverage, and the subsumption relations between them",
         "Control flow graphs and how a compound condition splits into separate branches",
-        "Why high coverage does not prove a suite is good, while low coverage shows what is untested",
-        "Mutation testing: mutants, killed and surviving mutants, mutation score, equivalent mutants and typical mutation operators",
+        "Why [[high coverage does not prove a suite is good]], while low coverage shows what is untested",
+        "Mutation testing: mutants, [[killed and surviving mutants, mutation score, equivalent mutants]] and typical mutation operators",
         "Using coverage after specification-based testing to find what the suite missed"
       ],
       "do": [
         "Work out the minimum number of tests for full branch coverage of a method with nested loops and conditions",
-        "Select an MC/DC test set for a boolean expression of four conditions (n plus 1 tests)",
+        "Select an MC/DC test set for a boolean expression of four conditions ([[n plus 1 tests]])",
         "Create a mutant that the given suite kills, a non-equivalent mutant that survives, and a test that kills it"
       ],
       "pitfalls": [
@@ -153,10 +153,10 @@
       "importance": "important",
       "know": [
         "Preconditions, postconditions and class invariants, and the invariant rule for public methods",
-        "Defensive versus cooperative checking, and assertions versus if-statements with exceptions (assertions can be disabled)",
-        "Contracts and inheritance: a subclass may weaken preconditions and strengthen postconditions and invariants, not the reverse (Liskov)",
+        "Defensive versus cooperative checking, and assertions versus if-statements with exceptions ([[assertions can be disabled]])",
+        "Contracts and inheritance: [[a subclass may weaken preconditions and strengthen postconditions and invariants]], not the reverse (Liskov)",
         "Contracts versus input validation",
-        "Property-based testing with jqwik: @Property, @ForAll, Arbitraries, @Provide and @Example",
+        "Property-based testing with jqwik: [[@Property, @ForAll, Arbitraries, @Provide and @Example]]",
         "Common property patterns: round-tripping, invariants, idempotence, hard to compute but easy to verify, differential and metamorphic testing"
       ],
       "do": [
@@ -179,10 +179,10 @@
       "timeShare": 6,
       "importance": "essential",
       "know": [
-        "Dummies, fakes, stubs, mocks and spies, and when a stub is enough",
-        "Mockito: mock, when and thenReturn, verify with times and never, and ArgumentCaptor",
+        "[[Dummies, fakes, stubs, mocks and spies]], and when a stub is enough",
+        "Mockito: [[mock, when and thenReturn, verify with times and never]], and ArgumentCaptor",
         "What to mock (slow or external dependencies) and what not to (the class under test, entities, value objects, exceptions)",
-        "Separating domain code from infrastructure: ports and adapters (hexagonal architecture)",
+        "Separating domain code from infrastructure: [[ports and adapters (hexagonal architecture)]]",
         "Dependency injection versus the dependency inversion principle, controllability and observability",
         "Why static methods and hidden dependencies such as the system clock hurt testability, and how to inject them instead"
       ],
@@ -207,10 +207,10 @@
       "know": [
         "When to test several classes together, and the cost of integration and system tests: flakiness, timeouts, data pollution",
         "SQL testing: setting up and cleaning the database, and applying category-partition and MC/DC to queries",
-        "Web testing with Selenium WebDriver: locating elements, interacting, waiting, and the Page Object pattern",
-        "Test code quality: DAMP over DRY, naming tests after behaviour, clear failure messages, AssertJ, no logic in tests, testing via public APIs",
+        "Web testing with Selenium WebDriver: locating elements, interacting, waiting, and the [[Page Object pattern]]",
+        "Test code quality: [[DAMP over DRY]], naming tests after behaviour, clear failure messages, AssertJ, no logic in tests, testing via public APIs",
         "Test smells and testing state rather than interactions",
-        "Test-driven development: the red-green-refactor cycle and its effect on design (asked only as theory)"
+        "Test-driven development: the [[red-green-refactor cycle]] and its effect on design (asked only as theory)"
       ],
       "do": [
         "Write Selenium system tests for a described web page",
@@ -218,7 +218,7 @@
         "Spot the smell in a test and rewrite it"
       ],
       "pitfalls": [
-        "Leaving a failing test in a submission: a suite with one failing test scores zero, so fix it or comment it out",
+        "Leaving a failing test in a submission: [[a suite with one failing test scores zero]], so fix it or comment it out",
         "Using mocks in a system-test task; the exam Q&A asks you to follow the instructions on which technique to use"
       ]
     },
@@ -231,7 +231,7 @@
       "timeShare": 5,
       "importance": "important",
       "know": [
-        "Cyclomatic complexity as decision points plus one, or edges minus nodes plus two on the control flow graph",
+        "Cyclomatic complexity as [[decision points plus one]], or [[edges minus nodes plus two]] on the control flow graph",
         "Cohesion and LCOM, coupling between objects",
         "Code smells: long method, feature envy, magic numbers, low cohesion, switch statements against the open-closed principle",
         "Refactorings: extract method, move method, extract class, introduce parameter object, replacing conditionals with polymorphism or a map",
@@ -259,11 +259,11 @@
       "importance": "important",
       "know": [
         "The software crisis, The Mythical Man-Month and No Silver Bullet",
-        "The Open Source Definition, permissive versus copyleft licences, common myths, supply-chain risks, and why companies contribute changes upstream",
+        "The Open Source Definition, [[permissive versus copyleft licences]], common myths, supply-chain risks, and why companies contribute changes upstream",
         "Product criteria (functionality, licence, non-functional properties, popularity, documentation, code quality, build) and process criteria (governance, workflow, releases, support, issue handling, contributions) for choosing open source software",
-        "Agile frameworks Scrum, Kanban, ScrumBan and XP, scaling frameworks SAFe, LeSS, Scrum@Scale and Spotify, and VUCA",
+        "Agile frameworks [[Scrum, Kanban, ScrumBan and XP]], scaling frameworks [[SAFe, LeSS, Scrum@Scale and Spotify]], and VUCA",
         "Energy versus power, measuring energy and carbon, tracing overhead, and the finding that energy changes tend to hurt maintainability",
-        "Generative AI in development: zero-shot and few-shot prompting, prompt engineering, and the ethical, legal (licensing, data leaks) and security risks"
+        "Generative AI in development: [[zero-shot and few-shot prompting]], prompt engineering, and the ethical, legal (licensing, data leaks) and security risks"
       ],
       "do": [
         "Assess whether an open source system suits an organisation, naming two product and two process criteria",

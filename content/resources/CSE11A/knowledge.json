@@ -17,10 +17,10 @@
       "know": [
         "The connectives not, and, or, ->, <-> and xor, the main connective of a formula, and how to read a new operator from its truth table",
         "Tautology, contradiction and contingency; satisfiable versus unsatisfiable",
-        "Logical equivalence and the laws used to rewrite: De Morgan, distribution, double negation, p -> q equivalent to (not p) or q",
-        "Converse, inverse and contrapositive of p -> q, and which of them are equivalent",
-        "Sufficient and necessary conditions: p is necessary for q means q -> p",
-        "Validity of an argument, and the principle of explosion: contradictory premises make any argument valid",
+        "Logical equivalence and the laws used to rewrite: De Morgan, distribution, double negation, [[p -> q equivalent to (not p) or q]]",
+        "[[Converse, inverse and contrapositive]] of p -> q, and which of them are equivalent",
+        "Sufficient and necessary conditions: [[p is necessary for q means q -> p]]",
+        "Validity of an argument, and the principle of explosion: [[contradictory premises make any argument valid]]",
         "Disjunctive and conjunctive normal form (DNF, CNF), reading a DNF straight from the true rows of a table"
       ],
       "do": [
@@ -42,11 +42,11 @@
       "importance": "essential",
       "know": [
         "Predicates, constants, functions and the domain of discourse; \"for all x\" and \"there exists x\"",
-        "Why \"for all x (A(x) -> B(x))\" goes with a universal claim and \"there exists x (A(x) and B(x))\" with an existential one",
-        "Negating quantified formulas: not for all x becomes there exists x not, and pushing negations down to the predicates",
-        "The order of quantifiers matters (for all x there exists y versus there exists y for all x)",
+        "Why \"[[for all x (A(x) -> B(x))]]\" goes with a universal claim and \"[[there exists x (A(x) and B(x))]]\" with an existential one",
+        "Negating quantified formulas: [[not for all x becomes there exists x not]], and pushing negations down to the predicates",
+        "[[The order of quantifiers matters]] (for all x there exists y versus there exists y for all x)",
         "Expressing \"only\", \"exactly one\" and \"exactly two\" with equality, and using sets and cardinality inside formulas",
-        "Tarski worlds and formal structures: a domain plus the set of tuples for each predicate; truth of a formula in a structure",
+        "Tarski worlds and formal structures: [[a domain plus the set of tuples for each predicate]]; truth of a formula in a structure",
         "Using a structure as a counterexample to show that a predicate-logic argument is invalid"
       ],
       "do": [
@@ -69,21 +69,21 @@
       "importance": "essential",
       "know": [
         "The difference between a definition, a theorem, a lemma and a conjecture",
-        "Definitions of even, odd, divisibility (a | b), prime and rational number; the number sets N (with 0 in N), Z, Q and R",
+        "Definitions of [[even, odd, divisibility (a | b), prime and rational number]]; the number sets N ([[with 0 in N]]), Z, Q and R",
         "Direct proof, proof by generalisation (take an arbitrary element), contrapositive, contradiction and division into cases",
         "Classic proofs: sqrt(2) is irrational, there is no smallest positive rational, every 4-digit palindrome is divisible by 11",
         "Proving an existential claim with an example and refuting a universal claim with a counterexample",
         "Which technique suits which claim: cases for remainders, contradiction for \"there is no\", contrapositive for negated conclusions"
       ],
       "do": [
-        "Prove a divisibility claim for all integers by writing n as 3m, 3m + 1 or 3m + 2 and treating each case",
+        "Prove a divisibility claim for all integers by [[writing n as 3m, 3m + 1 or 3m + 2]] and treating each case",
         "Write a proof by contradiction or contrapositive with the starting assumption stated correctly",
         "Name the two proof techniques used in an excerpt from a research paper and point to the lines that show them"
       ],
       "pitfalls": [
         "Starting with \"take an arbitrary k such that the claim holds\": that assumes what you must prove",
         "Opening a contradiction proof with an arbitrary element instead of \"suppose there exists\" a counterexample",
-        "Using modular arithmetic rules, which are not allowed unless proven in the course"
+        "Using modular arithmetic rules, which are [[not allowed unless proven in the course]]"
       ]
     },
     {
@@ -92,12 +92,12 @@
       "timeShare": 16,
       "importance": "essential",
       "know": [
-        "The principle of mathematical induction and the proof template: base case, induction hypothesis for an arbitrary k, inductive step, conclusion",
+        "The principle of mathematical induction and the proof template: [[base case, induction hypothesis for an arbitrary k, inductive step, conclusion]]",
         "Base cases other than 0, strong induction for recurrences that use the two previous terms, and induction in both directions to cover all of Z",
-        "Induction over a subset such as the multiples of 4: prove P(4) and for all x, P(4x) -> P(4(x + 1))",
+        "Induction over a subset such as the multiples of 4: [[prove P(4) and for all x, P(4x) -> P(4(x + 1))]]",
         "How many base cases a step of size 3 needs, as in P(n) -> P(n + 3)",
         "Recursive sequences and recursive functions with several cases, including rules that alternate between odd and even positions",
-        "Loop invariants and proofs by invariant in four parts: initialisation, iteration, eventual falsity of the guard, post-condition"
+        "Loop invariants and proofs by invariant in four parts: [[initialisation, iteration, eventual falsity of the guard, post-condition]]"
       ],
       "do": [
         "Prove a sum formula, a divisibility claim or a closed form for a recurrence by induction",
@@ -118,9 +118,9 @@
       "timeShare": 6,
       "importance": "important",
       "know": [
-        "A recursive set definition: base rules, recursive rules and the exclusion rule \"nothing else is in the set\"",
+        "A recursive set definition: [[base rules, recursive rules and the exclusion rule]] \"nothing else is in the set\"",
         "Standard examples: the set PROP of formulas, sets of words over a and b, the MIU system, sets of numbers",
-        "Structural induction: one base case per base rule and one inductive step per recursive rule",
+        "Structural induction: [[one base case per base rule and one inductive step per recursive rule]]",
         "Recursive functions defined on a recursive set, such as counting connectives or word length"
       ],
       "do": [
@@ -141,8 +141,8 @@
       "know": [
         "Binary trees: root, leaves, height, full and proper trees; parse trees and prefix notation",
         "Pre-order, in-order and post-order traversals",
-        "The formal TREE definition: the empty tree, a leaf (x, empty) and a node (x, (T1, ..., Tk)); BTREE for binary trees",
-        "Recursive functions on TREE, with base cases for the empty tree and for a leaf",
+        "The formal TREE definition: [[the empty tree, a leaf (x, empty) and a node (x, (T1, ..., Tk))]]; BTREE for binary trees",
+        "Recursive functions on TREE, with [[base cases for the empty tree and for a leaf]]",
         "Graphs: vertices, edges, degree, directed and undirected, simple graphs, multigraphs, weights and paths",
         "Directed acyclic graphs and topological orderings, including when a DAG has exactly one ordering"
       ],
@@ -166,7 +166,7 @@
         "Set notation and set-builder notation, the empty set and why it is unique, subsets",
         "Union, intersection, difference, complement and symmetric difference, and how each matches a connective",
         "Venn diagrams for three sets",
-        "The power set P(A) with 2 to the power |A| elements, and the Cartesian product A x B with |A| times |B| pairs",
+        "The power set P(A) with [[2 to the power |A| elements]], and the Cartesian product A x B with [[|A| times |B| pairs]]",
         "Proving set claims by element chasing and refuting them with concrete sets"
       ],
       "do": [
@@ -184,11 +184,11 @@
       "timeShare": 14,
       "importance": "important",
       "know": [
-        "A relation as a subset of A x B; reflexive, symmetric, antisymmetric and transitive, written in logic",
+        "A relation as [[a subset of A x B]]; [[reflexive, symmetric, antisymmetric and transitive]], written in logic",
         "Equivalence relations, equivalence classes and partitions; partial orderings",
         "A function as a special relation: domain, codomain and what makes a function well-defined",
-        "Injective, surjective and bijective functions",
-        "Countably infinite sets (a bijection with N), Cantor's argument that R is uncountable"
+        "[[Injective, surjective and bijective]] functions",
+        "Countably infinite sets ([[a bijection with N]]), Cantor's argument that [[R is uncountable]]"
       ],
       "do": [
         "Check each property of a relation, with a counterexample for every property that fails",
@@ -208,7 +208,7 @@
       "importance": "important",
       "know": [
         "Constraint puzzles in which you narrow a set of options until one remains",
-        "Puzzles about what other people know: the fact that a clue was not enough is itself information",
+        "Puzzles about what other people know: the fact that [[a clue was not enough is itself information]]",
         "Reconstructing earlier moves of a game from the final board"
       ],
       "do": [

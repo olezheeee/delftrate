@@ -121,15 +121,15 @@
     "Use structure to save time: expand determinants along rows or columns with zeros, and read eigenvalues of PCP^-1 straight from C.",
     "For a parameter question, row reduce with the parameter in place and check separately every value that makes a pivot zero.",
     "On academic reasoning, write TRUE or FALSE, then a full proof or an explicit numerical counterexample with all the quantities the question asks for; keep the Recall, Try, Answer steps from Lectures 7 and 17.",
-    "Memorise the rotation and reflection matrices and the composition order, so the transformation questions take a minute.",
+    "Memorise the [[rotation and reflection matrices and the composition order]], so the transformation questions take a minute.",
     "Take the midterm seriously even though it is optional: it can only raise your grade and it tests the first half in the same box format."
   ],
   "pitfalls": [
-    "Writing only TRUE or FALSE earns 0 on academic reasoning; a counterexample without the requested bases or eigenvalues lost a point on Resit 2022.",
+    "[[Writing only TRUE or FALSE earns 0]] on academic reasoning; a counterexample without the requested bases or eigenvalues lost a point on Resit 2022.",
     "Giving the squared least-squares error: Resit 2023 gave 1 of 3 points for 38 instead of sqrt(38).",
     "Pairing C for one complex eigenvalue with the eigenvector of the other: the 2024 endterm solutions mark that P as incorrect.",
     "Choosing columns of the echelon form as a basis of Col A instead of the matching columns of A.",
-    "Using det(cA) = c det(A) for an n x n matrix; it is c^n det(A).",
+    "Using det(cA) = c det(A) for an n x n matrix; it is [[c^n det(A)]].",
     "Classifying the origin as an attractor or saddle when an eigenvalue has absolute value 1: then it is none of these."
   ]
 }

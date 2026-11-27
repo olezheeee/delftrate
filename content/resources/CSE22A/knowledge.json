@@ -17,9 +17,9 @@
       "know": [
         "Objects, features, classes and the feature space; supervised tasks (classification, regression) versus unsupervised ones (clustering, dimensionality reduction)",
         "Generalisation, the i.i.d. assumption and the no-free-lunch theorem as the reason the course covers many classifiers",
-        "The prior p(y), the class-conditional density p(x|y), the posterior p(y|x) and Bayes' rule that links them through p(x)",
-        "The Bayes classifier: choose the class with the largest p(x|y) p(y); its boundary lies where the prior-weighted densities cross",
-        "The Bayes error as the lowest error any classifier can reach on a problem, and type I and type II errors",
+        "The [[prior p(y), the class-conditional density p(x|y), the posterior p(y|x)]] and Bayes' rule that links them through p(x)",
+        "The Bayes classifier: [[choose the class with the largest p(x|y) p(y)]]; its boundary lies where the prior-weighted densities cross",
+        "The [[Bayes error as the lowest error any classifier can reach]] on a problem, and type I and type II errors",
         "Misclassification costs, conditional risk and the rule that minimises the total risk"
       ],
       "do": [
@@ -29,7 +29,7 @@
       ],
       "pitfalls": [
         "Swapping the names prior, class-conditional and posterior: a Weblab and practice exam question tests exactly this",
-        "Adding up the error areas of both classes without first weighting each by its class prior"
+        "Adding up the error areas of both classes without first [[weighting each by its class prior]]"
       ]
     },
     {
@@ -39,12 +39,12 @@
       "importance": "important",
       "know": [
         "Histogram density estimates and why the number of cells explodes with the dimension: the curse of dimensionality",
-        "The univariate and multivariate Gaussian, and maximum likelihood estimates of the mean and the covariance matrix",
+        "The [[univariate and multivariate Gaussian]], and maximum likelihood estimates of the mean and the covariance matrix",
         "Plug-in Bayes rule: priors from class frequencies, class-conditional densities from fitted Gaussians",
-        "QDA (a covariance matrix per class, quadratic boundary), LDA (one averaged covariance, linear boundary) and the nearest mean classifier (identity covariance)",
+        "[[QDA (a covariance matrix per class, quadratic boundary)]], [[LDA (one averaged covariance, linear boundary)]] and the nearest mean classifier (identity covariance)",
         "Why a covariance matrix needs enough samples to be invertible, and how sharing or dropping it helps with few samples",
         "Generative versus discriminative models, and mixtures of Gaussians for classes with several modes",
-        "Why classifiers that use Euclidean distance need feature scaling, such as zero-mean, unit-variance"
+        "Why [[classifiers that use Euclidean distance need feature scaling]], such as zero-mean, unit-variance"
       ],
       "do": [
         "Count the free parameters of QDA or LDA for a given dimension and number of classes",
@@ -53,8 +53,8 @@
         "Say how a change in class priors moves an LDA boundary"
       ],
       "pitfalls": [
-        "Counting a full covariance matrix as d times d parameters instead of d(d+1)/2, or giving LDA one covariance per class",
-        "Thinking a change of priors can bend the LDA boundary: it only shifts, and stays linear"
+        "Counting a full covariance matrix as d times d parameters instead of [[d(d+1)/2]], or giving LDA one covariance per class",
+        "Thinking a change of priors can bend the LDA boundary: [[it only shifts, and stays linear]]"
       ]
     },
     {
@@ -65,8 +65,8 @@
       "know": [
         "Apparent (training) error versus true error, and why the gap between them signals overfitting",
         "Test-set error estimates and their variance, and the trade-off between training set size and test set size",
-        "k-fold cross-validation, leave-one-out, bootstrapping, and double (nested) cross-validation for tuning hyperparameters",
-        "Learning curves, feature curves and the bias-variance decomposition of the squared error",
+        "k-fold cross-validation, leave-one-out, bootstrapping, and [[double (nested) cross-validation for tuning hyperparameters]]",
+        "Learning curves, feature curves and the [[bias-variance decomposition of the squared error]]",
         "Confusion matrices, ROC curves and the area under the ROC curve"
       ],
       "do": [
@@ -76,7 +76,7 @@
         "Read a confusion matrix and trace an ROC curve from classifier outputs at several thresholds"
       ],
       "pitfalls": [
-        "Calling the cross-validation error unbiased: each fold trains on fewer objects, so it is slightly pessimistic",
+        "Calling the [[cross-validation error]] unbiased: each fold trains on fewer objects, so it is [[slightly pessimistic]]",
         "Confusing more test objects (a steadier estimate of the same error) with more training objects (a lower error)",
         "Taking the inner validation fold from the whole data set instead of from the outer training part"
       ]
@@ -90,8 +90,8 @@
         "Parametric versus non-parametric density estimation",
         "Parzen (kernel) density estimation, the role of the width h, and the Parzen classifier",
         "k-nearest neighbour density estimation and classification, the effect of k, tie-breaking and distance measures",
-        "Pros and cons of Parzen and k-NN: no training step, but sensitive to scaling and costly at prediction time",
-        "Naive Bayes: the conditional independence assumption, continuous and discrete versions, missing values and the zero-frequency problem"
+        "Pros and cons of Parzen and k-NN: [[no training step, but sensitive to scaling and costly at prediction time]]",
+        "Naive Bayes: the [[conditional independence assumption]], continuous and discrete versions, missing values and the zero-frequency problem"
       ],
       "do": [
         "Compute a Parzen estimate at a point for a box kernel",
@@ -100,9 +100,9 @@
         "Train a discrete Naive Bayes classifier by hand from a small table"
       ],
       "pitfalls": [
-        "Forgetting the 1/h and 1/n factors in the Parzen estimate",
+        "Forgetting the [[1/h and 1/n factors]] in the Parzen estimate",
         "Believing Gaussian Naive Bayes always gives a linear boundary: with different variances per class it does not",
-        "Thinking a larger k makes the k-NN boundary more complex: it makes it smoother"
+        "Thinking a [[larger k]] makes the k-NN boundary more complex: it makes it [[smoother]]"
       ]
     },
     {
@@ -111,12 +111,12 @@
       "timeShare": 13,
       "importance": "essential",
       "know": [
-        "Empirical risk minimisation: a hypothesis class, a loss function and minimising the average loss on the training data",
+        "Empirical risk minimisation: [[a hypothesis class, a loss function and minimising the average loss]] on the training data",
         "Linear regression with squared loss, its closed-form solution, and gradient descent and stochastic gradient descent",
-        "What the learning rate does, and why gradient descent uses only first derivatives and may stop in a local minimum",
-        "Logistic regression: h(x) = sigmoid(w^T x), the negative log-likelihood, its gradient and the boundary where w^T x = 0",
-        "Hard-margin and soft-margin support vector classifiers: margin, support vectors, hinge loss and the 1/2 ||w||^2 term",
-        "Multi-class schemes: one-versus-rest (K classifiers) and one-versus-one (K(K-1)/2 classifiers) and their ambiguous regions"
+        "What the learning rate does, and why gradient descent [[uses only first derivatives and may stop in a local minimum]]",
+        "Logistic regression: [[h(x) = sigmoid(w^T x)]], the negative log-likelihood, its gradient and the [[boundary where w^T x = 0]]",
+        "Hard-margin and soft-margin support vector classifiers: margin, support vectors, [[hinge loss and the 1/2 ||w||^2 term]]",
+        "Multi-class schemes: [[one-versus-rest (K classifiers)]] and [[one-versus-one (K(K-1)/2 classifiers)]] and their ambiguous regions"
       ],
       "do": [
         "Write the loss and its gradient for linear or logistic regression in NumPy",
@@ -136,11 +136,11 @@
       "timeShare": 13,
       "importance": "essential",
       "know": [
-        "Where disparities enter the machine learning loop: measurement, learning, action and feedback, with self-fulfilling predictions",
-        "The independence criterion (equal positive rates per group) and the separation criterion (equal error rates, checkable on ROC curves)",
-        "Why dropping a sensitive attribute does not remove discrimination: other features act as proxies",
+        "Where disparities enter the machine learning loop: [[measurement, learning, action and feedback]], with self-fulfilling predictions",
+        "The [[independence criterion (equal positive rates per group)]] and the [[separation criterion (equal error rates, checkable on ROC curves)]]",
+        "Why dropping a sensitive attribute does not remove discrimination: [[other features act as proxies]]",
         "Limits of statistical fairness notions: groups can look fair while individual decisions are not, and criteria conflict",
-        "Normative versus descriptive ethics, and utilitarianism, deontology (duty ethics) and virtue ethics",
+        "Normative versus descriptive ethics, and [[utilitarianism, deontology (duty ethics) and virtue ethics]]",
         "Epistemic versus non-epistemic values, moral agency and responsibility, and positionality"
       ],
       "do": [
@@ -160,10 +160,10 @@
       "importance": "essential",
       "know": [
         "Tree learning: assigning values to leaves, choosing splits, stopping and pruning",
-        "Impurity measures: entropy, Gini index and classification error; information gain and gain ratio",
+        "Impurity measures: [[entropy, Gini index and classification error]]; information gain and gain ratio",
         "Splitting on continuous features with thresholds, and which feature transformations leave the tree unchanged",
         "Classifier combining: Condorcet's jury theorem, bagging, random subspaces and random forests",
-        "Pros and cons of trees: readable rules, no scaling needed, high variance"
+        "Pros and cons of trees: [[readable rules, no scaling needed, high variance]]"
       ],
       "do": [
         "Compute entropy, Gini index and information gain for a split by hand",
@@ -171,8 +171,8 @@
         "Choose the best feature and threshold on a small table"
       ],
       "pitfalls": [
-        "Missing the empty or pure node case: 0 log 0 must count as 0",
-        "Thinking rescaling or flipping the sign of a feature changes the tree: monotone transformations do not, squaring can"
+        "Missing the empty or pure node case: [[0 log 0 must count as 0]]",
+        "Thinking rescaling or flipping the sign of a feature changes the tree: [[monotone transformations do not, squaring can]]"
       ]
     },
     {
@@ -181,9 +181,9 @@
       "timeShare": 11,
       "importance": "important",
       "know": [
-        "The perceptron, its loss and training rule, and why it cannot learn XOR",
-        "Multilayer perceptrons: hidden layers, activation functions (step, logistic, ReLU) and the forward pass",
-        "Backpropagation as the efficient way to compute the gradient, with a forward and a backward pass; training itself uses (stochastic) gradient descent",
+        "The perceptron, its loss and training rule, and why it [[cannot learn XOR]]",
+        "Multilayer perceptrons: hidden layers, [[activation functions (step, logistic, ReLU)]] and the forward pass",
+        "[[Backpropagation as the efficient way to compute the gradient]], with a forward and a backward pass; training itself uses (stochastic) gradient descent",
         "Image convolution with a kernel, feature maps, ReLU and max pooling in a convolutional network"
       ],
       "do": [
@@ -203,10 +203,10 @@
       "importance": "essential",
       "know": [
         "Distance and similarity measures, hard versus soft clustering, and why cluster evaluation is hard",
-        "The k-means algorithm, its sum of squared errors, local optima, restarts and the elbow method for choosing k",
-        "Agglomerative clustering with single, complete and average linkage, the shapes each produces, and dendrograms",
+        "The k-means algorithm, its sum of squared errors, local optima, restarts and the [[elbow method for choosing k]]",
+        "Agglomerative clustering with [[single, complete and average linkage]], the shapes each produces, and dendrograms",
         "Why reduce dimensions: visualisation, redundant features, intrinsic dimensionality and the curse of dimensionality",
-        "PCA: centre the data, compute the covariance matrix, take its eigenvectors; eigenvalues give the variance explained",
+        "PCA: [[centre the data, compute the covariance matrix, take its eigenvectors]]; [[eigenvalues give the variance explained]]",
         "Reconstruction from principal components, scree plots, and PCA as a step before classification"
       ],
       "do": [
@@ -216,7 +216,7 @@
         "Compute a 2 by 2 covariance matrix, its eigenvalues and the share of variance per component"
       ],
       "pitfalls": [
-        "Choosing k by the smallest sum of squared errors: it always falls as k grows",
+        "Choosing k by the smallest sum of squared errors: [[it always falls as k grows]]",
         "Dividing by N - 1 when the maximum likelihood covariance is asked, or skipping the centring step",
         "Ignoring the tie-breaking rule in an assignment task (for example the highest index), which fails the tests"
       ]

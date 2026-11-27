@@ -3,11 +3,13 @@ import {
   ContentError,
   crossCheck,
   isCourseCode,
+  markedParts,
   parseExamBooklet,
   parseKnowledgeBooklet,
   papersNoun,
   parseResources,
   topicStatistics,
+  withoutMarks,
 } from "./resources";
 
 // A valid file of each kind. Every test changes one thing in a copy.
@@ -162,6 +164,104 @@ describe("the knowledge booklet", () => {
   });
 });
 
+describe("the marks of what to know by heart", () => {
+  const line = "The coefficient of x^n is [[f^(n)(0)/n!]], also at [[n = 0]]";
+
+  it("cuts a line into marked and unmarked parts, in order", () => {
+    expect(markedParts(line)).toEqual([
+      { text: "The coefficient of x^n is ", marked: false },
+      { text: "f^(n)(0)/n!", marked: true },
+      { text: ", also at ", marked: false },
+      { text: "n = 0", marked: true },
+    ]);
+    expect(markedParts("Nothing to mark")).toEqual([{ text: "Nothing to mark", marked: false }]);
+    expect(markedParts("[[First]] and last")).toEqual([
+      { text: "First", marked: true },
+      { text: " and last", marked: false },
+    ]);
+    // Square brackets on their own are text: an index, an interval.
+    expect(markedParts("The entry a[i][j] on [0, 1]")).toEqual([{ text: "The entry a[i][j] on [0, 1]", marked: false }]);
+  });
+
+  it("lets a mark begin or end with a bracket of its own", () => {
+    expect(markedParts("Under independence [[E[XY] = E[X]E[Y]]] holds")).toEqual([
+      { text: "Under independence ", marked: false },
+      { text: "E[XY] = E[X]E[Y]", marked: true },
+      { text: " holds", marked: false },
+    ]);
+    expect(markedParts("On [[[0, 1] the function is continuous]], so")).toEqual([
+      { text: "On ", marked: false },
+      { text: "[0, 1] the function is continuous", marked: true },
+      { text: ", so", marked: false },
+    ]);
+    expect(markedParts("The entry [[a[b[i]]]] of it")[1]).toEqual({ text: "a[b[i]]", marked: true });
+    const knowledge = change(KNOWLEDGE, "topics.0.know.0", "Under independence [[E[XY] = E[X]E[Y]]] holds");
+    expect(parseKnowledgeBooklet(knowledge)).toEqual(knowledge);
+  });
+
+  it("reads a line without its marks", () => {
+    expect(withoutMarks(line)).toBe("The coefficient of x^n is f^(n)(0)/n!, also at n = 0");
+    expect(withoutMarks("Nothing to mark")).toBe("Nothing to mark");
+  });
+
+  it("accepts marks in the lines of a list, in both booklets", () => {
+    const knowledge = change(KNOWLEDGE, "topics.0.know.0", line);
+    expect(parseKnowledgeBooklet(knowledge)).toEqual(knowledge);
+    const exams = change(EXAMS, "pitfalls.0", "Mixing up [[bits and bytes]] in a size");
+    expect(parseExamBooklet(exams)).toEqual(exams);
+  });
+
+  it("refuses a mark that is open, empty, padded, nested or the whole line", () => {
+    const refused: [string, RegExp][] = [
+      ["An [[open mark", /\[\[ without its \]\]/],
+      ["A closed]] mark", /\[\[ without its \]\]/],
+      ["An empty [[]] mark", /empty/],
+      ["A [[ padded]] mark", /space at the edge/],
+      ["A [[mark [[in]] a mark]]", /\[\[ without its \]\]|inside a mark/],
+      ["[[The whole line]]", /marked as a whole/],
+      ["[[The whole]][[line]]", /marked as a whole/],
+      ["[[The whole]] [[line]]", /marked as a whole/],
+      ["[[The whole line]].", /marked as a whole/],
+      ["[[One]], [[two]], [[three]] and [[four]] marks", /at most 3 marks/],
+      // Brackets that only meet are not a mark, and are not drawn as one by mistake.
+      ["The matrix [[1, 2], [3, 4]] has determinant -2", /looks like a list in a list.*with a space/],
+      ["Fill the entry OPT[i][w - w[i]] of the table", /\[\[ without its \]\].*with a space/],
+    ];
+    for (const [value, message] of refused) {
+      expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.1.do.0", value)), value).toThrow(message);
+      expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.1.do.0", value)), value).toThrow(/^topics\[1\]\.do\[0\]/);
+    }
+  });
+
+  it("keeps marks out of everything that is not a line of a list", () => {
+    expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "summary", "What an [[operating system]] does."))).toThrow(
+      /^summary must not carry \[\[marks\]\]/,
+    );
+    expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.0.name", "[[Scheduling]] basics"))).toThrow(/marks/);
+    expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.0.lectures.0", "Lecture [[1]]"))).toThrow(/marks/);
+    expect(() => parseExamBooklet(change(EXAMS, "topicWeights.0.asks", "Trace a [[schedule]]."))).toThrow(/marks/);
+    // Brackets that only meet are told how to be written.
+    expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "summary", "Filling OPT[i][w - w[i]] by hand."))).toThrow(
+      /^summary must not carry \[\[marks\]\].*with a space/,
+    );
+  });
+
+  it("leaves a bracket inside a mark alone when it is no list in a list", () => {
+    for (const value of ["On [[the interval (0, 1]]] it holds", "On [[the interval [0, 1)]] it holds", "Then [[a[i] = b[i]]] holds"]) {
+      const knowledge = change(KNOWLEDGE, "topics.1.do.0", value);
+      expect(parseKnowledgeBooklet(knowledge), value).toEqual(knowledge);
+    }
+  });
+
+  it("counts the length of a line as it reads, without the signs of its marks", () => {
+    const full = `${"a".repeat(250)} ${"b".repeat(9)}`;
+    expect(full).toHaveLength(260);
+    const marked = `${"a".repeat(250)} [[${"b".repeat(9)}]]`;
+    expect(parseKnowledgeBooklet(change(KNOWLEDGE, "topics.0.know.0", marked)).topics[0].know[0]).toBe(marked);
+    expect(() => parseKnowledgeBooklet(change(KNOWLEDGE, "topics.0.know.0", `${marked}c`))).toThrow(/at most 260 characters \(it has 261\)/);
+  });
+});
+
 describe("the exam booklet", () => {
   it("accepts a valid file and returns it unchanged", () => {
     expect(parseExamBooklet(EXAMS)).toEqual(EXAMS);
@@ -210,6 +310,8 @@ describe("the exam booklet", () => {
     // Numbers without papers to count them from are refused.
     expect(() => parseExamBooklet({ ...none, topicWeights: EXAMS.topicWeights })).toThrow(/topicWeights must have 0 entries/);
     expect(() => parseExamBooklet({ ...none, basis: EXAMS.basis })).toThrow(/basis\.papers must have 0 entries/);
+    // So is a list of what comes back in them.
+    expect(() => parseExamBooklet({ ...none, recurring: EXAMS.recurring })).toThrow(/recurring must have 0 entries/);
     // And a booklet that says it has papers must list them.
     expect(() => parseExamBooklet({ ...none, available: true })).toThrow(/basis\.papers must have 1 to 40 entries/);
   });

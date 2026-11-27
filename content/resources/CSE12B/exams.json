@@ -87,7 +87,7 @@
     "Every question hangs on a short scenario: a company survey, a toy, a furniture webshop, a medication app, a password page, building signs.",
     "Open answers are marked per distinct correct element, so the points tell you how many separate items to give.",
     "The course's fixed lists are the answer key: the twelve design principles, the universal design guidelines, the five exclusion types, the PACT parts.",
-    "Justification counts as much as the answer: the principle questions give one point for the name and one for the reason.",
+    "Justification counts as much as the answer: the principle questions give [[one point for the name and one for the reason]].",
     "Prototyping and requirements are tested with check-all-that-apply questions whose wrong options mix up definitions."
   ],
   "trends": [],
@@ -95,7 +95,7 @@
     "Treat this as preparation for the predecessor's style only: check the CSE12B course page for the real format as soon as it appears.",
     "Make flash cards of the fixed lists with a one-line definition each; most practice points ask you to apply a definition to a case.",
     "Practise PACT analyses and design principle matching on everyday apps you use: these two kinds of question carry nearly half the practice points.",
-    "For every open answer, give exactly as many distinct items as there are points, each with a short reason.",
+    "For every open answer, give exactly [[as many distinct items as there are points]], each with a short reason.",
     "On check-all-that-apply questions, test each option on its own against the slide definition rather than looking for one right answer.",
     "Do not skip controlled experiments, adaptive systems and conversational interfaces: no practice set covers them, but they are in the lectures and the CSE3500 exam tested understanding of all course concepts."
   ],
@@ -103,7 +103,7 @@
     "Naming the principle without saying why it fits, or explaining without naming it: each half is a separate point.",
     "Giving overlapping user groups or activities in a PACT analysis; only distinct aspects score.",
     "Mixing up horizontal and vertical prototypes, a swap the practice distractors are built on.",
-    "Adding cost to the severity rating: the model answer names impact and frequency, with cost considered only when choosing what to fix.",
+    "Adding cost to the severity rating: the model answer names [[impact and frequency]], with cost considered only when choosing what to fix.",
     "Choosing the more thorough-sounding option on survey questions, such as letting every stakeholder speak to the design team, when the model answer favours clear and useful questions."
   ]
 }

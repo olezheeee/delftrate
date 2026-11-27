@@ -21,11 +21,11 @@
       "know": [
         "The formal definitions of O, Omega and Theta with a constant c and a threshold n0, and what the tightest bound of a function is",
         "Why counting primitive operations beats timing runs, and why constant factors and lower-order terms are dropped",
-        "The growth order of the usual functions: 1, log n, n, n log n, n^2, n^3, 2^n, and how logarithms with different bases relate",
+        "The growth order of the usual functions: [[1, log n, n, n log n, n^2, n^3, 2^n]], and how logarithms with different bases relate",
         "How to turn a recursive method into a base case and a recurrence such as T(n) = c1 + c2 n + 2T(n/4), one term per part of the code",
-        "The unfolding procedure: expand a few times, simplify, write the pattern after k steps, choose k so you reach the base case, substitute",
+        "The unfolding procedure: [[expand a few times, simplify, write the pattern after k steps, choose k so you reach the base case, substitute]]",
         "Space complexity: the call stack grows with recursion depth, and tail-recursion optimisation can remove that cost",
-        "Binary search as the model example, with O(log n) time and O(1) or O(log n) space depending on how it is written"
+        "Binary search as the model example, with [[O(log n) time]] and O(1) or O(log n) space depending on how it is written"
       ],
       "do": [
         "Prove a bound such as 2n^2 + 5n + 49 is O(n^2) by giving c and n0",
@@ -36,7 +36,7 @@
       ],
       "pitfalls": [
         "Skipping steps while unfolding: the marking gives a point per step, and an error after skipped steps costs all of them",
-        "Forgetting that LinkedList.get(i) is O(n), so calling it inside a double loop adds a factor n to the bound",
+        "Forgetting that [[LinkedList.get(i) is O(n)]], so calling it inside a double loop adds a factor n to the bound",
         "Leaving out what the input size n is, or not tying each term of the recurrence to lines of code"
       ]
     },
@@ -51,9 +51,9 @@
       "know": [
         "Arrays: insertion and removal by shifting, shallow versus deep copies with clone, and in-place insertion sort",
         "Singly, doubly and circularly linked lists, and the cost of inserting and removing at the head, the tail and a given node",
-        "Dynamic arrays that double when full: Theta(n) worst case for one append but amortised O(1) per append",
+        "Dynamic arrays that double when full: [[Theta(n) worst case for one append but amortised O(1) per append]]",
         "The Stack, Queue and Deque ADTs, each implemented with an array (a circular one for queues) or a linked list, with their costs",
-        "Positional lists and iterators, and why a position gives O(1) insertion next to a node",
+        "Positional lists and iterators, and why [[a position gives O(1) insertion]] next to a node",
         "Applications such as matching brackets with a stack and building a queue from two stacks"
       ],
       "do": [
@@ -80,9 +80,9 @@
         "Tree terms: depth, height, internal and external nodes, proper and complete binary trees, and the bounds linking nodes and height",
         "Pre-order, post-order, in-order and breadth-first traversals, and linked versus array storage of a binary tree",
         "The priority queue ADT, with unsorted and sorted list versions and their insert and removeMin costs",
-        "Heaps: heap order, completeness, height floor(log n), and up-heap and down-heap bubbling in O(log n)",
-        "The array heap with children of index i at 2i+1 and 2i+2, and finding the last position in a linked heap",
-        "Bottom-up heap construction in O(n), and adaptable priority queues that can update or remove any entry",
+        "Heaps: heap order, completeness, [[height floor(log n)]], and [[up-heap and down-heap bubbling in O(log n)]]",
+        "The array heap with [[children of index i at 2i+1 and 2i+2]], and finding the last position in a linked heap",
+        "[[Bottom-up heap construction in O(n)]], and adaptable priority queues that can update or remove any entry",
         "Comparable versus Comparator for defining the order of keys"
       ],
       "do": [
@@ -107,11 +107,11 @@
       "know": [
         "Selection, insertion and heap sort as sorting with a priority queue, and their in-place versions",
         "Merge sort and quick sort as divide and conquer, with their recursion trees and recurrences",
-        "Quick sort: Theta(n^2) worst case with a bad pivot, expected O(n log n) with a random pivot, in-place partitioning",
-        "The Omega(n log n) lower bound for comparison sorting from the decision-tree argument",
+        "Quick sort: [[Theta(n^2) worst case with a bad pivot, expected O(n log n) with a random pivot]], in-place partitioning",
+        "The [[Omega(n log n) lower bound for comparison sorting]] from the decision-tree argument",
         "Bucket sort in O(n + N) and radix sort with stable bucket passes, and when they beat comparison sorts",
         "Stability, in-place behaviour and running time on nearly sorted input for every algorithm",
-        "Quick-select for the k-th smallest element in expected O(n)"
+        "Quick-select for the k-th smallest element in [[expected O(n)]]"
       ],
       "do": [
         "Count the swaps or comparisons a given sort makes on a given array",
@@ -120,7 +120,7 @@
         "Implement merge sort, quick sort, quick-select or a hybrid in Java as the task describes"
       ],
       "pitfalls": [
-        "Forgetting that quick sort with the last element as pivot runs in Theta(n^2) on sorted input",
+        "Forgetting that quick sort with the last element as pivot runs in [[Theta(n^2) on sorted input]]",
         "Treating radix sort as linear when the number of digits grows with n, for example d = log n"
       ]
     },
@@ -134,8 +134,8 @@
       "know": [
         "The map ADT and its cost with an unsorted or a sorted array list",
         "Hash codes, compression by division or by the MAD method, and why a prime table size spreads keys better",
-        "Separate chaining and linear probing, with DEFUNCT markers for removed entries",
-        "The load factor, rehashing and expected O(1) versus worst-case O(n) operations",
+        "Separate chaining and linear probing, with [[DEFUNCT markers for removed entries]]",
+        "The load factor, rehashing and [[expected O(1) versus worst-case O(n) operations]]",
         "Sets, multisets, multimaps and sorted maps, and why a hash table cannot answer ordered queries"
       ],
       "do": [
@@ -158,8 +158,8 @@
       "importance": "important",
       "know": [
         "Binary search trees: search, insert and delete (with the in-order successor or predecessor) in O(h), and h up to n",
-        "AVL trees: the height-balance rule, single and double rotations by tri-node restructuring, and height O(log n)",
-        "(2,4) trees: multiway search, splits on overflow, and transfers and fusions on underflow",
+        "AVL trees: the height-balance rule, single and double rotations by tri-node restructuring, and [[height O(log n)]]",
+        "(2,4) trees: multiway search, [[splits on overflow, and transfers and fusions on underflow]]",
         "Red-black trees as a binary encoding of (2,4) trees, with recolouring and restructuring on insert and delete",
         "When a balanced tree beats a hash table: ordered operations such as first, last, floor and ceiling"
       ],
@@ -171,7 +171,7 @@
       ],
       "pitfalls": [
         "Using the wrong height convention: some questions count a null leaf position as height 0",
-        "Forgetting that a plain BST built from sorted input degrades to a list with O(n) operations"
+        "Forgetting that a plain BST built from sorted input [[degrades to a list with O(n) operations]]"
       ]
     },
     {
@@ -185,9 +185,9 @@
       "know": [
         "Graph terms: directed and undirected, simple graphs, paths, cycles, connectivity, and at most n(n-1)/2 edges",
         "Edge list, adjacency list, adjacency map and adjacency matrix, with the space and cost of each operation",
-        "DFS and BFS in O(n + m), and using them for connected components, path finding and cycle detection",
-        "DAGs and topological ordering by repeatedly taking a vertex with no incoming edges",
-        "Dijkstra's algorithm with an adaptable priority queue in O((n + m) log n), only for non-negative weights",
+        "[[DFS and BFS in O(n + m)]], and using them for connected components, path finding and cycle detection",
+        "DAGs and topological ordering by [[repeatedly taking a vertex with no incoming edges]]",
+        "Dijkstra's algorithm with an adaptable priority queue in [[O((n + m) log n), only for non-negative weights]]",
         "Kruskal's algorithm for minimum spanning trees, using a partition (union-find) structure"
       ],
       "do": [
@@ -198,7 +198,7 @@
       ],
       "pitfalls": [
         "Using Dijkstra where BFS is enough (all weights equal) or where weights can be negative",
-        "Picking the representation by habit: an edge test is O(1) in a matrix but O(n^2) space suits only dense graphs"
+        "Picking the representation by habit: [[an edge test is O(1) in a matrix]] but O(n^2) space suits only dense graphs"
       ]
     }
   ],
