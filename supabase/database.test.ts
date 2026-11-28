@@ -239,6 +239,64 @@ describe("confirming an email address", () => {
     expect(await password(id)).toBe("chosen-by-a-lead");
   });
 
+  // Supabase Auth creates an account for a lead (the admin API with "email_confirm") in
+  // one transaction: the account with its password first, other writes, the confirmation last.
+  it("keeps the password of an account that is created and confirmed in one transaction", async () => {
+    const id = await db.transaction(async (tx) => {
+      const made = await tx.query<{ id: string }>(
+        "insert into auth.users (encrypted_password) values ('chosen-by-a-lead') returning id",
+      );
+      const id = made.rows[0].id;
+      await tx.query("update auth.users set email = 'lead-made@example.com' where id = $1", [id]);
+      await tx.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+      return id;
+    });
+    expect(await password(id)).toBe("chosen-by-a-lead");
+  });
+
+  it("still forgets the password when the confirmation comes in a later transaction", async () => {
+    // A stranger signs up for someone else's address: one transaction.
+    const id = await db.transaction(async (tx) => {
+      const made = await tx.query<{ id: string }>(
+        "insert into auth.users (encrypted_password) values ('set-by-a-stranger') returning id",
+      );
+      return made.rows[0].id;
+    });
+    // The owner confirms the address: another transaction, on the same connection.
+    await db.transaction(async (tx) => {
+      await tx.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    });
+    expect(await password(id)).toBeNull();
+  });
+
+  it("forgets a stranger's password also when the same transaction creates another account", async () => {
+    const strangers = await unconfirmed();
+    const other = await db.transaction(async (tx) => {
+      const made = await tx.query<{ id: string }>(
+        "insert into auth.users (encrypted_password) values ('chosen-by-a-lead') returning id",
+      );
+      await tx.query("update auth.users set email_confirmed_at = now() where id = $1", [strangers]);
+      await tx.query("update auth.users set email_confirmed_at = now() where id = $1", [made.rows[0].id]);
+      return made.rows[0].id;
+    });
+    expect(await password(strangers)).toBeNull();
+    expect(await password(other)).toBe("chosen-by-a-lead");
+  });
+
+  it("keeps nothing from a transaction that was rolled back", async () => {
+    const id = await unconfirmed();
+    // A transaction notes a new account and fails. Its note must not outlive it.
+    await expect(
+      db.transaction(async (tx) => {
+        await tx.query("insert into auth.users (encrypted_password) values ('x')");
+        await tx.query("select set_config('delftrate.new_account', $1, true)", [id]);
+        throw new Error("stop");
+      }),
+    ).rejects.toThrow("stop");
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    expect(await password(id)).toBeNull();
+  });
+
   it("leaves the password alone before and after the confirmation", async () => {
     const id = await unconfirmed();
     // Not confirmed yet: other changes to the account do not touch the password.
