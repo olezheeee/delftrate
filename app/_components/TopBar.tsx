@@ -1,5 +1,6 @@
-// The bar at the top of the home page: the name on the left, the site's numbers in the
-// middle, and the way into an account on the right.
+// The bar at the top of the home page, the course list and the leaderboards: the name on
+// the left, the site's numbers in the middle, and the way into an account on the right
+// (for a signed-in user, also the links to the course list and the leaderboards).
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
@@ -34,7 +35,7 @@ async function LiveTotals() {
     totals = await getSiteTotals();
   } catch (error) {
     // The page works without its numbers.
-    console.error("Home page: the site totals could not be read.", error);
+    console.error("Top bar: the site totals could not be read.", error);
   }
   return <Totals totals={totals} />;
 }
@@ -76,17 +77,27 @@ async function Account() {
     signedIn = (await getCurrentUser()) !== null;
   } catch (error) {
     // The page works without knowing who is looking at it: the two links are shown.
-    console.error("Home page: the session could not be read.", error);
+    console.error("Top bar: the session could not be read.", error);
   }
   return (
-    <nav className={styles.account} aria-label="Account">
+    <nav className={signedIn ? `${styles.account} ${styles.signedIn}` : styles.account} aria-label="Account">
       {signedIn ? (
-        <Link href="/account" className={styles.profile} aria-label="Your account" title="Your account">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-            <circle cx="12" cy="8.5" r="3.6" />
-            <path d="M4.8 20c.9-3.6 3.7-5.6 7.2-5.6s6.3 2 7.2 5.6" strokeLinecap="round" />
-          </svg>
-        </Link>
+        <>
+          <Link href="/courses" className={styles.login}>
+            Courses
+          </Link>
+          <Link href="/leaderboards" className={styles.login}>
+            <span className={styles.boardsFull}>Leaderboards</span>
+            {/* Phones have no room for the full word next to the other two links. */}
+            <span className={styles.boardsShort}>Boards</span>
+          </Link>
+          <Link href="/account" className={styles.profile} aria-label="Your account" title="Your account">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <circle cx="12" cy="8.5" r="3.6" />
+              <path d="M4.8 20c.9-3.6 3.7-5.6 7.2-5.6s6.3 2 7.2 5.6" strokeLinecap="round" />
+            </svg>
+          </Link>
+        </>
       ) : (
         <>
           <Link href="/login" className={styles.login}>

@@ -95,6 +95,10 @@
 .narrow {
   display: none;
 }
+/* The word for the leaderboards link: the short one on phones, so the bar fits. */
+.boardsShort {
+  display: none;
+}
 .profile {
   display: grid;
   place-items: center;
@@ -150,6 +154,16 @@
     padding: 0 12px;
     font-size: 13px;
   }
+  /* Three links in a row: no room for a gap between them. */
+  .signedIn {
+    gap: 0;
+  }
+  .boardsFull {
+    display: none;
+  }
+  .boardsShort {
+    display: inline;
+  }
   .totals li {
     gap: 6px;
   }
@@ -164,6 +178,21 @@
 /* The smallest phones: a shorter word for the account button, and each number above its
    label instead of next to it. */
 @media (max-width: 360px) {
+  .bar {
+    gap: 8px 6px;
+  }
+  .brand {
+    padding-left: 6px;
+    font-size: 16px;
+  }
+  .login,
+  .create {
+    padding: 0 8px;
+  }
+  .profile {
+    width: 40px;
+    height: 40px;
+  }
   .wide {
     display: none;
   }
