@@ -154,7 +154,7 @@ export function CourseCard({
         {combined ? (
           <>
             {/* Higher is harder, which a bare "5.4 / 10" would not say. */}
-            <span className={`mono ${styles.scoreLabel}`}>Difficulty · 1 easiest, 10 hardest</span>
+            <span className={`mono ${styles.scoreLabel}`}>Difficulty · higher is harder</span>
             <b>
               {one(combined.score)}
               <small>/ 10</small>

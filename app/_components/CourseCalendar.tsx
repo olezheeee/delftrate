@@ -191,7 +191,7 @@ export function CourseCalendar({
       {layout && layout.rows > 0 && (scores ? (
         <p className={styles.legend}>
           <span className={styles.legendItem}>
-            Difficulty, from the easiest (1)
+            Difficulty, from the easiest
             <span
               className={styles.scale}
               style={{ background: `linear-gradient(to right, ${LOAD_SCALE.join(", ")})` }}
@@ -330,8 +330,8 @@ function CourseLink({
   );
 }
 
-// The overall difficulty of the course, written as "5.4/10": 1 is the easiest course, 10
-// one that is impossible to pass. The number takes its own colour: the site's blue for an
+// The overall difficulty of the course, written as "5.4/10": the higher, the harder, and
+// 10 is a course that is impossible to pass (the lowest it can be is 0, not 1). The number takes its own colour: the site's blue for an
 // easy course, white in between, a warm tone for a hard one (difficultyColour), so the
 // colour never says anything the number does not.
 function Overall({ score }: { score: number | null }) {
@@ -343,7 +343,7 @@ function Overall({ score }: { score: number | null }) {
       title={
         text === null
           ? "Difficulty: too few votes so far"
-          : `Difficulty: ${text} out of 10. 1 is the easiest course, 10 the hardest.`
+          : `Difficulty: ${text} out of 10. Higher is harder.`
       }
       style={score === null ? undefined : ({ "--tone": difficultyColour(score) } as CSSProperties)}
     >
