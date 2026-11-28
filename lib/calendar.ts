@@ -17,15 +17,27 @@ export type CalendarCourse = {
 // They come from the database function calendar_scores().
 export type CourseNumbers = { score: number | null; load: number | null; teach: number | null };
 
-// The colour that says how hard a subject is, as a hue for the overall score of a course:
-// green (140) for a light load, through yellow, to red (0) for a heavy one. Loads of 4 and
-// lower are all the lightest green and loads of 9 and higher all the deepest red, because
+// The colour that says how hard a subject is, for the overall score of a course. It stays
+// inside the site's own colours: the light blue of the accent for a light load, white in
+// the middle, and the warm counterpart of that blue for a heavy one (cool to warm). Loads of
+// 4 and lower are all the full blue and loads of 9 and higher the full warm tone, because
 // that is the range real courses are in; the colour changes evenly in between.
 const LIGHT_LOAD = 4;
 const HEAVY_LOAD = 9;
-export function loadHue(load: number): number {
+type Rgb = readonly [number, number, number];
+/** The accent of the site (--accent in globals.css). */
+const COOL: Rgb = [127, 208, 247];
+const NEUTRAL: Rgb = [255, 255, 255];
+/** The same tone as the accent on the other side of the colour wheel. */
+const WARM: Rgb = [247, 164, 126];
+/** The three colours as CSS, for the scale in the legend. */
+export const LOAD_SCALE = [COOL, NEUTRAL, WARM].map((c) => `rgb(${c.join(" ")})`);
+
+export function loadColour(load: number): string {
   const share = Math.min(Math.max((load - LIGHT_LOAD) / (HEAVY_LOAD - LIGHT_LOAD), 0), 1);
-  return Math.round(140 * (1 - share));
+  const [from, to, part] = share < 0.5 ? [COOL, NEUTRAL, share * 2] : [NEUTRAL, WARM, share * 2 - 1];
+  const mixed = from.map((value, i) => Math.round(value + (to[i] - value) * part));
+  return `rgb(${mixed.join(" ")})`;
 }
 
 // What the visitor picked. The year only counts once a programme is picked.

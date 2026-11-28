@@ -10,7 +10,8 @@ import { PROGRAMMES, YEARS, programmeName } from "@/lib/auth/programmes";
 import {
   courseHref,
   layoutCalendar,
-  loadHue,
+  LOAD_SCALE,
+  loadColour,
   parseChoice,
   type CalendarCourse,
   type Choice,
@@ -188,8 +189,13 @@ export function CourseCalendar({
       {layout && layout.rows > 0 && (scores ? (
         <p className={styles.legend}>
           <span className={styles.legendItem}>
-            <span className={styles.scale} aria-hidden="true" />
-            Overall: green for a light subject, red for a hard one
+            Overall, from a light subject
+            <span
+              className={styles.scale}
+              style={{ background: `linear-gradient(to right, ${LOAD_SCALE.join(", ")})` }}
+              aria-hidden="true"
+            />
+            to a hard one
           </span>
           {CIRCLES.filter(({ kind }) => kind !== "score").map(({ kind, name }) => (
             <span key={kind} className={styles.legendItem}>
@@ -197,7 +203,7 @@ export function CourseCalendar({
               {name}
             </span>
           ))}
-          <span>Out of 10. A higher load is a harder subject. A dash: too few votes so far.</span>
+          <span>Out of 10. A dash: too few votes so far.</span>
         </p>
       ) : (
         <p className={styles.hint}>The ratings are not available right now. Try again in a moment.</p>
@@ -323,8 +329,9 @@ function CourseLink({
 }
 
 // The overall score, written as "7.8/10". The number takes the colour of how hard the
-// subject is: green for a light load, red for a heavy one (loadHue). The load itself is in
-// the circle underneath, so the colour is never the only place that says it.
+// subject is: the site's blue for a light load, white in between, a warm tone for a heavy
+// one (loadColour). The load itself is in the circle underneath, so the colour is never the
+// only place that says it.
 function Overall({ score, load }: { score: number | null; load: number | null }) {
   const text = score === null ? null : tenth(score);
   const rated = text !== null && load !== null;
@@ -337,7 +344,7 @@ function Overall({ score, load }: { score: number | null; load: number | null })
           ? `Overall: ${text} out of 10. Its colour is the subject's load, ${tenth(load)}.`
           : "Overall: too few votes so far"
       }
-      style={rated ? ({ "--hue": loadHue(load) } as CSSProperties) : undefined}
+      style={rated ? ({ "--tone": loadColour(load) } as CSSProperties) : undefined}
     >
       <b aria-hidden="true">{text ?? "–"}</b>
       <span aria-hidden="true">/10</span>

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   courseHref,
   layoutCalendar,
-  loadHue,
+  loadColour,
   moduleCode,
   parseChoice,
   type CalendarCourse,
@@ -118,21 +118,28 @@ describe("the layout of the calendar", () => {
 });
 
 describe("the colour of a subject's load", () => {
-  it("goes from green for a light subject to red for a heavy one", () => {
-    expect(loadHue(4)).toBe(140);
-    expect(loadHue(6.5)).toBe(70);
-    expect(loadHue(9)).toBe(0);
+  // Red, green and blue of a colour written as "rgb(r g b)".
+  const parts = (colour: string) => colour.slice(4, -1).split(" ").map(Number);
+
+  it("goes from the site's blue for a light subject, through white, to a warm tone for a heavy one", () => {
+    expect(loadColour(4)).toBe("rgb(127 208 247)");
+    expect(loadColour(6.5)).toBe("rgb(255 255 255)");
+    expect(loadColour(9)).toBe("rgb(247 164 126)");
   });
 
-  it("gets redder with every step up in load", () => {
-    const hues = [4, 5, 6, 7, 7.5, 8, 9].map(loadHue);
-    expect(hues).toEqual([...hues].sort((a, b) => b - a));
-    expect(new Set(hues).size).toBe(hues.length);
+  it("gets warmer with every step up in load", () => {
+    // Warmer: more red than blue.
+    const warmth = [4, 5, 6, 7, 7.5, 8, 9].map((load) => {
+      const [red, , blue] = parts(loadColour(load));
+      return red - blue;
+    });
+    expect(warmth).toEqual([...warmth].sort((a, b) => a - b));
+    expect(new Set(warmth).size).toBe(warmth.length);
   });
 
-  it("stays green below the lightest load and red above the heaviest", () => {
-    expect(loadHue(0)).toBe(140);
-    expect(loadHue(10)).toBe(0);
+  it("stays blue below the lightest load and warm above the heaviest", () => {
+    expect(loadColour(0)).toBe(loadColour(4));
+    expect(loadColour(10)).toBe(loadColour(9));
   });
 });
 

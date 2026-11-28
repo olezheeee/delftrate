@@ -117,13 +117,13 @@
   border: 2px solid var(--accent);
   border-radius: 50%;
 }
-/* The colours the overall score can take, from a light subject to a hard one. */
+/* The colours the overall score can take, from a light subject to a hard one. The
+   colours themselves are set by the component (LOAD_SCALE). */
 .scale {
   flex: none;
-  width: 26px;
-  height: 6px;
-  border-radius: 3px;
-  background: linear-gradient(to right, hsl(140 78% 62%), hsl(70 78% 62%), hsl(0 78% 62%));
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
 }
 .swatch[data-kind="load"] {
   border-color: hsl(var(--fg) / 0.82);
@@ -237,43 +237,49 @@
 .scores {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 5px;
+  align-items: flex-end;
+  gap: 7px;
 }
-/* The number of the overall score takes the colour of how hard the subject is: --hue is
-   set per course, green for a light load and red for a heavy one. */
+/* The number of the overall score is set in the site's serif, like the "Rate" of the name
+   (italic: the only style of it the site loads, see app/layout.tsx), and takes the colour
+   of how hard the subject is: --tone is set per course, the blue of
+   the accent for a light load, white in between, a warm tone for a heavy one. */
 .overall {
   display: inline-flex;
   align-items: baseline;
-  gap: 1px;
+  gap: 2px;
   line-height: 1;
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
 }
 .overall b {
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: hsl(var(--hue, 0) 78% 62%);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+  color: var(--tone, hsl(var(--fg)));
 }
 .overall span {
-  font-size: 11px;
-  color: hsl(var(--fg) / 0.55);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: hsl(var(--fg) / 0.42);
 }
 .overall[data-empty] b {
-  color: hsl(var(--fg) / 0.4);
+  color: hsl(var(--fg) / 0.32);
 }
 .pair {
   display: flex;
-  gap: 4px;
+  gap: 3px;
 }
 .ring {
   position: relative;
   flex: none;
   display: grid;
   place-items: center;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 .ring svg {
   position: absolute;
@@ -285,10 +291,10 @@
 }
 .ring circle {
   fill: none;
-  stroke-width: 3.2;
+  stroke-width: 2.6;
 }
 .track {
-  stroke: hsl(0 0% 100% / 0.14);
+  stroke: hsl(0 0% 100% / 0.1);
 }
 /* Square ends: a round end adds its own length, and a 9.7 would look like a full ring. */
 .arc {
@@ -301,14 +307,15 @@
 }
 .ring b {
   position: relative;
-  font-size: 9.5px;
+  font-size: 8px;
   font-weight: 500;
+  color: hsl(var(--fg) / 0.82);
   line-height: 1;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 .ring[data-empty] b {
-  color: hsl(var(--fg) / 0.4);
+  color: hsl(var(--fg) / 0.32);
 }
 @container (max-width: 199px) {
   .text {
@@ -318,11 +325,12 @@
     grid-column: 1 / -1;
     grid-row: 2;
     flex-direction: row;
-    gap: 8px;
-    margin-top: 8px;
+    align-items: center;
+    gap: 9px;
+    margin-top: 9px;
   }
   .overall b {
-    font-size: 19px;
+    font-size: 23px;
   }
 }
 
