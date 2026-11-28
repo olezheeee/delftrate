@@ -238,6 +238,41 @@
       "year": 2,
       "quarters": [1],
       "professors": ["N Kleijn"]
+    },
+    {
+      "code": "AE3200",
+      "name": "Design Synthesis",
+      "year": 3,
+      "quarters": [4],
+      "professors": ["J A Melkert"]
+    },
+    {
+      "code": "AE3211-I",
+      "name": "Systems Engineering & Aerospace Design",
+      "year": 3,
+      "quarters": [3],
+      "professors": ["F Oliviero"]
+    },
+    {
+      "code": "AE3211-II",
+      "name": "Production of Aerospace Systems",
+      "year": 3,
+      "quarters": [3],
+      "professors": ["C A Dransfeld"]
+    },
+    {
+      "code": "AE3212-I",
+      "name": "Aerospace Flight Dynamics & Simulation, incl. Flight Test",
+      "year": 3,
+      "quarters": [3],
+      "professors": ["A C Veld"]
+    },
+    {
+      "code": "AE3212-II",
+      "name": "Simulation, Verification & Validation",
+      "year": 3,
+      "quarters": [3],
+      "professors": ["W van der Wal"]
     }
   ]
 }
