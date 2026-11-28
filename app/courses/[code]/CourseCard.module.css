@@ -63,6 +63,11 @@
   gap: 10px 20px;
   margin-top: 26px;
 }
+/* What the big number is, on a line of its own above it. */
+.scoreLabel {
+  flex-basis: 100%;
+  color: hsl(var(--fg) / 0.55);
+}
 .score b {
   font-size: clamp(64px, 16vw, 104px);
   font-weight: 300;

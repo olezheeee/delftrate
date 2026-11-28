@@ -250,9 +250,9 @@ The length of the code and of the password are also written in `lib/auth/validat
 
 ## Importing the courses
 
-The course lists in `data/courses` (`AE.json` and `CSE.json`) are written into the database by an import. Only a lead runs it. It needs the steps of "The database" first.
+The course lists in `data/courses` (`AE.json` and `CSE.json`) are written into the database by an import. Only a lead runs it. It needs the steps of "The database" first, including the migration that adds quarters to courses (`20261126000002_course_quarters.sql`): on a database without it, the import stops with `column "quarters" of relation "courses" does not exist` and writes nothing.
 
-What the import does: it adds new courses, updates the name, programme and year of courses it already knows (matched on the course code), adds professors it does not know yet (matched on the exact name) and links each professor to their courses. It is one statement: everything is written, or nothing is.
+What the import does: it adds new courses, updates the name, programme, year and quarters of courses it already knows (matched on the course code), adds professors it does not know yet (matched on the exact name) and links each professor to their courses. It is one statement: everything is written, or nothing is.
 
 What it never does: it never deletes or hides a course, a professor or a link, even when they are missing from the files. Deleting a link would delete the ratings on it. So a professor who stops teaching one course stays linked to it after the next import. Hiding the professor is not the answer: it hides them, and their ratings, on every course. Until there is a way to retire a single link, ask Oleg before removing one by hand. If one name matches two professors in the database, the import stops with an error naming them and changes nothing.
 
@@ -291,4 +291,4 @@ Keep it as one line: each `&&` runs the next part only when the one before it su
 
 **Check the result.** After the import, the totals are printed: courses, professors and course_professors. Run the import a second time: the totals must be the same.
 
-Quarters are in the files, but the import does not write them yet. A course it adds has no quarters and does not show in the calendar on the home page until that is built; a course that was already there keeps the quarters it had.
+The import stores each course's quarters, which the home-page calendar uses.

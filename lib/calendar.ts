@@ -11,6 +11,57 @@ export type CalendarCourse = {
   quarters: number[];
 };
 
+// The ratings of a course as the calendar shows them next to its name, each out of 10:
+// the overall difficulty (higher is harder), the subject's load, and the teaching score of
+// the course's default professor. Each is null until its block has enough votes; the score needs both blocks.
+// They come from the database function calendar_scores().
+export type CourseNumbers = { score: number | null; load: number | null; teach: number | null };
+
+// The colours of the numbers of a course. They stay inside the site's own colours: the
+// light blue of the accent for what is good for the student, white in the middle, and the
+// warm counterpart of that blue for what is not (cool to warm).
+//   - A subject's load: blue for a light subject, warm for a heavy one.
+//   - A professor's score: blue for a high score, warm for a low one.
+//   - The overall difficulty of a course: blue for an easy course, warm for a hard one.
+// The first two change evenly between 4 and 9, the range real courses are in, and are the
+// full blue or the full warm tone outside it. A load of 4 and a professor's 9 are the same
+// blue. The overall difficulty mixes the load with the teaching and interest, which pulls
+// courses closer together, so its colours run between 3 and 8.
+const LIGHT_LOAD = 4;
+const HEAVY_LOAD = 9;
+const EASY_COURSE = 3;
+const HARD_COURSE = 8;
+type Rgb = readonly [number, number, number];
+/** The accent of the site (--accent in globals.css). */
+const COOL: Rgb = [127, 208, 247];
+const NEUTRAL: Rgb = [255, 255, 255];
+/** The same tone as the accent on the other side of the colour wheel. */
+const WARM: Rgb = [247, 164, 126];
+/** The three colours as CSS, for the scale in the legend. */
+export const LOAD_SCALE = [COOL, NEUTRAL, WARM].map((c) => `rgb(${c.join(" ")})`);
+
+export function loadColour(load: number): string {
+  return tone((load - LIGHT_LOAD) / (HEAVY_LOAD - LIGHT_LOAD));
+}
+
+/** The colour of a course's overall difficulty (the score of calendar_scores()). */
+export function difficultyColour(score: number): string {
+  return tone((score - EASY_COURSE) / (HARD_COURSE - EASY_COURSE));
+}
+
+/** The colour of a professor's score: the scale of the load, the other way round. */
+export function teachColour(teach: number): string {
+  return tone((HEAVY_LOAD - teach) / (HEAVY_LOAD - LIGHT_LOAD));
+}
+
+// From the blue (0) through white (0.5) to the warm tone (1).
+function tone(position: number): string {
+  const share = Math.min(Math.max(position, 0), 1);
+  const [from, to, part] = share < 0.5 ? [COOL, NEUTRAL, share * 2] : [NEUTRAL, WARM, share * 2 - 1];
+  const mixed = from.map((value, i) => Math.round(value + (to[i] - value) * part));
+  return `rgb(${mixed.join(" ")})`;
+}
+
 // What the visitor picked. The year only counts once a programme is picked.
 export type Choice = { programme: ProgrammeId | null; year: number | null };
 

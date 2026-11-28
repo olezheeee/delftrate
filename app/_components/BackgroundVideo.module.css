@@ -1,0 +1,89 @@
+/* Fixed behind the whole page, so it stays put while the calendar scrolls over it. */
+.plate {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* The still and the clip fill the plate the same way, the clip on top of the still. */
+.still,
+.clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+.clip {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.clip[data-ready] {
+  opacity: 1;
+}
+/* Darkens the picture so the page on top stays easy to read, also where its brightest part
+   passes behind small grey text: most at the top, under the bar, and at the bottom. */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.68) 0%,
+    rgba(0, 0, 0, 0.5) 26%,
+    rgba(0, 0, 0, 0.56) 62%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+/* Stops and restarts the clip. In the corner, over the page but under the top bar. */
+.toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: hsl(210 14% 5% / 0.6);
+  backdrop-filter: blur(14px) saturate(140%);
+  color: hsl(var(--fg) / 0.72);
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.toggle:hover {
+  border-color: #fff;
+  color: #fff;
+}
+.toggle svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+@media (max-width: 760px) {
+  .still,
+  .clip {
+    object-position: 70% 50%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clip,
+  .toggle {
+    transition: none;
+  }
+}
+@media print {
+  .plate,
+  .toggle {
+    display: none;
+  }
+}

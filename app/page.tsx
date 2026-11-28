@@ -1,35 +1,30 @@
 import { io } from "next/cache";
-import Link from "next/link";
 import { Suspense } from "react";
 import { getCurrentUser, getProfile } from "@/lib/auth/session";
 import { parseChoice, type CalendarCourse } from "@/lib/calendar";
+import { getCalendarScores, RATINGS_WAIT_MS, within, type CalendarScores } from "@/lib/calendar-scores";
 import { getCalendarCourses } from "@/lib/courses";
+import { BackgroundVideo } from "./_components/BackgroundVideo";
 import { CourseCalendar } from "./_components/CourseCalendar";
 import calendarStyles from "./_components/CourseCalendar.module.css";
+import { TopBar } from "./_components/TopBar";
 import styles from "./page.module.css";
 
 export default function Home({ searchParams }: PageProps<"/">) {
   return (
-    <main className={styles.main}>
-      <header className={styles.head}>
-        <span className="mono">DelftRate · Courses</span>
-        <h1 className={styles.title}>
-          Know your course before the <em>first lecture.</em>
-        </h1>
-        <p className={styles.lead}>
-          Pick your programme and year to see the whole year laid out by quarter. Open a
-          course to read what students think of it.
-        </p>
-        {/* Reads the session, so it is rendered per request behind this boundary. */}
-        <Suspense fallback={<nav className={styles.nav} aria-hidden="true" />}>
-          <AccountLinks />
-        </Suspense>
-      </header>
-      {/* Reads the address and the session, so it is rendered per request as well. */}
-      <Suspense fallback={<CalendarSkeleton />}>
-        <Calendar searchParams={searchParams} />
-      </Suspense>
-    </main>
+    <>
+      <BackgroundVideo />
+      <div className={styles.page}>
+        <TopBar />
+        <main className={styles.main}>
+          <h1 className={styles.sr}>DelftRate course calendar</h1>
+          {/* Reads the address and the session, so it is rendered per request. */}
+          <Suspense fallback={<CalendarSkeleton />}>
+            <Calendar searchParams={searchParams} />
+          </Suspense>
+        </main>
+      </div>
+    </>
   );
 }
 
@@ -57,6 +52,14 @@ async function Calendar({ searchParams }: { searchParams: PageProps<"/">["search
     console.error("Home page: the courses could not be loaded.", error);
     return null;
   });
+  // The ratings next to each course, public and cached like the list. Without them the
+  // calendar still shows the courses, so it waits for them only so long.
+  const scores: Promise<CalendarScores | null> = within(getCalendarScores(), RATINGS_WAIT_MS).catch(
+    (error) => {
+      console.error("Home page: the ratings could not be loaded.", error);
+      return null;
+    },
+  );
 
   let signedIn = false;
   try {
@@ -71,27 +74,7 @@ async function Calendar({ searchParams }: { searchParams: PageProps<"/">["search
     console.error("Home page: the session or profile could not be read.", error);
   }
 
-  return <CourseCalendar courses={await loading} initial={choice} signedIn={signedIn} />;
-}
-
-async function AccountLinks() {
-  const user = await getCurrentUser();
   return (
-    <nav className={styles.nav} aria-label="Account">
-      {user ? (
-        <Link href="/account" className={styles.primary}>
-          Your account
-        </Link>
-      ) : (
-        <>
-          <Link href="/register" className={styles.primary}>
-            Create account
-          </Link>
-          <Link href="/login" className={styles.secondary}>
-            Log in
-          </Link>
-        </>
-      )}
-    </nav>
+    <CourseCalendar courses={await loading} scores={await scores} initial={choice} signedIn={signedIn} />
   );
 }

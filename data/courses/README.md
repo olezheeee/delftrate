@@ -39,7 +39,7 @@ allows automated collection.
   Each code may appear once across all files.
 - `name`: not empty. Extra spaces are cleaned up for you.
 - `year`: 1, 2 or 3 (bachelor year).
-- `quarters`: at least one of 1, 2, 3, 4, no repeats.
+- `quarters`: at least one of 1, 2, 3, 4, no repeats; the quarters the home-page calendar shows the course in.
 - `professors`: at least one name, no repeats within a course.
 - No other keys. A typo such as `profesors` is reported as an error.
 

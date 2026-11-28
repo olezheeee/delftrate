@@ -1,6 +1,7 @@
 "use client";
 
-// The card of one course: the combined score, the subject block, the professor block with
+// The card of one course: the combined score (the course's overall difficulty), the
+// subject block, the professor block with
 // its selector, and the six rating sliders.
 //
 // Between the professor block and the sliders sits "Resources" (Resources.tsx): the study
@@ -149,9 +150,11 @@ export function CourseCard({
         <h1 className={styles.title}>{course.name}</h1>
       </header>
 
-      <section className={styles.score} aria-label="Combined score">
+      <section className={styles.score} aria-label="Overall difficulty">
         {combined ? (
           <>
+            {/* Higher is harder, which a bare "5.4 / 10" would not say. */}
+            <span className={`mono ${styles.scoreLabel}`}>Difficulty · higher is harder</span>
             <b>
               {one(combined.score)}
               <small>/ 10</small>
@@ -160,8 +163,8 @@ export function CourseCard({
           </>
         ) : (
           <p className={styles.waiting}>
-            No combined score yet. It appears once the subject and a professor each have enough
-            votes.
+            No difficulty score yet. It appears once the subject and a professor each have
+            enough votes.
           </p>
         )}
       </section>

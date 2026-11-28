@@ -1,15 +1,23 @@
 "use client";
 
 // The course schedule calendar of the home page: pick a programme, then a year, and see
-// that year's courses under the quarters they run in.
+// that year's courses under the quarters they run in, each with its ratings: the overall
+// difficulty as "5.4/10", and under it two circles for the subject's load and the professor.
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState, type CSSProperties } from "react";
 import { PROGRAMMES, YEARS, programmeName } from "@/lib/auth/programmes";
 import {
   courseHref,
+  difficultyColour,
   layoutCalendar,
+  LOAD_SCALE,
+  loadColour,
+  teachColour,
+  parseChoice,
   type CalendarCourse,
   type Choice,
+  type CourseNumbers,
   type Placed,
 } from "@/lib/calendar";
 import styles from "./CourseCalendar.module.css";
@@ -30,17 +38,63 @@ function quarterLabel(quarters: number[]): string {
   return first === last ? `Quarter ${first}` : `Quarters ${first} to ${last}`;
 }
 
+const NOT_RATED: CourseNumbers = { score: null, load: null, teach: null };
+
+const CIRCLES = [
+  { kind: "score", name: "Difficulty" },
+  { kind: "load", name: "Subject load" },
+  { kind: "teach", name: "Professor" },
+] as const satisfies readonly { kind: keyof CourseNumbers; name: string }[];
+
+// One decimal, as on the course's own page. A full 10 is written without it: "10.0" does
+// not fit in a small circle.
+function tenth(value: number): string {
+  const text = value.toFixed(1);
+  return text === "10.0" ? "10" : text;
+}
+
+// For a screen reader, which gets the numbers in the link's name instead of the circles.
+function ratingText(numbers: CourseNumbers): string {
+  const parts = CIRCLES.flatMap(({ kind, name }) => {
+    const value = numbers[kind];
+    return value === null ? [] : [`${name.toLowerCase()} ${tenth(value)}`];
+  });
+  return parts.length > 0 ? `${parts.join(", ")} out of 10` : "not rated yet";
+}
+
+// The choice an address names. An address that names no programme leaves it to what the
+// server sent: nothing, or the programme and year of the user's own profile.
+function choiceOf(address: string, sent: Choice): Choice {
+  const params = new URLSearchParams(address);
+  const named = parseChoice({ programme: params.get("programme"), year: params.get("year") });
+  return named.programme ? named : sent;
+}
+
 export function CourseCalendar({
   courses,
+  scores,
   initial,
   signedIn,
 }: {
   // null when the courses could not be loaded.
   courses: CalendarCourse[] | null;
+  // The numbers of each rated course, by course code. null when they could not be loaded:
+  // the calendar then shows the courses without circles.
+  scores: Record<string, CourseNumbers> | null;
   initial: Choice;
   signedIn: boolean;
 }) {
-  const [choice, setChoice] = useState<Choice>(initial);
+  // What is shown is what the address names, from the start and whenever the address
+  // changes. The pills write their choice to the address themselves (see choose); the rest
+  // is for an address that changes some other way, such as a click on the name in the bar,
+  // which leads to "/", and for a page that comes back with an older answer of the server.
+  const address = useSearchParams().toString();
+  const [choice, setChoice] = useState<Choice>(() => choiceOf(address, initial));
+  const [seen, setSeen] = useState({ address, initial });
+  if (seen.address !== address || seen.initial !== initial) {
+    setSeen({ address, initial });
+    setChoice(choiceOf(address, initial));
+  }
 
   function choose(next: Choice) {
     setChoice(next);
@@ -63,6 +117,8 @@ export function CourseCalendar({
   const listed = layout
     ? layout.blocks.reduce((sum, block) => sum + block.item.courses.length, 0)
     : 0;
+
+  const numbersOf = (code: string): CourseNumbers | null => scores && (scores[code] ?? NOT_RATED);
 
   return (
     <section className={styles.calendar} aria-label="Course schedule">
@@ -131,6 +187,30 @@ export function CourseCalendar({
         )}
       </div>
 
+      {/* What the numbers of a course are. */}
+      {layout && layout.rows > 0 && (scores ? (
+        <p className={styles.legend}>
+          <span className={styles.legendItem}>
+            Difficulty, from the easiest
+            <span
+              className={styles.scale}
+              style={{ background: `linear-gradient(to right, ${LOAD_SCALE.join(", ")})` }}
+              aria-hidden="true"
+            />
+            to the hardest (10)
+          </span>
+          {CIRCLES.filter(({ kind }) => kind !== "score").map(({ kind, name }) => (
+            <span key={kind} className={styles.legendItem}>
+              <span className={styles.swatch} data-kind={kind} aria-hidden="true" />
+              {name}
+            </span>
+          ))}
+          <span>Blue: a light subject, a strong professor. A dash: too few votes so far.</span>
+        </p>
+      ) : (
+        <p className={styles.hint}>The ratings are not available right now. Try again in a moment.</p>
+      ))}
+
       {layout && layout.rows > 0 && (
         // The key restarts the entrance animation when the choice changes.
         <div className={styles.scroll} key={`${choice.programme}-${choice.year}`}>
@@ -164,6 +244,7 @@ export function CourseCalendar({
                   <CourseLink
                     key={item.code}
                     course={item.courses[0].item}
+                    numbers={numbersOf(item.courses[0].item.code)}
                     signedIn={signedIn}
                     className={`${styles.block} ${styles.course}`}
                     style={style}
@@ -183,6 +264,7 @@ export function CourseCalendar({
                       <CourseLink
                         key={part.item.code}
                         course={part.item}
+                        numbers={numbersOf(part.item.code)}
                         signedIn={signedIn}
                         className={`${styles.course} ${styles.part}`}
                         style={cell(part)}
@@ -205,11 +287,14 @@ export function CourseCalendar({
 
 function CourseLink({
   course,
+  numbers,
   signedIn,
   className,
   style,
 }: {
   course: CalendarCourse;
+  // null when the ratings could not be loaded: the course is shown without circles.
+  numbers: CourseNumbers | null;
   signedIn: boolean;
   className: string;
   style: CSSProperties;
@@ -222,10 +307,83 @@ function CourseLink({
       prefetch={false}
       className={className}
       style={style}
-      aria-label={`${course.code} ${course.name}, ${quarterLabel(course.quarters).toLowerCase()}`}
+      aria-label={
+        `${course.code} ${course.name}, ${quarterLabel(course.quarters).toLowerCase()}` +
+        (numbers ? `, ${ratingText(numbers)}` : "")
+      }
     >
-      <span className={styles.code}>{course.code}</span>
-      <span className={styles.name}>{course.name}</span>
+      <span className={styles.text}>
+        <span className={styles.code}>{course.code}</span>
+        <span className={styles.name}>{course.name}</span>
+      </span>
+      {numbers && (
+        // The overall score on top; under it the subject's load and the professor.
+        <span className={styles.scores}>
+          <Overall score={numbers.score} />
+          <span className={styles.pair}>
+            <Ring kind="load" value={numbers.load} />
+            <Ring kind="teach" value={numbers.teach} />
+          </span>
+        </span>
+      )}
     </Link>
+  );
+}
+
+// The overall difficulty of the course, written as "5.4/10": the higher, the harder, and
+// 10 is a course that is impossible to pass (the lowest it can be is 0, not 1). The number takes its own colour: the site's blue for an
+// easy course, white in between, a warm tone for a hard one (difficultyColour), so the
+// colour never says anything the number does not.
+function Overall({ score }: { score: number | null }) {
+  const text = score === null ? null : tenth(score);
+  return (
+    <span
+      className={styles.overall}
+      data-empty={text === null ? "" : undefined}
+      title={
+        text === null
+          ? "Difficulty: too few votes so far"
+          : `Difficulty: ${text} out of 10. Higher is harder.`
+      }
+      style={score === null ? undefined : ({ "--tone": difficultyColour(score) } as CSSProperties)}
+    >
+      <b aria-hidden="true">{text ?? "–"}</b>
+      <span aria-hidden="true">/10</span>
+    </span>
+  );
+}
+
+// One circle: a ring filled as far as the number goes (out of 10), with the number inside.
+// Empty with a dash while there are too few votes. The number takes the colour of what it
+// says: blue for a light subject or a strong professor, warm for the opposite.
+function Ring({ kind, value }: { kind: "load" | "teach"; value: number | null }) {
+  const name = CIRCLES.find((circle) => circle.kind === kind)!.name;
+  const text = value === null ? null : tenth(value);
+  const title = text === null ? `${name}: too few votes so far` : `${name}: ${text} out of 10`;
+  const colour = value === null ? null : kind === "load" ? loadColour(value) : teachColour(value);
+  return (
+    <span
+      className={styles.ring}
+      data-kind={kind}
+      data-empty={text === null ? "" : undefined}
+      title={title}
+      style={colour ? ({ "--tone": colour } as CSSProperties) : undefined}
+    >
+      <svg viewBox="0 0 36 36" aria-hidden="true">
+        <circle className={styles.track} cx="18" cy="18" r="16" />
+        {value !== null && (
+          <circle
+            className={styles.arc}
+            cx="18"
+            cy="18"
+            r="16"
+            // The circle counts as 100 long, so a 7.4 fills 74 of it.
+            pathLength={100}
+            strokeDasharray={`${Math.min(Math.max(value, 0), 10) * 10} 100`}
+          />
+        )}
+      </svg>
+      <b aria-hidden="true">{text ?? "–"}</b>
+    </span>
   );
 }

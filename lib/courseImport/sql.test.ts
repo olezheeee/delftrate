@@ -2,7 +2,7 @@ import type { PGlite } from "@electric-sql/pglite";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { as, createTestDatabase, createUser } from "../../supabase/testing/database";
 import type { Course } from "./schema";
-import { dollarQuote, importSql, TOTALS_SQL } from "./sql";
+import { dollarQuote, importRows, importSql, TOTALS_SQL } from "./sql";
 
 vi.setConfig({ hookTimeout: 60_000, testTimeout: 60_000 });
 
@@ -71,7 +71,7 @@ describe("course import SQL", () => {
     expect(await snapshot()).toEqual(first);
   });
 
-  it("keeps a rating when the course is imported again with a new name and year", async () => {
+  it("keeps a rating when the course is imported again with a new name, year and quarters", async () => {
     db = await createTestDatabase();
     await run(DATA);
     const ids = async () =>
@@ -86,14 +86,14 @@ describe("course import SQL", () => {
     );
 
     await run([
-      course("T1", ["Ada", "Bob"], { name: "Renamed", year: 3 }),
+      course("T1", ["Ada", "Bob"], { name: "Renamed", year: 3, quarters: [3, 4] }),
       DATA[1],
     ]);
 
-    const after = await db.query<{ id: string; name: string; year: number }>(
-      "select id, name, year from public.courses where code = 'T1'",
+    const after = await db.query<{ id: string; name: string; year: number; quarters: number[] }>(
+      "select id, name, year, quarters from public.courses where code = 'T1'",
     );
-    expect(after.rows[0]).toEqual({ id: c, name: "Renamed", year: 3 });
+    expect(after.rows[0]).toEqual({ id: c, name: "Renamed", year: 3, quarters: [3, 4] });
     expect((await ids()).c).toBe(c);
     const ratings = await db.query<{ n: number }>(
       "select count(*)::int as n from public.professor_ratings where course_id = $1 and professor_id = $2",
@@ -167,8 +167,7 @@ describe("course import SQL", () => {
   it("embeds the data verbatim in a dollar-quoted literal, not an escaped one", () => {
     const data = [course("S1", ["Ada"], { name: String.raw`a\nb "q" c's` })];
     const sql = importSql(data);
-    const json = JSON.stringify(data.map(({ code, name, programme, year, professors }) => ({ code, name, programme, year, professors })));
-    expect(sql).toContain(`$import_json$${json}$import_json$::jsonb`);
+    expect(sql).toContain(`$import_json$${JSON.stringify(importRows(data))}$import_json$::jsonb`);
   });
 
   it("chooses a dollar-quote tag that cannot end the literal early", () => {
@@ -194,16 +193,30 @@ describe("course import SQL", () => {
     await run(DATA);
     expect(await version()).toBe(first);
     await run([course("T1", ["Ada", "Bob"], { name: "Renamed" }), DATA[1]]);
-    expect(await version()).not.toBe(first);
+    const second = await version();
+    expect(second).not.toBe(first);
+    // Quarters alone count as a change too; the same quarters in another order do not.
+    await run([course("T1", ["Ada", "Bob"], { name: "Renamed", quarters: [2, 3] }), DATA[1]]);
+    const third = await version();
+    expect(third).not.toBe(second);
+    await run([course("T1", ["Ada", "Bob"], { name: "Renamed", quarters: [3, 2] }), DATA[1]]);
+    expect(await version()).toBe(third);
   });
 
-  it("does not write quarters and does not change the schema", async () => {
+  it("stores quarters sorted, also when given unsorted, and never changes the table's columns", async () => {
     db = await createTestDatabase();
     const columns = async () =>
-      (await db.query("select column_name from information_schema.columns where table_name = 'courses' order by 1")).rows;
+      (await db.query("select column_name, data_type from information_schema.columns where table_name = 'courses' order by 1")).rows;
     const before = await columns();
-    await run([course("QU1", ["Ada"], { quarters: [1, 2, 3, 4] })]);
+    // importSql is called here without the validator, which would have sorted them.
+    await run([course("Q1", ["Ada"], { quarters: [2, 1] }), course("Q2", ["Ada"], { quarters: [4] })]);
+    const { rows } = await db.query<{ code: string; quarters: number[] }>(
+      "select code, quarters from public.courses where code in ('Q1', 'Q2') order by code",
+    );
+    expect(rows).toEqual([
+      { code: "Q1", quarters: [1, 2] },
+      { code: "Q2", quarters: [4] },
+    ]);
     expect(await columns()).toEqual(before);
-    expect(await count("courses")).toBe(1);
   });
 });
