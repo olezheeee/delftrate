@@ -1,5 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { angleForValue, band, bandFor, beamShape, classifyTouch, keyStep, snap, valueFromPoint } from "./dial";
+import {
+  EXTREME_COLOUR,
+  TOP_COLOUR,
+  angleForValue,
+  band,
+  bandFor,
+  beamShape,
+  classifyTouch,
+  dialColour,
+  entersZone,
+  keyStep,
+  snap,
+  valueFromPoint,
+  zoneFor,
+} from "./dial";
+import { loadColour, teachColour } from "./calendar";
 
 const c = { x: 100, y: 100 };
 
@@ -142,5 +157,58 @@ describe("classifyTouch", () => {
     expect(classifyTouch(9, 7, 8)).toBe("drag");
     expect(classifyTouch(-14, 7, 8)).toBe("drag");
     expect(classifyTouch(7, 9, 8)).toBe("scroll");
+  });
+});
+
+describe("dialColour", () => {
+  it("uses the calendar's load colours for hardness", () => {
+    for (const v of [0, 5, 8.5]) expect(dialColour(v, "hardness")).toBe(loadColour(v));
+  });
+  it("uses the calendar's teach colours for quality", () => {
+    for (const v of [0, 5, 9]) expect(dialColour(v, "quality")).toBe(teachColour(v));
+  });
+  it("is red for a very hard subject", () => {
+    for (const v of [9, 9.5, 10]) expect(dialColour(v, "hardness")).toBe(EXTREME_COLOUR);
+    expect(dialColour(8.5, "hardness")).not.toBe(EXTREME_COLOUR);
+  });
+  it("is green only from 9.5 on a quality dial", () => {
+    for (const v of [9.5, 10]) expect(dialColour(v, "quality")).toBe(TOP_COLOUR);
+    expect(dialColour(9, "quality")).toBe(teachColour(9));
+    expect(dialColour(9, "quality")).not.toBe(TOP_COLOUR);
+  });
+});
+
+describe("zoneFor", () => {
+  it("finds the hardness zone from 9", () => {
+    expect(zoneFor(8.5, "hardness")).toBeNull();
+    expect(zoneFor(9, "hardness")).toBe("extreme");
+    expect(zoneFor(10, "hardness")).toBe("extreme");
+  });
+  it("finds the quality zone from 9.5", () => {
+    expect(zoneFor(9, "quality")).toBeNull();
+    expect(zoneFor(9.5, "quality")).toBe("top");
+  });
+  it("is null for an unrated dial", () => {
+    expect(zoneFor(null, "hardness")).toBeNull();
+    expect(zoneFor(null, "quality")).toBeNull();
+  });
+});
+
+describe("entersZone", () => {
+  it("is true when a hardness dial moves into its zone", () => {
+    expect(entersZone(null, 9, "hardness")).toBe(true);
+    expect(entersZone(8.5, 9, "hardness")).toBe(true);
+    expect(entersZone(5, 10, "hardness")).toBe(true);
+  });
+  it("is false within or out of the hardness zone, or short of it", () => {
+    expect(entersZone(9, 9.5, "hardness")).toBe(false);
+    expect(entersZone(9.5, 8.5, "hardness")).toBe(false);
+    expect(entersZone(8, 8.5, "hardness")).toBe(false);
+  });
+  it("works for a quality dial", () => {
+    expect(entersZone(9, 9.5, "quality")).toBe(true);
+    expect(entersZone(null, 10, "quality")).toBe(true);
+    expect(entersZone(9.5, 10, "quality")).toBe(false);
+    expect(entersZone(10, 9, "quality")).toBe(false);
   });
 });

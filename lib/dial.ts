@@ -4,6 +4,7 @@
  * (value 5) and 360 is right (value 10).
  */
 import type { Point } from "./beam";
+import { loadColour, teachColour } from "./calendar";
 
 export const STEP = 0.5;
 export const MIN = 0;
@@ -104,4 +105,32 @@ export function beamShape(value: number): { halfWidth: number; opacity: number }
 export function classifyTouch(dx: number, dy: number, slop: number): "undecided" | "drag" | "scroll" {
   if (Math.hypot(dx, dy) < slop) return "undecided";
   return Math.abs(dx) > Math.abs(dy) ? "drag" : "scroll";
+}
+
+/** The zone at the top of a dial: "extreme" for a hardness dial from 9 ("Very hard"), "top" for a quality dial from 9.5. */
+export type Zone = "extreme" | "top";
+export const EXTREME_FROM = 9;
+export const TOP_FROM = 9.5;
+/** A clear red for a very hard subject, and a green for the best ratings. */
+export const EXTREME_COLOUR = "rgb(244 98 88)";
+export const TOP_COLOUR = "rgb(120 220 150)";
+
+/** The zone a value is in, or null (also for an unrated dial, null). */
+export function zoneFor(value: number | null, scale: Scale): Zone | null {
+  if (value === null) return null;
+  if (scale === "hardness") return value >= EXTREME_FROM ? "extreme" : null;
+  return value >= TOP_FROM ? "top" : null;
+}
+
+/** The colour of a rated dial: loadColour(value) for "hardness", teachColour(value) for "quality"; the zone colour inside a zone. */
+export function dialColour(value: number, scale: Scale): string {
+  const zone = zoneFor(value, scale);
+  if (zone === "extreme") return EXTREME_COLOUR;
+  if (zone === "top") return TOP_COLOUR;
+  return scale === "hardness" ? loadColour(value) : teachColour(value);
+}
+
+/** True when a change from `previous` (null: not rated yet) to `next` moves the dial into its zone from outside it. Moving within the zone, or out of it, is false. */
+export function entersZone(previous: number | null, next: number, scale: Scale): boolean {
+  return zoneFor(next, scale) !== null && zoneFor(previous, scale) === null;
 }

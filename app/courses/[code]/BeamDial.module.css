@@ -17,7 +17,7 @@
 
 .pressed,
 .pressed:hover {
-  border-color: rgb(127 208 247 / 0.5);
+  border-color: color-mix(in srgb, var(--tone, var(--accent)) 50%, transparent);
 }
 
 .label {
@@ -77,7 +77,7 @@
 }
 
 .lit {
-  stroke: var(--accent);
+  stroke: var(--tone, var(--accent));
   opacity: 0.85;
 }
 
@@ -92,6 +92,13 @@
   font-weight: 400;
 }
 
+/* The group that the zone effects shake or bounce (see BeamDial.tsx). The bounce grows from the
+   lamp. */
+.fx {
+  transform-box: view-box;
+  transform-origin: 100px 100px;
+}
+
 .beam {
   transform-box: view-box;
   transform-origin: 0 0;
@@ -101,8 +108,16 @@
   transition: transform 500ms var(--ease);
 }
 
+/* In the extreme zone the beam turns heavily, as if against a spring, so while it follows a
+   finger it lags a little behind. */
+.extreme .beam.follow {
+  transition: transform 220ms ease-out;
+}
+
 .wedge {
-  transition: fill 300ms var(--ease);
+  transition:
+    fill 300ms var(--ease),
+    fill-opacity 300ms var(--ease);
 }
 
 .ghost {
@@ -136,10 +151,12 @@
 }
 
 .lamp {
-  fill: var(--accent);
+  fill: var(--tone, var(--accent));
   transform-box: fill-box;
   transform-origin: center;
-  transition: transform 500ms var(--ease);
+  transition:
+    transform 500ms var(--ease),
+    fill 300ms var(--ease);
 }
 
 .pressed .lamp {
@@ -148,7 +165,7 @@
 
 .shine {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--tone, var(--accent));
   stroke-width: 2;
   transform-box: fill-box;
   transform-origin: center;
@@ -188,6 +205,11 @@
   line-height: 36px;
   font-weight: 600;
   color: hsl(var(--fg));
+  transition: color 300ms var(--ease);
+}
+
+.tile:not(.unrated) .value {
+  color: var(--tone, hsl(var(--fg)));
 }
 
 .pop {
@@ -232,7 +254,8 @@
     transition: none !important;
   }
 
-  .beam:not(.follow) {
+  .beam:not(.follow),
+  .extreme .beam.follow {
     transition: none;
   }
 }

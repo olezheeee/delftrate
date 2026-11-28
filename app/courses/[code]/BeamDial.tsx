@@ -1,14 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
-import type { KeyboardEvent, PointerEvent } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties, KeyboardEvent, PointerEvent } from "react";
 import {
   MAX,
   MIN,
   angleForValue,
   bandFor,
   beamShape,
+  dialColour,
+  entersZone,
+  zoneFor,
   type Scale,
+  type Zone,
   classifyTouch,
   keyStep,
   valueFromPoint,
@@ -78,14 +82,64 @@ export function BeamDial(props: {
   const [following, setFollowing] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  // The group that is shaken or bounced. The svg and the band must never move, because pointer
+  // positions are measured from the svg, so the effects play on this group instead.
+  const fxRef = useRef<SVGGElement>(null);
 
   const rated = value !== null;
   const labelId = `${id}-label`;
   const hintId = `${id}-hint`;
 
+  // The value as last committed. React batches the updates of a fast drag, so a second move
+  // can arrive before the new value has rendered; this record is current at once, so the dial
+  // enters its zone only once. A value the parent sets takes over after each render.
+  const committed = useRef(value);
+  useLayoutEffect(() => {
+    committed.current = value;
+  }, [value]);
+
   function commit(next: number | null) {
     if (next === null) return;
-    if (value === null || next !== value) onChange(next);
+    const previous = committed.current;
+    if (previous !== null && next === previous) return;
+    committed.current = next;
+    // Only a user action gets here, so a value that the parent sets never plays an effect. A
+    // first rating that lands in the zone (a first tap at 10) plays it too.
+    if (entersZone(previous, next, scale)) playZoneEffect(zoneFor(next, scale));
+    onChange(next);
+  }
+
+  // A short tremble when the dial reaches the extreme zone, a small bounce at the top. The
+  // animation is played with the Web Animations API and not restarted by a key, because a
+  // remount in the middle of a drag would drop the pointer capture.
+  function playZoneEffect(zone: Zone | null) {
+    if (zone === null) return;
+    // With reduced motion the colour alone says it: no tremble, no bounce and no buzz.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // A phone only vibrates once the page has had a tap or a key press; before that (a first
+    // gesture that is a drag) the call is refused with a console warning, so it is not made.
+    // iPhones cannot vibrate from a web page at all.
+    if (
+      zone === "extreme" &&
+      typeof navigator.vibrate === "function" &&
+      navigator.userActivation?.hasBeenActive !== false
+    ) {
+      navigator.vibrate([12, 40, 12]);
+    }
+    const el = fxRef.current;
+    if (!el || typeof el.animate !== "function") return;
+    if (zone === "extreme") {
+      const x = [0, -1.5, 1.5, -1, 1, 0];
+      el.animate(
+        x.map((n) => ({ transform: `translateX(${n}px)` })),
+        { duration: 320, easing: "ease-out" },
+      );
+    } else {
+      el.animate(
+        [1, 1.06, 0.98, 1.01, 1].map((n) => ({ transform: `scale(${n})` })),
+        { duration: 500, easing: "ease-out" },
+      );
+    }
   }
 
   function fromEvent(e: PointerEvent): number | null {
@@ -188,12 +242,20 @@ export function BeamDial(props: {
   }
 
   const shape = beamShape(value ?? 0);
-  const tileClass = [styles.tile, pressed ? styles.pressed : "", rated ? "" : styles.unrated]
+  const zone = zoneFor(value, scale);
+  const tileClass = [
+    styles.tile,
+    pressed ? styles.pressed : "",
+    rated ? "" : styles.unrated,
+    zone === "extreme" ? styles.extreme : "",
+  ]
     .filter(Boolean)
     .join(" ");
+  // The colour of the value, which the ticks, the beam, the lamp and the number all use.
+  const tileStyle = value === null ? undefined : ({ "--tone": dialColour(value, scale) } as CSSProperties);
 
   return (
-    <div className={tileClass}>
+    <div className={tileClass} style={tileStyle}>
       <div className={styles.label} id={labelId}>
         {label}
       </div>
@@ -216,52 +278,54 @@ export function BeamDial(props: {
         onKeyDown={onKeyDown}
       >
         <svg ref={svgRef} className={styles.svg} viewBox="0 0 200 116" aria-hidden="true">
-          {TICKS.map((t, i) => {
-            const lit = value !== null && t.v <= value;
-            return (
-              <line
-                key={t.v}
-                className={lit ? `${styles.tick} ${styles.lit}` : styles.tick}
-                style={{ transitionDelay: lit ? `${i * STAGGER_MS}ms` : "0ms" }}
-                x1={t.from.x}
-                y1={t.from.y}
-                x2={t.to.x}
-                y2={t.to.y}
-              />
-            );
-          })}
-          {LABELS.map((l) => (
-            <text key={l.text} className={styles.tickLabel} x={l.x} y={l.y} textAnchor="middle">
-              {l.text}
-            </text>
-          ))}
-          {/* The beam rotates around the lamp. Its CSS transform carries the move to the lamp
-              as well, so the rotation origin is the same in every browser. */}
-          {value === null ? (
-              <g className={styles.ghost}>
-                <path d={wedge(10, BEAM_LENGTH)} className={styles.ghostWedge} />
-              </g>
-            ) : (
-              <g
-                className={following ? `${styles.beam} ${styles.follow}` : styles.beam}
-                style={{ transform: `translate(${CX}px, ${CY}px) rotate(${angleForValue(value)}deg)` }}
-              >
-                <path
-                  d={wedge(shape.halfWidth, BEAM_LENGTH)}
-                  className={styles.wedge}
-                  style={{ fill: `rgb(127 208 247 / ${shape.opacity})` }}
+          <g ref={fxRef} className={styles.fx}>
+            {TICKS.map((t, i) => {
+              const lit = value !== null && t.v <= value;
+              return (
+                <line
+                  key={t.v}
+                  className={lit ? `${styles.tick} ${styles.lit}` : styles.tick}
+                  style={{ transitionDelay: lit ? `${i * STAGGER_MS}ms` : "0ms" }}
+                  x1={t.from.x}
+                  y1={t.from.y}
+                  x2={t.to.x}
+                  y2={t.to.y}
                 />
-                <path
-                  d={wedge(shape.halfWidth / 2, BEAM_LENGTH)}
-                  className={styles.wedge}
-                  style={{ fill: `rgb(127 208 247 / ${Math.min(1, shape.opacity + 0.1)})` }}
-                />
-              </g>
-            )}
-          <g transform={`translate(${CX} ${CY})`}>
-            <rect className={styles.base} x={-10} y={0} width={20} height={8} rx={2} />
-            {value === MAX ? <circle className={styles.shine} r={7} /> : null}
-            <circle className={styles.lamp} r={6} />
+              );
+            })}
+            {LABELS.map((l) => (
+              <text key={l.text} className={styles.tickLabel} x={l.x} y={l.y} textAnchor="middle">
+                {l.text}
+              </text>
+            ))}
+            {/* The beam rotates around the lamp. Its CSS transform carries the move to the lamp
+                as well, so the rotation origin is the same in every browser. */}
+            {value === null ? (
+                <g className={styles.ghost}>
+                  <path d={wedge(10, BEAM_LENGTH)} className={styles.ghostWedge} />
+                </g>
+              ) : (
+                <g
+                  className={following ? `${styles.beam} ${styles.follow}` : styles.beam}
+                  style={{ transform: `translate(${CX}px, ${CY}px) rotate(${angleForValue(value)}deg)` }}
+                >
+                  <path
+                    d={wedge(shape.halfWidth, BEAM_LENGTH)}
+                    className={styles.wedge}
+                    style={{ fill: "var(--tone)", fillOpacity: shape.opacity }}
+                  />
+                  <path
+                    d={wedge(shape.halfWidth / 2, BEAM_LENGTH)}
+                    className={styles.wedge}
+                    style={{ fill: "var(--tone)", fillOpacity: Math.min(1, shape.opacity + 0.1) }}
+                  />
+                </g>
+              )}
+            <g transform={`translate(${CX} ${CY})`}>
+              <rect className={styles.base} x={-10} y={0} width={20} height={8} rx={2} />
+              {value === MAX ? <circle className={styles.shine} r={7} /> : null}
+              <circle className={styles.lamp} r={6} />
+            </g>
           </g>
           <path
             className={styles.band}
