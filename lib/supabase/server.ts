@@ -18,8 +18,8 @@ export async function createClient() {
             cookieStore.set(name, value, options);
           }
         } catch {
-          // Server Components cannot write cookies. Session refresh is added
-          // with the sign-in task.
+          // Server Components cannot write cookies. That is fine: the proxy
+          // (proxy.ts) refreshes the session before a page is rendered.
         }
       },
     },

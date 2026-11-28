@@ -1,0 +1,129 @@
+{
+  "course": "CSE14B",
+  "title": "Computer Networks",
+  "available": true,
+  "summary": "One written, closed-book exam of 120 minutes decides the grade, with one resit in the summer. Every paper has 20 short questions spread over all layers and security: about a quarter of the points are multiple choice, and well over half are small calculations done by hand, such as a CRC, a Hamming code, a routing table or a CBC decryption. The same question formats come back year after year with new numbers.",
+  "basis": {
+    "papers": [
+      { "name": "Endterm 2025", "year": 2025, "kind": "endterm", "questions": 20, "points": 20, "minutes": 120 },
+      { "name": "Resit 2025", "year": 2025, "kind": "resit", "questions": 20, "points": 20, "minutes": 120 },
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 20, "points": 25, "minutes": 120 },
+      { "name": "Resit 2024", "year": 2024, "kind": "resit", "questions": 20, "points": 23, "minutes": 120 },
+      { "name": "Endterm 2023", "year": 2023, "kind": "endterm", "questions": 20, "points": 20, "minutes": 120 },
+      { "name": "Resit 2022", "year": 2022, "kind": "resit", "questions": 20, "points": 20, "minutes": 120 }
+    ],
+    "note": "The archive holds four more papers: Endterm 2022, Endterm 2019 and two practice exams labelled CSE 1405; they were left out as older or not real papers. Shares are by printed points over 128 points. In Resit 2024 the text of question 10 is missing (only a weighted graph and its answer remain); it was counted as routing."
+  },
+  "format": {
+    "mode": "Written on paper, closed book, answers on a separate answer sheet",
+    "duration": "120 minutes",
+    "structure": "20 numbered questions, each mostly worth 1 point; Endterm 2024 and Resit 2024 had five and three questions worth 2 points. Four to six are multiple choice with one best answer, the rest are open questions answered in a fixed box. The 2022 and 2023 papers put five multiple-choice questions first and gave each question a topic title; from 2024 the kinds are mixed in any order.",
+    "grading": "The exam is the whole grade. The pass mark was 58 percent of the points in 2024 and 2025, and 11.5 or 11.6 of 20 points in 2022 and 2023. Partial points are given on open questions. Tutorials and WebLab assignments are not graded.",
+    "aids": "A calculator (non-graphical from 2024); no books, notes or smart watches. A Base64 table is printed on the paper whenever Base64 is asked."
+  },
+  "topicWeights": [
+    {
+      "topic": "Network security and cryptography",
+      "share": 19,
+      "appearsIn": 6,
+      "asks": "An S-box or P-box calculation in CBC or counter mode in five papers, a small RSA decryption in three, plus short questions on Tor, PGP, WEP keys, firewalls, responsible disclosure or which security goals a system needs."
+    },
+    {
+      "topic": "Error detection and correction",
+      "share": 14,
+      "appearsIn": 6,
+      "asks": "One to three calculations per paper: a Hamming code with given parity (five papers), a CRC to compute or check, an Internet checksum of 4-bit blocks, or a parity block."
+    },
+    {
+      "topic": "MAC sublayer, Ethernet, Wi-Fi and switches",
+      "share": 12,
+      "appearsIn": 6,
+      "asks": "Multiple choice on ALOHA, minimum frame size, binary exponential backoff and spanning tree roots; scenarios with RTS and CTS or a CSMA/CA backoff timeline; a switch table or spanning tree to draw."
+    },
+    {
+      "topic": "Application layer: DNS, email, web and P2P",
+      "share": 12,
+      "appearsIn": 6,
+      "asks": "A Base64 encoding or decoding in five papers, a Chord finger table in three, and DNS: recursive versus iterative lookups, query counts, CDN redirection; also SMTP and blockchain choice."
+    },
+    {
+      "topic": "Transport layer: UDP and TCP",
+      "share": 11,
+      "appearsIn": 6,
+      "asks": "A TCP sequence or acknowledgement number after a handshake, the forbidden region of clock-based sequence numbers, a TCP Reno window after a congestion signal, plus UDP header and checksum facts and QUIC."
+    },
+    {
+      "topic": "Network layer: IP, fragmentation and helpers",
+      "share": 10,
+      "appearsIn": 6,
+      "asks": "Fragment counts with and without MTU discovery, NAT and DHCP explained, congestion handling with ECN or RED, IPv6 address size and notation, and subnet masks."
+    },
+    {
+      "topic": "Layers and network performance",
+      "share": 8,
+      "appearsIn": 5,
+      "asks": "An opening question on the OSI layers (order, unit names, which run only on end hosts, why layering helps), delay definitions, and reasoning about what a ping or a jammer tells you."
+    },
+    {
+      "topic": "Reliable links: sliding windows and framing",
+      "share": 8,
+      "appearsIn": 6,
+      "asks": "A sliding window throughput or goodput calculation in four papers, once reversed to find the header share; a selective repeat timeout trace; byte stuffing or unstuffing; go-back-N versus selective repeat."
+    },
+    {
+      "topic": "Routing and IP prefixes",
+      "share": 6,
+      "appearsIn": 6,
+      "asks": "A distance vector routing table built from neighbours' vectors in every paper, or a shortest-path table from a graph; once a longest prefix match."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Calculation or trace",
+      "share": 58,
+      "description": "Run an algorithm by hand on a small example (codes, tables, windows, timelines, encodings, ciphers) and show the steps; the rubrics give partial points for the method."
+    },
+    {
+      "type": "Multiple choice",
+      "share": 24,
+      "description": "Four options, one best answer, no partial points; mostly facts and short scenarios about protocols."
+    },
+    {
+      "type": "Short explanation",
+      "share": 18,
+      "description": "Explain a mechanism or judge a scenario in a few sentences, such as NAT, a firewall choice, PGP keys or what a measurement proves."
+    }
+  ],
+  "recurring": [
+    "At least one CRC or Internet checksum question in every paper, and a Hamming code in five of six ((11,7), (19,14) and (21,16) have all appeared).",
+    "A sliding window question between two named people, often with a different latency in each direction, asking for throughput or goodput (four of six papers).",
+    "A routing table for one router in every paper, in five of them built from its neighbours' distance vectors and link costs, with a tie-break rule in the question.",
+    "An S-box or P-box cipher used in CBC or counter mode in five of six papers: three asked you to decrypt, two to encrypt.",
+    "A TCP sequence or acknowledgement number after a handshake and a few segments, in five of six papers; Endterm 2024 and Endterm 2025 used the very same numbers.",
+    "Base64 encoding or decoding with the table on the paper in five of six papers, and a Chord finger table in three.",
+    "IPv4 fragmentation over three networks with shrinking or mixed MTUs, in three of six papers.",
+    "A forbidden-region calculation for clock-based sequence numbers in three of six papers."
+  ],
+  "trends": [
+    "The 2022 and 2023 papers were built from a fixed set of titled questions (responsible disclosure, parity block, TCP Reno, forbidden region), some repeated nearly word for word between them.",
+    "The 2024 and 2025 papers, which name Fernando Kuipers as examiner, ask more about the network layer and practice: NAT, DHCP, subnet masks, IPv6 notation, ping, firewalls, WEP keys and QUIC.",
+    "Responsible disclosure and parity blocks have not appeared since 2023; the Internet checksum and spanning tree questions appeared from 2024.",
+    "The 2024 papers had some 2-point questions; the 2025 papers went back to 20 questions of 1 point each."
+  ],
+  "strategy": [
+    "Make a one-page list of the calculation types above and practise each until you can do it in five minutes. With 20 questions in 120 minutes you have about six minutes each.",
+    "Use the tutorials and their solutions first, then sit the past papers under time pressure: the tutorials match the open questions closely.",
+    "Write every intermediate step. The rubrics give half points or less for a bare correct answer on Hamming codes, CRCs and Base64.",
+    "For multiple choice, read every option and pick the most specific correct one, as the instructions say.",
+    "Check each answer against the exact rule the question sets: odd or even parity, bit numbering from the left, the tie-break in routing tables, encrypt or decrypt.",
+    "Use short, precise terms in explanations. A NAT answer needs [[internal address, internal port and external port]]; a Tor answer needs the order of the layers."
+  ],
+  "pitfalls": [
+    "Encrypting with the S-box or P-box when the question asks you to decrypt, or doing XOR and the box in the wrong order: both are capped at half points.",
+    "Using the wrong parity in a Hamming code, or giving the codeword with no explanation of where the parity bits go.",
+    "Giving paths instead of outgoing lines in a routing table, which costs points even when the costs are right.",
+    "Forgetting [[the 1 for the SYN]] when computing TCP sequence or acknowledgement numbers.",
+    "Computing fragments from the total size and the smallest MTU when the question has no MTU discovery; [[each network refragments what it receives]].",
+    "In CSMA/CA timelines, letting a waiting station start a new backoff instead of resuming its paused one: a correct time with wrong reasoning scored zero."
+  ]
+}

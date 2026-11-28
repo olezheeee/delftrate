@@ -1,0 +1,169 @@
+/* The Resources block of the course card. */
+.block {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-2);
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.head h2 {
+  margin: 0;
+}
+.count {
+  font-size: 12px;
+  color: hsl(var(--fg) / 0.5);
+}
+
+/* The two booklets. */
+.booklets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.booklet {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 16px 18px;
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  background: var(--card-2);
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+.booklet:hover,
+.booklet:focus-visible {
+  border-color: var(--accent);
+  background: hsl(200 60% 12%);
+  transform: translateY(-2px);
+}
+.booklet b {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.booklet small {
+  font-size: 13px;
+  line-height: 1.4;
+  color: hsl(var(--fg) / 0.6);
+}
+
+/* The material, one group at a time. */
+.groups {
+  border-top: 1px solid var(--line);
+}
+.group {
+  border-bottom: 1px solid var(--line);
+}
+.group summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 2px;
+  font-size: 15px;
+  cursor: pointer;
+  list-style: none;
+}
+.group summary::-webkit-details-marker {
+  display: none;
+}
+.group summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: hsl(var(--fg) / 0.55);
+}
+.group summary span::after {
+  content: "+";
+  font-size: 18px;
+  line-height: 1;
+  color: hsl(var(--fg) / 0.7);
+}
+.group[open] summary span::after {
+  content: "–";
+}
+.group summary:hover,
+.group summary:focus-visible {
+  color: var(--accent);
+}
+.group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 2px 12px;
+}
+.group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 7px 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+.group li a {
+  text-decoration: underline;
+  text-decoration-color: hsl(var(--fg) / 0.3);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.group li a:hover,
+.group li a:focus-visible {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.group li small {
+  flex: none;
+  max-width: 45%;
+  font-size: 12px;
+  text-align: right;
+  color: hsl(var(--fg) / 0.5);
+}
+.note {
+  margin: 0;
+  padding: 0 2px 14px;
+  font-size: 12.5px;
+  color: hsl(var(--fg) / 0.5);
+}
+.source,
+.empty {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: hsl(var(--fg) / 0.5);
+}
+.empty {
+  margin-top: 0;
+  font-size: 14.5px;
+  color: hsl(var(--fg) / 0.6);
+}
+.source a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .booklets {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .booklet {
+    transition: none;
+  }
+  .booklet:hover,
+  .booklet:focus-visible {
+    transform: none;
+  }
+}

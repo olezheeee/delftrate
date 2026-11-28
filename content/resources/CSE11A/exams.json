@@ -1,0 +1,191 @@
+{
+  "course": "CSE11A",
+  "title": "Reasoning and Logic",
+  "available": true,
+  "summary": "The grade rests on one closed-book written endterm of 180 minutes, with a resit. A 120-minute midterm in week 5 and the Prolog project can only add a bonus. Every paper is all open questions in a fixed order that follows the course, from a truth table to a closing logic puzzle. Proofs and constructions together carry about half of the points.",
+  "basis": {
+    "papers": [
+      {
+        "name": "Midterm 2025",
+        "year": 2025,
+        "kind": "midterm",
+        "questions": 10,
+        "points": 40,
+        "minutes": 120
+      },
+      {
+        "name": "Endterm 2025",
+        "year": 2025,
+        "kind": "endterm",
+        "questions": 14,
+        "points": 60,
+        "minutes": 180
+      },
+      {
+        "name": "Resit 2025",
+        "year": 2025,
+        "kind": "resit",
+        "questions": 15,
+        "points": 60,
+        "minutes": 180
+      },
+      {
+        "name": "Midterm 2024",
+        "year": 2024,
+        "kind": "midterm",
+        "questions": 10,
+        "points": 47,
+        "minutes": 120
+      },
+      {
+        "name": "Endterm 2024",
+        "year": 2024,
+        "kind": "endterm",
+        "questions": 15,
+        "points": 70,
+        "minutes": 180
+      },
+      {
+        "name": "Resit 2024",
+        "year": 2024,
+        "kind": "resit",
+        "questions": 16,
+        "points": 70,
+        "minutes": 180
+      }
+    ],
+    "note": "The archive lists 13 more papers. Seven of them (2022 and 2023 midterm, endterm and resit, and MCQ Test 2023) were read for trends only; the 2020 and 2021 papers had no text. Papers carry the academic year on the cover (2024-25 is the 2025 set). Shares use printed points over 347 points, sub-question by sub-question; invariant problems count under induction."
+  },
+  "format": {
+    "mode": "Written, closed-book exam on paper, with open questions only",
+    "duration": "Endterm and resit 180 minutes; midterm 120 minutes",
+    "structure": "Endterms and resits have 14 to 16 questions worth 60 or 70 points, in course order: a truth table, true-or-false claims, translations both ways, a formal structure, proof techniques in an excerpt, a number proof, induction, an invariant problem, recursive sets, sets, relations and functions, TREE functions and a puzzle. Midterms have 10 questions worth 40 to 55 points on chapters 1 to 3.",
+    "grading": "The endterm grade F is the base. Midterm M and project P give a bonus B = min(10, max(0, 2 x floor(M - 5)) + max(0, 2 x floor(P - 5))), and the course grade is F + B(10 - F)/100. A resit replaces F with the same bonus and the higher result counts. Each paper is graded as 1 + 9 x score / total.",
+    "aids": "None: no book, notes or calculator. Bring a pen and your campus card."
+  },
+  "topicWeights": [
+    {
+      "topic": "Propositional logic",
+      "share": 14,
+      "appearsIn": 6,
+      "asks": "Always question 1: a full truth table, often for a new operator defined by its own table, then validity or equivalence with reference to rows, or a DNF. Also true-or-false claims about arguments, explosion and satisfiability, and converses in English."
+    },
+    {
+      "topic": "Predicate logic and formal structures",
+      "share": 19,
+      "appearsIn": 6,
+      "asks": "Two or three English sentences into logic and two or three formulas back into English, a negation to simplify, and a Tarski world or formal structure with a bounded domain that satisfies statements or breaks an argument."
+    },
+    {
+      "topic": "Proof techniques",
+      "share": 12,
+      "appearsIn": 6,
+      "asks": "A 4 to 6-point proof of a claim about integers, usually by division into cases or contradiction, plus a 2-point excerpt from a real paper or course in which you name the two techniques used."
+    },
+    {
+      "topic": "Induction, recursion and invariants",
+      "share": 19,
+      "appearsIn": 6,
+      "asks": "An induction proof of a sum, divisibility or recurrence; describing the base case and step for a restricted claim; computing or writing a recursive sequence; and on endterms a 4 to 5-point invariant proof for a game or process."
+    },
+    {
+      "topic": "Recursive sets and structural induction",
+      "share": 10,
+      "appearsIn": 4,
+      "asks": "On every endterm and resit: write a recursive definition for a described set of words or numbers (3 points), then prove a property of all its elements by structural induction (4 to 6 points)."
+    },
+    {
+      "topic": "Trees and graphs",
+      "share": 11,
+      "appearsIn": 6,
+      "asks": "Draw a binary tree with set leaves and traversal sequence, evaluate a given TREE function on a drawn tree, write your own TREE function, and draw a directed graph or DAG with constraints on its topological orderings."
+    },
+    {
+      "topic": "Set theory",
+      "share": 3,
+      "appearsIn": 4,
+      "asks": "Small endterm items: list a product or power set, draw a Venn diagram, or prove or disprove a claim about all sets."
+    },
+    {
+      "topic": "Functions, relations and countability",
+      "share": 7,
+      "appearsIn": 4,
+      "asks": "Check reflexive, symmetric, transitive or antisymmetric for a given relation, build a relation with given properties, judge injective or surjective, and argue that a set is countable."
+    },
+    {
+      "topic": "Logic puzzles",
+      "share": 5,
+      "appearsIn": 6,
+      "asks": "A closing 3-point story puzzle about the coati kingdom: reconstruct a score table, a team assignment, a safe code or the last move of a game, explaining every elimination."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Proof",
+      "share": 27,
+      "description": "A full written proof: cases, contradiction or contrapositive, mathematical or structural induction, or a four-part invariant proof."
+    },
+    {
+      "type": "Construction",
+      "share": 22,
+      "description": "Build an object that meets given conditions: a Tarski world, formal structure, tree, graph, relation, recursive definition or recursive function on TREE."
+    },
+    {
+      "type": "Truth table or computation",
+      "share": 16,
+      "description": "Fill in truth tables, rewrite to DNF or CNF, negate formulas, evaluate recursive functions, or list power sets and products."
+    },
+    {
+      "type": "Translation",
+      "share": 13,
+      "description": "Turn English into predicate logic with your own predicates and constants, or formulas into natural English."
+    },
+    {
+      "type": "Short explanation",
+      "share": 9,
+      "description": "Name proof techniques in an excerpt, say what a base case and step must show, or give an informal argument such as countability."
+    },
+    {
+      "type": "True or false with counterexample",
+      "share": 8,
+      "description": "Decide whether a general claim holds and justify it, giving a concrete counterexample when it fails."
+    },
+    {
+      "type": "Logic puzzle",
+      "share": 5,
+      "description": "A story puzzle solved by elimination, marked on the written reasoning, not only the answer."
+    }
+  ],
+  "recurring": [
+    "Question 1 is always a truth table of 5 to 9 points, in five of the six papers for a made-up operator defined by its own table.",
+    "Every paper has a 2-point question with an excerpt from a research paper or another course's proof (Wiles, Algorithm Design): name the two techniques used and cite the lines.",
+    "Translations go both ways in every paper; endterms add sets, functions and cardinality such as \"more books than students\".",
+    "A Tarski world or formal structure with a bounded domain size appears in every paper.",
+    "Number proofs [[forbid modular arithmetic]] but let you write n as kx + r, so division into cases by remainder is the expected route.",
+    "Since 2024 every endterm and resit has a 4 to 5-point invariant proof about a game or a mixing process, marked on initialisation, iteration, eventual falsity and post-condition.",
+    "Endterms and resits always pair a TREE function to evaluate with one you must write yourself.",
+    "Every paper ends with a 3-point coati-kingdom puzzle, and the story continues from one paper to the next."
+  ],
+  "trends": [
+    "Endterms grew from 57 points in 2022 to 69 and 70 points in 2023 and 2024, then dropped to 60 points in 2025; midterms shrank from 54 and 55 to 47 and then 40 points.",
+    "A 20-question multiple-choice test on modules 1 and 2 ran alongside the midterm in the 2023 set; there is no multiple choice since.",
+    "Countability came back in Resit 2024 and both 2025 papers as a bijection or an informal argument, and Endterm 2025 added a partial-order check."
+  ],
+  "strategy": [
+    "Make question 1 safe: practise 8-row tables in a fixed row order, new operators read from a table, and a DNF taken from the true rows.",
+    "Learn the proof templates exactly as the rubrics score them: [[base case, hypothesis for an arbitrary k, use of the hypothesis, conclusion]]; for invariants the four parts.",
+    "Work through the 2024 and 2025 papers against the clock; the question order hardly changes, so you can plan minutes per block.",
+    "For predicate logic, write out your predicates and constants first and reread your English translation aloud: it must sound like normal English.",
+    "For TREE functions write the empty-tree and leaf cases first, then sum over the children; check your function on the example tree in the question.",
+    "Answer exactly what is asked: start with True or False or Yes or No when told to, and leave out side remarks, since irrelevant information can cost points.",
+    "Leave the closing puzzle for last unless you are quick at it, but write down each elimination: partial reasoning scores."
+  ],
+  "pitfalls": [
+    "Assuming the claim: \"take an arbitrary k such that the claim holds\" in a direct proof, or the full claim as induction hypothesis, both lose points.",
+    "A contradiction proof must start from [[\"there exists\" a counterexample]], not from an arbitrary element.",
+    "Translations into English that keep \"there exists an x such that\" are marked wrong.",
+    "Tarski worlds lose a point each for a domain size outside the bounds, unshaped objects or duplicate names.",
+    "Relation questions: swapping two property names costs a point, and each failing property needs its own counterexample.",
+    "Recursive definitions lose points for a missing exclusion rule or inconsistent notation, such as braces where tuples need round brackets."
+  ]
+}

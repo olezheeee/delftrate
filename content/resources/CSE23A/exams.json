@@ -1,0 +1,140 @@
+{
+  "course": "CSE23A",
+  "title": "Computer Security",
+  "available": true,
+  "summary": "One computer-based exam of 180 minutes on WebLab gives 80 percent of the grade. It has three equally weighted parts, Network Security, Systems Security and Cryptography, each mixing multiple choice with open questions, plus a few points on the other lectures. About half the points are multiple choice; the rest are explanations, worked crypto problems, design questions and a vulnerable C function. The numbers here rest on two papers only, both from 2025, so read them as indications.",
+  "basis": {
+    "papers": [
+      { "name": "Endterm 2025", "year": 2025, "kind": "endterm", "questions": 11, "points": 96, "minutes": 180 },
+      { "name": "Resit 2025", "year": 2025, "kind": "resit", "questions": 11, "points": 99, "minutes": 180 }
+    ],
+    "note": "Only two papers exist, both from 2025 when the course was CSE3220, so every share rests on two papers and 195 points. Neither paper prints a total: points are the sum of the printed sub-question points, and questions leave out the three unpointed justification boxes. The 180 minutes come from the WebLab exam instructions. The grade weighs the three parts equally whatever their points, so point shares are not grade shares."
+  },
+  "format": {
+    "mode": "Computer-based exam on WebLab; closed book except for one handwritten A4 cheat sheet",
+    "duration": "180 minutes",
+    "structure": "Three parts in fixed order: Network Security, Systems Security and Cryptography. Each opens with or mixes multiple-choice or true/false items worth 1 to 2 points, followed by a justification box for them, and open questions of 2 to 6 points. A short last part on the other lectures asks about attacks on AI systems and vulnerability disclosure.",
+    "grading": "The exam is 80 percent of the grade and two group assignments 10 percent each; minimum grades follow the TER. Inside the exam each part counts for a third, multiple choice for 40 percent and open questions for 60 percent.",
+    "aids": "One handwritten A4 cheat sheet, a simple calculator (an online one is also provided) and scratch paper, which is not marked."
+  },
+  "topicWeights": [
+    {
+      "topic": "Software security: SQL injection and memory errors",
+      "share": 19,
+      "appearsIn": 2,
+      "asks": "A short C function with a stack overflow, 7 points in both papers: why it overflows, whether code injection works, what changes under W XOR X. Also SQL injection defences, anomaly detection on result size, ASLR, Heartbleed and fuzzing."
+    },
+    {
+      "topic": "Encryption, hashing and security games",
+      "share": 16,
+      "appearsIn": 2,
+      "asks": "True/false on key counts, modes, parallelism and IND-CPA or IND-CCA; brute-force effort for two key lengths; a one-time pad by hand; CBC diagrams; and in both papers a 4- to 6-point IND-CPA attack on a weak mode."
+    },
+    {
+      "topic": "Signatures, key exchange, passwords and secret sharing",
+      "share": 14,
+      "appearsIn": 2,
+      "asks": "Recovering a Shamir secret from two shares, what MACs and signatures offer, the order of signing and encrypting, Diffie-Hellman authentication, a Merkle proof, and a 4- to 6-point protocol or threshold-sharing design."
+    },
+    {
+      "topic": "Security principles, threats and disclosure",
+      "share": 9,
+      "appearsIn": 2,
+      "asks": "Multiple choice on the CIA triad, the Cyber Kill Chain and the Pyramid of Pain; once a 4-point question on why defenders scan their own network; a short question on disclosure models or a CVD programme."
+    },
+    {
+      "topic": "Malware and malware detection",
+      "share": 9,
+      "appearsIn": 2,
+      "asks": "Worm phases, rootkits, ransomware and false positives or negatives in multiple choice; short open questions on how worms find targets, whether they need human help, or what a ransomware worm does."
+    },
+    {
+      "topic": "OS security and access control",
+      "share": 8,
+      "appearsIn": 2,
+      "asks": "An access control matrix from a written policy, turned into ACLs and capability lists (6 points); or authentication versus authorisation, reference monitors, Bell-LaPadula and Biba."
+    },
+    {
+      "topic": "Firewalls and intrusion detection",
+      "share": 7,
+      "appearsIn": 2,
+      "asks": "Firewall types, honeypots and the DMZ in multiple choice, and once a 4-point question on network layout for people working from home."
+    },
+    {
+      "topic": "Internet protocols: TLS, DNS and email",
+      "share": 7,
+      "appearsIn": 2,
+      "asks": "Certificate authorities and the chain of trust, the purpose of TLS, SPF and DKIM; once an open question on transport-layer versus application-layer encryption."
+    },
+    {
+      "topic": "DDoS attacks and botnets",
+      "share": 6,
+      "appearsIn": 2,
+      "asks": "Volumetric versus protocol attacks, BCP38 and domain generation algorithms in multiple choice, and an open question on SYN cookies."
+    },
+    {
+      "topic": "Physical layer security",
+      "share": 3,
+      "appearsIn": 1,
+      "asks": "Only in the endterm: guided versus unguided media, and a 5-point plan to protect an organisation's network spread over two floors of a shared building."
+    },
+    {
+      "topic": "Other",
+      "share": 2,
+      "appearsIn": 2,
+      "asks": "One multiple-choice question on attacks against AI systems (model stealing, backdoors), from a lecture that is not in the archive."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Multiple choice and true/false",
+      "share": 51,
+      "description": "Items with four or five options and true/false statements, worth 1 to 2 points, with a box per part to justify your choices."
+    },
+    {
+      "type": "Short explanation",
+      "share": 20,
+      "description": "Explain a mechanism or a difference in a few sentences; marked against a checklist of required elements."
+    },
+    {
+      "type": "Worked construction",
+      "share": 12,
+      "description": "Build an access control matrix with its ACLs and capability lists, fill in CBC diagrams, give a Merkle proof, or play out the IND-CPA game step by step."
+    },
+    {
+      "type": "Security or protocol design",
+      "share": 10,
+      "description": "Propose measures or a protocol for a described situation, such as a shared office building, remote workers, a fair random choice or threshold key sharing, and justify each part."
+    },
+    {
+      "type": "Vulnerable code analysis",
+      "share": 7,
+      "description": "Read a short C function with a stack buffer overflow and explain the bug, a code injection exploit and the effect of W XOR X."
+    }
+  ],
+  "recurring": [
+    "The same skeleton both times: ten 2-point network items, a systems block of 1.5-point items, eight 1-point crypto true/false statements, then 1.5-point crypto multiple choice.",
+    "A vulnerable C greeting function with three sub-questions (the overflow, code injection, W XOR X), worth 7 points each time.",
+    "An IND-CPA attack on a block cipher mode used badly, asking for the oracle queries, the two challenge messages and the guess.",
+    "A Shamir reconstruction from two given shares, with numbers to work out.",
+    "Concepts asked again with new wording: volumetric versus protocol DDoS, the Pyramid of Pain, the CIA triad, the CA chain of trust, honeypots, antivirus false positives and negatives, worm phases, escaping functions and SQL injection defences, W XOR X.",
+    "A short last part on the other lectures: one AI security item and one disclosure question."
+  ],
+  "trends": [],
+  "strategy": [
+    "Prepare the three parts evenly: [[each counts for a third of the exam grade]], whatever its number of points.",
+    "Drill the fixed exercises until they are routine: the C overflow block, CBC and counter mode diagrams, IND-CPA attacks on ECB or a fixed IV, Shamir with two points, Merkle proofs, an access control matrix with ACLs and capability lists.",
+    "Answer open questions in the elements a checklist would look for: [[name the mechanism, say why it works or fails, and give one concrete example]].",
+    "In design questions, cover several layers (physical access, network segmentation, monitoring, people) and justify every measure, since points are given per distinct measure.",
+    "Use the justification box for any multiple-choice item where two options look right, and keep it to one line per item.",
+    "Read through all parts first and start with your strongest, as the exam instructions advise; plan about an hour per part."
+  ],
+  "pitfalls": [
+    "ASLR answers that only say memory is randomised: the checklist gives most points for explaining that [[buffer and code addresses become hard to locate]].",
+    "Code injection answers that miss a step: both [[overwriting the return address and pointing it at the injected code]] are marked.",
+    "Treating W XOR X as protection against the overflow itself; [[it blocks executing injected code, not the overwrite]].",
+    "Claiming input sanitisation and a hidden schema are enough against SQL injection; second-order injection still works.",
+    "Network scanning answers that mention the kill chain but do not link scanning to a phase or give a practical example.",
+    "A remote-work design that stops at a VPN, missing segmentation or monitoring and user education."
+  ]
+}

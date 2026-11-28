@@ -1,0 +1,146 @@
+{
+  "course": "CSE14A",
+  "title": "Probability Theory and Statistics",
+  "available": true,
+  "summary": "Two written tests of two hours count equally: a midterm on lectures 1 to 8 and an endterm on lectures 9 to 16. A three-hour resit covers the whole course in one paper. Papers mix multiple choice, short answers where only the result is marked, and open questions where you show your working. Nearly everything is a calculation with given numbers; estimation, joint distributions, testing and regression carry the most points.",
+  "basis": {
+    "papers": [
+      { "name": "Resit 2025", "year": 2025, "kind": "resit", "questions": 15, "points": 90, "minutes": 180 },
+      { "name": "Endterm 2025", "year": 2025, "kind": "endterm", "questions": 15, "points": 45, "minutes": 120 },
+      { "name": "Midterm 2025", "year": 2025, "kind": "midterm", "questions": 11, "points": 45, "minutes": 120 },
+      { "name": "Resit 2024", "year": 2024, "kind": "resit", "questions": 13, "points": 45, "minutes": 180 },
+      { "name": "Midterm 2024", "year": 2024, "kind": "midterm", "questions": 13, "points": 36, "minutes": 120 },
+      { "name": "Resit 2023", "year": 2023, "kind": "resit", "questions": 12, "points": 30, "minutes": 180 }
+    ],
+    "note": "The archive holds 8 more papers: Endterm 2021 to 2024 and Midterm 2019, 2021, 2022 and 2023. Endterm 2024 is only partly in the archive (just its questions on lectures 9 to 16), so Resit 2023 was taken instead. Shares are by printed marks over 291 marks, assigned per sub-question where parts belong to different topics. Two marks were unreadable in the text and were derived from the paper total."
+  },
+  "format": {
+    "mode": "Written exam on paper. Multiple-choice and short answers go on a pre-printed answer sheet, open answers on a separate answer sheet. Questions are given in English and Dutch.",
+    "duration": "Midterm and endterm 2 hours; resit 3 hours",
+    "structure": "Three parts: multiple choice (give the letter), short-answer questions (only the result is marked) and open questions (show your working). The 2025 papers have 6 multiple-choice items, 3 to 6 short-answer questions and 2 to 6 open questions. Resit 2024 was entirely open; Resit 2023 gave 2 marks to every question and sub-question.",
+    "grading": "The course grade is the average of the midterm and the endterm, weighted equally. The resit is one test on the whole course. Each paper's grade is linear in its marks, for example 1 + 0.2S for S out of 45 in 2025 and 1 + 0.1S out of 90 on Resit 2025.",
+    "aids": "A non-graphing, non-symbolic calculator and one handwritten A4 formula sheet: one side for the midterm, both sides for the endterm and the resit. Tables of the standard normal and t distributions are provided."
+  },
+  "topicWeights": [
+    {
+      "topic": "Estimators: method of moments, bias, MSE and MLE",
+      "share": 22,
+      "appearsIn": 5,
+      "asks": "An unbiased estimator built from a count or a sum of squares and its MSE, a method of moments estimator, the sign of the bias of 2 times the mean or the maximum, an MLE from a likelihood (often with parameter-dependent support), and how to estimate an MSE by simulation or bootstrap."
+    },
+    {
+      "topic": "Joint distributions, covariance and sums",
+      "share": 15,
+      "appearsIn": 6,
+      "asks": "A joint pmf table with given marginals and covariance, the constant, a marginal and E[X] or Cov(X, Y) for a joint density on a square or triangle, independence from factorisation, the convolution integral for a sum, and the sign of a correlation argued in words."
+    },
+    {
+      "topic": "Hypothesis testing and power",
+      "share": 12,
+      "appearsIn": 4,
+      "asks": "A t-test from a sample mean and standard deviation, alpha and type II error for a given rejection rule, power and the sample size that reaches it, and p-values for tests built on a minimum, a count or a sum with given quantiles."
+    },
+    {
+      "topic": "Linear regression",
+      "share": 11,
+      "appearsIn": 4,
+      "asks": "Questions on Python OLS output: degrees of freedom, R^2 and 1 - R^2, a 90 percent interval for a coefficient, a test via the printed interval, prediction changes, dummy variables for a categorical variable, residual plots, and multiple testing."
+    },
+    {
+      "topic": "Random variables, distributions and data summaries",
+      "share": 11,
+      "appearsIn": 5,
+      "asks": "Name a distribution with its parameter (binomial, geometric, exponential), sketch a mixture distribution function, choose a distribution from a five-number summary, and compute probabilities from a pdf or a Pareto tail."
+    },
+    {
+      "topic": "Expectation, variance and transformations",
+      "share": 9,
+      "appearsIn": 5,
+      "asks": "E[X^2] from a pmf proportional to 1/k^4, the expected prize in a box game, F_Y and E[Y] for a transformed uniform variable, an integral expression for E[g(Y)], Jensen's inequality, and expectations of products of independent variables."
+    },
+    {
+      "topic": "Probability rules, conditional probability and Bayes",
+      "share": 8,
+      "appearsIn": 5,
+      "asks": "A Bayes' rule question with a test, a classifier or plant varieties, and a probability of an intersection such as P(A and B and not C) from conditional probabilities."
+    },
+    {
+      "topic": "Chebyshev, law of large numbers and the CLT",
+      "share": 7,
+      "appearsIn": 5,
+      "asks": "Approximate the probability that a sum of 72 to 400 independent variables lies in a range with the CLT, and check or apply Chebyshev's inequality against the exact probability."
+    },
+    {
+      "topic": "Confidence intervals",
+      "share": 4,
+      "appearsIn": 4,
+      "asks": "A t-interval for a normal mean from given data or from a mean and standard deviation, sometimes split into its parts (centre, critical value, s, square root of n)."
+    },
+    {
+      "topic": "Other",
+      "share": 1,
+      "appearsIn": 1,
+      "asks": "Resit 2023: fill in a missing node value in a regression tree, a topic not in the current lecture slides."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Open calculation or derivation",
+      "share": 41,
+      "description": "Multi-part problems where working earns the marks: estimators and MSE, likelihoods, joint densities, convolutions, power and sample size."
+    },
+    {
+      "type": "Multiple choice",
+      "share": 28,
+      "description": "Mostly numerical options (a Bayes posterior, a CLT probability, an interval), so a small slip usually leads to an answer that is not listed; no partial credit."
+    },
+    {
+      "type": "Short answer",
+      "share": 15,
+      "description": "Only the result is marked: name a distribution with its parameter, give an integral expression, fill a joint pmf table or a p-value."
+    },
+    {
+      "type": "Regression output",
+      "share": 11,
+      "description": "Read Python OLS output or set up a regression model: predictions, R^2, intervals and tests for coefficients, dummy variables."
+    },
+    {
+      "type": "Short explanation",
+      "share": 5,
+      "description": "A line or two of reasoning: the sign of a correlation or a bias, why variables are dependent, or how a simulation or bootstrap would work."
+    }
+  ],
+  "recurring": [
+    "A Bayes' rule question on every midterm and resit: a disease test, a classifier, plant varieties or a die followed by a uniform draw.",
+    "A joint pmf table to fill in from given marginals and a given covariance (Midterm 2024 and Midterm 2025), with several valid answers.",
+    "E[X^2] for a pmf proportional to 1/k^4 using the given series, almost identical on Midterm 2024 and Midterm 2025.",
+    "A CLT approximation for the sum of many independent variables on four of the six papers.",
+    "An unbiased estimator made from a count or a sum of squares of a discrete sample, followed by its MSE, on all three resits and Midterm 2025.",
+    "A t-interval for a normal mean from a sample mean and standard deviation on every endterm and resit.",
+    "A test whose statistic is a minimum, maximum, count or sum with a non-standard distribution, where you work out alpha, the p-value or the power yourself.",
+    "Regression on every endterm and resit, mostly from Python OLS output: R^2, predictions, coefficient tests and dummy variables."
+  ],
+  "trends": [
+    "Marks grew: Resit 2023 gave 2 marks per (sub-)question for 30 in total, Midterm 2024 had 36, and the 2025 papers have 45 (90 on the resit) with questions worth 1 to 10 marks.",
+    "Estimation moved to the first half: Midterm 2024 had none, Midterm 2025 had method of moments, bias and MSE worth 16 of 45 marks.",
+    "Resit 2024 was entirely open questions; Resit 2025 returned to multiple-choice, short-answer and open parts.",
+    "A regression tree question appeared on Resit 2023; later papers ask about simulation or parametric bootstrap instead."
+  ],
+  "strategy": [
+    "Work through the 2024 and 2025 papers with their solutions: the question types return with new numbers, and some return almost word for word.",
+    "Plan your time: about 2.7 minutes per mark on a 45-mark midterm or endterm, and 2 minutes per mark on the 90-mark resit.",
+    "Put on your formula sheet the standard distributions with pmf or pdf, F, E and Var, the computation rules for expectation, variance and covariance, the CI and test recipes, and the Bonferroni rule.",
+    "In open questions write the method before the numbers: name the distribution, the formula and the direction of the test, so you can earn marks even if the arithmetic slips.",
+    "In multiple choice there is no partial credit: if your answer is not among the options, recompute rather than pick the nearest one.",
+    "Look for shortcuts before integrating: symmetry, linearity, independence and Jensen. Several questions say in a hint that no hard integration is needed.",
+    "For tests on unusual statistics, [[first decide whether small or large values support H1]], then write the p-value or rejection region as a probability under H0."
+  ],
+  "pitfalls": [
+    "Filling a joint table by multiplying marginals when independence was not given; the solutions point this out explicitly.",
+    "Using z or the wrong degrees of freedom in a t-interval or t-test; with n = 3 the critical value is t_(2, 0.025) = 4.303.",
+    "Setting the derivative of the likelihood to zero when the support depends on the parameter; [[check where the likelihood is zero first]].",
+    "Using k dummies for k categories, or forgetting to define the new variables and the base category.",
+    "Judging a larger regression model by R^2 alone, or testing five coefficients at 0.05 without the multiple-testing correction.",
+    "Giving only a final answer to an open question: the cover page says working is required there."
+  ]
+}

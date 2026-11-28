@@ -1,0 +1,246 @@
+{
+  "course": "CSE21C",
+  "title": "Operating Systems",
+  "ects": 5,
+  "summary": "How an operating system shares the CPU, memory, storage and devices between programs, and how it keeps them apart. Lectures cover the classic OS topics with Linux and Windows as examples, plus virtualisation and multicore hardware. Six individual C lab assignments on WebLab must be passed, and the grade comes from one closed-book exam.",
+  "basis": {
+    "lectures": 11,
+    "description": "Slides of the CSE2430 lectures (10 lectures as text; Protection and Security only as the topic list in the final review), the CSE2430 lab assignments of 2024-25, and the 2023 and 2024 exam papers. Time shares count text slides; the security share is an estimate of one lecture.",
+    "caveat": "The material is from CSE2430, the older code, when the course was optional for students in the Systems variant and ran in quarter 3 of year 2. From 2026-27 the course is the compulsory core course CSE21C in year 2, quarter 1, so the schedule, the lab and the lecturers may differ. Cache Coherence and Windows shared one lecture slot, so their slide shares overstate their lecture time."
+  },
+  "topics": [
+    {
+      "name": "OS structure and hardware support",
+      "lectures": ["Lecture 1 - OS History and Structure"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "The OS as resource manager and as a layer that hides hardware details, and the step from batch processing to multiprogramming to time sharing",
+        "Which hardware made each step possible: [[magnetic tape for batch work, a programmable timer for time sharing]]",
+        "Dual-mode execution: [[user mode versus kernel mode]], the mode bit (MSR) and x86 protection rings",
+        "System calls, exceptions and interrupts: who raises each, and why each enters the kernel",
+        "How the mode bit changes when the kernel is entered and how a return-from-interrupt instruction switches back to user mode",
+        "[[Monolithic, modular and microkernel]] designs, and where device drivers live in each"
+      ],
+      "do": [
+        "Walk through a system call or an exception step by step, stating the processor mode at each step",
+        "Compare multiprogramming with time sharing, and argue for or against putting a driver inside the kernel"
+      ],
+      "pitfalls": [
+        "Mixing up [[exceptions (raised because the running code did something wrong)]] with [[interrupts (raised by a device to signal an event)]]",
+        "Saying when the mode bit is set but forgetting the switch back to user mode at the end of the handler"
+      ]
+    },
+    {
+      "name": "Processes, IPC and CPU scheduling",
+      "lectures": ["Lecture 2 - Processes and Scheduling", "Lecture 3 - Threads and Concurrency"],
+      "timeShare": 9,
+      "importance": "essential",
+      "know": [
+        "From program to process: the ELF format, loading, the process control block and the states [[running, ready and blocked]]",
+        "[[fork, exec, wait and waitpid, exit]], and the role of init as the first process",
+        "Signals, pipes and other IPC: shared memory, sockets, files",
+        "FIFO, SJF, SRT, priority and round-robin scheduling, and what each one optimises or sacrifices",
+        "Multilevel feedback queues and Linux niceness; why [[static priorities can starve jobs and how ageing fixes it]]",
+        "Real-time scheduling with [[rate-monotonic and earliest-deadline-first]], and the CPU utilisation condition for meeting deadlines",
+        "Multiprocessor scheduling and the Linux schedulers up to CFS"
+      ],
+      "do": [
+        "Trace FIFO, SJF, SRT, priority and round-robin schedules for five processes and fill in each completion time",
+        "Draw an RMS or EDF schedule for three periodic tasks and spot a missed deadline",
+        "Count how many processes a fork loop creates, with or without waitpid",
+        "Say which state transitions are possible and what event causes each"
+      ],
+      "pitfalls": [
+        "Allowing blocked to running or ready to blocked: [[a blocked process always goes back through ready]]",
+        "In round-robin, letting a task keep the CPU after it finishes early instead of switching at once"
+      ]
+    },
+    {
+      "name": "Threads, synchronisation and deadlock",
+      "lectures": ["Lecture 3 - Threads and Concurrency", "Lecture 4 - Synchronization"],
+      "timeShare": 16,
+      "importance": "essential",
+      "know": [
+        "Threads versus processes, the thread control block, and user-level, kernel-level and hybrid (N to M) threads with their trade-offs",
+        "POSIX threads and higher-level options: thread pools, OpenMP, Grand Central Dispatch",
+        "Race conditions, the Too Much Milk solutions, safety versus liveness, and Peterson's algorithm",
+        "Locks from disabling interrupts and from atomic instructions ([[test-and-set, compare-and-swap]]); spinlocks versus sleeping mutexes, ticket locks, the bakery algorithm and futexes",
+        "Condition variables, monitors (Mesa versus Hoare signalling) and semaphores, used on the producer-consumer queue",
+        "Priority inversion and its fixes, and [[Amdahl's law S(n) = 1 / ((1 - P) + P/n)]]",
+        "Deadlock: [[the four conditions]], resource allocation graphs, [[prevention by lock ordering, avoidance with the Banker's algorithm]], detection and recovery; deadlock versus livelock and starvation"
+      ],
+      "do": [
+        "Write pseudocode with semaphores or mutexes that forces an order between processes",
+        "Design a deadlock-free and starvation-free locking scheme for a dining philosophers variant",
+        "Build a semaphore out of a mutex and a sleep and wake-up mechanism",
+        "Choose between a spinlock and a kernel mutex for a given level of contention, and explain why"
+      ],
+      "pitfalls": [
+        "Checking a [[condition variable]] with if instead of a [[while loop]]",
+        "Assuming more threads always means more speed: Amdahl's law caps the speed-up"
+      ]
+    },
+    {
+      "name": "Protection and security",
+      "lectures": ["Lecture 5 - Protection and Security"],
+      "timeShare": 9,
+      "importance": "important",
+      "know": [
+        "The goals of protection, the [[least-privilege principle]] and the access matrix model with domains and owner and control rights",
+        "Ways to store the matrix: [[access lists, capability lists, lock and key]]",
+        "Threats: viruses, worms, ransomware, buffer overflows, port scanning, denial of service, and why humans are the weakest link (phishing, social engineering)",
+        "Buffer-overflow defences: [[a non-executable stack, stack canaries, compiler-inserted bounds checks]]",
+        "Authentication with passwords and one-way functions, symmetric keys, Diffie-Hellman key exchange, firewalls"
+      ],
+      "do": [
+        "Describe a realistic attack on a given system (session hijacking, replaying a car-key signal) and a practical defence against it",
+        "Explain how and why a program drops its own privileges in the access matrix model"
+      ],
+      "pitfalls": [
+        "Naming an attack without explaining why the proposed defence actually stops it, for example why a challenge-response defeats a replay"
+      ]
+    },
+    {
+      "name": "Memory management and virtual memory",
+      "lectures": ["Lecture 6 - Memory Management"],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "Heap allocation with [[first fit, best fit, worst fit and buddy allocation]], and external versus internal fragmentation",
+        "Address spaces, relocation and translation; segmentation and its limits; paging",
+        "Page tables: [[simple forward-mapped, multi-level, hashed and inverted]], plus the TLB",
+        "Page faults and how the MMU and the OS handle them together, and the effective access time formula with its simplifications",
+        "Page replacement: [[optimal, FIFO, LRU, clock and second-chance clock]]; local versus global replacement",
+        "Working sets, page-fault frequency, thrashing and swapping as load control"
+      ],
+      "do": [
+        "Work out where each malloc lands under first, best and worst fit after a series of allocations and frees",
+        "Fill a FIFO, LRU or clock replacement table for a request string and mark the page faults",
+        "Compute offset bits, the number of page table entries, the table size and the number of levels from the address and page sizes",
+        "Compute the effective memory access time from the access time, the clock speed, the disk transfer time and the fault rate"
+      ],
+      "pitfalls": [
+        "Counting page table entries from the physical address size instead of the virtual one",
+        "Ignoring the given access history (and, for clock, the starting hand position and reference bits) before the first request"
+      ]
+    },
+    {
+      "name": "I/O and storage devices",
+      "lectures": ["Lecture 7 - IO and Storage"],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "Device access by polling, by interrupts and by DMA, and when each suits a device",
+        "Hard disk access time as [[seek time plus rotational delay plus transfer time]], and disk capacity",
+        "Disk-head scheduling: [[FIFO, SSTF, SCAN, C-SCAN, LOOK and C-LOOK]]",
+        "RAID 0, 1, 3, 5 and 10: [[striping, mirroring and parity]], with their read and write speeds",
+        "SSDs: the flash translation layer, garbage collection, write amplification, over-provisioning and wear",
+        "Buffered standard I/O versus Unix I/O, blocking versus non-blocking, and asynchronous APIs (POSIX aio, Linux aio, io_uring)"
+      ],
+      "do": [
+        "Order a list of track requests under four disk-scheduling algorithms and add up the tracks crossed",
+        "Compare the read or write time of an SSD with a RAID array of hard disks for a given file, with full calculations",
+        "Pick polling, interrupts or DMA for a described device and defend the choice"
+      ],
+      "pitfalls": [
+        "Turning SCAN or C-SCAN at the last request: in the model solutions they [[sweep to the disk edge]], and [[C-SCAN counts the jump back]]",
+        "Using a full rotation instead of [[half a rotation as the average rotational delay]]"
+      ]
+    },
+    {
+      "name": "File systems",
+      "lectures": ["Lecture 8 - File Systems"],
+      "timeShare": 12,
+      "importance": "important",
+      "know": [
+        "Files, their attributes and operations; file descriptor table, open file table (with its reference count) and vnode table, and how fork shares open files",
+        "Directory structures, mounting, hard links versus soft links, and why [[hard links to directories are not allowed]]",
+        "Block allocation: contiguous, linked, FAT and indexed with the UNIX inode ([[direct, single, double and triple indirect blocks]])",
+        "Free-space management with bitmaps and linked lists",
+        "Consistency: fsck, [[journaling in ext3, extents in ext4]], and the ideas behind ReiserFS, XFS, ZFS and NTFS"
+      ],
+      "do": [
+        "Derive the maximum file size from the block size, address size and inode layout",
+        "Count the metadata blocks a file of a given size needs, including the inode and every indirect block",
+        "Explain how extents or journaling solve a stated problem"
+      ],
+      "pitfalls": [
+        "Forgetting the inode itself, or the extra indirect block under the doubly-indirect block, when counting metadata blocks"
+      ]
+    },
+    {
+      "name": "Multicore and cache coherence",
+      "lectures": ["Lecture 11 - Multicore & Cache Coherence"],
+      "timeShare": 9,
+      "importance": "useful",
+      "know": [
+        "[[Shared-memory (UMA) and distributed shared-memory (NUMA)]] systems",
+        "Write-through versus write-back caches, and how private caches can hold stale copies",
+        "Snooping protocols and the MESI states [[modified, exclusive, shared and invalid]]",
+        "Coherence versus memory consistency, and weak consistency",
+        "Why spinning on a shared lock causes cache-line traffic, and the fix of spinning on the cached copy with plain loads before trying an atomic exchange"
+      ],
+      "do": [
+        "Trace the MESI state of a cache line through a sequence of reads and writes by two cores",
+        "Explain why a spinlock performs badly on many cores and how to reduce the traffic"
+      ],
+      "pitfalls": []
+    },
+    {
+      "name": "Windows internals",
+      "lectures": ["Lecture 10 - Windows Deep Dive"],
+      "timeShare": 12,
+      "importance": "important",
+      "know": [
+        "The path from MS-DOS to NT-based Windows and how NT's design differs from Unix",
+        "The layers: [[hardware abstraction layer, kernel, executive]] and its managers (object, I/O, virtual memory, security reference monitor)",
+        "Subsystems ([[Win32, WinRT/UWP, WSL]]) that translate their API calls into the native NT API",
+        "[[Threads as the unit of scheduling]], priority boosts for the focused window, for threads woken from I/O and for servers handling a request",
+        "Stacked and filter drivers, the registry, NTFS recovery, and why the window manager runs in kernel mode"
+      ],
+      "do": [
+        "Name and explain two design differences between Windows NT and Unix",
+        "Explain a design choice (async tasks in UWP, kernel-mode window manager, filter drivers) with a concrete reason"
+      ],
+      "pitfalls": []
+    },
+    {
+      "name": "Virtualisation and containers",
+      "lectures": ["Lecture 9 - Virtualization"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "Why virtual machines are used, and the three goals [[safety, fidelity and performance]]",
+        "Type 1 and type 2 hypervisors, full emulation versus trap-and-emulate",
+        "Why some instruction sets cannot be virtualised by trap-and-emulate alone, and the fixes: [[binary translation, hardware assistance, para-virtualisation]]",
+        "Two-level address translation (nested or extended page tables) and I/O virtualisation",
+        "Containers versus virtual machines, with Docker and Kubernetes as examples"
+      ],
+      "do": [
+        "Explain why a program runs slower in a VM, and when it runs at almost native speed",
+        "Weigh para-virtualisation against pure virtualisation, and containers against VMs"
+      ],
+      "pitfalls": [
+        "Calling para-virtualisation a hardware feature: [[the guest is modified and knows it runs on a hypervisor]]"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Programming in C: pointers, arrays, structs and bit operations (the lab starts with a C practice set)",
+    "Computer Organisation (CSE11C): registers, interrupts, caches and the memory hierarchy",
+    "Algorithms and Data Structures (CSE13C): queues, trees and linked lists",
+    "Comfort with powers of two and unit prefixes (KiB, MiB, GiB) without a calculator",
+    "Basic use of a Linux command line"
+  ],
+  "practical": "Six individual lab assignments in C on WebLab, all mandatory and pass/fail: processes and a small shell with fork and exec; multithreading with pthreads, niceness and parallel quicksort; concurrency with producer-consumer and semaphores; a buddy memory allocator; security, crafting a buffer-overflow payload and a loader that only runs correctly signed binaries; and a file system built with FUSE. All spec tests must pass, and a TA signs off each one by checking that you understand your code. The lab does not count towards the grade, but failing it gives a 1.",
+  "studyAdvice": [
+    "Memory, scheduling and I/O together carry almost half of the exam points; give them most of your revision time.",
+    "Drill the fixed calculation exercises until they are routine: scheduling tables, page replacement tables, disk-head scheduling, heap fits, page table sizes and inode metadata blocks. They are about a third of every paper.",
+    "Windows takes 12 percent of the slides and about 6 percent of the points. Learn a short list of facts (subsystems, priority boosts, filter drivers, NT versus Unix) rather than the whole history.",
+    "Multicore and cache coherence earned no points on the 2023 and 2024 papers. Study it last, but keep the spinlock and futex part, which is examined under synchronisation.",
+    "The security slides are not in the archive. Work from the topic list in the final review and the Homework 5 solutions, and practise describing an attack together with its defence.",
+    "Do the homework sets after each lecture and check them against the solutions in the archive (Homework 1 to 5 and 8): they are written in the exam style.",
+    "Keep a week ahead in the lab, as the course advises, so you can ask questions before the sign-off; the shell, threading and concurrency work also helps on the exam questions about those topics."
+  ]
+}

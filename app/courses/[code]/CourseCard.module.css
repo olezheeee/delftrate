@@ -1,0 +1,345 @@
+/* The course card: a basic outline in the look of the approved demo. */
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 4vh, 40px);
+  padding: var(--gut);
+}
+.top {
+  width: 100%;
+  max-width: 720px;
+}
+.brand {
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.brand em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--accent);
+}
+.card,
+.skeleton {
+  width: 100%;
+  max-width: 720px;
+  padding: clamp(20px, 5vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--card);
+}
+.skeleton {
+  height: 640px;
+}
+.back {
+  display: inline-block;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: hsl(var(--fg) / 0.6);
+}
+.back:hover,
+.back:focus-visible {
+  color: #fff;
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.title {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 46px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 20px;
+  margin-top: 26px;
+}
+/* What the big number is, on a line of its own above it. */
+.scoreLabel {
+  flex-basis: 100%;
+  color: hsl(var(--fg) / 0.55);
+}
+.score b {
+  font-size: clamp(64px, 16vw, 104px);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.score b small,
+.blockHead b small {
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: hsl(var(--fg) / 0.45);
+}
+.verdict {
+  padding-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.waiting {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: hsl(var(--fg) / 0.6);
+}
+
+.block {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-2);
+}
+.blockHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.blockHead h2 {
+  margin: 0;
+}
+.blockHead b {
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.blockHead b small {
+  margin: 0 8px 0 0;
+  font-size: 12.5px;
+}
+.legend {
+  font-size: 12px;
+  color: hsl(var(--fg) / 0.5);
+}
+
+.bars {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+.bar {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  align-items: center;
+  gap: 12px;
+  font-size: 14.5px;
+}
+.bar dt {
+  color: hsl(var(--fg) / 0.75);
+}
+.bar dd {
+  display: grid;
+  grid-template-columns: 1fr 34px;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+.bar b {
+  font-weight: 400;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.track {
+  height: 4px;
+  border-radius: 4px;
+  background: hsl(0 0% 100% / 0.14);
+  overflow: hidden;
+}
+.track span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.pill {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.pill:hover {
+  border-color: #fff;
+}
+.pill[aria-pressed="true"] {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+/* The rating sliders, as in the demo. */
+.group {
+  margin: 0;
+  padding-bottom: 4px;
+  font-size: 13px;
+  font-weight: 400;
+  color: hsl(var(--fg) / 0.55);
+}
+.slider ~ .group {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-2);
+}
+.slider {
+  padding: 14px 0 6px;
+}
+.slider + .slider {
+  border-top: 1px solid var(--line);
+}
+.sliderHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.sliderHead label {
+  font-size: 15px;
+}
+.sliderHead small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: hsl(var(--fg) / 0.5);
+}
+.sliderHead output {
+  min-width: 2.2ch;
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: hsl(var(--fg) / 0.3);
+}
+.slider[data-set] output {
+  color: #fff;
+}
+.slider input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 34px;
+  margin: 4px 0 0;
+  background: none;
+  cursor: pointer;
+  /* Not rated yet: an empty track. */
+  --track: hsl(0 0% 100% / 0.14);
+}
+.slider[data-set] input {
+  --track: linear-gradient(to right, var(--accent) var(--p), hsl(0 0% 100% / 0.14) var(--p));
+}
+.slider input::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 6px;
+  background: var(--track);
+}
+.slider input::-moz-range-track {
+  height: 6px;
+  border-radius: 6px;
+  background: var(--track);
+}
+.slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  border: 0;
+  border-radius: 50%;
+  background: hsl(0 0% 62%);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+.slider input::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: hsl(0 0% 62%);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+.slider[data-set] input::-webkit-slider-thumb {
+  background: #fff;
+}
+.slider[data-set] input::-moz-range-thumb {
+  background: #fff;
+}
+.slider input:focus-visible {
+  outline: 0;
+}
+.slider input:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.slider input:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.formFoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.formFoot p {
+  margin: 0;
+  font-size: 13.5px;
+  color: hsl(var(--fg) / 0.6);
+}
+.post {
+  height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #000;
+  font-weight: 500;
+  cursor: pointer;
+}
+.post:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .bar {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none;
+  }
+}

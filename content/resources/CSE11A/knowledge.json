@@ -1,0 +1,238 @@
+{
+  "course": "CSE11A",
+  "title": "Reasoning and Logic",
+  "ects": 5,
+  "summary": "A first-quarter course in stating claims precisely and proving them. It runs from propositional and predicate logic through proof methods and induction to sets, relations, functions, trees and graphs, following the textbook Delftse Foundations of Computation. Lectures are interactive with voting questions, you practise in weekly group TA-checks in the labs, and an individual Prolog project runs alongside.",
+  "basis": {
+    "lectures": 17,
+    "description": "Slides of Lectures 0 to 16, the Tantalizing TA-checks, the Acing R&L sessions and the course description. Lecture 1 has no slide text and is counted as one average lecture. Time shares count content slides, with repeated animation frames counted at most twice.",
+    "caveat": "From 2026-27 the course is CSE11A, renamed from CSE1300 with the content unchanged. Slide counts understate the logic puzzles, which sit in short intermezzi, and leave out the history part of Lecture 13 (Frege, Russell, Godel), which no paper examines. Lectures 15 and 16 mix all topics as exam practice."
+  },
+  "topics": [
+    {
+      "name": "Propositional logic",
+      "lectures": ["Lecture 0 - Introduction", "Lecture 1 - Propositional Calculus Part 1", "Lecture 2 - Propositional Calculus Part 2"],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "The connectives not, and, or, ->, <-> and xor, the main connective of a formula, and how to read a new operator from its truth table",
+        "Tautology, contradiction and contingency; satisfiable versus unsatisfiable",
+        "Logical equivalence and the laws used to rewrite: De Morgan, distribution, double negation, [[p -> q equivalent to (not p) or q]]",
+        "[[Converse, inverse and contrapositive]] of p -> q, and which of them are equivalent",
+        "Sufficient and necessary conditions: [[p is necessary for q means q -> p]]",
+        "Validity of an argument, and the principle of explosion: [[contradictory premises make any argument valid]]",
+        "Disjunctive and conjunctive normal form (DNF, CNF), reading a DNF straight from the true rows of a table"
+      ],
+      "do": [
+        "Fill in an 8-row truth table for three variables, including a made-up ternary operator",
+        "Decide whether an argument is valid or two formulas are equivalent by pointing at specific rows",
+        "Rewrite a formula to DNF or CNF and simplify it",
+        "Judge a general claim about arguments or satisfiability as true or false, with a counterexample if false"
+      ],
+      "pitfalls": [
+        "Tables with fewer than 8 distinct rows, or one operator applied wrongly throughout: each costs a point in the rubric",
+        "Turning \"necessary\" into a bi-implication or the wrong direction of the implication",
+        "Calling an argument invalid when its premises contradict each other and explosion makes it valid"
+      ]
+    },
+    {
+      "name": "Predicate logic and formal structures",
+      "lectures": ["Lecture 2 - Propositional Calculus Part 2", "Lecture 3 - First-Order Logic", "Lecture 4 - Methods of Proof Part 1"],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "Predicates, constants, functions and the domain of discourse; \"for all x\" and \"there exists x\"",
+        "Why \"[[for all x (A(x) -> B(x))]]\" goes with a universal claim and \"[[there exists x (A(x) and B(x))]]\" with an existential one",
+        "Negating quantified formulas: [[not for all x becomes there exists x not]], and pushing negations down to the predicates",
+        "[[The order of quantifiers matters]] (for all x there exists y versus there exists y for all x)",
+        "Expressing \"only\", \"exactly one\" and \"exactly two\" with equality, and using sets and cardinality inside formulas",
+        "Tarski worlds and formal structures: [[a domain plus the set of tuples for each predicate]]; truth of a formula in a structure",
+        "Using a structure as a counterexample to show that a predicate-logic argument is invalid"
+      ],
+      "do": [
+        "Translate English sentences into predicate logic, defining every predicate and constant you use",
+        "Translate formulas back into natural English sentences",
+        "Negate and simplify a formula so negations only stand in front of predicates",
+        "Build a Tarski world or formal structure within a given domain size that satisfies a set of statements",
+        "Show an argument invalid with a structure that makes the premises true and the conclusion false"
+      ],
+      "pitfalls": [
+        "English translations that still read as logic (\"there exists an x such that\") score nothing",
+        "Predicates that quietly introduce an extra object, or a common noun made into a constant",
+        "Structures without an explicit domain, objects without a shape, or two objects with the same name"
+      ]
+    },
+    {
+      "name": "Proof techniques",
+      "lectures": ["Lecture 3 - First-Order Logic", "Lecture 4 - Methods of Proof Part 1", "Lecture 5 - Methods of Proof Part 2"],
+      "timeShare": 12,
+      "importance": "essential",
+      "know": [
+        "The difference between a definition, a theorem, a lemma and a conjecture",
+        "Definitions of [[even, odd, divisibility (a | b), prime and rational number]]; the number sets N ([[with 0 in N]]), Z, Q and R",
+        "Direct proof, proof by generalisation (take an arbitrary element), contrapositive, contradiction and division into cases",
+        "Classic proofs: sqrt(2) is irrational, there is no smallest positive rational, every 4-digit palindrome is divisible by 11",
+        "Proving an existential claim with an example and refuting a universal claim with a counterexample",
+        "Which technique suits which claim: cases for remainders, contradiction for \"there is no\", contrapositive for negated conclusions"
+      ],
+      "do": [
+        "Prove a divisibility claim for all integers by [[writing n as 3m, 3m + 1 or 3m + 2]] and treating each case",
+        "Write a proof by contradiction or contrapositive with the starting assumption stated correctly",
+        "Name the two proof techniques used in an excerpt from a research paper and point to the lines that show them"
+      ],
+      "pitfalls": [
+        "Starting with \"take an arbitrary k such that the claim holds\": that assumes what you must prove",
+        "Opening a contradiction proof with an arbitrary element instead of \"suppose there exists\" a counterexample",
+        "Using modular arithmetic rules, which are [[not allowed unless proven in the course]]"
+      ]
+    },
+    {
+      "name": "Induction, recursion and invariants",
+      "lectures": ["Lecture 6 - Induction and Recursion Part 1", "Lecture 7 - Induction and Recursion Part 2", "Lecture 8 - Induction and Recursion Part 3", "Lecture 15 - Exam Prep", "Lecture 16 - The Last One"],
+      "timeShare": 16,
+      "importance": "essential",
+      "know": [
+        "The principle of mathematical induction and the proof template: [[base case, induction hypothesis for an arbitrary k, inductive step, conclusion]]",
+        "Base cases other than 0, strong induction for recurrences that use the two previous terms, and induction in both directions to cover all of Z",
+        "Induction over a subset such as the multiples of 4: [[prove P(4) and for all x, P(4x) -> P(4(x + 1))]]",
+        "How many base cases a step of size 3 needs, as in P(n) -> P(n + 3)",
+        "Recursive sequences and recursive functions with several cases, including rules that alternate between odd and even positions",
+        "Loop invariants and proofs by invariant in four parts: [[initialisation, iteration, eventual falsity of the guard, post-condition]]"
+      ],
+      "do": [
+        "Prove a sum formula, a divisibility claim or a closed form for a recurrence by induction",
+        "State exactly what the base case and the inductive step must show for a given claim",
+        "Compute values of a recursive function and write a recursive definition for a described sequence",
+        "Find a parity invariant in a game or mixing process, prove it and use it to predict the outcome",
+        "Prove an algorithm correct with a loop invariant"
+      ],
+      "pitfalls": [
+        "Writing the whole claim as the induction hypothesis: assuming it means you are already done",
+        "Leaving out \"arbitrary\" in the hypothesis, or using the hypothesis without saying where",
+        "Inconsistent notation in recursive definitions (mixing sequence and function notation) costs a point"
+      ]
+    },
+    {
+      "name": "Recursive sets and structural induction",
+      "lectures": ["Lecture 9 - Set Theory Part 1", "Lecture 10 - Set Theory Part 2", "Lecture 14 - Functions on trees and graphs", "Lecture 15 - Exam Prep"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "A recursive set definition: [[base rules, recursive rules and the exclusion rule]] \"nothing else is in the set\"",
+        "Standard examples: the set PROP of formulas, sets of words over a and b, the MIU system, sets of numbers",
+        "Structural induction: [[one base case per base rule and one inductive step per recursive rule]]",
+        "Recursive functions defined on a recursive set, such as counting connectives or word length"
+      ],
+      "do": [
+        "Write a recursive definition for a described set, for example the odd-length palindromes over a and b",
+        "Prove a property of every element by structural induction, for example that every element is divisible by 4",
+        "Show that a given element is in a recursively defined set by building it from the rules"
+      ],
+      "pitfalls": [
+        "Forgetting the exclusion rule, which is worth a separate point",
+        "Covering only some of the recursive rules in the inductive step"
+      ]
+    },
+    {
+      "name": "Trees and graphs",
+      "lectures": ["Lecture 8 - Induction and Recursion Part 3", "Lecture 11 - Set Theory Part 3", "Lecture 14 - Functions on trees and graphs", "Lecture 16 - The Last One"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Binary trees: root, leaves, height, full and proper trees; parse trees and prefix notation",
+        "Pre-order, in-order and post-order traversals",
+        "The formal TREE definition: [[the empty tree, a leaf (x, empty) and a node (x, (T1, ..., Tk))]]; BTREE for binary trees",
+        "Recursive functions on TREE, with [[base cases for the empty tree and for a leaf]]",
+        "Graphs: vertices, edges, degree, directed and undirected, simple graphs, multigraphs, weights and paths",
+        "Directed acyclic graphs and topological orderings, including when a DAG has exactly one ordering"
+      ],
+      "do": [
+        "Draw a tree with a given number of leaves and a given sequence inside a traversal",
+        "Evaluate a recursive function on a drawn tree",
+        "Write a function on TREE that counts, sums, compares or transforms nodes, using helper functions where needed",
+        "Draw a graph or DAG that meets constraints on vertices, edges and topological orderings"
+      ],
+      "pitfalls": [
+        "Handling only binary nodes in a TREE function when the definition allows any number of children",
+        "Wrong brackets: curly braces where tuples need round ones cost a point"
+      ]
+    },
+    {
+      "name": "Set theory",
+      "lectures": ["Lecture 9 - Set Theory Part 1", "Lecture 10 - Set Theory Part 2", "Lecture 11 - Set Theory Part 3"],
+      "timeShare": 9,
+      "importance": "important",
+      "know": [
+        "Set notation and set-builder notation, the empty set and why it is unique, subsets",
+        "Union, intersection, difference, complement and symmetric difference, and how each matches a connective",
+        "Venn diagrams for three sets",
+        "The power set P(A) with [[2 to the power |A| elements]], and the Cartesian product A x B with [[|A| times |B| pairs]]",
+        "Proving set claims by element chasing and refuting them with concrete sets"
+      ],
+      "do": [
+        "List the elements of combinations such as P(B - A) symmetric difference P(A intersect B)",
+        "Draw a Venn diagram for a set expression, or write the expression for a shaded diagram",
+        "Prove or disprove a claim about all sets A, B and C"
+      ],
+      "pitfalls": [
+        "Mixing up the empty set and the set containing it when a power set has the empty set or tuples as elements"
+      ]
+    },
+    {
+      "name": "Functions, relations and countability",
+      "lectures": ["Lecture 12 - Functions & Relations", "Lecture 13 - The limitations of Set Theory", "Lecture 14 - Functions on trees and graphs", "Lecture 16 - The Last One"],
+      "timeShare": 14,
+      "importance": "important",
+      "know": [
+        "A relation as [[a subset of A x B]]; [[reflexive, symmetric, antisymmetric and transitive]], written in logic",
+        "Equivalence relations, equivalence classes and partitions; partial orderings",
+        "A function as a special relation: domain, codomain and what makes a function well-defined",
+        "[[Injective, surjective and bijective]] functions",
+        "Countably infinite sets ([[a bijection with N]]), Cantor's argument that [[R is uncountable]]"
+      ],
+      "do": [
+        "Check each property of a relation, with a counterexample for every property that fails",
+        "Build a relation on {0, 1, 2} with a given mix of properties by listing its pairs",
+        "Decide whether a given function is injective or surjective, or not well-defined",
+        "Give a bijection from N to a set, or an informal argument that a set of trees or finite subsets is countable"
+      ],
+      "pitfalls": [
+        "Swapping the names of two properties costs a point even if the reasoning is right",
+        "Missing that a rule mapping one input to two outputs is not a function"
+      ]
+    },
+    {
+      "name": "Logic puzzles",
+      "lectures": ["Lecture 0 - Introduction", "Lecture 2 - Propositional Calculus Part 2", "Lecture 3 - First-Order Logic", "Lecture 6 - Induction and Recursion Part 1", "Lecture 8 - Induction and Recursion Part 3"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "Constraint puzzles in which you narrow a set of options until one remains",
+        "Puzzles about what other people know: the fact that [[a clue was not enough is itself information]]",
+        "Reconstructing earlier moves of a game from the final board"
+      ],
+      "do": [
+        "List the remaining options after each clue and justify every elimination in writing",
+        "Turn a story into numbers or a table before reasoning about it"
+      ],
+      "pitfalls": [
+        "Giving only the final answer: the points are for the steps that rule out the other options"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Secondary-school algebra: expanding and factoring products, fractions, powers and sums with sigma notation",
+    "Basic number facts: primes, divisibility, even and odd",
+    "No logic background is assumed; Computer Organisation touches logic gates in the same quarter"
+  ],
+  "practical": "Each week has a Tantalizing TA-check, done in a group of four or five. TA-checks are not graded, but TAs give feedback and the solutions open once you have submitted. The course calls them your main study method. Acing R&L sessions add harder guided problems. An individual Prolog project on WebLab, about automated reasoning over software specifications, runs from week 3 to week 9 and only counts as a bonus.",
+  "studyAdvice": [
+    "Do every TA-check with your group and get feedback on it: the exam questions are of the same kind, and solutions only open after you submit.",
+    "Logic (propositional and predicate) carries about a third of the exam points, and induction, structural induction and invariants about 30 percent. Spend most of your hours there.",
+    "Sit the midterm in week 5 even though it only gives a bonus: it is a dry run of the endterm with feedback, on modules 1 to 4.",
+    "Practise on the 2024 and 2025 papers first; the lecturers warn that some older midterms leave out trees and induction.",
+    "Write out every proof in full and mark it against the rubric: points go to the base case, the arbitrary element, using the hypothesis and the conclusion.",
+    "For TREE functions, use the Acing R&L approach: split the task into helper functions and fix the base cases before the recursive case.",
+    "Skip the history of Frege, Russell and Godel in Lecture 13 when time is short; no paper asks about it."
+  ]
+}

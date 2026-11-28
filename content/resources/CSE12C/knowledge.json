@@ -1,0 +1,273 @@
+{
+  "course": "CSE12C",
+  "title": "Data Management",
+  "ects": 5,
+  "summary": "How to design a relational database, query it, and how a database system stores, indexes and processes data and keeps it correct under concurrent use and crashes. The first part covers data models, ER modelling, normalisation and SQL; the second part opens up the engine: storage, indexes, query optimisation, transactions, recovery and NoSQL. Lectures come with lab work in PostgreSQL on an IMDb dataset, with SQL written by hand and some Java (JDBC, JPA).",
+  "basis": {
+    "lectures": 21,
+    "description": "Slides of the two predecessors: 13 lectures of CSE1505 Information and Data Management (IDM) and the 8 content lectures of the database half of CSE1500 Web and Database Technology (WDT DB), plus their lab assignments and past papers. The WDT DB Q&A lecture and tutorials are left out.",
+    "caveat": "CSE12C is new in 2026-27 (year 1, quarter 2) and merges IDM with the database half of WDT; its schedule, labs and slides may differ. Its assessment is not published: the exam booklet uses the predecessors' papers. Time shares weigh each set by its lectures (IDM 13, WDT DB 8), as WDT DB used about 109 slides per lecture against 65 for IDM; within a set they follow slide counts, without decks marked as not examined."
+  },
+  "topics": [
+    {
+      "name": "Data models, ER modelling and relational schemas",
+      "lectures": [
+        "Lecture 1 - Introduction (WDT DB)",
+        "Lecture 2 - Modelling-ER (WDT DB)",
+        "Lecture 3 - More on ER (WDT DB)",
+        "Lecture 6 - Relational Model (WDT DB)",
+        "Lecture 1 - Introduction (IDM)"
+      ],
+      "timeShare": 22,
+      "importance": "essential",
+      "know": [
+        "Data, information and knowledge; what a DBMS adds: [[data independence, views, integrity, transactions]], and the parts of a DBMS",
+        "Data models versus schemas versus instances; the relational, document, key-value and graph models for the same data",
+        "Chen EER notation as used in the exam: entity, weak entity, key, multi-valued, composite and derived attributes, identifying relationships, total participation, cardinalities",
+        "Binary, ternary and recursive relationship types, and when a ternary relationship cannot be split into binary ones",
+        "Specialisation and generalisation ([[disjoint or overlapping, total or partial]]) and when inheritance is worth modelling",
+        "The relational model formally: domains, relations as sets of tuples, superkeys, candidate and primary keys, [[entity and referential integrity]]",
+        "Mapping rules from EER to relations: entities, 1:1, 1:N and N:M relationships, attributes on relationships, n-ary relationships, weak entities, multi-valued attributes and the variants for inheritance"
+      ],
+      "do": [
+        "Draw a complete EER schema from a one-page scenario, with keys and cardinalities, and note the requirements it cannot express",
+        "Convert a given EER diagram into relations in the course notation, with primary and foreign keys and minimal redundancy",
+        "Argue for or against a design decision: an email as primary key, a weak entity, inheritance, a surrogate key",
+        "Explain why you design a conceptual schema before the logical one"
+      ],
+      "pitfalls": [
+        "Forgetting primary keys or cardinalities, or modelling behaviour (users can delete reviews) as data",
+        "Using an address (country, city, street, number) as a natural key: it is not globally unique, so the model answers add a surrogate key",
+        "Storing a value that can be computed (a score derived from other data) as a normal attribute instead of a derived one",
+        "Giving a weak entity foreign keys to each owner separately when it belongs to their relationship (the screenshot of a game a user owns)"
+      ]
+    },
+    {
+      "name": "Functional dependencies and normalisation",
+      "lectures": ["Lecture 7 - Database Normalization (WDT DB)"],
+      "timeShare": 4,
+      "importance": "essential",
+      "know": [
+        "[[Update, insert and delete anomalies]] caused by redundancy, and lossless decomposition as the cure",
+        "Functional dependencies, [[Armstrong's axioms (reflexivity, augmentation, transitivity)]] and the derived rules union, decomposition and pseudotransitivity",
+        "Attribute closure, the closure F+ and a minimal cover of a set of FDs",
+        "Superkey, candidate key and primary key in terms of FDs",
+        "1NF (atomic values, three ways to remove multi-valued attributes), [[2NF (no partial dependency on a key)]] and [[3NF (no transitive dependency)]]; BCNF and higher forms are not examined"
+      ],
+      "do": [
+        "Find all candidate keys of a relation from a set of FDs, using closures",
+        "State the highest normal form of a relation and justify it with the offending FD",
+        "Decompose step by step into 2NF and then 3NF, naming the keys of every new relation",
+        "Check which FDs hold in a given table extension, and derive FDs from a scenario text"
+      ],
+      "pitfalls": [
+        "Jumping straight to 3NF: the model answers give no points for the 2NF step if it is skipped",
+        "Writing a composite key without brackets, which reads as two separate keys"
+      ]
+    },
+    {
+      "name": "SQL: querying and defining data",
+      "lectures": [
+        "Lecture 4 - SQL Part 1 (WDT DB)",
+        "Lecture 5 - SQL Part 2 (WDT DB)",
+        "Lecture 2 - SQL (IDM)"
+      ],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "SELECT, FROM, WHERE, ORDER BY, DISTINCT, LIKE patterns, and the logical evaluation order of a query",
+        "Inner joins, self joins, and the outer joins LEFT, RIGHT and FULL; [[a comma join with a WHERE condition gives the same result set as JOIN ... ON]]",
+        "Aggregates COUNT, SUM, AVG, MIN and MAX with GROUP BY and HAVING, and how NULL behaves in aggregates and in three-valued logic",
+        "Set operators [[UNION, INTERSECT and EXCEPT]], and bag versus set semantics",
+        "Subqueries: [[IN, NOT IN, EXISTS, NOT EXISTS, ANY and ALL]], correlated versus uncorrelated, and the WITH clause",
+        "DDL and DML: CREATE TABLE with NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY and reaction policies; INSERT, UPDATE, DELETE, ALTER and DROP"
+      ],
+      "do": [
+        "Write a correct query from a plain-English request on a given schema, with the exact result schema asked for",
+        "Express 'never', 'all' and 'at least two different' requests with EXCEPT, NOT EXISTS, self joins or [[HAVING COUNT(DISTINCT ...)]]",
+        "Read a query and describe its result in plain English, or spot why it fails",
+        "Judge whether an AI-generated query is correct and repair it"
+      ],
+      "pitfalls": [
+        "Filtering on a non-aggregate alias in HAVING: the model answer treats it as a syntax error",
+        "Forgetting DISTINCT where duplicates arise from joins, or treating EXISTS and a join as equivalent when the join can return duplicates"
+      ]
+    },
+    {
+      "name": "Database applications: JDBC, SQL injection and persistence",
+      "lectures": ["Lecture 8 - JDBC (WDT DB)", "Lecture 3 - API Persistance (IDM)"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "The [[impedance mismatch]] between objects and relations",
+        "JDBC: driver types, connections, Statement versus PreparedStatement, ResultSet and transactions with commit and rollback",
+        "SQL injection: how concatenated input changes a query, and how [[prepared statements (and hashing with salt for passwords)]] defend against it",
+        "Surrogate key generation: [[sequences, hi-low keys and UUID types 1, 2 and 4]], with their trade-offs",
+        "JPA: entities as annotated POJOs, relationship annotations, the EntityManager, JPQL, and the schema a provider generates (without indexes)"
+      ],
+      "do": [
+        "Read a JDBC method and say what it returns, how to break it with an injection, and how to fix it",
+        "Choose a key generation strategy for a distributed setting and justify it",
+        "Derive the relational schema that JPA annotations on given classes produce"
+      ],
+      "pitfalls": [
+        "Thinking you must write JDBC code from scratch: WDT DB asks you to read and analyse it, not to write it"
+      ]
+    },
+    {
+      "name": "Relational algebra",
+      "lectures": ["Lecture 4 - Towards Query Processing (IDM)"],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "Selection, projection, rename, union, intersection, difference, Cartesian product, theta join, equi-join and natural join",
+        "Aggregation and grouping as an extended operator",
+        "[[Set semantics in relational algebra]] versus [[bag semantics in SQL]]",
+        "Algebraic equivalences: commuting and cascading selections, associativity of joins, pushing selections through joins"
+      ],
+      "do": [
+        "Write a relational algebra expression for an English request, including 'never' requests with set difference",
+        "Pick every correct expression from a list of candidates, or the SQL equivalent of a given expression",
+        "Bound the number of result tuples of an expression on relations of given sizes"
+      ],
+      "pitfalls": [
+        "Assuming SQL and algebra give the same result: [[UNION ALL keeps duplicates]], while an OR in one query does not"
+      ]
+    },
+    {
+      "name": "Storage media, RAID and record layout",
+      "lectures": ["Lecture 5 - Storage (IDM)", "Lecture 6 - Logical Storage Indexing (IDM)"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "The memory hierarchy and its cost, capacity and access-time trade-offs",
+        "Hard disk structure, [[seek time, rotational latency and transfer time]]; why random I/O is expensive and the I/O model of computation",
+        "SSDs and non-volatile memory compared with spinning disks",
+        "RAID 0, 1, 0+1, 2, 3, 4 and 5: [[striping, mirroring and parity]], with their read speed, write speed and fault tolerance",
+        "Files, blocks, fixed and variable length records, blobs, and blocking factor",
+        "Row stores versus column stores, and which workloads (OLTP or OLAP) each serves"
+      ],
+      "do": [
+        "Pick the RAID level for a stated goal such as maximum read speed or surviving one disk failure",
+        "Decide per query whether row-wise or column-wise storage is faster, or whether it does not matter",
+        "Compute records per block and blocks per table from record and block sizes"
+      ],
+      "pitfalls": [
+        "Choosing an option that only holds in an edge case: the papers ask what a database admin would pick under realistic assumptions"
+      ]
+    },
+    {
+      "name": "Indexing: hash, B+-trees and kd-trees",
+      "lectures": ["Lecture 6 - Logical Storage Indexing (IDM)", "Lecture 7 - Indexing (IDM)"],
+      "timeShare": 5,
+      "importance": "important",
+      "know": [
+        "Primary versus secondary indexes, dense versus sparse, and why not every attribute is indexed",
+        "Hash indexes: buckets, collisions, overflow lists and rehashing; [[good for point queries only]]",
+        "B+-trees: structure, fan-out, search, range queries, insertion with splits and its cost",
+        "Multidimensional indexing: multiple-key indexes and kd-trees, with range and nearest-neighbour queries"
+      ],
+      "do": [
+        "Choose a hash index, B+-tree, kd-tree or no index for each attribute of a query or workload",
+        "Compute the height or fan-out of a B+-tree from block, key and pointer sizes",
+        "Explain why [[high fan-out reduces disk seeks]]"
+      ],
+      "pitfalls": [
+        "Treating two single-attribute B+-trees as one kd-tree: the rubric gives 0 points for combining them in one index scan"
+      ]
+    },
+    {
+      "name": "Query processing and optimisation",
+      "lectures": [
+        "Lecture 4 - Towards Query Processing (IDM)",
+        "Lecture 8 - Query Processing Part 1 (IDM)",
+        "Lecture 9 - Query Processing Part 2 (IDM)",
+        "Lecture 10 - Query Processing Part 3 (IDM)"
+      ],
+      "timeShare": 18,
+      "importance": "essential",
+      "know": [
+        "From SQL to canonical and annotated operator trees; heuristic versus cost-based optimisation; pipelining versus materialisation",
+        "The algebraic equivalences and the greedy heuristic: [[break and push selections, break and push or introduce projections, turn products plus selections into joins]]",
+        "Cost of a [[relation scan (number of blocks)]], [[binary search (log2 of the blocks)]] and [[index scan (matching records times index cost plus one)]]",
+        "Block nested loop, index nested loop, sort-merge and hash joins, with the block-access cost formula of each including writing the result",
+        "Reduction factors: [[1/#dv for equality]], a range fraction for comparisons, multiplied for independent conditions; [[join size |R| times |S| divided by the larger #dv]]",
+        "Join order: Catalan numbers of tree shapes, left-deep trees, dynamic programming with a cost table and greedy join ordering"
+      ],
+      "do": [
+        "Estimate records and blocks of each intermediate result in an operator tree from the statistics in an appendix",
+        "Choose relation scan or index scan, and the cheapest join algorithm, with a calculation",
+        "Judge whether 1/#dv gives an accurate estimate for a given attribute (uniform or not)",
+        "Improve a join order or apply the greedy heuristics to a plan"
+      ],
+      "pitfalls": [
+        "Applying 1/#dv blindly: [[it assumes uniform data]], so it is wrong for unique names or for birth dates before 1945",
+        "Ignoring the appendix rules on byte sizes, block size, sort order and index costs, which every calculation depends on"
+      ]
+    },
+    {
+      "name": "Transactions, concurrency control and recovery",
+      "lectures": [
+        "Lecture 11 - Transactions Concurrency (IDM)",
+        "Lecture 12 - Recovery Distributed Transactions (IDM)",
+        "Lecture 1 - Introduction (WDT DB)"
+      ],
+      "timeShare": 11,
+      "importance": "important",
+      "know": [
+        "ACID; schedules; the anomalies [[dirty read, non-repeatable read, phantom read, lost update, write skew and read skew]]; isolation levels",
+        "Conflicting operations, conflict equivalence and conflict serialisability tested with a conflict (precedence) graph",
+        "Locking schedulers, lock conversion, two-phase locking and its weak points, deadlocks, and MVCC",
+        "Steal and force buffer policies and the recovery types they lead to",
+        "Undo logging, redo logging and undo/redo logging: their rules, recovery procedures and checkpoints",
+        "Two-phase commit: the [[prepare and commit phases]], votes, and [[blocking when the coordinator fails]]"
+      ],
+      "do": [
+        "Draw the conflict graph of a schedule and decide whether it is conflict serialisable",
+        "Mark schedules as valid or invalid two-phase locking schedules",
+        "Given a log and a crash point, say what is on disk and what the recovery manager undoes or redoes",
+        "Predict the behaviour of 2PC participants after a coordinator or participant failure"
+      ],
+      "pitfalls": [
+        "Claiming to know whether the COMMIT record reached the log when the crash comes before a flush: the model answer is that [[it may or may not be there, so give both cases]]"
+      ]
+    },
+    {
+      "name": "Distributed data, CAP and NoSQL",
+      "lectures": [
+        "Lecture 12 - Recovery Distributed Transactions (IDM)",
+        "Lecture 13 - NoSQL (IDM)"
+      ],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "BASE transactions versus ACID, and eventual consistency",
+        "The CAP theorem: [[consistency, availability and partition tolerance]], and why [[a partitioned system must give up one of the first two]]",
+        "Where relational systems struggle: extreme scale, availability demands and new data models",
+        "Aggregate-oriented models: [[key-value, document and column-family stores]], graph databases and schemaless designs",
+        "Application databases versus integration databases, scaling out and distributed relational databases"
+      ],
+      "do": [
+        "Classify an application scenario (flash sale, social feed, shared editing, banking) as CP or AP and justify it",
+        "Argue for or against a relational or an aggregate model for a given application"
+      ],
+      "pitfalls": []
+    }
+  ],
+  "prerequisites": [
+    "Object-oriented programming in Java, enough to read JDBC and JPA code",
+    "Sets, tuples, Cartesian products and basic logic, which the relational model and algebra build on",
+    "Working with logarithms, fractions and powers of two by hand, for block and cost estimates",
+    "A laptop with PostgreSQL and pgAdmin installed, and the IMDb dump loaded"
+  ],
+  "practical": "In the predecessors, both halves had three lab assignments. WDT DB (ungraded, groups of 2 to 3): an EER schema and its relational mapping, SQL queries and debugging on the IMDb database in PostgreSQL, and FDs with normalisation to 3NF. IDM (official description: optional but strongly recommended): advanced SQL on IMDb plus a Java part with JDBC and JPA, relational algebra with the ReLaX calculator, and query optimisation with cost calculations. Reference solutions are in the archive. How CSE12C runs its labs is not known yet.",
+  "studyAdvice": [
+    "SQL, query optimisation and data modelling together carry about 62 percent of the points in the predecessor papers. Plan most of your hours there.",
+    "Write SQL every week on the IMDb database. The exam queries run on WebLab, and a syntax error, an empty result or a wrong column name gives 0 points.",
+    "Practise a full EER scenario under time pressure: read the text, list entities, relationships and keys, then draw. Then convert it to relations in the course notation.",
+    "Drill normalisation as a fixed routine: closures, candidate keys, normal form with the offending FD, 2NF split, 3NF split.",
+    "For optimisation, work through the operator-tree exercises in the slides and Assignment 3 with an appendix of statistics until the size, block and scan-cost steps are routine.",
+    "Keep transactions, logging and CAP for after the heavy topics, but learn them well: the questions are short, and a logging trace appears on every IDM paper.",
+    "If a cheat sheet is allowed, as it was for IDM, put the cost formulas, reduction factors, logging rules and normal form definitions on it."
+  ]
+}

@@ -339,6 +339,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calendar_scores: {
+        Args: never
+        Returns: {
+          code: string
+          load: number | null
+          score: number | null
+          teach: number | null
+        }[]
+      }
+      cancel_unfinished_registration: { Args: never; Returns: boolean }
       course_professor_stats: {
         Args: { p_course_id?: string }
         Returns: {
@@ -380,6 +390,14 @@ export type Database = {
           p_value: number
         }
         Returns: undefined
+      }
+      site_totals: {
+        Args: never
+        Returns: {
+          courses: number
+          students: number
+          votes: number
+        }[]
       }
       submit_rating: {
         Args: {

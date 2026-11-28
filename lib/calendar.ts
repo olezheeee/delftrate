@@ -1,4 +1,7 @@
-// Pure layout logic for the course calendar. No React, no Supabase.
+// The course calendar of the home page: which programme and year is shown, and where each
+// course sits in the grid of four quarters. No React and no database here, so it is tested
+// on its own (calendar.test.ts).
+import { PROGRAMMES, YEARS, type ProgrammeId } from "./auth/programmes";
 
 export type CalendarCourse = {
   code: string;
@@ -8,109 +11,181 @@ export type CalendarCourse = {
   quarters: number[];
 };
 
-export type Quarter = 1 | 2 | 3 | 4;
+// The ratings of a course as the calendar shows them next to its name, each out of 10:
+// the overall difficulty (higher is harder), the subject's load, and the teaching score of
+// the course's default professor. Each is null until its block has enough votes; the score needs both blocks.
+// They come from the database function calendar_scores().
+export type CourseNumbers = { score: number | null; load: number | null; teach: number | null };
 
-export type Placement = {
-  course: CalendarCourse;
-  start: Quarter;
-  span: number;
-  lane: number;
+// The colours of the numbers of a course. They stay inside the site's own colours: the
+// light blue of the accent for what is good for the student, white in the middle, and the
+// warm counterpart of that blue for what is not (cool to warm).
+//   - A subject's load: blue for a light subject, warm for a heavy one.
+//   - A professor's score: blue for a high score, warm for a low one.
+//   - The overall difficulty of a course: blue for an easy course, warm for a hard one.
+// The first two change evenly between 4 and 9, the range real courses are in, and are the
+// full blue or the full warm tone outside it. A load of 4 and a professor's 9 are the same
+// blue. The overall difficulty mixes the load with the teaching and interest, which pulls
+// courses closer together, so its colours run between 3 and 8.
+const LIGHT_LOAD = 4;
+const HEAVY_LOAD = 9;
+const EASY_COURSE = 3;
+const HARD_COURSE = 8;
+type Rgb = readonly [number, number, number];
+/** The accent of the site (--accent in globals.css). */
+const COOL: Rgb = [127, 208, 247];
+const NEUTRAL: Rgb = [255, 255, 255];
+/** The same tone as the accent on the other side of the colour wheel. */
+const WARM: Rgb = [247, 164, 126];
+/** The three colours as CSS, for the scale in the legend. */
+export const LOAD_SCALE = [COOL, NEUTRAL, WARM].map((c) => `rgb(${c.join(" ")})`);
+
+export function loadColour(load: number): string {
+  return tone((load - LIGHT_LOAD) / (HEAVY_LOAD - LIGHT_LOAD));
+}
+
+/** The colour of a course's overall difficulty (the score of calendar_scores()). */
+export function difficultyColour(score: number): string {
+  return tone((score - EASY_COURSE) / (HARD_COURSE - EASY_COURSE));
+}
+
+/** The colour of a professor's score: the scale of the load, the other way round. */
+export function teachColour(teach: number): string {
+  return tone((HEAVY_LOAD - teach) / (HEAVY_LOAD - LIGHT_LOAD));
+}
+
+// From the blue (0) through white (0.5) to the warm tone (1).
+function tone(position: number): string {
+  const share = Math.min(Math.max(position, 0), 1);
+  const [from, to, part] = share < 0.5 ? [COOL, NEUTRAL, share * 2] : [NEUTRAL, WARM, share * 2 - 1];
+  const mixed = from.map((value, i) => Math.round(value + (to[i] - value) * part));
+  return `rgb(${mixed.join(" ")})`;
+}
+
+// What the visitor picked. The year only counts once a programme is picked.
+export type Choice = { programme: ProgrammeId | null; year: number | null };
+
+// Reads a choice from the address (/?programme=CSE&year=2) or from a profile. Anything the
+// calendar does not offer is dropped.
+export function parseChoice(input: { programme?: unknown; year?: unknown }): Choice {
+  const programme = PROGRAMMES.find((p) => p.id === input.programme)?.id ?? null;
+  const year = YEARS.find((y) => String(y) === String(input.year)) ?? null;
+  return { programme, year: programme ? year : null };
+}
+
+// A place in a grid. Rows and columns count from 0; a block covers `span` columns and
+// `height` rows.
+export type Placed<T> = { item: T; row: number; column: number; span: number; height: number };
+
+// Courses of one module are drawn together, as on the Aerospace curriculum sheet: AE1110-I
+// and AE1110-II belong to AE1110. A course on its own is a block of one.
+export type CalendarBlock = {
+  // The module code, or the course's own code for a course that stands alone.
+  code: string;
+  isModule: boolean;
+  firstQuarter: number;
+  lastQuarter: number;
+  // The courses inside, placed in a grid that starts at this block's first quarter.
+  courses: Placed<CalendarCourse>[];
 };
 
-export type CalendarLayout = {
-  placements: Placement[];
-  lanes: number;
-  unplaced: number;
-};
+export type CalendarLayout = { rows: number; blocks: Placed<CalendarBlock>[] };
 
-export const PROGRAMMES = ["AE", "CSE"] as const;
-export type ProgrammeCode = (typeof PROGRAMMES)[number];
-export const YEARS = [1, 2, 3] as const;
-export type Year = (typeof YEARS)[number];
+type Span = { first: number; last: number };
 
-export type Choice = { programme: ProgrammeCode | null; year: Year | null };
-
-type ParamValue = string | string[] | undefined | null;
-type ParamsLike =
-  | { get(name: string): string | null }
-  | Record<string, ParamValue>;
-
-function readParam(params: ParamsLike, name: string): string | undefined {
-  if (typeof (params as { get?: unknown }).get === "function") {
-    return (params as { get(n: string): string | null }).get(name) ?? undefined;
-  }
-  const v = (params as Record<string, ParamValue>)[name];
-  const first = Array.isArray(v) ? v[0] : v;
-  return first ?? undefined;
+// The quarters of a course as one unbroken stretch. A course listed for quarters 1 and 3
+// is drawn from 1 to 3: the grid has no way to show a gap inside one rectangle.
+function stretch(quarters: number[]): Span {
+  return { first: Math.min(...quarters), last: Math.max(...quarters) };
 }
 
-// Invalid or missing values become null ("nothing picked yet").
-export function parseChoice(params: ParamsLike): Choice {
-  const p = readParam(params, "programme");
-  const y = readParam(params, "year");
-  const programme = (PROGRAMMES as readonly string[]).includes(p ?? "")
-    ? (p as ProgrammeCode)
-    : null;
-  const year = y === "1" || y === "2" || y === "3" ? (Number(y) as Year) : null;
-  return { programme, year };
+// "AE1110-II" belongs to module "AE1110". Only a Roman numeral after the last hyphen counts.
+export function moduleCode(courseCode: string): string {
+  return courseCode.replace(/-[IVX]+$/, "");
 }
 
-// Splits quarters into runs of adjacent quarters, e.g. [1,2,4] -> [[1,2],[4]].
-function runs(quarters: number[]): number[][] {
-  const sorted = [...new Set(quarters)]
-    .filter((q) => Number.isInteger(q) && q >= 1 && q <= 4)
-    .sort((a, b) => a - b);
-  const out: number[][] = [];
-  for (const q of sorted) {
-    const last = out[out.length - 1];
-    if (last && last[last.length - 1] === q - 1) last.push(q);
-    else out.push([q]);
-  }
-  return out;
-}
-
-export function layoutCalendar(
-  courses: CalendarCourse[],
-  programme: string,
-  year: number,
-): CalendarLayout {
-  // Runs are worked out once per course, not in every comparison of the sort.
-  const selected = courses
-    .filter((c) => c.programme === programme && c.year === year)
-    .map((course) => ({ course, runs: runs(course.quarters) }));
-  const firstQuarter = (r: number[][]) => (r.length ? r[0][0] : 99);
-  selected.sort(
-    (a, b) =>
-      firstQuarter(a.runs) - firstQuarter(b.runs) ||
-      (a.course.code < b.course.code ? -1 : a.course.code > b.course.code ? 1 : 0),
-  );
-
-  const placements: Placement[] = [];
-  // Which quarters each lane already holds, so a gap in a lane (a course in Q1 and Q3
-  // leaves Q2 free) can be used by a later course.
+// Puts each item in the first row where its columns are still free, in the order given.
+// Then lets every item grow downwards into rows nothing else uses, so a course without
+// neighbours fills its quarter instead of leaving a hole.
+function pack<T>(items: { item: T; span: Span }[], firstColumn: number): { rows: number; placed: Placed<T>[] } {
   const taken: boolean[][] = [];
-  let unplaced = 0;
+  const isFree = (row: number, from: number, to: number) => {
+    for (let column = from; column <= to; column++) if (taken[row]?.[column]) return false;
+    return true;
+  };
+  const take = (row: number, from: number, to: number) => {
+    taken[row] ??= [];
+    for (let column = from; column <= to; column++) taken[row][column] = true;
+  };
 
-  for (const { course, runs: r } of selected) {
-    if (r.length === 0) {
-      unplaced += 1;
-      continue;
-    }
-    for (const run of r) {
-      const isFree = (lane: boolean[]) => run.every((q) => !lane[q]);
-      let lane = taken.findIndex(isFree);
-      if (lane === -1) {
-        lane = taken.length;
-        taken.push([]);
-      }
-      for (const q of run) taken[lane][q] = true;
-      placements.push({
-        course,
-        start: run[0] as Quarter,
-        span: run.length,
-        lane,
-      });
+  const placed = items.map(({ item, span }) => {
+    const from = span.first - firstColumn;
+    const to = span.last - firstColumn;
+    let row = 0;
+    while (!isFree(row, from, to)) row++;
+    take(row, from, to);
+    return { item, row, column: from, span: to - from + 1, height: 1 };
+  });
+  for (const block of placed) {
+    const to = block.column + block.span - 1;
+    while (block.row + block.height < taken.length && isFree(block.row + block.height, block.column, to)) {
+      take(block.row + block.height, block.column, to);
+      block.height++;
     }
   }
-  return { placements, lanes: taken.length, unplaced };
+  return { rows: taken.length, placed };
+}
+
+function byQuarterThenCode<T extends { code: string }>(a: T & Span, b: T & Span): number {
+  // Earlier quarters first; among those the longer course first, so it gets the top row.
+  return a.first - b.first || b.last - a.last || a.code.localeCompare(b.code);
+}
+
+// Lays out the courses of one programme and year. Courses without quarters are left out:
+// there is nowhere to draw them.
+export function layoutCalendar(courses: CalendarCourse[]): CalendarLayout {
+  const groups = new Map<string, CalendarCourse[]>();
+  for (const course of courses) {
+    if (course.quarters.length === 0) continue;
+    const code = moduleCode(course.code);
+    groups.set(code, [...(groups.get(code) ?? []), course]);
+  }
+
+  const blocks = [...groups.entries()]
+    .flatMap(([code, members]) =>
+      // A module needs at least two courses; one course alone keeps its own code.
+      members.length > 1 ? [{ code, members }] : members.map((course) => ({ code: course.code, members: [course] })),
+    )
+    .map(({ code, members }) => {
+      const spans = members.map((course) => ({ course, code: course.code, ...stretch(course.quarters) }));
+      const first = Math.min(...spans.map((s) => s.first));
+      const last = Math.max(...spans.map((s) => s.last));
+      const inside = pack(
+        spans.sort(byQuarterThenCode).map((s) => ({ item: s.course, span: { first: s.first, last: s.last } })),
+        first,
+      );
+      const block: CalendarBlock = {
+        code,
+        isModule: members.length > 1,
+        firstQuarter: first,
+        lastQuarter: last,
+        courses: inside.placed,
+      };
+      return { block, code, first, last };
+    })
+    .sort(byQuarterThenCode);
+
+  // Quarter 1 is column 0.
+  const { rows, placed } = pack(
+    blocks.map((b) => ({ item: b.block, span: { first: b.first, last: b.last } })),
+    1,
+  );
+  return { rows, blocks: placed };
+}
+
+// Where a click on a course leads. The course sheet needs an account, so a signed-out
+// visitor goes to the login page first and lands on the course afterwards.
+export function courseHref(code: string, signedIn: boolean): string {
+  const path = `/courses/${encodeURIComponent(code)}`;
+  return signedIn ? path : `/login?next=${encodeURIComponent(path)}`;
 }

@@ -1,0 +1,43 @@
+/* The page a booklet lies on: the dark site around a white sheet. The sheet itself is in
+   sketch/Sketch.module.css. */
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 4vh, 40px);
+  padding: var(--gut);
+}
+.top {
+  width: 100%;
+  max-width: 860px;
+}
+.brand {
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.brand em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--accent);
+}
+/* The empty sheet, shown while the booklet is fetched. */
+.skeleton {
+  width: 100%;
+  max-width: 860px;
+  height: 900px;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* On paper there is only the sheet. */
+@media print {
+  .shell {
+    display: block;
+    padding: 0;
+    background: #fff;
+  }
+  .top {
+    display: none;
+  }
+}

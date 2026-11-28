@@ -2,14 +2,12 @@ import { cacheLife, cacheTag } from "next/cache";
 import type { CalendarCourse } from "./calendar";
 import { createPublicClient } from "./supabase/public";
 
-export type Programme = { id: string; name: string };
-
-// Cache tags. Whatever changes courses or programmes (the admin panel, Pack 6) calls
-// revalidateTag with these so the home page shows the change at once instead of after
-// the cache lifetime.
+// Whatever changes courses (the import, the admin panel) calls revalidateTag with this, so
+// the calendar shows the change at once instead of when the cache runs out.
 export const COURSES_TAG = "courses";
-export const PROGRAMMES_TAG = "programmes";
 
+// Every course with its quarters, for the calendar on the home page. The list is public
+// and the same for everyone, so it is cached and shared between visitors.
 export async function getCalendarCourses(): Promise<CalendarCourse[]> {
   "use cache";
   cacheLife("hours");
@@ -19,31 +17,17 @@ export async function getCalendarCourses(): Promise<CalendarCourse[]> {
     .from("courses")
     .select("code, name, programme_id, year, quarters", { count: "exact" })
     .order("code");
-  if (error) throw new Error(`Could not load courses: ${error.message}`);
-  // The API returns at most a fixed number of rows per request (1000 by default). A cut-off
-  // list would quietly leave courses out of the calendar, so fail loudly instead; page the
-  // query if the course list ever grows that large.
+  if (error) throw new Error(`The courses could not be read: ${error.message}`);
+  // The API hands out a limited number of rows per request (1000 unless changed). A list
+  // that was cut off would quietly miss courses, so that is an error instead.
   if (count !== null && data.length < count) {
-    throw new Error(`Loaded only ${data.length} of ${count} courses: the API row limit was reached`);
+    throw new Error(`Only ${data.length} of ${count} courses were read: the API row limit was reached.`);
   }
-  return data.map((r) => ({
-    code: r.code,
-    name: r.name,
-    programme: r.programme_id,
-    year: r.year,
-    quarters: r.quarters,
+  return data.map((row) => ({
+    code: row.code,
+    name: row.name,
+    programme: row.programme_id,
+    year: row.year,
+    quarters: row.quarters,
   }));
-}
-
-export async function getProgrammes(): Promise<Programme[]> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag(PROGRAMMES_TAG);
-
-  const { data, error } = await createPublicClient()
-    .from("programmes")
-    .select("id, name")
-    .order("name");
-  if (error) throw new Error(`Could not load programmes: ${error.message}`);
-  return data;
 }

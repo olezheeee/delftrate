@@ -1,0 +1,169 @@
+{
+  "course": "CSE21C",
+  "source": {
+    "name": "Lightspace",
+    "title": "Operating Systems",
+    "url": "https://lightspace.study/courses/operating-systems",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 0 - Course Introduction",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%200%20-%20Course%20Introduction.pdf",
+          "size": "495 KB"
+        },
+        {
+          "title": "Lecture 1 - OS History and Structure",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%201%20-%20OS%20History%20and%20Structure.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 2 - Processes and Scheduling",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%202%20-%20Processes%20and%20Scheduling.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 3 - Threads and Concurrency",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%203%20-%20Threads%20and%20Concurrency.pdf",
+          "size": "660 KB"
+        },
+        {
+          "title": "Lecture 4 - Synchronization",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%204%20-%20Synchronization.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 5 - Protection and Security",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%205%20-%20Protection%20and%20Security.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 6 - Memory Management",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%206%20-%20Memory%20Management.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 7 - IO and Storage",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%207%20-%20IO%20and%20Storage.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 8 - File Systems",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%208%20-%20File%20Systems.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 9 - Virtualization",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%209%20-%20Virtualization.pdf",
+          "size": "755 KB"
+        },
+        {
+          "title": "Lecture 10 - Windows Deep Dive",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%2010%20-%20Windows%20Deep%20Dive.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 11 - Multicore & Cache Coherence",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%2011%20-%20Multicore%20%26%20Cache%20Coherence.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 12 - Final Review",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Lectures/OS%20Lecture%2012%20-%20Final%20Review.pdf",
+          "size": "149 KB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2023",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Exams/OS%20Endterms/OS%20Endterm%202023.pdf",
+          "size": "328 KB"
+        },
+        {
+          "title": "Endterm 2024",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Exams/OS%20Endterms/OS%20Endterm%202024.pdf",
+          "size": "341 KB"
+        },
+        {
+          "title": "Practice Endterm",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Exams/OS%20Endterms/OS%20Practice%20Endterm.pdf",
+          "size": "56 KB"
+        },
+        {
+          "title": "Resit 2024",
+          "section": "Resits",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Exams/OS%20Resits/OS%20Resit%202024.pdf",
+          "size": "333 KB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Homework 1 Introduction Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Assignment%20Solutions/OS%20Homework%201%20Introduction%20Solutions.pdf",
+          "size": "75 KB"
+        },
+        {
+          "title": "Homework 2 Scheduling Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Assignment%20Solutions/OS%20Homework%202%20Scheduling%20Solutions.pdf",
+          "size": "135 KB"
+        },
+        {
+          "title": "Homework 3 Threads Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Assignment%20Solutions/OS%20Homework%203%20Threads%20Solutions.pdf",
+          "size": "92 KB"
+        },
+        {
+          "title": "Homework 4 Synchronization Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Assignment%20Solutions/OS%20Homework%204%20Synchronization%20Solutions.pdf",
+          "size": "70 KB"
+        },
+        {
+          "title": "Homework 5 Security Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Assignment%20Solutions/OS%20Homework%205%20Security%20Solutions.pdf",
+          "size": "58 KB"
+        },
+        {
+          "title": "Homework 8 IO and Storage Solutions",
+          "section": "Assignment Solutions",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Assignment%20Solutions/OS%20Homework%208%20IO%20and%20Storage%20Solutions.pdf",
+          "size": "80 KB"
+        }
+      ]
+    },
+    {
+      "kind": "notes",
+      "items": [
+        {
+          "title": "Notes",
+          "url": "https://lightspace.study/courses/operating-systems/read/OS%20Notes.pdf",
+          "size": "4 MB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Operating Systems Principles and Practice"
+        }
+      ]
+    }
+  ]
+}

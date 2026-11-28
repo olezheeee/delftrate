@@ -1,0 +1,147 @@
+{
+  "course": "CSE12A",
+  "title": "Calculus",
+  "available": true,
+  "summary": "Two written exams without a calculator: a two-hour midterm on Lectures 1 to 10 made only of short-answer questions, and a three-hour endterm on the whole course with a short-answer part and an open part. The resit has the endterm format and replaces the whole grade. Short answers are marked on the final answer only; open answers need full working. Power series alone carry about a quarter of all points.",
+  "basis": {
+    "papers": [
+      { "name": "Resit 2025", "year": 2025, "kind": "resit", "questions": 11, "points": 43, "minutes": 180 },
+      { "name": "Endterm 2025", "year": 2025, "kind": "endterm", "questions": 12, "points": 45, "minutes": 180 },
+      { "name": "Midterm 2025", "year": 2025, "kind": "midterm", "questions": 14, "points": 34, "minutes": 120 },
+      { "name": "Resit 2024", "year": 2024, "kind": "resit", "questions": 9, "points": 42, "minutes": 180 },
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 11, "points": 45, "minutes": 180 },
+      { "name": "Midterm 2024", "year": 2024, "kind": "midterm", "questions": 13, "points": 30, "minutes": 120 }
+    ],
+    "note": "The archive holds 7 more papers, from 2019 to 2023, all with text; they were read for trends only. The archive names papers by academic year, so Midterm 2025 was sat in December 2024 and Midterm 2024 in December 2023. All six have model answers; Endterm 2025 also has a grading guide. Shares are by printed points over 239 points, with sub-questions assigned one by one. The printed points of Resit 2025 add up to 43, although its grade formula divides by 5 as the 45-point papers do."
+  },
+  "format": {
+    "mode": "Written on paper, closed book, no calculator; you hand in only the answer form",
+    "duration": "Midterm 2 hours, endterm and resit 3 hours",
+    "structure": "Midterm: 13 or 14 short-answer questions of 2 or 4 points. Endterm and resit: 4 to 6 short-answer questions of 2 to 4 points, then 5 to 7 open questions of 1 to 8 points, usually split into parts. The open part always has the same core: interval of convergence of a power series, extremes on a closed region, a double integral, a series approximation and a complex numbers question.",
+    "grading": "Final grade = midterm/3 + 2 times endterm/3. You pass with 5.75 or more and an endterm of at least 5. The single resit covers everything and counts for 100 percent. Each paper converts points to a grade from 1 to 10 with a printed formula.",
+    "aids": "None of your own. The 2023-24 papers came with the course formula sheet (Resit 2024 added a list of series sums); Midterm 2025 banned a formula sheet but printed a few identities, and the 2025 endterm and resit mention none."
+  },
+  "topicWeights": [
+    {
+      "topic": "Power series and Taylor series",
+      "share": 24,
+      "appearsIn": 4,
+      "asks": "Every endterm and resit: an open interval of convergence with both end points argued, a Taylor series of an antiderivative followed by approximating an integral to a given error, and short questions on a derivative from a series or matching a series to its function."
+    },
+    {
+      "topic": "Functions, limits and asymptotes",
+      "share": 14,
+      "appearsIn": 4,
+      "asks": "Mostly midterm: limits by factoring, the root trick, squeeze or l'Hospital, power limits of type 1^infinity, all asymptotes of a root or rational function, and the inverse of a quadratic with its domain."
+    },
+    {
+      "topic": "Integration techniques and improper integrals",
+      "share": 12,
+      "appearsIn": 5,
+      "asks": "Integrals that need substitution then integration by parts, odd integrands over symmetric intervals, area between two curves, and improper integrals that must be split or compared to decide DIV."
+    },
+    {
+      "topic": "Extrema of functions of two variables",
+      "share": 11,
+      "appearsIn": 4,
+      "asks": "One open question of 6 to 7 points on every endterm and resit: classify the interior critical points, then find the absolute maximum and minimum on a triangle or half-disc by checking each edge and corner."
+    },
+    {
+      "topic": "Sequences and convergence of series",
+      "share": 9,
+      "appearsIn": 6,
+      "asks": "Midterm: the limit of a recursive sequence. Endterm and resit: AC, CC or D with a justified test, naming the right test, and showing convergence before approximating a sum to a given error."
+    },
+    {
+      "topic": "Complex numbers",
+      "share": 9,
+      "appearsIn": 4,
+      "asks": "All roots of an equation such as z^4 = 16i, modulus and argument of a quotient, powers through the polar form, and short derivations with Euler's formula."
+    },
+    {
+      "topic": "Double integrals",
+      "share": 8,
+      "appearsIn": 4,
+      "asks": "One open question of 4 or 5 points: integrate over a region bounded by lines and curves, sometimes after sketching it or splitting it into simple parts."
+    },
+    {
+      "topic": "Functions of several variables and gradients",
+      "share": 7,
+      "appearsIn": 4,
+      "asks": "A short question on the gradient and directional derivative at a point, or the slope of a level curve, plus matching functions to contour plots."
+    },
+    {
+      "topic": "Derivatives and their applications",
+      "share": 6,
+      "appearsIn": 4,
+      "asks": "Absolute extremes on a closed interval, a linearisation, the top of an implicitly defined curve, and once a sketch of Newton's method."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Short-answer computation",
+      "share": 45,
+      "description": "Compute a limit, integral, derivative, root or series value and write only the result; a slip costs the points, with partial credit only where a grading guide allows it."
+    },
+    {
+      "type": "Open multi-step computation",
+      "share": 38,
+      "description": "Worked problems marked on method, such as an interval of convergence, extremes on a region or a double integral."
+    },
+    {
+      "type": "Short-answer recognition",
+      "share": 5,
+      "description": "Match functions to contour plots or series to functions, name the right convergence test, or read a minimum off a gradient field."
+    },
+    {
+      "type": "Approximation with an error bound",
+      "share": 4,
+      "description": "Approximate an integral or a sum by a few terms of a series and argue why the error is below the given bound."
+    },
+    {
+      "type": "Convergence argument",
+      "share": 4,
+      "description": "Decide AC, CC or D, or show that a series converges, with the test and its conditions written out."
+    },
+    {
+      "type": "Proof or derivation",
+      "share": 2,
+      "description": "Show that a power series represents a given function, or derive Euler's formula or a double-angle identity."
+    },
+    {
+      "type": "Sketch",
+      "share": 2,
+      "description": "Draw a region, the roots of a complex equation in the plane, or two steps of Newton's method."
+    }
+  ],
+  "recurring": [
+    "Every endterm and resit has an open interval-of-convergence question with a reminder to say whether the end points are included.",
+    "Every endterm and resit asks for the critical points of a function on a closed triangle or half-disc and then its absolute extremes there.",
+    "The Taylor series of an antiderivative of a function such as e^(x^2) or e^(-x^3), then an integral approximated to an error below a given value, appeared in Endterm 2024, Endterm 2025 and Resit 2025.",
+    "A gradient and directional derivative at a point is a short question in Endterm 2024, Resit 2024 and Endterm 2025.",
+    "Both midterms ask for the inverse of a quadratic on a restricted domain together with its domain, a limit of a recursive sequence, and a vertical-asymptote or all-asymptotes question.",
+    "The midterms include at least one integral that [[is 0 because the integrand is odd on a symmetric interval]].",
+    "Complex roots of z^n = c, given as a + bi, in polar form or as dots in the plane, appear on every endterm and resit."
+  ],
+  "trends": [
+    "Midterms moved from 16 questions worth mostly 1 point (Midterm 2023) to 13 or 14 questions of 2 and 4 points (2024 and 2025).",
+    "The formula sheet has been phased out: it came with the 2023-24 papers, while Midterm 2025 banned it and the 2025 endterm and resit mention none, so [[the standard series must be known by heart]].",
+    "From 2025 the endterm and resit are bilingual, with a Dutch version after the English one."
+  ],
+  "strategy": [
+    "Work through all six recent papers under time: 2 hours for a midterm, 3 for an endterm, without a calculator or notes.",
+    "For short answers, check every result once by another route (for example by substitution or a second method), since only the final answer counts.",
+    "Skip a short question that stalls you and come back to it; the open part carries about two thirds of the endterm points.",
+    "For open questions, write the argument in sentences: [[name each test and check its conditions]], as the grading guide gives points for each step.",
+    "Learn the fixed procedures for the recurring open questions so you can do them quickly: interval of convergence, extremes on a region, double integral, series approximation.",
+    "If you cannot finish part a), still describe how you would do part b); the papers ask for that and it can earn points."
+  ],
+  "pitfalls": [
+    "Leaving out the end points of an interval of convergence, or including one without an argument.",
+    "Missing the corner points or one edge of the region when looking for absolute extremes.",
+    "Giving more than one answer of the same type in an asymptote question: Midterm 2025 gives 0 points for that.",
+    "Using a direction vector that has not been normalised in a directional derivative.",
+    "Writing infinity where the convention asks for DNE or DIV, or not splitting an improper integral at an asymptote inside the interval.",
+    "Dropping the n! or a minus sign when reading a derivative off a Taylor coefficient: the Endterm 2025 guide takes a point for that."
+  ]
+}

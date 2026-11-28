@@ -1,0 +1,125 @@
+{
+  "course": "CSE22A",
+  "title": "Machine Learning",
+  "available": true,
+  "summary": "One on-campus Weblab exam of three hours is the whole grade. The only real paper in the archive, Endterm 2024, has 27 questions: mostly single-answer multiple choice on the properties of methods, a few hand calculations, two open multi-part problems on 1D class densities, and three Python implementation questions. The two practice exams are built the same way. All numbers here rest on that one real paper plus two practice papers, so read them as a guide, not a rule.",
+  "basis": {
+    "papers": [
+      { "name": "Endterm 2024", "year": 2024, "kind": "endterm", "questions": 27, "points": null, "minutes": null },
+      { "name": "Practice Exam 1", "year": 2024, "kind": "practice", "questions": 25, "points": null, "minutes": null },
+      { "name": "Practice Exam 2", "year": null, "kind": "practice", "questions": 24, "points": null, "minutes": null }
+    ],
+    "note": "Exams.md holds three complete papers: Endterm 2024, the archive's only listed paper (its pages are stamped November 2023), and two Weblab practice exams of CSE2510, not in the archive's list; Practice Exam 1 is from the 2023-24 edition. Points are not printed for every question (Practice Exam 1 totals 42.5), so shares count the 76 main questions equally, which understates implementation and open questions."
+  },
+  "format": {
+    "mode": "Digital exam on Weblab, on campus, closed book",
+    "duration": "3 hours, as stated in the 2024-25 introduction lecture; the papers do not print it",
+    "structure": "A code-of-honour item, then about 25 questions in random order, ending with a feedback item. Most are single-answer multiple choice; a few are open calculations or true-or-false statements to explain in at most three sentences; three are Python functions in a Solution class, checked by hidden tests. Points differ per question and a wrong answer scores 0.",
+    "grading": "The exam is 100 percent of the grade and the pass mark is 5.8. There is one resit a year. Labs and Weblab exercises are optional and not graded.",
+    "aids": "Python and NumPy documentation inside Weblab; no notes or books. The practice exams advise you to bring paper, pen and a calculator."
+  },
+  "topicWeights": [
+    {
+      "topic": "Linear discriminative models",
+      "share": 21,
+      "appearsIn": 3,
+      "asks": "An implementation of a loss and its gradient (linear or logistic regression), the sigmoid output for given weights, the SVM weight vector and support vectors for a few points, true statements about gradient descent, the role of the margin term, and what the hypothesis class is in risk minimisation."
+    },
+    {
+      "topic": "Clustering and PCA",
+      "share": 14,
+      "appearsIn": 3,
+      "asks": "An implementation of a k-means step (assigning points with a given distance and tie rule, or the average squared error of a cluster), single or complete linkage merges, k-means properties, the maximum likelihood covariance of two points, and true or false statements about PCA."
+    },
+    {
+      "topic": "Foundations and Bayes decision theory",
+      "share": 12,
+      "appearsIn": 3,
+      "asks": "An open problem on two 1D class densities: posterior at a point, Bayes decision boundary and Bayes error. Also naming the task type, counting features, classes and objects, and naming prior, class-conditional and posterior."
+    },
+    {
+      "topic": "Fairness and ethics",
+      "share": 12,
+      "appearsIn": 3,
+      "asks": "Three questions per paper: which ethical theory or branch a statement describes (duty, virtue, normative versus descriptive), the independence and separation criteria, and a fairness claim to judge and explain, such as dropping a sensitive feature."
+    },
+    {
+      "topic": "Classifier evaluation",
+      "share": 10,
+      "appearsIn": 3,
+      "asks": "Whether cross-validation over- or underestimates the true error, fold sizes in nested cross-validation, a leave-one-out error by hand, matching learning or feature curves to NMC, LDA and QDA, and what happens with more test or more training objects."
+    },
+    {
+      "topic": "Decision trees and ensembles",
+      "share": 8,
+      "appearsIn": 3,
+      "asks": "An implementation of entropy or Gini index with information gain for a binary or threshold split, the best split by classification error on a small table, and which feature transformations change a tree."
+    },
+    {
+      "topic": "Neural networks and convolution",
+      "share": 8,
+      "appearsIn": 3,
+      "asks": "The output of a small MLP with logistic or step activations, what backpropagation does and does not do, how an MLP is trained, and in the endterm the largest value after convolving a binary image."
+    },
+    {
+      "topic": "Non-parametric methods and Naive Bayes",
+      "share": 8,
+      "appearsIn": 3,
+      "asks": "k-NN predictions for query points with k = 1 and k = 3, a Parzen estimate with a box kernel, the role of the bandwidth, k-NN properties, and the false statement about Naive Bayes."
+    },
+    {
+      "topic": "Parametric density-based classifiers",
+      "share": 7,
+      "appearsIn": 3,
+      "asks": "Counting the free parameters of LDA or QDA, whether LDA and QDA are generative, and how a change in class priors moves the LDA boundary."
+    }
+  ],
+  "questionTypes": [
+    {
+      "type": "Multiple choice on concepts",
+      "share": 54,
+      "description": "Pick the one true (or false) statement about a method, or name a task, term or ethical theory."
+    },
+    {
+      "type": "Calculation",
+      "share": 31,
+      "description": "Small numeric work by hand, mostly with answer options: sigmoid and MLP outputs, SVM weights, parameter counts, Parzen and k-NN, covariance, posteriors and Bayes error."
+    },
+    {
+      "type": "Writing code",
+      "share": 12,
+      "description": "Three NumPy functions per paper, graded by hidden unit tests against a precise specification."
+    },
+    {
+      "type": "Short explanation",
+      "share": 3,
+      "description": "A true-or-false statement on fairness with an explanation of at most three sentences."
+    }
+  ],
+  "recurring": [
+    "Every paper has three implementation questions on the same three themes: a tree impurity and gain function, a regression loss with its gradient, and a part of k-means.",
+    "Every paper has three ethics and fairness questions, mixing ethical theory with the independence and separation criteria.",
+    "A sigmoid calculation for logistic regression appears in all three papers, sometimes as pure reasoning, with a probability given and the output at another point asked.",
+    "All three papers ask for the SVM solution on a tiny data set: the weight vector with the bias or the number of support vectors.",
+    "All three papers have a problem on two 1D class densities; in the endterm it asks for a posterior, the Bayes boundary and the Bayes error (the practice versions keep their answers locked).",
+    "Both practice exams ask for an LDA or QDA parameter count, a generative-or-not statement, a 2 by 2 covariance matrix for PCA and a curve-matching question for NMC, LDA and QDA."
+  ],
+  "trends": [],
+  "strategy": [
+    "Sit both practice exams on Weblab in full, under time, before the real one; they share their build and many questions with the endterm.",
+    "Leave enough time for the three implementation questions. Copy the example from the task into a quick test and check the output before you submit.",
+    "Read each code spec closely: [[mean or sum, minimise or maximise, which distance, and which index wins a tie]]. The model solutions follow the spec literally.",
+    "Keep paper and a calculator at hand for the calculations, and know [[sigmoid(0) = 0.5, sigmoid(1) = 0.731 and sigmoid(-1) = 0.269]] by heart.",
+    "Watch for questions that ask for the FALSE statement; the endterm mixes three of them in among the ones that ask for the true one.",
+    "In open calculation questions write out each step and state any assumption you make, such as how you break a tie on the boundary.",
+    "Check before the exam that you are enrolled in the right Weblab edition of the course, as the introduction lecture warns."
+  ],
+  "pitfalls": [
+    "Taking log of 0 in a log-likelihood: the model solution of Practice Exam 2 clips the sigmoid away from 0 and 1 to avoid it.",
+    "Returning the summed loss where the task asks for the average negative log-likelihood, or the reverse; the three papers each use a different form.",
+    "In leave-one-out with a nearest mean classifier, a left-out point can land exactly on the boundary; the model answer then gives three possible error rates, so say how you resolve the tie.",
+    "Choosing nested cross-validation fold sizes from the full data set instead of from the outer training part.",
+    "Saying that removing a sensitive feature, or meeting one fairness criterion, makes a model fair: the model answers mark both as false.",
+    "Dividing by N - 1 for the PCA covariance when the maximum likelihood estimate is asked for, which gives a different option."
+  ]
+}

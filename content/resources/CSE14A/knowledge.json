@@ -1,0 +1,246 @@
+{
+  "course": "CSE14A",
+  "title": "Probability Theory and Statistics",
+  "ects": 5,
+  "summary": "Probability in the first half (events, Bayes' rule, random variables, joint distributions, the central limit theorem) and statistics in the second (estimation, confidence intervals, hypothesis tests, linear regression read from Python output). Teaching is blended: before each lecture you watch a short video and do Grasple exercises, the lecture works through examples with polling questions, and the Dekking et al. textbook is the reference.",
+  "basis": {
+    "lectures": 16,
+    "description": "The slides of all 16 lectures as text, the official CSE1210 course description, the four exercise sheets and the past papers. Time shares count content slides; bare title slides, wrap-ups and repeated animation frames are left out.",
+    "caveat": "From 2026-27 the course is CSE14A, renamed from CSE1210 with the content unchanged, still in year 1, quarter 4. The split between midterm and endterm has moved before: the 2024 endterm notes a shift since 2023, and the 2025 midterm included method of moments, bias and MSE. Chebyshev's and Jensen's inequalities are examined but barely appear in the slide text, so the slide count understates them."
+  },
+  "topics": [
+    {
+      "name": "Probability rules, conditional probability and Bayes",
+      "lectures": ["Lecture 1 - Introduction to Course and Uncertainty", "Lecture 2 - Conditional Probability and Bayes' Rule"],
+      "timeShare": 11,
+      "importance": "essential",
+      "know": [
+        "Sample space, events as subsets, and the definition of a probability function on finite and infinite sample spaces",
+        "Union, intersection and complement, the sum rule and the complement rule, and the difference between probabilistic and statistical reasoning",
+        "Permutations and combinations for counting equally likely outcomes",
+        "Conditional probability [[P(A|B) = P(A and B) / P(B)]] and the multiplication rule, also for three or more events",
+        "The [[law of total probability]] over a partition and [[Bayes' rule]], with prior, likelihood and posterior",
+        "Independence of two events and mutual independence of more than two, and why [[pairwise independence is not enough]]"
+      ],
+      "do": [
+        "Solve a test-and-disease or classifier problem with Bayes' rule, using a tree or a table",
+        "Compute probabilities such as P(A and B and not C) from a mix of conditional and unconditional facts",
+        "Check whether given events are independent",
+        "Use a probability tree for a sequential game, such as guessing boxes in a quiz show"
+      ],
+      "pitfalls": [
+        "Ignoring the base rate: in the teacher or park ranger example the description fits a ranger, but teachers are far more common",
+        "Mixing up P(A|B) and P(B|A), for instance the chance of a positive test given infection versus infection given a positive test"
+      ]
+    },
+    {
+      "name": "Random variables, distributions and data summaries",
+      "lectures": ["Lecture 3 - Random Variables and Distributions", "Lecture 4 - Modelling", "Lecture 7 - Variance and MSE"],
+      "timeShare": 14,
+      "importance": "essential",
+      "know": [
+        "Discrete versus continuous random variables; pmf, pdf and distribution function F, and how to get one from another ([[sum or integrate, difference or derivative]])",
+        "Bernoulli, binomial, geometric and Poisson; uniform, exponential, Pareto and normal, with their parameters and what situation each one models",
+        "Memorylessness of the [[geometric and exponential]] distributions",
+        "Using the standard normal table, including [[P(Z <= -a) = 1 - P(Z <= a)]]",
+        "Median and quantiles of a distribution and of a data set, the five-number summary and the boxplot",
+        "Histogram as an estimate of a density, the empirical distribution function as an estimate of F, and sample mean, variance and standard deviation"
+      ],
+      "do": [
+        "Name the distribution and its parameter of a described count or waiting time (number of non-sixes in ten throws, number of tries until success)",
+        "Sketch the distribution function of a mixture, for example a coin toss that picks between two uniform variables",
+        "Pick the most plausible model distribution from a five-number summary",
+        "Find a parameter from a given probability, such as the rate of an exponential from P(X <= 40) = 0.9"
+      ],
+      "pitfalls": [
+        "Drawing a mixture distribution function without its flat stretches and jumps, or letting it exceed 1",
+        "Using the wrong form of the Pareto or geometric distribution: in this course Par(alpha) lives on [1, infinity) and the [[geometric counts the trials up to and including the first success]]"
+      ]
+    },
+    {
+      "name": "Expectation, variance and transformations",
+      "lectures": ["Lecture 5 - Independence and Expectation", "Lecture 6 - Estimation", "Lecture 7 - Variance and MSE"],
+      "timeShare": 10,
+      "importance": "essential",
+      "know": [
+        "E[X] as a sum over the pmf or an integral against the pdf, and the [[expectations and variances of the standard distributions]]",
+        "The change-of-variable formula E[g(X)] = integral of g(x) f(x) dx, without first finding the density of g(X)",
+        "Finding the distribution function of Y = g(X) by rewriting P(g(X) <= y) as an event about X",
+        "Change of units: [[E[aX + b] = aE[X] + b and Var(aX + b) = a^2 Var(X)]]; standardising a normal variable",
+        "[[Var(X) = E[X^2] - (E[X])^2]], the standard deviation, and degenerate random variables",
+        "Jensen's inequality: [[for convex g, E[g(X)] >= g(E[X])]]"
+      ],
+      "do": [
+        "Compute E[X] or E[X^2] for a pmf whose constant must first be fixed so the probabilities add up to 1",
+        "Find F_Y and f_Y for a transformed variable such as ln(X) or tan(X), and check E[Y] against the change-of-variable formula",
+        "Write a correct integral expression for E[g(Y)] without evaluating it",
+        "Use symmetry, linearity and Jensen's inequality to avoid long integrals"
+      ],
+      "pitfalls": [
+        "A sign error in integration by parts: the lectures show a 'wrong exam answer' where E[X] of an exponential comes out negative",
+        "Assuming E[g(X)] = g(E[X]) for a non-linear g"
+      ]
+    },
+    {
+      "name": "Joint distributions, covariance and sums",
+      "lectures": ["Lecture 5 - Independence and Expectation", "Lecture 7 - Variance and MSE", "Lectures 8 to 9"],
+      "timeShare": 18,
+      "importance": "essential",
+      "know": [
+        "Joint pmf tables and joint densities, and marginals by summing rows and columns or integrating out a variable",
+        "Independence of random variables: [[the joint pmf or density factorises]]; stochastic versus physical independence",
+        "E[g(X, Y)] as a double sum or double integral, and [[E[XY] = E[X]E[Y] under independence]]",
+        "[[Covariance as E[XY] minus E[X]E[Y]]], the correlation coefficient and how both react to a change of units; the [[variance of a sum adds 2Cov(X, Y)]] to the two variances",
+        "Convolution for the sum of independent variables, the [[gamma distribution as a sum of exponentials]], and generating functions for moments and sums",
+        "Covariance matrix, sample covariance matrix and the multivariate normal; a [[linear combination of jointly normal variables is normal]]"
+      ],
+      "do": [
+        "Fill in a joint pmf table that has given marginals and a given covariance",
+        "Find the constant, a marginal density and E[X] or Cov(X, Y) for a joint density on a square, triangle or half-disk",
+        "Set up the convolution integral for X + Y with the correct limits, and evaluate it at one point",
+        "Argue the sign of a correlation without computing it",
+        "Give the distribution of X - 2Y for independent normal X and Y"
+      ],
+      "pitfalls": [
+        "Multiplying marginals to fill a joint table when independence was not given",
+        "Calling X + Y normal because X and Y are each normal: that [[needs joint normality]], as the lectures' 'wrong exam answer' shows",
+        "Taking the convolution limits from one density only; they come from [[where both densities are non-zero]]"
+      ]
+    },
+    {
+      "name": "Chebyshev, law of large numbers and the CLT",
+      "lectures": ["Lecture 5 - Independence and Expectation", "Lecture 7 - Variance and MSE", "Lecture 10 - CLT and Maximum Likelihood"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "Expectation and variance of a sum and of an average of n independent copies: [[nE[X], nVar(X), and Var(X)/n]]",
+        "The law of large numbers, and why running averages of a Pareto variable with infinite expectation do not settle",
+        "Chebyshev's inequality [[P(|Y - E[Y]| >= a) <= Var(Y) / a^2]]",
+        "The central limit theorem for sums and for averages, and the rule of thumb for when n is large enough"
+      ],
+      "do": [
+        "Approximate the probability that a sum of 72 or 100 independent variables lies in a range, by standardising and using the normal table",
+        "Bound a probability with Chebyshev and compare the bound with the exact value"
+      ],
+      "pitfalls": [
+        "Standardising a sum with sigma instead of [[sqrt(n) times sigma]]",
+        "Thinking a Chebyshev bound above 1 is a mistake: it is correct, just useless"
+      ]
+    },
+    {
+      "name": "Estimators: method of moments, bias, MSE and MLE",
+      "lectures": ["Lecture 6 - Estimation", "Lecture 7 - Variance and MSE", "Lecture 10 - CLT and Maximum Likelihood"],
+      "timeShare": 9,
+      "importance": "essential",
+      "know": [
+        "Model distribution, estimate versus estimator, and the sampling distribution of an estimator",
+        "Method of moments with one or two parameters, using [[the k-th moment E[X^k]]]",
+        "Bias [[E[T] - theta]], unbiased estimators, and how to rescale a statistic to remove bias",
+        "Mean squared error [[MSE = Var(T) + bias^2]], and comparing estimators by MSE",
+        "Likelihood and log-likelihood for discrete and continuous samples, and the maximum likelihood estimate",
+        "Properties of the MLE: [[asymptotically unbiased, asymptotically lowest variance, functionally invariant]]"
+      ],
+      "do": [
+        "Build an unbiased estimator from a count, a sum or a sum of squares, and compute its MSE",
+        "Derive a method of moments estimator, switching to the second moment when the first does not involve the parameter",
+        "Write down a likelihood, maximise its logarithm and plug in data",
+        "Find an MLE when the support depends on the parameter, such as U(0, theta) or a Pareto with unknown start",
+        "Say whether an estimator such as 2 times the mean or the sample maximum is unbiased or biased, and in which direction",
+        "Describe how to estimate an MSE or a sampling distribution by simulation or parametric bootstrap"
+      ],
+      "pitfalls": [
+        "Setting the derivative to zero when the support depends on the parameter: the lectures' warning example shows this fails",
+        "Forgetting that [[an unbiased estimator's MSE is just its variance]], and computing a long expression instead"
+      ]
+    },
+    {
+      "name": "Confidence intervals",
+      "lectures": ["Lecture 11 - Confidence Intervals"],
+      "timeShare": 6,
+      "importance": "important",
+      "know": [
+        "What a confidence level means, critical values z_p and t_(m,p), and how to read the t table",
+        "The studentised mean and the t-interval for a normal mean with unknown variance, with [[n - 1 degrees of freedom]]",
+        "Large-sample intervals without normality, and the interval for a proportion with its condition of [[at least 5 successes and 5 failures]]",
+        "Pivots: [[inverting a quantity with a known distribution]] to get an interval, also for non-standard cases",
+        "How width depends on confidence level and sample size, and choosing n for a required width"
+      ],
+      "do": [
+        "Compute a 95 or 99 percent t-interval from a mean and standard deviation, or from raw data",
+        "Build an interval for a scale parameter from given quantiles of a pivot such as S_5 / theta",
+        "Find the sample size needed for an interval of a given width"
+      ],
+      "pitfalls": [
+        "Using z instead of t, or n instead of n - 1 degrees of freedom, for a small normal sample",
+        "Using the 95 percent value when a 90 or 99 percent interval is asked"
+      ]
+    },
+    {
+      "name": "Hypothesis testing and power",
+      "lectures": ["Lecture 12 - Hypothesis Testing", "Lecture 15 - More Hypothesis Testing", "Lecture 16 - Even More Hypothesis Testing"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "Null and alternative hypotheses, test statistic, significance level, critical region and p-value",
+        "Type I and type II errors and the power of a test, power curves and their link with effect size, alpha and noise",
+        "The t-test for a mean (normal or large sample) and the asymptotic test for a proportion",
+        "One-sided versus two-sided tests and their critical values",
+        "Choosing the sample size for a given power, alpha, effect size and standard deviation",
+        "Multiple testing with the [[Bonferroni correction alpha / m]], p-hacking, and the paired and unpaired two-sample t-tests"
+      ],
+      "do": [
+        "Carry out a t-test from a sample mean and standard deviation and state the conclusion",
+        "Compute alpha, a type II error probability or the power for a given rejection rule, also for tests based on a minimum, maximum or count",
+        "Compute a p-value from the distribution of a non-standard statistic, deciding the direction from H1",
+        "Find the n that gives a required power in a normal test"
+      ],
+      "pitfalls": [
+        "Taking the p-value in the wrong tail: decide first whether large or small values of the statistic support H1",
+        "Forgetting both tails when finding alpha or power for a two-sided rejection region"
+      ]
+    },
+    {
+      "name": "Linear regression",
+      "lectures": ["Lecture 13 - Linear Regression Part 1", "Lecture 14 - Linear Regression Part 2", "Lecture 15 - More Hypothesis Testing"],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "The simple linear regression model, residuals, least squares and its link with maximum likelihood",
+        "Multiple regression with a design matrix and the normal equations",
+        "Categorical explanatory variables with [[k - 1 dummy variables and a base category]]",
+        "Sums of squares, R^2 and adjusted R^2, and why [[R^2 never drops when you add a variable]]",
+        "Residual plots to check the assumptions, heteroskedasticity, and transformations (a squared term, log of the response)",
+        "t-tests and confidence intervals for coefficients, the F-test for all coefficients, and reading Python OLS output"
+      ],
+      "do": [
+        "Write a model with dummies for a categorical variable and define each new variable",
+        "Compute how a prediction changes when explanatory values or the category change",
+        "Read R^2, the degrees of freedom, a coefficient's p-value or interval from OLS output, and build a 90 percent interval from the standard error",
+        "Decide from residual plots whether to add a squared term or transform the response",
+        "Decide which coefficients are significant, with a multiple-testing correction"
+      ],
+      "pitfalls": [
+        "Using k dummies for k categories, or not saying which category is the base",
+        "Preferring a larger model because its R^2 is slightly higher instead of checking adjusted R^2 and the p-values"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Integration by parts and substitution, for expectations and distribution functions",
+    "Double integrals over triangles, discs and half-disks, for joint densities",
+    "Logarithms and derivatives, to maximise a log-likelihood",
+    "Infinite series such as the geometric series; exams give harder sums like 1/k^2",
+    "Matrices and matrix products, for the covariance matrix and the normal equations",
+    "Enough Python to read a regression output table"
+  ],
+  "practical": "There is no graded lab or project. Each lecture comes with Grasple exercises (instant feedback, plus four revision modules) and book exercises, and four exercise sessions work through exercise sheets whose answers are in the archive. None of this counts towards the grade, but the lectures assume you did the pre-lecture video and exercises.",
+  "studyAdvice": [
+    "Estimation carries about a fifth of all points on the six papers analysed and appears in both halves: practise unbiased estimators from counts or sums of squares, MSE, and MLE when the support depends on the parameter.",
+    "Joint distributions have the most slides and are on every paper: drill joint pmf tables with a given covariance, marginals from joint densities, and the convolution integral.",
+    "Do the pre-lecture video and Grasple set before every lecture; the lectures build on them and do not repeat them.",
+    "Build your handwritten formula sheet week by week. The midterm allows only one side, so choose: the standard distributions with E and Var, the conditional probability rules and the computation rules for expectation and variance.",
+    "Learn Chebyshev's and Jensen's inequalities from the book: both were examined in 2024 although the slides hardly cover them.",
+    "Redo the 2024 and 2025 papers under time: several questions return almost word for word, such as E[X^2] from a pmf proportional to 1/k^4 and the joint table with a given covariance.",
+    "For the second half, practise reading Python OLS output; regression and tests on its coefficients were a third of the 2025 endterm."
+  ]
+}

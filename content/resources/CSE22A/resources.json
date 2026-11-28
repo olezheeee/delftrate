@@ -1,0 +1,148 @@
+{
+  "course": "CSE22A",
+  "source": {
+    "name": "Lightspace",
+    "title": "Machine Learning",
+    "url": "https://lightspace.study/courses/machine-learning",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Community notes (Notion)",
+          "url": "https://plain-pocket-06a.notion.site/Machine-learning-8d12a462325d414c8c7fd3858afda4fa"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Guest Lecture - CNN",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Guest%20Lecture%20-%20CNN.pdf",
+          "size": "7 MB"
+        },
+        {
+          "title": "Guest Lecture - Ethics and Machine Learning",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Guest%20Lecture%20-%20Ethics%20and%20Machine%20Learning.pdf",
+          "size": "14 MB"
+        },
+        {
+          "title": "Lecture 1 - Introduction to Machine Learning",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%201%20-%20Introduction%20to%20Machine%20Learning.pdf",
+          "size": "15 MB"
+        },
+        {
+          "title": "Lecture 2 - Basics",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%202%20-%20Basics.pdf",
+          "size": "11 MB"
+        },
+        {
+          "title": "Lecture 3 - Parametric Densities",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%203%20-%20Parametric%20Densities.pdf",
+          "size": "10 MB"
+        },
+        {
+          "title": "Lecture 4 - Normal-density Based Classification",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%204%20-%20Normal-density%20Based%20Classification.pdf",
+          "size": "8 MB"
+        },
+        {
+          "title": "Lecture 5 - Evaluation",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%205%20-%20Evaluation.pdf",
+          "size": "7 MB"
+        },
+        {
+          "title": "Lecture 6 - Non Parametric Density Estimation",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%206%20-%20Non%20Parametric%20Density%20Estimation.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 7 - Linear Discriminative Classifiers",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%207%20-%20Linear%20Discriminative%20Classifiers.pdf",
+          "size": "19 MB"
+        },
+        {
+          "title": "Lecture 8 - Linear Discriminative Classifiers Part 2",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%208%20-%20Linear%20Discriminative%20Classifiers%20Part%202.pdf",
+          "size": "4 MB"
+        },
+        {
+          "title": "Lecture 9 - Fairness",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%209%20-%20Fairness.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 10 - Decision Trees",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%2010%20-%20Decision%20Trees.pdf",
+          "size": "9 MB"
+        },
+        {
+          "title": "Lecture 11 - Multilayer Perceptrons",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%2011%20-%20Multilayer%20Perceptrons.pdf",
+          "size": "6 MB"
+        },
+        {
+          "title": "Lecture 12 - Clustering",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%2012%20-%20Clustering.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 13 - PCA",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lectures/ML%20Lecture%2013%20-%20PCA.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "exams",
+      "items": [
+        {
+          "title": "Endterm 2024",
+          "section": "Endterms",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Exams/ML%20Endterms/ML%20Endterm%202024.pdf",
+          "size": "1 MB"
+        }
+      ]
+    },
+    {
+      "kind": "solutions",
+      "items": [
+        {
+          "title": "Week 1 Exercise Solutions",
+          "section": "Exercise Solutions",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Exercise%20Solutions/ML%20Week%201%20Exercise%20Solutions.pdf",
+          "size": "164 KB"
+        },
+        {
+          "title": "Week 2 Exercise Solutions",
+          "section": "Exercise Solutions",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Exercise%20Solutions/ML%20Week%202%20Exercise%20Solutions.pdf",
+          "size": "167 KB"
+        },
+        {
+          "title": "Week 3 Exercise Solutions",
+          "section": "Exercise Solutions",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Exercise%20Solutions/ML%20Week%203%20Exercise%20Solutions.pdf",
+          "size": "171 KB"
+        },
+        {
+          "title": "Lab 2 Parametric Classifiers Solutions",
+          "section": "Lab Solutions",
+          "url": "https://lightspace.study/courses/machine-learning/read/ML%20Lab%20Solutions/ML%20Lab%202%20Parametric%20Classifiers%20Solutions.pdf",
+          "size": "355 KB"
+        }
+      ]
+    },
+    {
+      "kind": "textbooks",
+      "items": [
+        {
+          "title": "Pattern Recognition and Machine Learning"
+        }
+      ]
+    }
+  ]
+}

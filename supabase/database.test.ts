@@ -4,7 +4,17 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { PGlite } from "@electric-sql/pglite";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { courseScore, VERDICT_LABELS, type ProfessorStats, type SubjectStats } from "../lib/score";
+import {
+  courseScore,
+  defaultProfessor,
+  load,
+  teach,
+  VERDICT_LABELS,
+  type ProfessorAverages,
+  type ProfessorStats,
+  type SubjectAverages,
+  type SubjectStats,
+} from "../lib/score";
 import { as, createTestDatabase, createUser } from "./testing/database";
 
 // Every test builds its own database, which takes a moment on a slow machine.
@@ -95,9 +105,24 @@ afterEach(async () => {
 });
 
 describe("a signed-out visitor", () => {
-  it("reads the programmes and the courses and nothing else", async () => {
+  it("reads the programmes and the courses, and nothing else", async () => {
     expect(await rows(null, "select id from public.programmes order by id")).toEqual([{ id: "AE" }, { id: "CSE" }]);
-    expect(await rows(null, "select code from public.courses order by code")).toEqual([{ code: "AE1" }, { code: "CSE1" }]);
+    // The calendar on the home page is public: code, name, programme, year and quarters.
+    expect(
+      await rows(null, "select code, name, programme_id, year, quarters from public.courses order by code"),
+    ).toMatchObject([
+      { code: "AE1", programme_id: "AE", quarters: [] },
+      { code: "CSE1", programme_id: "CSE", quarters: [] },
+    ]);
+    // Those five columns and no others: not the internal id, not when the row was made.
+    for (const columns of ["id", "created_at", "*"]) {
+      await expect(rows(null, `select ${columns} from public.courses`), columns).rejects.toThrow(/permission denied/);
+    }
+    await expect(rows(null, "update public.courses set name = 'x'")).rejects.toThrow(/permission denied/);
+    await expect(rows(null, "delete from public.courses")).rejects.toThrow(/permission denied/);
+    await expect(
+      rows(null, "insert into public.courses (code, name, programme_id, year) values ('X1', 'x', 'AE', 1)"),
+    ).rejects.toThrow(/permission denied/);
 
     for (const table of [
       "profiles",
@@ -110,26 +135,6 @@ describe("a signed-out visitor", () => {
     ]) {
       await expect(rows(null, `select * from public.${table}`), table).rejects.toThrow(/permission denied/);
     }
-  });
-
-  it("reads code, name, programme, year and quarters of every course", async () => {
-    await db.query("update public.courses set quarters = '{1,2}' where id = $1", [cse]);
-    expect(
-      await rows(null, "select code, name, programme_id, year, quarters from public.courses order by code"),
-    ).toEqual([
-      { code: "AE1", name: "Aerodynamics", programme_id: "AE", year: 1, quarters: [] },
-      { code: "CSE1", name: "Algorithms", programme_id: "CSE", year: 1, quarters: [1, 2] },
-    ]);
-  });
-
-  it("cannot add, change or remove a course", async () => {
-    await expect(
-      rows(null, "insert into public.courses (code, name, programme_id, year) values ('X', 'X', 'AE', 1)"),
-    ).rejects.toThrow(/permission denied/);
-    await expect(rows(null, "update public.courses set name = 'Hacked'")).rejects.toThrow(/permission denied/);
-    await expect(rows(null, "delete from public.courses")).rejects.toThrow(/permission denied/);
-    expect(await one("select count(*)::int from public.courses where name = 'Hacked'")).toBe(0);
-    expect(await one("select count(*)::int from public.courses")).toBe(2);
   });
 
   it("reads no averages and cannot rate", async () => {
@@ -180,6 +185,93 @@ describe("profiles", () => {
   });
 });
 
+describe("cancelling an unfinished registration", () => {
+  const cancel = (userId: string | null) =>
+    rows(userId, "select public.cancel_unfinished_registration() as removed");
+  const accounts = () => one<number>("select count(*)::int from auth.users");
+
+  it("removes the caller's own account while it has no profile, and no other account", async () => {
+    const fresh = await one<string>("insert into auth.users default values returning id");
+    const stranger = await one<string>("insert into auth.users default values returning id");
+    const before = await accounts();
+
+    expect(await cancel(fresh)).toEqual([{ removed: true }]);
+    expect(await accounts()).toBe(before - 1);
+    expect(await one("select count(*)::int from auth.users where id = $1", [fresh])).toBe(0);
+    expect(await one("select count(*)::int from auth.users where id = $1", [stranger])).toBe(1);
+
+    // A second call finds nothing left to remove.
+    expect(await cancel(fresh)).toEqual([{ removed: false }]);
+  });
+
+  it("never removes an account that has a profile", async () => {
+    const before = await accounts();
+    expect(await cancel(student)).toEqual([{ removed: false }]);
+    expect(await cancel(admin)).toEqual([{ removed: false }]);
+    expect(await accounts()).toBe(before);
+    expect(await rows(student, "select id from public.profiles")).toEqual([{ id: student }]);
+  });
+
+  it("is closed to a signed-out visitor", async () => {
+    await expect(cancel(null)).rejects.toThrow(/permission denied/);
+  });
+});
+
+describe("confirming an email address", () => {
+  // Supabase Auth writes to auth.users as the owner of that table, not through the API roles.
+  const unconfirmed = () =>
+    one<string>("insert into auth.users (encrypted_password) values ('set-by-a-stranger') returning id");
+  const password = (id: string) =>
+    one<string | null>("select encrypted_password from auth.users where id = $1", [id]);
+
+  it("forgets the password the account had before", async () => {
+    const id = await unconfirmed();
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    expect(await password(id)).toBeNull();
+  });
+
+  it("keeps a password that is set in the same write", async () => {
+    const id = await unconfirmed();
+    await db.query(
+      "update auth.users set email_confirmed_at = now(), encrypted_password = 'chosen-by-a-lead' where id = $1",
+      [id],
+    );
+    expect(await password(id)).toBe("chosen-by-a-lead");
+  });
+
+  it("leaves the password alone before and after the confirmation", async () => {
+    const id = await unconfirmed();
+    // Not confirmed yet: other changes to the account do not touch the password.
+    await db.query("update auth.users set email = 'someone@example.com' where id = $1", [id]);
+    expect(await password(id)).toBe("set-by-a-stranger");
+
+    // Confirmed, then the owner saves a password: it stays through every later change.
+    await db.query("update auth.users set email_confirmed_at = now() where id = $1", [id]);
+    await db.query("update auth.users set encrypted_password = 'chosen-by-the-owner' where id = $1", [id]);
+    await db.query(
+      "update auth.users set email_confirmed_at = now() + interval '1 day', email = 'other@example.com' where id = $1",
+      [id],
+    );
+    expect(await password(id)).toBe("chosen-by-the-owner");
+  });
+});
+
+describe("the quarters of a course", () => {
+  const setQuarters = (value: string) =>
+    db.query("update public.courses set quarters = $1::smallint[] where id = $2", [value, cse]);
+
+  it("accepts one to four different quarters, and none at all", async () => {
+    for (const value of ["{}", "{1}", "{2,3}", "{1,2,3,4}"]) await setQuarters(value);
+    expect(await one("select quarters from public.courses where id = $1", [cse])).toEqual([1, 2, 3, 4]);
+  });
+
+  it("refuses a quarter that does not exist, a repeated one, an empty one and a nested list", async () => {
+    for (const value of ["{0}", "{5}", "{1,1}", "{1,NULL}", "{{1,2},{3,4}}"]) {
+      await expect(setQuarters(value), value).rejects.toThrow(/courses_quarters_valid/);
+    }
+  });
+});
+
 describe("courses and professors", () => {
   it("a signed-in user reads them and cannot change them", async () => {
     expect(await rows(student, "select code from public.courses order by code")).toEqual([{ code: "AE1" }, { code: "CSE1" }]);
@@ -200,19 +292,6 @@ describe("courses and professors", () => {
     expect(await one("select count(*)::int from public.course_professors")).toBe(3);
   });
 
-  it("a student reads the quarters and cannot change them", async () => {
-    expect(await rows(student, "select quarters from public.courses where id = $1", [cse])).toEqual([{ quarters: [] }]);
-    await rows(student, "update public.courses set quarters = '{4}'");
-    expect(await one("select count(*)::int from public.courses where quarters = '{4}'")).toBe(0);
-  });
-
-  it("an admin sets the quarters of a course", async () => {
-    await rows(admin, "update public.courses set quarters = '{1,2}' where id = $1", [cse]);
-    await rows(admin, "insert into public.courses (code, name, programme_id, year, quarters) values ('AE2', 'Flight', 'AE', 2, '{3}')");
-    expect(await one("select quarters from public.courses where id = $1", [cse])).toEqual([1, 2]);
-    expect(await one("select quarters from public.courses where code = 'AE2'")).toEqual([3]);
-  });
-
   it("an admin adds, changes and removes them", async () => {
     await rows(admin, "insert into public.courses (code, name, programme_id, year) values ('AE2', 'Flight', 'AE', 2)");
     await rows(admin, "insert into public.professors (name) values ('Dan')");
@@ -222,30 +301,6 @@ describe("courses and professors", () => {
     expect(await one("select count(*)::int from public.professors")).toBe(4);
     expect(await one("select hidden from public.professors where id = $1", [bob])).toBe(true);
     expect(await one("select count(*)::int from public.course_professors")).toBe(2);
-  });
-});
-
-describe("the quarters of a course", () => {
-  it("accepts no quarters, one quarter and several", async () => {
-    for (const ok of ["{}", "{2}", "{1,2}", "{1,2,3,4}"]) {
-      await rows(admin, "update public.courses set quarters = $1 where id = $2", [ok, cse]);
-      expect(await one("select quarters::text from public.courses where id = $1", [cse])).toBe(ok);
-    }
-  });
-
-  it("rejects 0, 5, duplicates and nulls", async () => {
-    for (const bad of ["{0}", "{5}", "{1,5}", "{2,2}", "{1,NULL}", "{NULL}", "{{1,2},{3,4}}"]) {
-      await expect(
-        rows(admin, "update public.courses set quarters = $1 where id = $2", [bad, cse]),
-        bad,
-      ).rejects.toThrow(/courses_quarters_valid/);
-    }
-    await expect(
-      rows(admin, "insert into public.courses (code, name, programme_id, year, quarters) values ('Z', 'Z', 'AE', 1, '{3,3}')"),
-    ).rejects.toThrow(/courses_quarters_valid/);
-    await expect(rows(admin, "update public.courses set quarters = null where id = $1", [cse])).rejects.toThrow(
-      /not-null|null value/,
-    );
   });
 });
 
@@ -561,6 +616,251 @@ describe("a hidden professor", () => {
   });
 });
 
+describe("the site totals", () => {
+  const totals = async (userId: string | null) => (await rows(userId, "select * from public.site_totals()"))[0];
+
+  it("are three numbers that everyone reads, signed in or not", async () => {
+    // Four accounts with a profile and two courses come from the setup above.
+    const expected = { votes: 0, students: 4, courses: 2 };
+    for (const reader of [null, student, admin]) {
+      expect(await rows(reader, "select * from public.site_totals()")).toEqual([expected]);
+    }
+  });
+
+  it("count a rating as one subject vote and one professor vote", async () => {
+    await rate(student, cse, ada, [5, 5, 5, 5, 5, 5]);
+    expect((await totals(null)).votes).toBe(2);
+
+    // Rating again replaces the earlier rating: still two.
+    await rate(student, cse, ada, [8, 8, 8, 8, 8, 8]);
+    expect((await totals(null)).votes).toBe(2);
+
+    // A second professor of the same course: one more professor vote, the same subject vote.
+    await rate(student, cse, bob, [8, 8, 8, 6, 6, 6]);
+    expect((await totals(null)).votes).toBe(3);
+
+    await rate(aeStudent, ae, eve, [5, 5, 5, 5, 5, 5]);
+    expect((await totals(null)).votes).toBe(5);
+  });
+
+  it("count manual votes as the course page does: the smallest of a block's three criteria", async () => {
+    await setManualVotes(admin, cse, null, "difficulty", 5, 30);
+    // Two criteria of the subject have no votes yet, so the block has none.
+    expect((await totals(null)).votes).toBe(0);
+
+    await setManualVotes(admin, cse, null, "exam_level", 5, 12);
+    await setManualVotes(admin, cse, null, "interest", 5, 20);
+    expect((await totals(null)).votes).toBe(12);
+    expect((await subjectStats(student, cse)).votes).toBe(12);
+
+    for (const criterion of PROFESSOR) await setManualVotes(admin, cse, ada, criterion, 7, 10);
+    await rate(student, cse, ada, [5, 5, 5, 5, 5, 5]);
+    // 12 + 1 for the subject, 10 + 1 for Ada.
+    expect((await totals(null)).votes).toBe(24);
+  });
+
+  it("leave out the votes of a hidden professor, and count them again when shown", async () => {
+    for (const criterion of PROFESSOR) await setManualVotes(admin, cse, bob, criterion, 9, 20);
+    await rate(student, cse, bob, [5, 5, 5, 9, 9, 9]);
+    expect((await totals(null)).votes).toBe(22);
+
+    await rows(admin, "update public.professors set hidden = true where id = $1", [bob]);
+    // The subject vote stays. An admin gets the same number: it is what the site shows.
+    expect((await totals(null)).votes).toBe(1);
+    expect((await totals(admin)).votes).toBe(1);
+
+    await rows(admin, "update public.professors set hidden = false where id = $1", [bob]);
+    expect((await totals(null)).votes).toBe(22);
+  });
+
+  it("count a student once they have a profile, and every course", async () => {
+    // An account that has not finished registering.
+    await db.query("insert into auth.users default values");
+    expect((await totals(null)).students).toBe(4);
+
+    await createUser(db, { programme: "CSE" });
+    await db.query("insert into public.courses (code, name, programme_id, year) values ('CSE2', 'Logic', 'CSE', 1)");
+    expect(await totals(null)).toEqual({ votes: 0, students: 5, courses: 3 });
+  });
+
+  it("open nothing else to a signed-out visitor", async () => {
+    await rate(student, cse, ada, [5, 5, 5, 5, 5, 5]);
+    for (const hidden of ["private.subject_stats", "private.professor_stats", "public.profiles", "public.subject_ratings"]) {
+      await expect(rows(null, `select * from ${hidden}`), hidden).rejects.toThrow(/permission denied/);
+    }
+  });
+});
+
+describe("the calendar scores", () => {
+  const scores = (userId: string | null) => rows(userId, "select * from public.calendar_scores() order by code");
+
+  // Ten votes (the minimum) on each criterion of a block, at the given values.
+  async function subjectVotes(course: string, values: number[], count = 10) {
+    for (const [i, criterion] of SUBJECT.entries()) await setManualVotes(admin, course, null, criterion, values[i], count);
+  }
+  async function professorVotes(course: string, professor: string, values: number[], count = 10) {
+    for (const [i, criterion] of PROFESSOR.entries()) {
+      await setManualVotes(admin, course, professor, criterion, values[i], count);
+    }
+  }
+
+  // What the score module makes of the stats a student receives: the numbers of the
+  // course's own page. calendar_scores() has to give exactly these.
+  async function pageNumbers(course: string) {
+    const number = (v: unknown) => (v === null ? null : Number(v));
+    const s = await subjectStats(student, course);
+    const subject: SubjectStats = {
+      difficulty: number(s.difficulty),
+      exam_level: number(s.exam_level),
+      interest: number(s.interest),
+      enough_votes: s.enough_votes as boolean,
+    };
+    const blocks = await rows(student, "select * from public.course_professor_stats($1)", [course]);
+    const candidates: ProfessorStats[] = blocks.map((row) => ({
+      professor_id: row.professor_id as string,
+      hidden: row.hidden as boolean,
+      engagement: number(row.engagement),
+      understanding: number(row.understanding),
+      approachability: number(row.approachability),
+      votes: row.votes as number,
+      enough_votes: row.enough_votes as boolean,
+    }));
+    const best = defaultProfessor(candidates);
+    return {
+      score: courseScore(subject, candidates)?.score ?? null,
+      load: subject.enough_votes ? load(subject as SubjectAverages) : null,
+      teach: best ? teach(best as ProfessorAverages) : null,
+    };
+  }
+
+  it("are three numbers per course that everyone reads, signed in or not", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    await professorVotes(cse, ada, [9, 9, 9]);
+
+    const expected = [{ code: "CSE1", score: 0.65 * 7.5 + 0.23 * (10 - 9) + 0.12 * (10 - 6), load: 7.5, teach: 9 }];
+    // An admin gets no more than anyone else: these are the numbers the site shows.
+    for (const reader of [null, student, aeStudent, admin]) {
+      expect(await scores(reader)).toEqual(expected);
+    }
+  });
+
+  it("leave out a course nobody rated", async () => {
+    expect(await scores(null)).toEqual([]);
+  });
+
+  it("show nothing of a block that is below the minimum", async () => {
+    await subjectVotes(cse, [7, 8, 6], 9);
+    await professorVotes(cse, ada, [9, 9, 9], 9);
+    expect(await scores(null)).toEqual([]);
+    expect(await scores(admin)).toEqual([]);
+
+    // The subject reaches the minimum: its load shows. The score needs the professor too.
+    await subjectVotes(cse, [7, 8, 6]);
+    expect(await scores(null)).toEqual([{ code: "CSE1", score: null, load: 7.5, teach: null }]);
+
+    // One criterion of the professor stays one vote short.
+    await setManualVotes(admin, cse, ada, "engagement", 9, 10);
+    await setManualVotes(admin, cse, ada, "understanding", 9, 10);
+    expect((await scores(null))[0]).toMatchObject({ score: null, teach: null });
+
+    await setManualVotes(admin, cse, ada, "approachability", 9, 10);
+    expect((await scores(null))[0]).toMatchObject({ load: 7.5, teach: 9 });
+    expect((await scores(null))[0].score).not.toBeNull();
+  });
+
+  it("show the teaching score alone while the subject is below the minimum", async () => {
+    await professorVotes(ae, eve, [8, 7, 9]);
+    expect(await scores(null)).toEqual([{ code: "AE1", score: null, load: null, teach: 8 }]);
+  });
+
+  it("use the best rated professor, and never a hidden one", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    await professorVotes(cse, ada, [9, 9, 9]);
+    await professorVotes(cse, bob, [6, 6, 6], 40);
+    expect((await scores(null))[0].teach).toBe(9);
+
+    await rows(admin, "update public.professors set hidden = true where id = $1", [ada]);
+    for (const reader of [null, student, admin]) {
+      expect((await scores(reader))[0]).toEqual({ code: "CSE1", ...(await pageNumbers(cse)) });
+      expect((await scores(reader))[0].teach).toBe(6);
+    }
+
+    // With every professor hidden only the load is left.
+    await rows(admin, "update public.professors set hidden = true where id = $1", [bob]);
+    expect(await scores(null)).toEqual([{ code: "CSE1", score: null, load: 7.5, teach: null }]);
+  });
+
+  it("pick between equally rated professors as the course page does: more votes, then the lower id", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    // The same teaching score from different votes: 8 three times, and 7, 8 and 9.
+    await professorVotes(cse, ada, [8, 8, 8], 12);
+    await professorVotes(cse, bob, [7, 8, 9], 30);
+    expect(await scores(null)).toEqual([{ code: "CSE1", ...(await pageNumbers(cse)) }]);
+
+    await professorVotes(cse, ada, [8, 8, 8], 30);
+    expect(await scores(null)).toEqual([{ code: "CSE1", ...(await pageNumbers(cse)) }]);
+  });
+
+  it("are the numbers of the course's own page, to the last digit", async () => {
+    // Votes chosen to be awkward for a computer, as [value, number of votes] per criterion.
+    // The first gives a score of exactly 5.25 (load 7, teaching 8, interest 8), which one
+    // way of calculating shows as 5.2 and another as 5.3. The others give averages that do
+    // not end, such as 7.333...
+    const cases: { subject: [number, number][][]; professor: [number, number][][] }[] = [
+      {
+        subject: [[[7, 5], [8, 5]], [[6, 5], [7, 5]], [[8, 10]]],
+        professor: [[[8, 10]], [[8, 10]], [[8, 10]]],
+      },
+      {
+        subject: [[[7, 10], [8, 5]], [[6, 11], [9, 3]], [[5, 7], [8, 6]]],
+        professor: [[[9, 10], [7, 4]], [[8, 13]], [[6, 9], [10, 2], [7, 3]]],
+      },
+      {
+        subject: [[[1, 3], [10, 8]], [[0, 10], [9, 1]], [[3, 6], [4, 7]]],
+        professor: [[[8, 7], [9, 6]], [[2, 1], [9, 12]], [[7, 11], [8, 2]]],
+      },
+    ];
+    for (const votes of cases) {
+      await db.query("delete from public.manual_votes");
+      for (const [i, criterion] of SUBJECT.entries()) {
+        for (const [value, count] of votes.subject[i]) await setManualVotes(admin, cse, null, criterion, value, count);
+      }
+      for (const [i, criterion] of PROFESSOR.entries()) {
+        for (const [value, count] of votes.professor[i]) await setManualVotes(admin, cse, ada, criterion, value, count);
+      }
+      const page = await pageNumbers(cse);
+      expect(page.score).not.toBeNull();
+      expect(await scores(null)).toEqual([{ code: "CSE1", ...page }]);
+    }
+    // The last case was not rounded on the way: its teaching score is a number without end.
+    expect(String((await scores(null))[0].teach).length).toBeGreaterThan(12);
+  });
+
+  it("count student ratings together with manual votes", async () => {
+    await subjectVotes(cse, [7, 8, 6], 9);
+    await professorVotes(cse, ada, [9, 9, 9], 9);
+    await rate(student, cse, ada, [2, 3, 10, 4, 5, 6]);
+    expect(await scores(null)).toEqual([{ code: "CSE1", ...(await pageNumbers(cse)) }]);
+    // Difficulty (9 * 7 + 2) / 10 = 6.5 and exam level (9 * 8 + 3) / 10 = 7.5.
+    expect((await scores(null))[0].load).toBe(7);
+  });
+
+  it("leave the criteria, the vote counts and the professors closed to a signed-out visitor", async () => {
+    await subjectVotes(cse, [7, 8, 6]);
+    await professorVotes(cse, ada, [9, 9, 9]);
+    for (const hidden of [
+      "public.course_subject_stats()",
+      "public.course_professor_stats()",
+      "private.subject_stats",
+      "private.professor_stats",
+      "public.manual_votes",
+      "public.professors",
+    ]) {
+      await expect(rows(null, `select * from ${hidden}`), hidden).rejects.toThrow(/permission denied/);
+    }
+  });
+});
+
 describe("something a later migration adds", () => {
   it("is closed to the API roles until that migration grants access", async () => {
     await db.exec(`
@@ -594,7 +894,8 @@ describe("the seed data", () => {
   async function cards(userId: string) {
     const read = (sql: string) => as(seeded, userId, (tx) => tx.query<Row>(sql)).then((r) => r.rows);
     const number = (v: unknown) => (v === null ? null : Number(v));
-    const courses = await read("select id, code from public.courses");
+    // Only the example courses: the curriculum courses in the seed have no votes.
+    const courses = await read("select id, code from public.courses where id::text like '00000000-0000-4000-a000-%'");
     const professors = await read("select id, name from public.professors");
     const subjects = await read("select * from public.course_subject_stats()");
     const blocks = await read("select * from public.course_professor_stats()");
@@ -636,13 +937,13 @@ describe("the seed data", () => {
 
   const EXPECTED = {
     // Two professors with enough votes: the best rated one is used.
-    CSE1001: { professor: "Dr. Marijke van Houten", load: "7.4", teach: "9.2", score: "7.7", verdict: "Smooth ride" },
-    CSE1002: { professor: "Prof. Ravi Menon", load: "8.0", teach: "8.8", score: "7.8", verdict: "Hard, but well taught" },
+    CSE1001: { professor: "Dr. Marijke van Houten", load: "7.4", teach: "9.2", score: "5.4", verdict: "Smooth ride" },
+    CSE1002: { professor: "Prof. Ravi Menon", load: "8.0", teach: "8.8", score: "5.6", verdict: "Hard, but well taught" },
     CSE2001: null, // subject one vote short
     CSE2002: null, // only professor has 6 votes
-    AE2001: { professor: "Dr. Anouk Dekkers", load: "8.1", teach: "9.0", score: "8.0", verdict: "Hard, but well taught" },
+    AE2001: { professor: "Dr. Anouk Dekkers", load: "8.1", teach: "9.0", score: "5.6", verdict: "Hard, but well taught" },
     // The better rated professor is hidden, so the visible one is used.
-    AE3001: { professor: "Prof. Tomasz Wieliczko", load: "9.3", teach: "6.8", score: "6.3", verdict: "Brace yourself" },
+    AE3001: { professor: "Prof. Tomasz Wieliczko", load: "9.3", teach: "6.8", score: "6.9", verdict: "Brace yourself" },
     AE1001: null, // no votes
   };
 
@@ -650,23 +951,66 @@ describe("the seed data", () => {
     expect(await cards(seedStudent)).toEqual(EXPECTED);
   });
 
+  it("gives a signed-out visitor the same numbers in the calendar", async () => {
+    const found = await as(seeded, null, (tx) => tx.query<Row>("select * from public.calendar_scores()"));
+    const shown = Object.fromEntries(found.rows.map((row) => [row.code as string, row]));
+    for (const [code, card] of Object.entries(EXPECTED)) {
+      const row = shown[code];
+      if (card) {
+        expect(
+          { load: (row.load as number).toFixed(1), teach: (row.teach as number).toFixed(1), score: (row.score as number).toFixed(1) },
+          code,
+        ).toEqual({ load: card.load, teach: card.teach, score: card.score });
+      } else {
+        // No combined score: the course is left out, or shows only one of the small circles.
+        expect(row?.score ?? null, code).toBeNull();
+      }
+    }
+    // The curriculum courses in the seed have no votes.
+    expect(Object.keys(shown).sort()).toEqual(["AE2001", "AE3001", "CSE1001", "CSE1002", "CSE2001", "CSE2002"]);
+  });
+
+  it("holds the curriculum of both programmes, every course with its quarters", async () => {
+    const perYear = await as(seeded, null, (tx) =>
+      tx.query<Row>(
+        `select programme_id, year, count(*)::int as courses from public.courses
+         where quarters <> '{}' group by programme_id, year order by programme_id, year`,
+      ),
+    );
+    expect(perYear.rows).toEqual([
+      { programme_id: "AE", year: 1, courses: 15 },
+      { programme_id: "AE", year: 2, courses: 17 },
+      { programme_id: "AE", year: 3, courses: 5 },
+      { programme_id: "CSE", year: 1, courses: 12 },
+      { programme_id: "CSE", year: 2, courses: 8 },
+      { programme_id: "CSE", year: 3, courses: 1 },
+    ]);
+  });
+
+  it("links the study guide lecturers to their first-year CSE courses", async () => {
+    const linked = await as(seeded, seedStudent, (tx) =>
+      tx.query<Row>(
+        `select c.code, array_agg(p.name order by p.name) as lecturers
+         from public.course_professors l
+         join public.courses c on c.id = l.course_id
+         join public.professors p on p.id = l.professor_id
+         where c.code in ('CSE11C', 'CSE12C', 'CSE11B') group by c.code order by c.code`,
+      ),
+    );
+    expect(linked.rows).toEqual([
+      { code: "CSE11C", lecturers: ["A. Asadi PhD", "Dr. A.J. Power"] },
+      { code: "CSE12C", lecturers: ["Dr. A.J. Power"] },
+    ]);
+  });
+
   it("gives an admin the same published scores, although an admin receives more rows", async () => {
     expect(await cards(seedAdmin)).toEqual(EXPECTED);
   });
 
-  it("gives every course quarters, with a course over two quarters and two in one quarter", async () => {
-    const { rows: found } = await seeded.query<Row>("select code, programme_id, year, quarters from public.courses");
-    expect(found).toHaveLength(7);
-    for (const course of found) expect((course.quarters as number[]).length, String(course.code)).toBeGreaterThan(0);
-    expect(found.some((c) => (c.quarters as number[]).length === 2)).toBe(true);
-
-    const slots = found.flatMap((c) => (c.quarters as number[]).map((q) => `${c.programme_id}${c.year}Q${q}`));
-    expect(new Set(slots).size).toBeLessThan(slots.length);
-  });
-
   it("hides the hidden professor from the student", async () => {
     const names = await as(seeded, seedStudent, (tx) => tx.query<Row>("select name from public.professors"));
-    expect(names.rows).toHaveLength(7);
+    // 7 visible example professors and the 9 lecturers of the first-year CSE courses.
+    expect(names.rows).toHaveLength(16);
     expect(names.rows).not.toContainEqual({ name: "Dr. Hiroshi Tanabe" });
   });
 
@@ -678,50 +1022,32 @@ describe("the seed data", () => {
     const { rows: found } = await taken.query<Row>(
       "select (select count(*) from public.courses)::int as courses, (select name from public.courses where code = 'CSE1001') as name, (select count(*) from public.manual_votes m join public.courses c on c.id = m.course_id where c.code = 'CSE1001')::int as votes",
     );
-    expect(found).toEqual([{ courses: 7, name: "The real one", votes: 0 }]);
+    // 7 example courses (one of them skipped, the real one counted) and 58 from the curriculum.
+    expect(found).toEqual([{ courses: 65, name: "The real one", votes: 0 }]);
+    await taken.close();
+  });
+
+  it("gives its lecturers to its own courses only, not to a real course with the same code", async () => {
+    const taken = await createTestDatabase();
+    await taken.query("insert into public.courses (code, name, programme_id, year) values ('CSE11C', 'The real one', 'CSE', 1)");
+    await taken.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
+
+    const { rows: found } = await taken.query<Row>(
+      `select c.code, c.name, count(l.professor_id)::int as lecturers
+       from public.courses c left join public.course_professors l on l.course_id = c.id
+       where c.code in ('CSE11C', 'CSE12C') group by c.code, c.name order by c.code`,
+    );
+    expect(found).toEqual([
+      { code: "CSE11C", name: "The real one", lecturers: 0 },
+      { code: "CSE12C", name: "Data Management", lecturers: 1 },
+    ]);
     await taken.close();
   });
 
   it("can be loaded twice without adding anything", async () => {
-    const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses");
+    const count = () => seeded.query<Row>("select (select count(*) from public.manual_votes)::int as votes, (select count(*) from public.courses)::int as courses, (select count(*) from public.course_professors)::int as links");
     const before = (await count()).rows;
     await seeded.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
     expect((await count()).rows).toEqual(before);
-  });
-});
-
-describe("quarters: writers outside the API roles", () => {
-  it("lets a server job with the service key write courses through the quarters check", async () => {
-    const fresh = await createTestDatabase();
-    try {
-      await fresh.transaction(async (tx) => {
-        await tx.exec("set local role service_role");
-        await tx.query(
-          "insert into public.courses (code, name, programme_id, year, quarters) values ('SR1', 'Service', 'CSE', 1, '{1,2}')",
-        );
-        await tx.query("update public.courses set name = 'Service job' where code = 'SR1'");
-      });
-      const { rows } = await fresh.query<Row>("select name, quarters from public.courses where code = 'SR1'");
-      expect(rows).toEqual([{ name: "Service job", quarters: [1, 2] }]);
-    } finally {
-      await fresh.close();
-    }
-  });
-
-  it("gives quarters to example courses of a project seeded before quarters existed", async () => {
-    const old = await createTestDatabase({ seed: true });
-    try {
-      // As if seeded before this migration: the example courses exist without quarters.
-      await old.exec("update public.courses set quarters = '{}'");
-      await old.exec("insert into public.courses (code, name, programme_id, year) values ('REAL1', 'Real', 'AE', 1)");
-      await old.exec(readFileSync(join(import.meta.dirname, "seed.sql"), "utf8"));
-      const { rows } = await old.query<Row>("select code, quarters from public.courses order by code");
-      const byCode = Object.fromEntries(rows.map((r) => [r.code, r.quarters]));
-      expect(byCode.CSE1001).toEqual([1, 2]);
-      expect(byCode.AE1001).toEqual([1, 2, 3]);
-      expect(byCode.REAL1).toEqual([]); // not an example course: left alone
-    } finally {
-      await old.close();
-    }
   });
 });

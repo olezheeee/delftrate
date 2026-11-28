@@ -1,0 +1,192 @@
+{
+  "course": "CSE200",
+  "title": "Software Project",
+  "ects": 15,
+  "summary": "A full-quarter team project: five students build working software for an external client, from problem analysis and requirements to a tested, documented product, guided by a TA and a TU coach. The sessions do not teach programming. They support the project with technical writing for the final report, teamwork and client communication, and the ethical evaluation of your product. Most of the grade is the committee's judgement of your research, process, product and presentation; the report is graded separately by the writing lecturer.",
+  "basis": {
+    "lectures": 6,
+    "description": "Slides of the six archived sessions from the 2024-25 run (still labelled CSE2000 on Brightspace), read as one text, plus the course rubrics and the TU Write report guide. Time shares count content slides; the split of the text over the six archive lectures is inferred from the slide decks.",
+    "caveat": "The course was CSE2000 and is CSE200 from 2026-27, still in year 2, quarter 4, with new entry requirements including the SP Bootcamp. Technical writing is given by two lecturers in parallel and both decks are in the archive, so writing is counted about twice while you attend only one. Only the first of four teamwork sessions is included, so teamwork is under-counted. Design thinking and the software process itself are not in the slides."
+  },
+  "topics": [
+    {
+      "name": "Ethics and social impact of your software",
+      "lectures": ["Lecture 0 - Kickoff"],
+      "timeShare": 12,
+      "importance": "important",
+      "know": [
+        "Why software raises ethical questions: society depends on it, it can empower or harm, non-developers cannot spot its flaws, and data use falls under rules such as the GDPR",
+        "Real failures used as warnings: the Dutch child benefits scandal (Toeslagenaffaire), the Rotterdam fraud algorithm, COMPAS and Amazon's hiring system",
+        "Mediation theory: [[technology is not neutral]], it shapes moral perceptions, opens or closes options for action, and changes values",
+        "Ethics as ongoing support for decisions during the project, not a verdict from experts and not just a checklist to tick off",
+        "What your report must cover: [[data and privacy, risks to users, stakeholders and non-users, bias in data or processes, and mediation effects]]",
+        "The steps: watch the required ethics lecture and read the ethics checklist on Brightspace, draft the section in the draft report, get written feedback, revise for the final report"
+      ],
+      "do": [
+        "Answer the four question groups for your own project: who it serves, who is affected and whose data it uses, who is responsible for what, and what the software does once in use",
+        "Write an ethics chapter that names concrete risks of your product and says how your design reduces each one",
+        "Apply the three mediation questions ([[perception, action, values]]) to your product, as the lecture does with Brightspace"
+      ],
+      "pitfalls": [
+        "Treating the ethics part as a checklist exercise; the lecture asks you to reason about how the technology changes behaviour and values",
+        "Leaving the ethics section out of the draft report, which means losing the instructors' written feedback before the final version"
+      ]
+    },
+    {
+      "name": "Writing the report as a team",
+      "lectures": ["Lecture 1 - Technical Writing Basics", "Lecture 4 - Technical Writing ToC and Practice"],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "The seven writing goals, from summarising literature and structuring the report to writing for readers with little time and writing as a team",
+        "The writing assignments in order: project plan, table of contents, individual introduction, improved group introduction, first chapters, draft report, self-assessment, final report",
+        "What the final upload contains: the report as one PDF, a [[document listing the changes]] you made after the draft feedback, and a [[document explaining your use of AI tools]]",
+        "The draft cycle: hand in a draft and say where you want feedback, assess it yourselves with the rubric, bring [[at least three questions]] to the online draft meeting",
+        "The report is [[15 percent of the course grade]], graded by the writing lecturer, and [[attendance at the writing sessions is mandatory]]"
+      ],
+      "do": [
+        "Agree early on roles (an editor, who uploads), a writing schedule and how you give each other feedback",
+        "Make one consistent style across chapters written by five people",
+        "Assess your own draft with the report rubric and turn the findings into a list of changes"
+      ],
+      "pitfalls": [
+        "Forgetting the change document or the AI-use document with the final upload"
+      ]
+    },
+    {
+      "name": "Literature and referencing (APA and IEEE)",
+      "lectures": ["Lecture 1 - Technical Writing Basics", "Lecture 2 - Technical Writing Structure"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "The hard minimum: [[at least 10 sources in the final report, 5 of them scientific]], in APA or IEEE style; uncited material counts as plagiarism",
+        "[[APA puts author and year in the text]], (Jones, 2019); [[IEEE uses a bracketed number]], [5]; both let you name the author in the sentence",
+        "[[IEEE numbers sources in the order you first cite them]], and the list holds only sources you actually cite",
+        "How to point to a page, paragraph, figure, table, equation, appendix or section in IEEE, for example [5, p. 17] or [5, Sec. 2.3]",
+        "The details to check per entry: what goes in italics, how titles are written, how many authors and initials, page numbers and the DOI",
+        "Software you used, such as GitLab or Google Analytics, goes in [[a footnote rather than the reference list]]"
+      ],
+      "do": [
+        "Back up every claim about the client's context or the problem with a citation, as in the problem-analysis examples",
+        "Choose one style and apply it consistently in the text and the list",
+        "Check your project plan's references against the feedback and fix them before the final report"
+      ],
+      "pitfalls": [
+        "Reference list mistakes the guide sees most: no full stop after an entry, adding titles such as prof. or dr., italicising the article instead of the journal, listing only the first author",
+        "An in-text citation without a list entry, or a list entry never cited in the text"
+      ]
+    },
+    {
+      "name": "Report structure: title page, contents, introduction",
+      "lectures": ["Lectures 1 to 4"],
+      "timeShare": 17,
+      "importance": "essential",
+      "know": [
+        "The three readers: a CEO without CS background (summary, introduction, problem, conclusion, visuals), a technical CTO (requirements, method, design, implementation, testing) and a new development team (conclusion, appendices)",
+        "The required parts: title page with the whole committee, preface, summary, contents, introduction, chapters on problem analysis, research, requirements, methodology, design, ethics, implementation, testing and discussion, conclusion, references, appendices",
+        "A good table of contents: complete, correctly formatted, with clear, descriptive, short and consistent titles from which the storyline is visible",
+        "The introduction in three parts: [[why (reason), what (objective) and how (approach and structure of the report)]]",
+        "Ways to open the introduction: a striking fact or figure, a clarifying example, or a relevant quote, each backed by a source",
+        "A chapter introduction states the chapter's purpose and announces its sections; the objective needs a clear end point and the chapters are the steps towards it",
+        "The [[12,000-word limit counts from the introduction to the conclusion]]; put the full requirements table with status and the division of labour (max one A4) in appendices"
+      ],
+      "do": [
+        "Draft a table of contents early and review another group's for formatting and titles",
+        "Write an introduction with a concrete reason, objective and structure, and check that the objective follows from the problem",
+        "Decide for each chapter which of the three readers it serves, and move material only the new team needs to an appendix"
+      ],
+      "pitfalls": [
+        "Mixing up the project aim, the educational aim and the report aim in the introduction, a mediocre mark in the rubric",
+        "Assuming readers know the project plan; most only read the final report, so reuse and update the problem analysis"
+      ]
+    },
+    {
+      "name": "Paragraphs, style and visuals",
+      "lectures": ["Lecture 1 - Technical Writing Basics", "Lecture 3 - Technical Writing Style"],
+      "timeShare": 14,
+      "importance": "important",
+      "know": [
+        "A paragraph covers [[one topic, announced in its first sentence, the topic sentence]], either as an announcement or as a statement",
+        "Coherence inside a paragraph through transition words, and between paragraphs through bridges and signposts",
+        "List rules: [[announce the list and its length, two to six bullets, the same sentence structure for every item]]",
+        "[[Figures carry a caption below and tables a caption above]]; both are numbered in order, referred to in the text and readable on their own",
+        "In the text around a visual, say what it shows, how it shows it and why that matters",
+        "Common style problems: passive style, comma splices, subject and verb not agreeing, informal words; and the rule to write small counts in words"
+      ],
+      "do": [
+        "Rewrite a paragraph so its first sentence really covers its content",
+        "Revise your chapters for one style principle from the style tutorial and show the before and after",
+        "Add captions and in-text references to every figure and table, and check that each can be read alone"
+      ],
+      "pitfalls": [
+        "Vague quantities such as some, several or many where you could give a number",
+        "Long unsorted lists, such as 28 must-haves in one list; group them",
+        "A topic sentence that is too abstract or covers more or less than the paragraph actually says"
+      ]
+    },
+    {
+      "name": "Preface, summary and conclusion",
+      "lectures": ["Lecture 4 - Technical Writing ToC and Practice"],
+      "timeShare": 19,
+      "importance": "important",
+      "know": [
+        "The preface: educational context, a reading guide and thanks, the only place for a personal tone, plus the required footnote with course, word count and how you used generative AI",
+        "The summary stands alone: reason, objective and main requirements, outcome, how you got there, limitations and recommendations, [[without references or pointers to chapters]]",
+        "Summary form: [[actions in the past tense, facts in the present tense]], short on background, [[one A4 advised and two at most]]",
+        "The conclusion restates the aim and method, answers the question, argues from the chapters, gives implications and recommendations, and ends with a strong final sentence",
+        "Conclusion rules: [[no new information, concise (one to two pages), readable without the rest of the report]]",
+        "Recommendations follow from the conclusion and are feasible, specific and encouraging; a few go in a final paragraph announced with their number, many get their own chapter"
+      ],
+      "do": [
+        "Build the conclusion as a framework of topic sentences first, then write the paragraphs as a group",
+        "Turn a lead-style summary into one that reports what you built and found",
+        "Check a draft conclusion with another group: are all elements there, and do the objective and the main conclusion match?"
+      ],
+      "pitfalls": [
+        "Writing the summary as a teaser that lists topics but gives no results; the lecture calls this a lead",
+        "Bringing up new facts in the conclusion that the body chapters did not support"
+      ]
+    },
+    {
+      "name": "Teamwork, communication and client meetings",
+      "lectures": ["Lecture 5 - Effective Communication"],
+      "timeShare": 17,
+      "importance": "essential",
+      "know": [
+        "The four teamwork sessions: effective communication, meeting skills and Core Quadrants, feedback and Buddycheck, respect for differences",
+        "Observation versus interpretation, and checking whether the other person really understood you and is also satisfied",
+        "Habits that make communication fail (waiting for your turn instead of listening, letting bias lead, ignoring other views) and those that help (active listening, checking assumptions, summarising, asking questions, nonverbal awareness)",
+        "The three levels of interaction, [[content, process and relation]] (McClelland), and how a problem can sit on any of them",
+        "[[Closed questions that start with a verb]] versus [[open questions that start with who, what, which, when, why or how]]; summarising and silence as listening tools",
+        "Team values and the norms that show them, written down in the code of conduct, including ambition level and work-life balance"
+      ],
+      "do": [
+        "Run a client meeting with clear roles, and analyse it afterwards on content, process and relation",
+        "Respond to a client's change request mid-project without dismissing it",
+        "Agree on three team values each, link concrete behaviour to them and spot where they may clash"
+      ],
+      "pitfalls": [
+        "Treating a teammate's unclear commit as a skills problem when the cause may be time pressure or a process issue",
+        "Assuming communication worked because you made your point, without checking how it landed"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "CSE11B Introduction to Programming",
+    "CSE100 Collaborative Development Project: a first team project with planning and version control",
+    "CSE13B Software Design and Engineering: architecture, requirements and testing, which the product grade relies on",
+    "CSE12B HCI & AI-Assisted Prototyping: designing and validating with users",
+    "The SP Bootcamp in week 3.5, mandatory before you may start",
+    "Registration through Project Forum in weeks 2.8 and 2.9; you cannot enrol later"
+  ],
+  "practical": "The course is the project: ten weeks, full time (42 hours a week), no other courses alongside. Your team of five registers via Project Forum, works for a client and meets a TA weekly. You deliver a project plan, a working product with code, tests and documentation (README, build, APIs), the final report and a final presentation with demo. Twelve numbered assignments run alongside, among them a code of conduct, ToC, an individual introduction, report chapters, Core Quadrants, an individual reflection, the draft and a self-assessment.",
+  "studyAdvice": [
+    "The product is 35 percent of the grade and exploration and process 20 percent each; the writing sessions are only 15 percent, so put most of your hours into the client work, but never let any part fall below 5.0.",
+    "Start the report at once: the first writing session is in week 4.2, the table of contents and individual introduction were due in week 4.3 in 2025, and the draft report in week 4.8. Each session builds on the previous assignment.",
+    "Use the draft feedback round fully: ask for feedback on specific parts, score your own draft with the rubric and bring three questions to the draft meeting.",
+    "Collect sources from the start of the research phase; you need 10, of which 5 scientific, and they also support the problem analysis and design choices the committee grades.",
+    "Write the ethics section into the draft, not the final, so the ethics instructors can comment on it.",
+    "Keep evidence of your process as you go (planning, meeting notes, who did what): the process grade and the division-of-labour appendix both depend on it.",
+    "Settle your team values and norms in the code of conduct right after the first teamwork session (it was due two days later in 2025), so you have agreed rules to fall back on when tension rises later."
+  ]
+}

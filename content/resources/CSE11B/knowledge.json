@@ -1,0 +1,248 @@
+{
+  "course": "CSE11B",
+  "title": "Introduction to Programming",
+  "ects": 5,
+  "summary": "Your first programming course: Java from primitive types and loops to classes, inheritance, equals and hashCode, exceptions, file I/O, unit tests, streams and threads, all in one quarter. Each week has three lectures that mix theory with live coding, plus lab sessions with eight practice assignments. The grade comes from two exams of equal weight: a closed-book theory exam on WebLab and a three-hour programming exam in IntelliJ.",
+  "basis": {
+    "lectures": 20,
+    "description": "Slides of Lectures 1 to 20 of CSE1100 (2024-25) as text, the WebLab exercises and lab assignments, and the 2023 to 2025 theory and programming papers. Time shares count content slides; Lecture 0 (course organisation) and Lecture 21 (exam practice) are left out.",
+    "caveat": "The material is from CSE1100, the old code; from 2026-27 the course is CSE11B, with content unchanged, and you need it to enter CSE200 Software Project. Older papers carry the former name Object Oriented Programming. Lectures 9 and 10 share one slide deck, and the I/O decks step through long code examples slide by slide, so I/O looks bigger in slides than in lecture time."
+  },
+  "topics": [
+    {
+      "name": "Java basics: types, operators and control flow",
+      "lectures": ["Lecture 1 - First Steps", "Lecture 2 - Programming Structures"],
+      "timeShare": 9,
+      "importance": "essential",
+      "know": [
+        "The [[eight primitive types, their ranges]], two's complement storage, and how int and double arithmetic differ (integer division, modulo, overflow)",
+        "Implicit widening versus explicit casts, and what a cast to int does to a double",
+        "Equality, relational, boolean [[logical (& and |) versus conditional (&& and ||)]] operators, short-circuit evaluation and bitwise operators on integers",
+        "if/else, [[switch with and without break (fall-through)]], for, while and do-while, and when each loop fits",
+        "What == compares for primitives and for references"
+      ],
+      "do": [
+        "Trace a loop or switch by hand and state the exact output",
+        "Evaluate an expression mixing bitwise, boolean and arithmetic operators",
+        "Write nested loops that build a text pattern of stars and other characters into a String"
+      ],
+      "pitfalls": [
+        "Forgetting that a switch without break falls through into the next case",
+        "Expecting 7 / 2 to give 3.5, or & to short-circuit like &&"
+      ]
+    },
+    {
+      "name": "Methods, arrays and recursion",
+      "lectures": ["Lecture 3 - Methods", "Lecture 5 - Arrays"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "Method signature, parameters, return type and void methods, and the lifetime of local variables",
+        "[[Java is always pass by value]]: for an object or array [[the reference is copied, not the object]]",
+        "Arrays: creation, fixed length, default values, traversal, and copying an array versus copying the reference",
+        "Standard array patterns: reduction (sum, max), filtering, linear search",
+        "Recursion with a base case, and why deep recursion ends in a [[StackOverflowError]]"
+      ],
+      "do": [
+        "Predict what a swap method does to primitives versus to array elements",
+        "Implement a class around a String or int array that adds, removes, shifts or rotates elements",
+        "Read a recursive method and say for which inputs it terminates or overflows the stack"
+      ],
+      "pitfalls": [
+        "Believing a method can swap two int arguments in the caller",
+        "Off-by-one errors and ArrayIndexOutOfBoundsException at the array edges"
+      ]
+    },
+    {
+      "name": "Classes, composition and collections",
+      "lectures": ["Lecture 4 - Classes", "Lecture 6 - Container Classes", "Lecture 7 - Class Composition & Libraries", "Lecture 18 - Program Design"],
+      "timeShare": 17,
+      "importance": "essential",
+      "know": [
+        "Class versus object, fields, constructors, this, static versus instance members, and encapsulation with private fields and getters",
+        "[[Stack and heap: where variables, objects and Strings live]], and how many objects exist after a piece of code runs",
+        "null and the NullPointerException; [[final fields cannot be reassigned]], so a setter on them does not compile",
+        "Writing a container class on top of an array, then ArrayList and Set from the library, and how ArrayList grows internally",
+        "Composition (a class holding objects of other classes) versus inheritance, and [[composition over inheritance]] when a property is not a kind of the class",
+        "Packages, import, and reading the Javadoc of library classes"
+      ],
+      "do": [
+        "Draw the stack and heap for a short program and count the objects created",
+        "Choose between a String attribute, a composed class or a subclass for a described design",
+        "Turn a problem text into model classes and a container class, as the Program Design lecture does for an animal shelter",
+        "Implement list operations with ArrayList: add, remove, contains, copy, filter"
+      ],
+      "pitfalls": [
+        "Storing everything in Strings or in one big main class: the programming rubric gives no design points for that",
+        "Confusing a shallow copy (clone of an ArrayList) with copies of the elements"
+      ]
+    },
+    {
+      "name": "Testing, debugging and code quality",
+      "lectures": ["Lecture 8 - Unit Tests", "Lecture 13 - Debugging", "Lecture 14 - Code Quality, Strings & Generics"],
+      "timeShare": 15,
+      "importance": "essential",
+      "know": [
+        "JUnit 5: [[@Test, assertEquals, assertTrue, assertNotSame, assertThrows]], and the difference between assertEquals and assertSame",
+        "Unit versus integration tests, positive versus negative tests, and line coverage as a measure of enough testing",
+        "The debugger: breakpoints, conditional and hit-count breakpoints, watchpoints, stepping and inspecting values",
+        "Quality rules: short methods, no duplicated code (pull shared code into an abstract parent), low cyclomatic complexity, short parameter lists, naming conventions",
+        "Javadoc comments with a description and [[@param and @return]], and Checkstyle as the tool that checks style"
+      ],
+      "do": [
+        "Write a test class that reaches 80 percent line coverage with one test per non-trivial method",
+        "Decide whether a given test passes, fails or does not compile",
+        "Test code that reads input by giving a Scanner a String instead of a file"
+      ],
+      "pitfalls": [
+        "Thinking high cyclomatic complexity is a sign of good internal quality: [[lower is better]]",
+        "Leaving @param fields empty in Javadoc, which the programming exam marks down"
+      ]
+    },
+    {
+      "name": "Inheritance, polymorphism and interfaces",
+      "lectures": ["Lecture 9 - Inheritance", "Lecture 10 - Polymorphism"],
+      "timeShare": 7,
+      "importance": "essential",
+      "know": [
+        "extends, super() and the order of construction, default constructors, and the access levels private, package, protected and public",
+        "The Liskov Substitution Principle: [[a subclass object may stand wherever its superclass is expected]], not the other way round",
+        "[[Declared (static) versus actual (dynamic) type]], and which casts the compiler accepts",
+        "Overloading versus overriding; [[static binding by the compiler versus dynamic binding by the JVM]]",
+        "Abstract classes, interfaces, default methods, and final to stop overriding"
+      ],
+      "do": [
+        "Given a class hierarchy and a main method, say which lines compile and what each call prints",
+        "Explain static and dynamic binding in your own words with an example where they differ",
+        "Design an inheritance hierarchy with an abstract parent for the item types in an exam scenario"
+      ],
+      "pitfalls": [
+        "Defining binding as working out the type of a variable: the midterm feedback names this as the most common mistake",
+        "Claiming static binding only applies to static, private or final methods",
+        "Calling a subclass-only method through a superclass reference and expecting it to compile"
+      ]
+    },
+    {
+      "name": "Equality and hashCode",
+      "lectures": ["Lecture 11 - Equality & Hashcodes"],
+      "timeShare": 4,
+      "importance": "essential",
+      "know": [
+        "== versus equals, and the default equals in Object",
+        "The equals contract: [[reflexive, symmetric, transitive, consistent, false for null]]",
+        "Why [[getClass() is preferred over instanceof]] once subclasses are involved",
+        "hashCode: [[equal objects must have equal hash codes]]; buckets, compression and collisions in a HashSet or HashMap",
+        "Objects.equals and Objects.hash, and the equals and hashCode that a record generates"
+      ],
+      "do": [
+        "Write equals and hashCode for a class with String, int and List fields, including null fields and order-independent comparison",
+        "Predict the result of equals, assertEquals or a HashSet lookup on two separately created objects"
+      ],
+      "pitfalls": [
+        "Comparing String fields with == inside equals",
+        "Calling o.getClass() before checking o for null",
+        "Overriding equals but not hashCode, which breaks HashSet and HashMap"
+      ]
+    },
+    {
+      "name": "Exceptions",
+      "lectures": ["Lecture 12 - Exceptions"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "Errors versus exceptions, and [[checked versus unchecked (RuntimeException)]] exceptions",
+        "try, catch and finally, and that [[catch blocks must go from specific to general]]",
+        "Propagation along the call stack and the default exception handler",
+        "The throws clause versus throwing with throw, and writing your own exception class"
+      ],
+      "do": [
+        "Decide from the Javadoc whether an exception is checked and what the compiler then demands",
+        "Say which catch block runs, and whether two orderings of catch blocks compile"
+      ],
+      "pitfalls": [
+        "Saying a checked exception must be both caught and declared: [[either one is enough]]",
+        "Thinking a throws clause stops the exception from reaching the default handler: it only passes it on"
+      ]
+    },
+    {
+      "name": "Strings, file input and output",
+      "lectures": ["Lecture 14 - Code Quality, Strings & Generics", "Lecture 15 - Input Output Part 1", "Lecture 16 - Input Output Part 2"],
+      "timeShare": 18,
+      "importance": "essential",
+      "know": [
+        "String methods (split, substring, trim, indexOf, toUpperCase) and Character helpers, plus String immutability",
+        "Scanner on System.in, a file or a String: [[next, nextInt, nextLine, hasNext and useDelimiter]]",
+        "java.io: [[Reader and Writer for characters, InputStream and OutputStream for bytes]], buffering with BufferedReader, and PrintWriter for output",
+        "Closing resources, and handling FileNotFoundException and IOException",
+        "Object streams and Serializable for saving whole objects"
+      ],
+      "do": [
+        "Parse a semi-structured text file whose records span several lines into objects, without hardcoding the file name",
+        "Build a looping text menu that reads choices from System.in and handles wrong input",
+        "Write a list of objects to a Writer in an exact output format",
+        "Transform strings, for example to camelCase, using String and Character methods"
+      ],
+      "pitfalls": [
+        "Mixing nextInt and nextLine on one Scanner and losing a line",
+        "A reader that only works for the exact order of the example file: the rubric tests it with other input files"
+      ]
+    },
+    {
+      "name": "Generics, functional and modern Java",
+      "lectures": ["Lecture 14 - Code Quality, Strings & Generics", "Lecture 17 - Functional Java", "Lecture 19 - Modern Java"],
+      "timeShare": 15,
+      "importance": "important",
+      "know": [
+        "Generic classes such as Box<T>, raw types, autoboxing of int to Integer, type erasure and bounded types",
+        "Lambdas and functional interfaces (Predicate, Function), and the imperative versus functional paradigm",
+        "Stream pipelines: a source, intermediate operations (filter, map, sorted, distinct) and [[one terminal operation]] (collect, count, max, average); [[a stream is used once]]",
+        "Optional and the primitive versions such as OptionalInt, returned by max or findFirst on a possibly empty stream",
+        "var, enums, switch expressions, sealed classes, records, and [[Comparable versus Comparator]] for sorting"
+      ],
+      "do": [
+        "Solve a task with streams and Optional only, without loops, recursion or collections",
+        "Say the type and value a stream expression produces on empty input",
+        "Write a record and know which class it is equivalent to",
+        "Use replaceAll with a lambda or a Comparator on a List in the programming exam"
+      ],
+      "pitfalls": [
+        "Returning null where an Optional is expected, or assuming max of an empty IntStream gives a number",
+        "Falling back on a loop in a question that demands a functional solution: that exercise then scores 0"
+      ]
+    },
+    {
+      "name": "Threads",
+      "lectures": ["Lecture 20 - Threads"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "Threads versus processes, concurrency versus parallelism, interleaving on one core and hyperthreading",
+        "Starting a thread: a subclass of Thread or a Runnable, [[start versus run]], and Thread.ofPlatform",
+        "[[The OS scheduler decides the order]], so output order is not fixed",
+        "synchronized methods and blocks, race conditions, and deadlock"
+      ],
+      "do": [
+        "List which output orders are possible for two threads calling a synchronized method",
+        "Move one calculation of a menu option into a separate thread, as Programming Endterm 2025 asked"
+      ],
+      "pitfalls": [
+        "Calling run instead of start, which [[runs the code in the current thread]]",
+        "Assuming threads run in the order they were started"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "None officially: the course starts from zero",
+    "The faculty advises an online Java tutorial before the quarter, and an entry test on WebLab shows where you stand"
+  ],
+  "practical": "Eight lab assignments, about one per teaching week, take 4 to 6 hours each. The first ones run on WebLab, the later ones in IntelliJ, and they grow towards exam-sized programs that read a file, model it in classes and offer a menu. They are not graded, but TAs give feedback in the labs. Short weekly WebLab exercises (multiple choice plus small coding tasks) come with each lecture. The week 5 midterm and the week 8 mock programming exam do not count directly but earn bonus points.",
+  "studyAdvice": [
+    "Keep up from day one: the course moves from loops to inheritance in four weeks, and the midterm in week 5 covers all of it.",
+    "Do every lab assignment yourself in IntelliJ before its deadline; the programming exam is the same kind of task under a three-hour limit.",
+    "Spend the most time on classes and composition, inheritance, file reading and testing: together they carry about three fifths of the exam points.",
+    "Practise tracing code without an IDE, because the theory exam gives you only WebLab and the Java documentation.",
+    "Learn to write equals and hashCode from memory with getClass(); every analysed paper rewards them.",
+    "Sit the mock programming exam and queue for feedback afterwards: it earns bonus and shows where your time goes.",
+    "For open questions, practise short precise definitions with an example: wrong extra claims cost points even next to correct ones."
+  ]
+}

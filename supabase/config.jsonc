@@ -209,7 +209,7 @@
     // Allow/disallow testing manual linking of accounts
     "enable_manual_linking": false,
     // Passwords shorter than this value will be rejected as weak. Minimum 6, recommended 8 or more.
-    "minimum_password_length": 6,
+    "minimum_password_length": 8,
     // Passwords that do not meet the following requirements will be rejected as weak. Supported values
     // are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
     "password_requirements": "",
@@ -258,14 +258,15 @@
       // addresses. If disabled, only the new email is required to confirm.
       "double_confirm_changes": true,
       // If enabled, users need to confirm their email address before signing in.
-      "enable_confirmations": false,
+      // On: an account cannot sign in, and so cannot see ratings, until the emailed code is entered.
+      "enable_confirmations": true,
       // If enabled, users will need to reauthenticate or have logged in recently to change their password.
       "secure_password_change": false,
       // If enabled, users will need to provide their current password to change their password, unless
       // they signed in with a one-time password, magic link, or recovery link.
       // "require_current_password": true,
       // Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
-      "max_frequency": "1s",
+      "max_frequency": "60s",
       // Number of characters used in the email OTP.
       "otp_length": 6,
       // Number of seconds before the email OTP expires (defaults to 1 hour).
@@ -282,13 +283,18 @@
       //   "sender_name": "Admin"
       // },
 
-      // Uncomment to customize email template
-      // "template": {
-      //   "invite": {
-      //     "subject": "You have been invited",
-      //     "content_path": "./supabase/templates/invite.html"
-      //   }
-      // },
+      // Our emails carry a code to type on the site ({{ .Token }}) instead of a link.
+      // The same two templates are pasted into the dashboard of our projects (see SETUP.md).
+      "template": {
+        "confirmation": {
+          "subject": "Your DelftRate code",
+          "content_path": "./supabase/templates/confirmation.html"
+        },
+        "recovery": {
+          "subject": "Your DelftRate password reset code",
+          "content_path": "./supabase/templates/recovery.html"
+        }
+      },
 
       // Uncomment to customize notification email template
       // "notification": {

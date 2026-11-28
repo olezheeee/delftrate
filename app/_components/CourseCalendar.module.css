@@ -1,225 +1,408 @@
-.root {
+.calendar {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 22px;
+  min-width: 0;
+  /* The calendar lies on the background clip of the home page. Its surfaces are see-through
+     so the clip shows a little; the text sits on the darker ones and stays easy to read.
+     Only a few surfaces blur what is behind them (the grid as a whole, not each course): a
+     blur on every course is slow. Write the standard property only; the build adds the
+     -webkit- one, and drops the standard one if both are written here. */
+  --glass: hsl(210 14% 5% / 0.5);
+  --glass-blur: blur(14px) saturate(140%);
+  /* For small text that lies on the clip itself, with nothing behind it. */
+  --on-clip: 0 0 10px #000, 0 1px 2px #000;
 }
-.pickers {
+
+/* The two steps: programme, then year. */
+.steps {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px 48px;
+  gap: 18px 40px;
 }
-.group {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  min-width: 0;
+.step {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+.step > span {
+  color: hsl(var(--fg) / 0.72);
+  text-shadow: var(--on-clip);
   transition: opacity 0.3s var(--ease);
 }
-.group legend {
-  padding: 0;
-  margin-bottom: 12px;
-  float: left; /* keeps legend inside the flex column */
-  width: 100%;
+/* The year step waits for a programme. Its label and pills are dimmed one by one: an
+   opacity on the step itself would cut the blur of its pills off from the clip behind. */
+.step[data-waiting] > span {
+  opacity: 0.45;
 }
-.group:disabled {
-  opacity: 0.4;
+.step[data-waiting] .pill {
+  border-color: var(--line);
+  color: hsl(var(--fg) / 0.45);
 }
 .pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  clear: both;
+  gap: 8px;
 }
 .pill {
-  position: relative;
-  cursor: pointer;
-}
-.pill input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  margin: 0;
-  cursor: inherit;
-}
-.pill span {
-  display: block;
-  padding: 10px 18px;
+  height: 44px;
+  padding: 0 18px;
   border-radius: 999px;
   border: 1px solid var(--line-2);
-  background: var(--card);
-  font-size: 15px;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  cursor: pointer;
   transition:
-    border-color 0.25s,
-    background 0.25s,
-    color 0.25s,
-    transform 0.35s var(--ease);
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
 }
-.pill:hover span {
-  border-color: hsl(var(--fg) / 0.4);
-  transform: translateY(-1px);
+.pill:hover:not(:disabled) {
+  border-color: #fff;
 }
-.pill input:checked + span {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: hsl(200 80% 70% / 0.08);
+.pill[aria-pressed="true"] {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+  font-weight: 500;
 }
-.pill input:focus-visible + span {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-.group:disabled .pill {
-  cursor: not-allowed;
+.pill:disabled {
+  cursor: default;
 }
 
-.note,
-.empty,
-.unplaced {
+.message {
   margin: 0;
-  color: hsl(var(--fg) / 0.6);
-  font-size: 15px;
+  padding: 28px 24px;
+  border: 1px dashed var(--line-2);
+  border-radius: 16px;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  color: hsl(var(--fg) / 0.8);
 }
-.unplaced {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  margin-top: 16px;
+/* Read out by a screen reader, not shown: the grid says the same to the eye. */
+.announce {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-.empty {
-  padding: 24px 0;
+.hint,
+.legend {
+  margin: 0;
+  font-size: 14px;
+  color: hsl(var(--fg) / 0.72);
+  text-shadow: var(--on-clip);
+}
+/* What the numbers of a course are. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+  font-size: 13px;
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: hsl(var(--fg) / 0.9);
+}
+.swatch {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+}
+/* The colours the overall score can take, from a light subject to a hard one. The
+   colours themselves are set by the component (LOAD_SCALE). */
+.scale {
+  flex: none;
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
+}
+.swatch[data-kind="load"] {
+  border-color: hsl(var(--fg) / 0.82);
 }
 
-.scroller {
+/* Four quarters side by side. On a narrow screen the calendar scrolls sideways inside its
+   own box; the page itself never does. */
+.scroll {
   overflow-x: auto;
-  padding-bottom: 8px;
-}
-.board {
-  min-width: 720px;
-}
-.head {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 14px;
-}
-.head span {
-  padding-left: 4px;
+  margin: -4px;
+  padding: 4px;
 }
 .grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  /* One row per lane (set from the layout), so the grid is exactly as tall as it needs. */
-  grid-template-rows: repeat(var(--lanes, 1), minmax(88px, auto));
   gap: 10px;
+  min-width: 720px;
+  padding-bottom: 8px;
+  /* One blurred surface behind the four lanes and the gaps between them. */
+  border-radius: 16px;
+  backdrop-filter: var(--glass-blur);
 }
-.cell {
-  display: flex;
-  min-width: 0;
+.quarter {
+  position: relative;
+  padding: 12px 14px 2px;
 }
-.course {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: var(--card);
+.lane {
   border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--glass);
+  /* Stretch past the last row so the lane closes below the courses. */
+  margin-bottom: -8px;
+  pointer-events: none;
+}
+/* On a phone the blur of the grid would be redone for every frame of the clip, over the
+   whole calendar. It is off there and the lanes are darker instead. These rules have to
+   stay below the ones they change. */
+@media (max-width: 860px) {
+  .grid {
+    backdrop-filter: none;
+  }
+  .lane {
+    background: hsl(210 14% 5% / 0.7);
+  }
+}
+
+/* A block is a course on its own, or a module holding its courses. */
+.block {
+  position: relative;
+  margin: 0 8px;
   min-width: 0;
+  animation: rise 0.5s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 30ms);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.course {
+  /* The name on the left, the circles on the right. A card too narrow for that puts the
+     circles in a row under the name (see the container rule below). */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 10px;
+  container-type: inline-size;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  background: hsl(210 12% 8% / 0.74);
   transition:
-    transform 0.35s var(--ease),
-    border-color 0.25s,
-    background 0.25s;
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease),
+    transform 0.2s var(--ease);
 }
 .course:hover,
 .course:focus-visible {
-  transform: translateY(-3px);
   border-color: var(--accent);
-  background: var(--card-2);
+  background: hsl(200 60% 12%);
+  transform: translateY(-2px);
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+/* No circles (the ratings could not be loaded): the name takes the whole card. */
+.text:only-child {
+  grid-column: 1 / -1;
 }
 .code {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
   color: var(--accent);
 }
 .name {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.3;
-  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
 
-.skeleton {
+/* The ratings of a course: the overall difficulty as "5.4/10", and under it two small circles
+   for the subject's load and the professor, each a ring filled as far as the number goes,
+   out of 10. */
+.scores {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  align-items: flex-end;
+  gap: 7px;
 }
-.skeletonPills {
-  height: 76px;
-  max-width: 560px;
-  border-radius: 20px;
-  background: var(--card);
-  border: 1px solid var(--line);
+/* The number of the overall difficulty is set in the site's serif, like the "Rate" of the
+   name (italic: the only style of it the site loads, see app/layout.tsx), and takes the
+   colour of how hard the course is: --tone is set per course, the blue of the accent for an
+   easy one, white in between, a warm tone for a hard one. */
+.overall {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+  white-space: nowrap;
 }
-.skeletonGrid {
-  height: 240px;
-  border-radius: 24px;
-  background: var(--card);
-  border: 1px solid var(--line);
+.overall b {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+  color: var(--tone, hsl(var(--fg)));
+}
+.overall span {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: hsl(var(--fg) / 0.42);
+}
+.overall[data-empty] b {
+  color: hsl(var(--fg) / 0.32);
+}
+.pair {
+  display: flex;
+  gap: 3px;
+}
+.ring {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+}
+.ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* The ring fills from the top, clockwise. */
+  transform: rotate(-90deg);
+}
+.ring circle {
+  fill: none;
+  stroke-width: 2.6;
+}
+.track {
+  stroke: hsl(0 0% 100% / 0.1);
+}
+/* Square ends: a round end adds its own length, and a 9.7 would look like a full ring. */
+.arc {
+  stroke: var(--accent);
+}
+/* The load is not a mark out of 10 like the other two (higher is harder, not better), so
+   it is drawn in white. */
+.ring[data-kind="load"] .arc {
+  stroke: hsl(var(--fg) / 0.82);
+}
+.ring b {
+  position: relative;
+  font-size: 8px;
+  font-weight: 500;
+  /* The colour of what the number says, set per circle (see Ring). */
+  color: var(--tone, hsl(var(--fg) / 0.82));
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.ring[data-empty] b {
+  color: hsl(var(--fg) / 0.32);
+}
+@container (max-width: 199px) {
+  .text {
+    grid-column: 1 / -1;
+  }
+  .scores {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    margin-top: 9px;
+  }
+  .overall b {
+    font-size: 23px;
+  }
 }
 
-@media (max-width: 720px) {
-  .board {
-    min-width: 640px;
-  }
-  .pills {
-    gap: 8px;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .calendar {
-    animation: fade 0.6s var(--ease) both;
-  }
-  .cell {
-    animation: rise 0.7s var(--ease) both;
-    animation-delay: calc(var(--i, 0) * 45ms);
-  }
-  .skeletonPills,
-  .skeletonGrid {
-    animation: pulse 1.6s ease-in-out infinite;
-  }
-  @keyframes fade {
-    from {
-      opacity: 0;
-    }
-  }
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-  }
-  @keyframes pulse {
-    50% {
-      opacity: 0.55;
-    }
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .pill span,
+/* The bar of the home page stays at the top of a wide screen (TopBar). This keeps a course
+   or a pill that gets the keyboard focus from ending up underneath it. */
+@media (min-width: 861px) {
   .course,
-  .group {
+  .pill {
+    scroll-margin-top: 96px;
+  }
+}
+
+.module {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  background: hsl(210 12% 11% / 0.6);
+}
+.moduleCode {
+  padding: 2px 6px 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: hsl(var(--fg) / 0.55);
+}
+.parts {
+  flex: 1;
+  display: grid;
+  grid-auto-rows: minmax(min-content, 1fr);
+  gap: 6px;
+  min-width: 0;
+}
+.part {
+  border-color: var(--line);
+  background: hsl(210 14% 5% / 0.66);
+  border-radius: 9px;
+  padding: 10px 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block {
+    animation: none;
+  }
+  .course,
+  .pill,
+  .step > span {
     transition: none;
   }
-  .pill:hover span,
   .course:hover,
   .course:focus-visible {
     transform: none;
   }
+}
+
+/* While the courses load. */
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.skeletonPills {
+  height: 76px;
+  max-width: 520px;
+  border-radius: 16px;
+  background: hsl(210 14% 5% / 0.5);
+}
+.skeletonGrid {
+  height: 320px;
+  border-radius: 16px;
+  background: hsl(210 14% 5% / 0.5);
 }

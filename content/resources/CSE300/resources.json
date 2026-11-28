@@ -1,0 +1,55 @@
+{
+  "course": "CSE300",
+  "source": {
+    "name": "Lightspace",
+    "title": "Research Project",
+    "url": "https://lightspace.study/courses/research-project",
+    "retrieved": "2026-11-26"
+  },
+  "groups": [
+    {
+      "kind": "links",
+      "items": [
+        {
+          "title": "Community notes (Notion)",
+          "url": "https://plain-pocket-06a.notion.site/Research-Project-f319d75731e64166b87a3b881dd67131"
+        }
+      ]
+    },
+    {
+      "kind": "lectures",
+      "items": [
+        {
+          "title": "Lecture 1 - Academic Writing",
+          "url": "https://lightspace.study/courses/research-project/read/RP%20Lectures/RP%20Lecture%201%20-%20Academic%20Writing.pdf",
+          "size": "1 MB"
+        },
+        {
+          "title": "Lecture 2 - Presentation Skills",
+          "url": "https://lightspace.study/courses/research-project/read/RP%20Lectures/RP%20Lecture%202%20-%20Presentation%20Skills.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 3 - Advanced Writing",
+          "url": "https://lightspace.study/courses/research-project/read/RP%20Lectures/RP%20Lecture%203%20-%20Advanced%20Writing.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 4 - Advanced Presentation Skills",
+          "url": "https://lightspace.study/courses/research-project/read/RP%20Lectures/RP%20Lecture%204%20-%20Advanced%20Presentation%20Skills.pdf",
+          "size": "3 MB"
+        },
+        {
+          "title": "Lecture 5 - Research Integrity",
+          "url": "https://lightspace.study/courses/research-project/read/RP%20Lectures/RP%20Lecture%205%20-%20Research%20Integrity.pdf",
+          "size": "2 MB"
+        },
+        {
+          "title": "Lecture 6 - Research Integrity Tutorial",
+          "url": "https://lightspace.study/courses/research-project/read/RP%20Lectures/RP%20Lecture%206%20-%20Research%20Integrity%20Tutorial.pdf",
+          "size": "1 MB"
+        }
+      ]
+    }
+  ]
+}

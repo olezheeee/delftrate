@@ -1,0 +1,264 @@
+{
+  "course": "CSE100",
+  "title": "Collaborative Development Project",
+  "ects": 5,
+  "summary": "A team of five or six first-years builds a client/server application in Java from a given product backlog, with a Spring Boot server and a JavaFX client. Six lectures in the first three weeks cover Git, build servers, teamwork, the technology stack, Scrum, requirements and accessibility; after that the course is almost entirely project work, with a weekly lab and a one-hour meeting with your TA. There is no exam: you are graded on what your team and you personally leave behind in GitLab.",
+  "basis": {
+    "lectures": 6,
+    "description": "Slides of the six lectures, the 2024-25 assessment design document, the NetNote product backlog and the self-study sheets of CSE1105 Collaborative Software Engineering Project, the predecessor. Time shares count content slides; the opening organisation part of Lecture 1 is left out.",
+    "caveat": "CSE100 replaces CSE1105 from 2026-27 and moves from quarter 2 to quarter 4, so the schedule, the project (NetNote was the 2024-25 project) and its extensions will differ. Slide counts favour the image-heavy Teamwork and Accessibility lectures and understate Lecture 3, which packs dependency injection, Spring Boot, JavaFX and JSON into one slot."
+  },
+  "topics": [
+    {
+      "name": "Git and version control",
+      "lectures": ["Lecture 1 - Organization & Project, Version Control & Build Basics"],
+      "timeShare": 9,
+      "importance": "essential",
+      "know": [
+        "[[Working directory, staging area (index) and repository]], and how add, reset, commit and checkout move changes between them",
+        "History as a graph of commits identified by SHA hashes; [[a branch is only a movable pointer to a commit]]",
+        "Trunk-based development versus feature branches, and why feature branches keep unfinished work out of main",
+        "Two-way versus three-way merge: knowing the common base version is what lets Git resolve most conflicts automatically",
+        "Remotes such as origin, remote-tracking branches, and the fetch, pull and push cycle",
+        "Which changes provoke conflicts: deleting or renaming files, changing method signatures, large refactorings",
+        "Line endings, SSH keys and a .gitignore that keeps target/, IDE folders and OS files out of the repository"
+      ],
+      "do": [
+        "Create a feature branch, commit, push it and merge it back through a GitLab merge request",
+        "Resolve a merge conflict by hand from the conflict markers Git writes into the file",
+        "Configure Git with your full name and TU Delft email so your contributions can be attributed to you"
+      ],
+      "pitfalls": [
+        "Committing under a different name or email than your merge commits use: the Git assignment checks this, and work under an unknown address is not credited to you",
+        "Integrating rarely: conflicting work then surfaces late, so commit early and merge main into your branch often",
+        "Squashing a feature branch into one commit: the staff then see only one commit, while you must commit several times every week"
+      ]
+    },
+    {
+      "name": "Build automation, CI and code style",
+      "lectures": ["Lecture 1 - Organization & Project, Version Control & Build Basics"],
+      "timeShare": 4,
+      "importance": "important",
+      "know": [
+        "The steps of a build: [[resolve dependencies, compile, run unit tests, package, verify, deploy, report]]",
+        "Why manual builds fail: no reproducibility, no traceability, human error, and the it-works-on-my-machine problem",
+        "The build server as a neutral third party; GitLab pipelines and jobs, and where to read a failing build log",
+        "Maven and its pom.xml: project structure, plugins, main class and dependencies",
+        "The two team rules: [[a green main build has top priority]], and [[whatever you value should be able to fail the build]]",
+        "Checkstyle, and the course requirement that each team picks [[at least 10 rules]] and enforces them in the build"
+      ],
+      "do": [
+        "Read a pipeline log and find why a build failed",
+        "Add a dependency or a Checkstyle rule to the Maven configuration",
+        "Keep the build of main green and the pipeline under about three minutes"
+      ],
+      "pitfalls": [
+        "Tests that exist but are not run by the build server count as poor in the testing rubric",
+        "Merging with a failing pipeline or leaving a broken build for more than a day lowers the build-server grade"
+      ]
+    },
+    {
+      "name": "Teamwork: agreements, meetings and feedback",
+      "lectures": ["Lecture 2 - Teamwork"],
+      "timeShare": 17,
+      "importance": "essential",
+      "know": [
+        "The code of conduct: topics it must cover (ambition, planning, communication, decisions, broken agreements, escalation) and why [[every agreement must be SMART]]",
+        "Three influence principles that make agreements stick: consensus (group norms), consistency (written, public, voluntary commitments) and liking",
+        "Meeting roles: the chair prepares the agenda and leads, the minute taker records decisions and actions, participants prepare too",
+        "Setting a purpose for each agenda item (inform, inventory, brainstorm, discuss, decide) and stating what, why and how",
+        "Content, process and relation as three levels present in every interaction, and frames of reference behind one-sided stories",
+        "Active listening, summarising, questioning and the use of silence; the risk of groupthink",
+        "The AID model for feedback: [[Action]] (an observed fact), [[Impact]] (its effect on you, from the I perspective), [[Desired change]]; feedback versus complaining"
+      ],
+      "do": [
+        "Write SMART team agreements with a clear procedure for when to involve the TA or lecturers",
+        "Prepare an agenda from the template with a time estimate for every item, and chair a meeting to it",
+        "Take minutes that end in an action list saying [[who does what by when]]",
+        "Write a Buddycheck tip in AID form and a top backed by an observable fact"
+      ],
+      "pitfalls": [
+        "Feedback that interprets or labels (you are sloppy) instead of describing a concrete, recent action fails the AID check",
+        "Writing the impact as the whole team being blocked or as blame; the rubric wants your own observed effect",
+        "Tops that praise a personal quality rather than a concrete performance fail",
+        "Leaving role rotation too late: [[everyone must have chaired and taken minutes at least once]], and there are only about six TA meetings"
+      ]
+    },
+    {
+      "name": "Dependency injection and testable design",
+      "lectures": ["Lecture 3 - Dependency Injection"],
+      "timeShare": 4,
+      "importance": "essential",
+      "know": [
+        "The dependency inversion principle: [[high-level and low-level code both depend on an abstraction]]",
+        "Dependency injection: [[a component receives the components it depends on (DOCs) from outside]] instead of creating them",
+        "The strategy pattern as dependency inversion in action, and how a framework such as Guice wires the objects for you",
+        "Constructor injection (always valid, easy to test, long constructors) versus field injection (shorter, needs reflection, fields empty in the constructor); setter injection combines the drawbacks",
+        "Why static fields, static methods and hand-made singletons make code hard to use and hard to test"
+      ],
+      "do": [
+        "Refactor a class that creates its own dependencies into one that receives them",
+        "Write a test double for an interface and use it to test a class's input, output and call order"
+      ],
+      "pitfalls": [
+        "Calling new on a dependency inside a constructor or writing a singleton: the Technology rubric rates this poor or insufficient",
+        "Using static fields for anything other than constants"
+      ]
+    },
+    {
+      "name": "Spring Boot server",
+      "lectures": ["Lecture 3 - Dependency Injection"],
+      "timeShare": 8,
+      "importance": "essential",
+      "know": [
+        "Controllers with request mappings for GET, POST, PUT and DELETE, path variables, request parameters and request bodies",
+        "The Spring component model: [[@Component, @Controller and @RestController, @Service, @Repository]], @Configuration with @Bean, and component scanning",
+        "Bean scopes (application, session, request) and why Spring manages component lifetimes for you",
+        "Persistence with JPA: @Entity classes, JpaRepository interfaces with custom queries, and the database console for inspection",
+        "Testing controllers and services as plain unit tests with injected test doubles",
+        "Debugging REST endpoints with Postman and a debugger attached to the server"
+      ],
+      "do": [
+        "Add a REST endpoint that takes a path variable or request body and returns a JSON object",
+        "Move logic out of a controller into a @Service and inject it",
+        "Store and query an entity through a Spring repository",
+        "Write a unit test for an endpoint"
+      ],
+      "pitfalls": [
+        "Mapping JSON to strings by hand in the server: Spring already does this with Jackson",
+        "Putting all logic in controllers; the top rubric level wants services, controllers and configuration kept apart"
+      ]
+    },
+    {
+      "name": "JavaFX client and JSON object mapping",
+      "lectures": ["Lecture 3 - Dependency Injection"],
+      "timeShare": 9,
+      "importance": "essential",
+      "know": [
+        "Stage, scene and the scene graph; building a UI in code versus in FXML with Scene Builder",
+        "Controllers, fx:id and FXML field injection, and implementing Initializable to finish set-up",
+        "The template project: Guice with MyFXML injects dependencies into controllers, and MainCtrl switches scenes to avoid cyclic dependencies between them",
+        "JSON types and why you design proper Java classes instead of thinking about the wire format",
+        "Object mapping with Jackson: ObjectMapper, [[a no-argument constructor for the mapper, equals and hashCode on shared classes]]",
+        "Calling the server from the client with the Jersey (JAX-RS) client in ServerUtils, with data classes shared through the commons module"
+      ],
+      "do": [
+        "Create a scene with a button and a label and switch between two scenes",
+        "Add a data class to commons and send it from client to server and back as JSON",
+        "Keep UI code, server communication and business logic in separate classes"
+      ],
+      "pitfalls": [
+        "Writing or parsing JSON yourself; the lectures call it wasted time and the rubric marks it poor",
+        "Mixing UI code with server requests; separating them is the step from sufficient to good in the client rubric"
+      ]
+    },
+    {
+      "name": "Scrum and agile planning",
+      "lectures": ["Lecture 4 - Project Management and Requirements Engineering"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "The waterfall model and its limits, and the agile movement as the response",
+        "Scrum roles: [[Scrum Master, Product Owner, developers]]",
+        "Scrum artefacts and events: product backlog, sprint planning and sprint backlog, sprint, daily scrum, sprint review, retrospective",
+        "Estimating with story points and planning poker on a Fibonacci scale, and filling a sprint to the team's average velocity",
+        "Sprint boards with a shared [[definition of done]], and burndown charts",
+        "Scrum as adapted for this course: a fixed backlog, one-week sprints, the TA meeting as review and planning, the retrospective among students only"
+      ],
+      "do": [
+        "Run a sprint review, retrospective and planning inside one TA meeting",
+        "Estimate tasks and choose next week's milestone from what the team actually achieved in earlier weeks"
+      ],
+      "pitfalls": [
+        "Filling a milestone with what must get done rather than what past weeks show you can do",
+        "Showing the TA features that are not merged into main: the demo must be potentially shippable"
+      ]
+    },
+    {
+      "name": "Requirements engineering",
+      "lectures": ["Lecture 4 - Project Management and Requirements Engineering"],
+      "timeShare": 8,
+      "importance": "important",
+      "know": [
+        "Understanding the domain: the client's terminology, stakeholders and their conflicting needs",
+        "User requirements versus system requirements, and [[functional versus non-functional requirements]] (product, organisational, external)",
+        "User stories in the form [[as a role, I want something, so that some goal]]; epics, and acceptance criteria",
+        "Use cases with actor, preconditions, main scenario and alternate flows for failure cases",
+        "Requirements engineering as an incremental process: details emerge, mock-ups help, products are always underspecified",
+        "[[A user story is not a task]]: one story splits into several technical tasks of about one 3 to 4 hour work session"
+      ],
+      "do": [
+        "Break a user story from the backlog into concrete technical tasks (UI, data model, endpoint, validation, tests)",
+        "Write acceptance criteria for a story whose effect is ambiguous, and check them with your TA"
+      ],
+      "pitfalls": [
+        "Using backlog user stories directly as issues: the Tasks and Planning rubric rates this poor"
+      ]
+    },
+    {
+      "name": "Accessibility and usability",
+      "lectures": ["Lecture 5 - Accessibility"],
+      "timeShare": 20,
+      "importance": "important",
+      "know": [
+        "Disability as [[a mismatch between a person and their environment]], and physical, conceptual, economic, cultural and social exclusion",
+        "Seven universal design principles: use that is equitable and flexible, simple and intuitive operation, information every user can perceive, tolerance for error, low physical effort, and enough size and space for approach and use",
+        "Equal versus equitable treatment",
+        "Multiple modalities (text, colour, icon, shape, location), sufficient colour contrast and WCAG contrast levels AA and AAA",
+        "Good error messages: visible, saying [[what went wrong, why, and how to fix it]]; anticipating user errors and system errors such as an unreachable server",
+        "Fitts's law: [[target size and distance decide how quickly a target can be hit]]",
+        "Keyboard access, avoiding keyboard deadlocks, and information architecture (content, context, users)"
+      ],
+      "do": [
+        "Check an interface for contrast, keyboard-only navigation and multi-modal cues",
+        "Add keyboard shortcuts, confirmation dialogs for irreversible deletes, and informative feedback after actions",
+        "Implement multi-step undo with the command pattern"
+      ],
+      "pitfalls": [
+        "Not catching an exception at all, so the user cannot be told an error happened",
+        "Conveying status by colour alone instead of pairing it with text or an icon"
+      ]
+    },
+    {
+      "name": "Merge requests, code review and GitLab issues",
+      "lectures": ["Lecture 6 - Collaborative Software Engineering"],
+      "timeShare": 13,
+      "importance": "essential",
+      "know": [
+        "GitLab as a collaboration platform on top of Git: merge requests are [[a forge feature, not git merge or git pull]]",
+        "Why every change to main is reviewed: catching mistakes, knowledge transfer, quality and style checks",
+        "Developer rules: small, focused merge requests from up-to-date branches, one shared formatter, refactorings agreed with the team",
+        "Reviewer rules: look at meaning as well as syntax, a review is a conversation, [[review within two to three days]], approve only what is ready",
+        "Draft merge requests, approvals reset by new commits, and not closing or merging someone else's merge request",
+        "Issues with a clear title, context, actions and acceptance criteria; assignees, labels, /estimate and /spend time tracking",
+        "Weekly milestones and boards, with coarse plans further out and finer ones close by"
+      ],
+      "do": [
+        "Open a merge request with a clear title and description and respond to review comments",
+        "Write review comments that suggest concrete improvements",
+        "Create, label, estimate and assign issues linked to their user story, and track time spent on them"
+      ],
+      "pitfalls": [
+        "Approving with a quick looks good to me while the pipeline is failing",
+        "Huge merge requests that tangle several tasks; they are slow to review and score low on reviewability",
+        "Checklists inside one issue instead of separate smaller issues"
+      ]
+    }
+  ],
+  "prerequisites": [
+    "Object-oriented programming in Java at the level of the first-year programming course; the lecturers warn that you must catch up early if you are not there yet",
+    "Software testing and process basics from Software Design and Engineering, which runs in the quarter before",
+    "Basic HTTP: methods, requests and responses",
+    "A working set-up of Git, Maven, a recent JDK and JavaFX in an IDE before the first lab"
+  ],
+  "practical": "The whole course is one team project. In 2024-25 teams built NetNote, a note-taking app with a Spring Boot server and a JavaFX client sharing Jackson-mapped data classes, starting from a template project with client, server and commons modules. A set of basic requirements must work to pass; extensions (multiple collections, embedded files, links and tags, live sync over WebSockets, a language switch) raise the grade. Each week has a lab with a mandatory TA meeting that your team runs itself. Individually you do a Git assignment in week 1 and must keep contributing code, merge requests and reviews every project week.",
+  "studyAdvice": [
+    "Do the Git assignment and the Spring, JavaFX and object-mapping self-studies in the first two weeks; the whole project rests on them, and the Git assignment is pass/fail.",
+    "Process carries more weight than features: tasks and planning plus code contribution and reviews are half the grade, features only a quarter. Set up issues, estimates, milestones and small merge requests from the first project week.",
+    "Plan for the weekly minimum from week 3 on: a finished merge request with Java code, about 100 lines of Java, one review comment of 100 or more characters and one approval. Two weak weeks in a row remove you from the course.",
+    "Take work by feature, not by layer, so you write both client and server code; the final check needs at least 100 lines on each side.",
+    "Finish every basic requirement first, then polish a few extensions to a high level; a complete extension earns more than several half-built ones.",
+    "Reread the accessibility checklist early: its nine criteria (contrast, shortcuts, keyboard flows, undo, error messages, feedback, delete confirmation) are cheaper to design in than to bolt on in week 9.",
+    "Use the formative feedback: it uses the same rubrics as the final grading, and grading looks mostly at the last weeks, so you can still recover."
+  ]
+}
