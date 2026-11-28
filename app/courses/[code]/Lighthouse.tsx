@@ -43,7 +43,9 @@ const SETTLED = 0.05; // degrees
 const SWEEP_HIT_EVERY = 4;
 
 function wedge(halfWidth: number, length: number): string {
-  const h = length * Math.tan((halfWidth * Math.PI) / 180);
+  // Rounded: the server and the browser may differ in the last digit of a tangent, and the
+  // drawing they each render has to be the same text.
+  const h = Math.round(length * Math.tan((halfWidth * Math.PI) / 180) * 100) / 100;
   return `0,0 ${length},${-h} ${length},${h}`;
 }
 

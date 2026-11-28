@@ -62,6 +62,9 @@
   overflow: visible;
   user-select: none;
   -webkit-user-select: none;
+  /* The same as on the band inside. Safari may not read touch-action from an element inside
+     an svg, so the rule is repeated here, where it does. */
+  touch-action: pan-y;
 }
 
 .tick {
