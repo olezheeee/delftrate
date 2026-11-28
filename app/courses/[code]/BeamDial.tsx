@@ -131,6 +131,9 @@ export function BeamDial(props: {
       // The browser's implicit capture is kept: it sends this finger's moves here even when it
       // slides off the band, so the gesture is always decided. It does not stop the page from
       // scrolling: a vertical swipe ends in pointercancel.
+      // The pen of a graphics tablet is not captured that way, so it is captured here: without
+      // it, a pen that slides off the band and lifts would leave its record behind for good.
+      if (e.pointerType === "pen") e.currentTarget.setPointerCapture(e.pointerId);
       touchStart.current = { id: e.pointerId, x: e.clientX, y: e.clientY };
       return;
     }
@@ -270,7 +273,9 @@ export function BeamDial(props: {
             onPointerUp={release}
             onPointerCancel={release}
             onLostPointerCapture={(e) => {
-              // The browser took the pointer away without an up or a cancel: the drag is over.
+              // The browser took the pointer away without an up or a cancel: the drag, or the
+              // touch that was still being decided, is over.
+              if (touchStart.current?.id === e.pointerId) touchStart.current = null;
               if (e.pointerId !== dragging.current) return;
               dragging.current = null;
               setPressed(false);
