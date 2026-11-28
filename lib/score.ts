@@ -46,8 +46,8 @@ export function teach(professor: ProfessorAverages): number {
  * to pass (10). The load (difficulty and exam level) counts for 65%, the teaching for 23%
  * and interest for 12%; good teaching and an interesting subject make a course easier, so
  * those two count the other way round.
- * The database function calendar_scores() does the same sum for the home page. Change them
- * together.
+ * Two database functions do the same sum: calendar_scores() for the home page and
+ * course_ranks() for the rank tiles of a course. Change all three together.
  */
 export function combinedScore(subject: SubjectAverages, professor: ProfessorAverages): number {
   return 0.65 * load(subject) + 0.23 * (10 - teach(professor)) + 0.12 * (10 - subject.interest);

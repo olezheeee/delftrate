@@ -365,6 +365,17 @@ export type Database = {
           votes: number
         }[]
       }
+      course_ranks: {
+        Args: { p_course_id: string }
+        Returns: {
+          lighter_load: number | null
+          professor_id: string | null
+          score_of: number | null
+          score_rank: number | null
+          teach_of: number | null
+          teach_rank: number | null
+        }[]
+      }
       course_subject_stats: {
         Args: { p_course_id?: string }
         Returns: {
