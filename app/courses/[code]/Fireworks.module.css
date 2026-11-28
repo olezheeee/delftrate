@@ -1,0 +1,10 @@
+.canvas {
+  /* The screen, not the card: the card is far taller than the screen, and a canvas that
+     size would burst out of sight and use a lot of memory on phones. */
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 2;
+}
