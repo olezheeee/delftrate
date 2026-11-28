@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { requireUser } from "@/lib/auth/session";
 import type { CourseListEntry } from "@/lib/course-list";
@@ -52,8 +53,13 @@ function ListSkeleton() {
 }
 
 async function Courses() {
-  // Outside any try/catch: the redirect for a visitor who is not signed in, and Next.js's own
-  // signal while the site is built, must not be swallowed.
+  // Wait for the request first, as the top bar does: everything below runs when a visitor
+  // asks for the page, not while it is prerendered. Without this the prerender reached the
+  // database, Next.js stopped the read when the prerender ended, and the catch below logged
+  // that as a failure.
+  await connection();
+  // Outside any try/catch: the redirect for a visitor who is not signed in must not be
+  // swallowed.
   await requireUser();
   let entries: CourseListEntry[];
   try {

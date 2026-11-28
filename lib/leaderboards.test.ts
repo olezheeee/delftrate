@@ -132,12 +132,12 @@ describe("buildBoards", () => {
     ).rows;
     expect(rows).toHaveLength(2);
     expect(rows[0]).toMatchObject({
-      title: "Aerospace Engineering, year 1",
-      subtitle: "AE · 2 courses rated",
+      title: "AE · Year 1",
+      subtitle: "Aerospace Engineering · 2 courses rated",
       value: 7,
       href: "/?programme=AE&year=1",
     });
-    expect(rows[1]).toMatchObject({ subtitle: "CS · 1 course rated", value: 5, href: "/?programme=CS&year=2" });
+    expect(rows[1]).toMatchObject({ subtitle: "Computer Science · 1 course rated", value: 5, href: "/?programme=CS&year=2" });
   });
 });
 

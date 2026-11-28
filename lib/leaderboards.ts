@@ -73,8 +73,10 @@ function hardestYears(entries: readonly CourseListEntry[]): Candidate[] {
     else groups.set(key, { entry, loads: [load] });
   }
   return [...groups.values()].map(({ entry, loads }) => ({
-    title: `${entry.programmeName}, year ${entry.year}`,
-    subtitle: `${entry.programme} · ${loads.length} ${loads.length === 1 ? "course" : "courses"} rated`,
+    // The short name leads: this board is one of the narrow ones, and the full programme
+    // name would be cut off there.
+    title: `${entry.programme} · Year ${entry.year}`,
+    subtitle: `${entry.programmeName} · ${loads.length} ${loads.length === 1 ? "course" : "courses"} rated`,
     value: loads.reduce((sum, load) => sum + load, 0) / loads.length,
     href: `/?programme=${encodeURIComponent(entry.programme)}&year=${entry.year}`,
   }));

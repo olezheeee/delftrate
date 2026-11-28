@@ -137,6 +137,7 @@
 .sort button {
   height: 38px;
   padding: 0 13px;
+  white-space: nowrap;
   border-radius: 999px;
   border: 0;
   background: none;
@@ -377,6 +378,14 @@
     padding: 0 6px;
   }
 }
+/* The smallest phones: the four sort words stay on one line each. */
+@media (max-width: 360px) {
+  .sort button {
+    padding: 0 9px;
+    font-size: 12.5px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .search input,
   .chip,
