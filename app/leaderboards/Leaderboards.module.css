@@ -1,0 +1,261 @@
+/* The same frame as the home page and the course list, so the top bar sits in the same
+   place on every page. */
+.page {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 5vw, 56px);
+  padding: 14px var(--gut) var(--gut);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.main {
+  min-width: 0;
+  padding-bottom: 72px;
+}
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+.head h1 {
+  margin: 14px 0 0;
+  font-weight: 400;
+  font-size: clamp(38px, 5.4vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+.head h1 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: hsl(var(--fg) / 0.6);
+}
+.head p {
+  margin: 0;
+  color: hsl(var(--fg) / 0.6);
+  font-size: 16px;
+}
+.boards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.board {
+  --c: #fff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 12px;
+  border-radius: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.xl {
+  grid-column: span 2;
+  padding: 30px 30px 14px;
+  border-radius: 28px;
+}
+.xl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(620px circle at 100% 0%, color-mix(in srgb, var(--c) 20%, transparent), transparent 62%);
+}
+.board > * {
+  position: relative;
+}
+.boardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.board h2 {
+  margin: 14px 0 0;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.xl h2 {
+  font-size: clamp(34px, 3.6vw, 50px);
+  letter-spacing: -0.05em;
+}
+.desc {
+  margin: 8px 0 20px;
+  font-size: 13.5px;
+  color: hsl(var(--fg) / 0.55);
+}
+.empty {
+  margin: auto 0 0;
+  padding: 22px 0 18px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: hsl(var(--fg) / 0.55);
+}
+.shareWrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.share {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  font-size: 13px;
+  color: hsl(var(--fg) / 0.8);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.share:hover {
+  background: #fff;
+  color: #000;
+}
+.share svg {
+  width: 13px;
+  height: 13px;
+}
+.message {
+  max-width: 220px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--accent);
+}
+.message:empty {
+  display: none;
+}
+.board ol {
+  list-style: none;
+  margin: auto 0 0;
+  padding: 0;
+}
+.row {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  min-height: 58px;
+  padding: 10px 0;
+  text-align: left;
+  border-top: 1px solid var(--line);
+  transition: padding 0.3s var(--ease);
+}
+.row:hover,
+.row:focus-visible {
+  padding-left: 6px;
+}
+.rank {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: hsl(var(--fg) / 0.45);
+}
+.name {
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+.name span,
+.name small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.name small {
+  margin-top: 2px;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  color: hsl(var(--fg) / 0.5);
+}
+.value {
+  font-weight: 300;
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.xl .row {
+  min-height: 68px;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+}
+.xl .name {
+  font-size: 18px;
+}
+.xl .value {
+  font-size: 32px;
+}
+.board li:first-child .rank,
+.board li:first-child .value {
+  color: var(--c);
+}
+.xl li:first-child .name {
+  font-size: 22px;
+}
+.xl li:first-child .value {
+  font-size: 44px;
+}
+.unavailable {
+  margin: 0;
+  padding: 40px 0;
+  color: hsl(var(--fg) / 0.6);
+}
+.skeleton {
+  min-height: 360px;
+  border-radius: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.skeleton.xl {
+  grid-column: span 2;
+}
+@media (max-width: 1080px) {
+  .boards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 860px) {
+  .head {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+@media (max-width: 640px) {
+  .boards {
+    grid-template-columns: 1fr;
+  }
+  .xl,
+  .skeleton.xl {
+    grid-column: auto;
+    padding: 24px 20px 10px;
+  }
+  .board {
+    padding: 22px 20px 10px;
+  }
+  .xl li:first-child .name {
+    font-size: 19px;
+  }
+  .xl li:first-child .value {
+    font-size: 36px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .share {
+    transition: none;
+  }
+}

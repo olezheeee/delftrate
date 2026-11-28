@@ -25,9 +25,9 @@ export type ProfessorAverages = {
 
 // Removes floating point noise, so that a mean of exactly 8 counts as 8 and not as
 // 7.999999999999999. Used wherever two numbers are compared: the thresholds of the verdict
-// and the choice between two professors. The numbers that are shown stay exactly as the
-// demo calculates them.
-function tidy(value: number): number {
+// and the choice between two professors, and the order of the course list and the
+// leaderboards. The numbers that are shown stay exactly as the demo calculates them.
+export function tidy(value: number): number {
   return Math.round(value * 1e6) / 1e6;
 }
 
