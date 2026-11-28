@@ -38,6 +38,7 @@ async function Course({ params }: { params: PageProps<"/courses/[code]">["params
     <CourseCard
       course={found.course}
       sheet={found.sheet}
+      ranks={found.ranks}
       resources={material.resources}
       booklets={{
         knowledge: material.knowledge && {

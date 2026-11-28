@@ -1,0 +1,100 @@
+/* The lighthouse: a tower in the card's corner and a beam that follows the mouse. */
+.tower {
+  display: block;
+  height: 112px;
+  width: auto;
+  aspect-ratio: 1 / 2;
+  flex: none;
+}
+@media (max-width: 639px) {
+  .tower {
+    height: 88px;
+  }
+}
+
+.body,
+.roof,
+.rail {
+  fill: #e8eef2;
+  stroke: var(--line-2);
+  stroke-width: 1;
+}
+.room {
+  fill: var(--card);
+}
+
+.window {
+  fill: hsl(210 12% 11%);
+  opacity: 0.9;
+  transition:
+    fill 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.windowLit {
+  fill: var(--accent);
+  opacity: 1;
+}
+
+.lamp {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  /* A few pulses, then it stays lit: an open page should not animate forever. An odd count
+     with alternate ends on the last keyframe, full brightness, which is the lamp's own. */
+  animation: pulse 2.5s cubic-bezier(0.22, 1, 0.36, 1) 5 alternate;
+}
+.lampComplete {
+  opacity: 1;
+  animation: flash 900ms cubic-bezier(0.22, 1, 0.36, 1) 1;
+}
+@keyframes pulse {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes flash {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.6);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.beam {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.8;
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.beamComplete {
+  opacity: 1;
+}
+.outer {
+  fill: rgb(127 208 247 / 0.1);
+}
+.inner {
+  fill: rgb(127 208 247 / 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lamp {
+    animation: none;
+    opacity: 1;
+  }
+  .window,
+  .beam {
+    transition: none;
+  }
+}
