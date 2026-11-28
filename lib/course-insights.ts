@@ -1,16 +1,8 @@
 // Ranks and study tips for the course page. Pure logic: no React, no database, so a client
-// component can import it and it is tested on its own. The thresholds of studyPlan are the
-// ones of the approved demo (index.html).
-import {
-  courseScore,
-  load,
-  scoreWithProfessor,
-  teach,
-  type ProfessorAverages,
-  type ProfessorStatsRow,
-  type SubjectAverages,
-  type SubjectStatsRow,
-} from "./score";
+// component can import it and it is tested on its own. The ranks themselves are worked out
+// by the database (course_ranks()); here they are only put into the shape the card uses.
+// The thresholds of studyPlan are the ones of the approved demo (index.html).
+import { load, teach, type ProfessorAverages, type SubjectAverages } from "./score";
 
 // Same idea as the private tidy() in score.ts: float noise must not decide a comparison.
 function tidy(value: number): number {
@@ -20,95 +12,41 @@ function tidy(value: number): number {
 export type Rank = { rank: number; of: number };
 
 export type CourseRanks = {
-  /** False when the averages of all courses could not be read in full: no ranks are shown. */
+  /** False when the ranks could not be read: no rank tiles are shown. */
   available: boolean;
-  /** By professor id (this course's visible professors): rank of this course's difficulty (the combined score) with that professor among all courses that have one. Rank 1 is the hardest. */
+  /** By professor id: rank of this course's difficulty (the combined score) with that professor among all courses that have one. Rank 1 is the hardest. */
   score: Record<string, Rank>;
-  /** By professor id: rank of that professor's teaching score (teach) on this course among every visible professor row with enough votes, across all courses. */
+  /** By professor id: rank of that professor's teaching score on this course among every visible professor of every course with enough votes. Rank 1 is the best. */
   professor: Record<string, Rank>;
   /** Whole percentage (0 to 100) of the other courses with enough subject votes that have a lighter load (a lower load, not a lower overall difficulty) than this course. Null when this course has too few subject votes or no other course qualifies. */
-  easierThan: number | null;
+  lighterLoad: number | null;
 };
 
-function subjectAverages(row: SubjectStatsRow | undefined): SubjectAverages | null {
-  if (!row?.enough_votes) return null;
-  const { difficulty, exam_level, interest } = row;
-  if (difficulty === null || exam_level === null || interest === null) return null;
-  return { difficulty, exam_level, interest };
-}
+/** A row of the database function course_ranks(): one per visible professor of the course, or one with an empty professor_id for a course without one. */
+export type CourseRankRow = {
+  professor_id: string | null;
+  score_rank: number | null;
+  score_of: number | null;
+  teach_rank: number | null;
+  teach_of: number | null;
+  lighter_load: number | null;
+};
 
-function professorAverages(row: ProfessorStatsRow): ProfessorAverages | null {
-  if (row.hidden || !row.enough_votes) return null;
-  const { engagement, understanding, approachability } = row;
-  if (engagement === null || understanding === null || approachability === null) return null;
-  return { engagement, understanding, approachability };
-}
-
-// 1 + the number of other values that are strictly higher. For the difficulty score the highest
-// value is the hardest course, so #1 is the hardest; for the teaching score #1 is the best.
-function rankOf(value: number, others: readonly number[]): Rank {
-  const mine = tidy(value);
-  return { rank: 1 + others.filter((other) => tidy(other) > mine).length, of: others.length + 1 };
-}
-
-export function courseRanks(
-  courseId: string,
-  subjectRows: readonly SubjectStatsRow[],
-  professorRows: readonly ProfessorStatsRow[],
-): CourseRanks {
-  const visibleRows = professorRows.filter((row) => !row.hidden);
-
-  // Difficulty: the default-professor score of every other course. Rank 1 is the hardest.
-  const professorsByCourse = new Map<string, ProfessorStatsRow[]>();
-  for (const row of visibleRows) {
-    const list = professorsByCourse.get(row.course_id);
-    if (list) list.push(row);
-    else professorsByCourse.set(row.course_id, [row]);
-  }
-  const otherScores: number[] = [];
-  for (const subject of subjectRows) {
-    if (subject.course_id === courseId) continue;
-    const result = courseScore(subject, professorsByCourse.get(subject.course_id) ?? []);
-    if (result) otherScores.push(result.score);
-  }
-  const ownSubject = subjectRows.find((row) => row.course_id === courseId);
-  const score: Record<string, Rank> = {};
-  if (ownSubject) {
-    for (const row of professorsByCourse.get(courseId) ?? []) {
-      const result = scoreWithProfessor(ownSubject, row);
-      if (result) score[row.professor_id] = rankOf(result.score, otherScores);
+/** The ranks of one course as the card uses them, from the rows of course_ranks(). */
+export function ranksFromRows(rows: readonly CourseRankRow[]): CourseRanks {
+  const ranks: CourseRanks = { available: true, score: {}, professor: {}, lighterLoad: null };
+  for (const row of rows) {
+    // The share of lighter courses belongs to the course: it is the same in every row.
+    ranks.lighterLoad = row.lighter_load;
+    if (row.professor_id === null) continue;
+    if (row.score_rank !== null && row.score_of !== null) {
+      ranks.score[row.professor_id] = { rank: row.score_rank, of: row.score_of };
+    }
+    if (row.teach_rank !== null && row.teach_of !== null) {
+      ranks.professor[row.professor_id] = { rank: row.teach_rank, of: row.teach_of };
     }
   }
-
-  // Professor: teaching score among every visible professor row with enough votes.
-  const teachings = visibleRows.flatMap((row) => {
-    const averages = professorAverages(row);
-    return averages ? [{ row, teach: teach(averages) }] : [];
-  });
-  const professor: Record<string, Rank> = {};
-  for (const entry of teachings) {
-    if (entry.row.course_id !== courseId) continue;
-    const others = teachings.filter((other) => other !== entry).map((other) => other.teach);
-    professor[entry.row.professor_id] = rankOf(entry.teach, others);
-  }
-
-  // Lighter load than: share of the other courses with a lower load (the field is still called
-  // easierThan).
-  let easierThan: number | null = null;
-  const ownAverages = subjectAverages(ownSubject);
-  if (ownAverages) {
-    const mine = tidy(load(ownAverages));
-    const otherLoads = subjectRows.flatMap((row) => {
-      if (row.course_id === courseId) return [];
-      const averages = subjectAverages(row);
-      return averages ? [tidy(load(averages))] : [];
-    });
-    if (otherLoads.length > 0) {
-      easierThan = Math.round((100 * otherLoads.filter((other) => other < mine).length) / otherLoads.length);
-    }
-  }
-
-  return { available: true, score, professor, easierThan };
+  return ranks;
 }
 
 export type StudyPlan = { line: string; tips: string[] };

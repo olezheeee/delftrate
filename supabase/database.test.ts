@@ -15,7 +15,10 @@ import {
   type SubjectAverages,
   type SubjectStats,
 } from "../lib/score";
+import { ranksFromRows, type CourseRankRow } from "../lib/course-insights";
+import type { ProfessorStatsRow, SubjectStatsRow } from "../lib/score";
 import { as, createTestDatabase, createUser } from "./testing/database";
+import { referenceRanks } from "./testing/reference-ranks";
 
 // Every test builds its own database, which takes a moment on a slow machine.
 vi.setConfig({ hookTimeout: 60_000, testTimeout: 60_000 });
@@ -919,6 +922,276 @@ describe("the calendar scores", () => {
   });
 });
 
+// What the course page used to work out itself from the averages of every course, read as
+// this user (referenceRanks). course_ranks() has to give exactly the same.
+async function ranksTheOldWay(database: PGlite, userId: string, course: string) {
+  const number = (v: unknown) => (v === null ? null : Number(v));
+  const read = (sql: string) => as(database, userId, (tx) => tx.query<Row>(sql)).then((r) => r.rows);
+  const subjects = (await read("select * from public.course_subject_stats()")).map(
+    (row) =>
+      ({
+        ...row,
+        difficulty: number(row.difficulty),
+        exam_level: number(row.exam_level),
+        interest: number(row.interest),
+      }) as SubjectStatsRow,
+  );
+  const professors = (await read("select * from public.course_professor_stats()")).map(
+    (row) =>
+      ({
+        ...row,
+        engagement: number(row.engagement),
+        understanding: number(row.understanding),
+        approachability: number(row.approachability),
+      }) as ProfessorStatsRow,
+  );
+  return referenceRanks(course, subjects, professors);
+}
+
+async function ranksFromTheDatabase(database: PGlite, userId: string | null, course: string) {
+  const found = await as(database, userId, (tx) =>
+    tx.query<CourseRankRow>("select * from public.course_ranks($1)", [course]),
+  );
+  return ranksFromRows(found.rows);
+}
+
+describe("the course ranks", () => {
+  const ranks = (userId: string | null, course: string) =>
+    rows(userId, "select * from public.course_ranks($1) order by professor_id", [course]) as unknown as Promise<
+      CourseRankRow[]
+    >;
+  const of = async (userId: string | null, course: string) => ranksFromRows(await ranks(userId, course));
+
+  // Votes on each criterion of a block, at the given values; ten is the minimum.
+  async function subjectVotes(course: string, values: number[], count = 10) {
+    for (const [i, criterion] of SUBJECT.entries()) await setManualVotes(admin, course, null, criterion, values[i], count);
+  }
+  async function professorVotes(course: string, professor: string, values: number[], count = 10) {
+    for (const [i, criterion] of PROFESSOR.entries()) {
+      await setManualVotes(admin, course, professor, criterion, values[i], count);
+    }
+  }
+  const newCourse = (code: string) =>
+    one<string>("insert into public.courses (code, name, programme_id, year) values ($1, $1, 'CSE', 2) returning id", [code]);
+  const newProfessor = (name: string) =>
+    one<string>("insert into public.professors (name) values ($1) returning id", [name]);
+  const link = (course: string, professor: string) =>
+    db.query("insert into public.course_professors (course_id, professor_id) values ($1, $2)", [course, professor]);
+  // A course with one professor: the subject at these values, the professor at one value.
+  async function rated(code: string, subject: number[], teaching: number) {
+    const course = await newCourse(code);
+    const professor = await newProfessor(`Professor of ${code}`);
+    await link(course, professor);
+    await subjectVotes(course, subject);
+    await professorVotes(course, professor, [teaching, teaching, teaching]);
+    return { course, professor };
+  }
+
+  it("are closed to a signed-out visitor", async () => {
+    await expect(ranks(null, cse)).rejects.toThrow(/permission denied/);
+  });
+
+  // With the subject at 5, 5, 5 and a professor at v the difficulty is 6.15 - 0.23 v: a
+  // better professor makes the course easier.
+  it("put the hardest course first, and courses that are equally hard on the same rank", async () => {
+    const a = await rated("A", [5, 5, 5], 8);
+    const b = await rated("B", [5, 5, 5], 9);
+    const c = await rated("C", [5, 5, 5], 8);
+    const d = await rated("D", [5, 5, 5], 6);
+
+    expect((await of(student, a.course)).score).toEqual({ [a.professor]: { rank: 2, of: 4 } });
+    expect((await of(student, c.course)).score).toEqual({ [c.professor]: { rank: 2, of: 4 } });
+    expect((await of(student, b.course)).score).toEqual({ [b.professor]: { rank: 4, of: 4 } });
+    expect((await of(student, d.course)).score).toEqual({ [d.professor]: { rank: 1, of: 4 } });
+  });
+
+  it("rank a course once with each of its own professors, and the others with their best one", async () => {
+    await subjectVotes(cse, [5, 5, 5]);
+    await professorVotes(cse, ada, [6, 6, 6]); // 4.77
+    await professorVotes(cse, bob, [9, 9, 9]); // 4.08
+    // The other course is 4.31 with Eve, its best professor, and would be 5.46 with Zed.
+    const zed = await newProfessor("Zed");
+    await link(ae, zed);
+    await subjectVotes(ae, [5, 5, 5]);
+    await professorVotes(ae, eve, [8, 8, 8]);
+    await professorVotes(ae, zed, [3, 3, 3]);
+
+    expect((await of(student, cse)).score).toEqual({
+      [ada]: { rank: 1, of: 2 },
+      [bob]: { rank: 2, of: 2 },
+    });
+    // Seen from the other course, this one counts with Bob, its best professor.
+    expect((await of(student, ae)).score).toEqual({
+      [eve]: { rank: 1, of: 2 },
+      [zed]: { rank: 1, of: 2 },
+    });
+  });
+
+  it("rank the teaching of a professor on a course among all professors of all courses", async () => {
+    await professorVotes(cse, ada, [8, 8, 8]);
+    await professorVotes(cse, bob, [8, 8, 8]);
+    await professorVotes(ae, eve, [5, 5, 5]);
+    // Ada teaches the other course too, better: that is a row of its own.
+    await link(ae, ada);
+    await professorVotes(ae, ada, [9, 9, 9]);
+    // No subject votes anywhere: the teaching ranks do not need them.
+    const found = await of(student, cse);
+    expect(found.professor).toEqual({ [ada]: { rank: 2, of: 4 }, [bob]: { rank: 2, of: 4 } });
+    expect(found.score).toEqual({});
+    expect((await of(student, ae)).professor).toEqual({ [ada]: { rank: 1, of: 4 }, [eve]: { rank: 4, of: 4 } });
+  });
+
+  it("do not let float noise break a tie", async () => {
+    // Ada's three averages are 7.9, 8 and 8.1; their mean is not exactly 8 in floating point.
+    await setManualVotes(admin, cse, ada, "engagement", 7, 1);
+    await setManualVotes(admin, cse, ada, "engagement", 8, 9);
+    await setManualVotes(admin, cse, ada, "understanding", 8, 10);
+    await setManualVotes(admin, cse, ada, "approachability", 8, 9);
+    await setManualVotes(admin, cse, ada, "approachability", 9, 1);
+    await professorVotes(cse, bob, [8, 8, 8]);
+
+    expect((await of(student, cse)).professor).toEqual({ [ada]: { rank: 1, of: 2 }, [bob]: { rank: 1, of: 2 } });
+  });
+
+  it("never count a hidden professor", async () => {
+    await subjectVotes(cse, [5, 5, 5]);
+    await professorVotes(cse, ada, [7, 7, 7]);
+    await professorVotes(cse, bob, [10, 10, 10]);
+    await db.query("update public.professors set hidden = true where id = $1", [bob]);
+    // On the other course the hidden professor would be the best one.
+    const hid = await newProfessor("Hid");
+    await link(ae, hid);
+    await db.query("update public.professors set hidden = true where id = $1", [hid]);
+    await subjectVotes(ae, [5, 5, 5]);
+    await professorVotes(ae, eve, [9, 9, 9]);
+    await professorVotes(ae, hid, [10, 10, 10]);
+
+    for (const reader of [student, admin]) {
+      const found = await ranks(reader, cse);
+      // No row for Bob, and the other course counts with Eve.
+      expect(found.map((row) => row.professor_id)).toEqual([ada]);
+      expect(ranksFromRows(found)).toEqual({
+        available: true,
+        score: { [ada]: { rank: 1, of: 2 } },
+        professor: { [ada]: { rank: 2, of: 2 } },
+        lighterLoad: 0,
+      });
+    }
+  });
+
+  it("leave a rank empty below the minimum number of votes", async () => {
+    await subjectVotes(cse, [5, 5, 5]);
+    await professorVotes(cse, ada, [8, 8, 8]);
+    await professorVotes(cse, bob, [9, 9, 9], 9); // one vote short
+    await subjectVotes(ae, [7, 7, 7], 9); // one vote short
+    await professorVotes(ae, eve, [6, 6, 6]);
+
+    // Bob has a row but no ranks. The other course has no difficulty, so this one is alone.
+    expect(await ranks(student, cse)).toEqual(
+      [
+        { professor_id: ada, score_rank: 1, score_of: 1, teach_rank: 1, teach_of: 2, lighter_load: null },
+        { professor_id: bob, score_rank: null, score_of: null, teach_rank: null, teach_of: null, lighter_load: null },
+      ].sort((x, y) => (x.professor_id < y.professor_id ? -1 : 1)),
+    );
+    // The course whose subject is short: a teaching rank only.
+    expect(await ranks(student, ae)).toEqual([
+      { professor_id: eve, score_rank: null, score_of: null, teach_rank: 2, teach_of: 2, lighter_load: null },
+    ]);
+    // An admin sees averages below the minimum elsewhere, but the ranks are the same for all.
+    expect(await ranks(admin, cse)).toEqual(await ranks(student, cse));
+  });
+
+  it("say how many of the other rated courses have a lighter load", async () => {
+    const a = await rated("A", [6, 6, 5], 8);
+    const b = await rated("B", [2, 2, 5], 8);
+    const c = await rated("C", [9, 9, 5], 8);
+    await rated("D", [5, 7, 5], 8); // the same load as A
+    await subjectVotes(cse, [1, 1, 1], 9); // too few votes: does not count
+
+    // For A: B is lighter, C heavier, D equal. One of three.
+    expect((await of(student, a.course)).lighterLoad).toBe(33);
+    expect((await of(student, c.course)).lighterLoad).toBe(100);
+    expect((await of(student, b.course)).lighterLoad).toBe(0);
+    expect((await of(student, cse)).lighterLoad).toBeNull();
+  });
+
+  it("have no share of lighter courses while no other course is rated", async () => {
+    await subjectVotes(cse, [6, 6, 5]);
+    expect((await of(student, cse)).lighterLoad).toBeNull();
+  });
+
+  it("return one row without a professor for a course that has none, and nothing for an unknown course", async () => {
+    const lone = await newCourse("LONE");
+    await subjectVotes(lone, [6, 6, 5]);
+    await subjectVotes(cse, [2, 2, 5]);
+
+    expect(await ranks(student, lone)).toEqual([
+      { professor_id: null, score_rank: null, score_of: null, teach_rank: null, teach_of: null, lighter_load: 100 },
+    ]);
+    expect(await ranks(student, "00000000-0000-4000-8000-000000000000")).toEqual([]);
+  });
+
+  it("are the ranks the page worked out itself, also with more than 1000 professors of courses", async () => {
+    // A catalogue larger than the API hands out in one request (1000 rows): 280 courses with
+    // four professors each. The votes come from a fixed sequence, so every run is the same.
+    let state = 20261128;
+    const next = (n: number) => {
+      state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+      return Math.floor((state / 4294967296) * n);
+    };
+    const courseIds = Array.from({ length: 280 }, (_, i) => `10000000-0000-4000-8000-${String(i).padStart(12, "0")}`);
+    const professorIds = Array.from({ length: 300 }, (_, i) => `20000000-0000-4000-8000-${String(i).padStart(12, "0")}`);
+    const quote = (v: string | null) => (v === null ? "null" : `'${v}'`);
+    await db.exec(
+      `insert into public.courses (id, code, name, programme_id, year) values ${courseIds
+        .map((id, i) => `('${id}', 'BIG${i}', 'Big ${i}', 'CSE', 3)`)
+        .join(", ")};
+       insert into public.professors (id, name, hidden) values ${professorIds
+         .map((id, i) => `('${id}', 'Big professor ${i}', ${next(12) === 0})`)
+         .join(", ")};`,
+    );
+    const links: string[] = [];
+    const votes: string[] = [];
+    // One block: two different values with their counts. One block in eight stays below the
+    // minimum; few values and small counts make equal averages, so ranks are shared, common.
+    const block = (course: string, professor: string | null, criteria: readonly string[]) => {
+      const short = next(8) === 0;
+      for (const criterion of criteria) {
+        const first = 3 + next(7);
+        const second = first === 10 ? 9 : first + 1;
+        votes.push(`('${course}', ${quote(professor)}, '${criterion}', ${first}, ${short ? 4 : 5 + next(4)})`);
+        votes.push(`('${course}', ${quote(professor)}, '${criterion}', ${second}, ${short ? next(5) : 5 + next(4)})`);
+      }
+    };
+    for (const [i, course] of courseIds.entries()) {
+      block(course, null, SUBJECT);
+      for (let k = 0; k < 4; k += 1) {
+        const professor = professorIds[(i * 7 + k * 31) % professorIds.length];
+        links.push(`('${course}', '${professor}')`);
+        block(course, professor, PROFESSOR);
+      }
+    }
+    await db.exec(
+      `insert into public.course_professors (course_id, professor_id) values ${links.join(", ")};
+       insert into public.manual_votes (course_id, professor_id, criterion, value, count) values ${votes.join(", ")};`,
+    );
+    expect(await one<number>("select count(*)::int from public.course_professors")).toBeGreaterThan(1000);
+
+    let withScore = 0;
+    let shared = 0;
+    for (const course of [cse, ...courseIds.filter((_, i) => i % 9 === 0)]) {
+      const fromDatabase = await ranksFromTheDatabase(db, student, course);
+      expect(fromDatabase, course).toEqual(await ranksTheOldWay(db, student, course));
+      const found = Object.values(fromDatabase.score);
+      withScore += found.length;
+      if (new Set(found.map((rank) => rank.rank)).size < found.length) shared += 1;
+    }
+    // The comparison is worth something only if it met real ranks, and shared ones.
+    expect(withScore).toBeGreaterThan(50);
+    expect(shared).toBeGreaterThan(0);
+  });
+});
+
 describe("something a later migration adds", () => {
   it("is closed to the API roles until that migration grants access", async () => {
     await db.exec(`
@@ -1007,6 +1280,24 @@ describe("the seed data", () => {
 
   it("gives a student the demo's numbers through the score module", async () => {
     expect(await cards(seedStudent)).toEqual(EXPECTED);
+  });
+
+  it("gives every example course the ranks its page worked out itself before", async () => {
+    const courses = await seeded.query<{ id: string; code: string }>(
+      "select id, code from public.courses where id::text like '00000000-0000-4000-a000-%'",
+    );
+    for (const { id, code } of courses.rows) {
+      expect(await ranksFromTheDatabase(seeded, seedStudent, id), code).toEqual(
+        await ranksTheOldWay(seeded, seedStudent, id),
+      );
+    }
+    // The three tiles of the first example course, as its page shows them.
+    const calculus = courses.rows.find((course) => course.code === "CSE1001")!.id;
+    const best = await seeded.query<{ id: string }>("select id from public.professors where name = 'Dr. Marijke van Houten'");
+    const found = await ranksFromTheDatabase(seeded, seedStudent, calculus);
+    expect(found.score[best.rows[0].id]).toEqual({ rank: 4, of: 4 });
+    expect(found.professor[best.rows[0].id]).toEqual({ rank: 1, of: 6 });
+    expect(found.lighterLoad).toBe(25);
   });
 
   it("gives a signed-out visitor the same numbers in the calendar", async () => {

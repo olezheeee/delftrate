@@ -406,7 +406,7 @@ export function CourseCard({
           professor ? undefined : NO_PROFESSOR_NOTE,
         )}
         <Tile
-          value={ranks.easierThan}
+          value={ranks.lighterLoad}
           caption="Of rated courses have a lighter load"
           note={sheet.subject.averages ? "No other rated courses yet" : MIN_VOTES_NOTE}
         />

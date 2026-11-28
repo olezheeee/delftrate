@@ -14,10 +14,12 @@ const header = `// The shape of the database, for the Supabase clients.
 
 `;
 
-// The averages of these functions are null until a block has enough votes. The generator
-// cannot know that and types them as plain numbers, so they are corrected here.
+// The averages of these functions are null until a block has enough votes, and so are the
+// ranks worked out from them. The generator cannot know that and types them as plain numbers
+// (or a plain string, for an id), so they are corrected here.
 const NULLABLE = {
   calendar_scores: ["score", "load", "teach"],
+  course_ranks: ["professor_id", "score_rank", "score_of", "teach_rank", "teach_of", "lighter_load"],
   course_subject_stats: ["difficulty", "exam_level", "interest"],
   course_professor_stats: ["engagement", "understanding", "approachability"],
 };
@@ -44,7 +46,7 @@ for (const [fn, columns] of Object.entries(NULLABLE)) {
   if (!block) fail(`The function ${fn} is missing from the generated types.`);
   let fixed = block[0];
   for (const column of columns) {
-    const line = new RegExp(`(\\n\\s+${column}: number)(?! \\| null)`);
+    const line = new RegExp(`(\\n\\s+${column}: (?:number|string))(?! \\| null)`);
     if (!line.test(fixed)) fail(`The column ${column} of ${fn} is not where it was expected.`);
     fixed = fixed.replace(line, "$1 | null");
   }

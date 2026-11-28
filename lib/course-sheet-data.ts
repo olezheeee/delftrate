@@ -1,11 +1,11 @@
 // Reads one course with its professors and averages, as the signed-in user. Uses the
 // Supabase server client, so the component that calls it must sit inside <Suspense>.
-import { courseRanks, type CourseRanks } from "./course-insights";
+import { ranksFromRows, type CourseRanks } from "./course-insights";
 import { buildCourseSheet, type CourseSheet } from "./course-sheet";
 import type { ProfessorStatsRow, SubjectStatsRow } from "./score";
 import { createClient } from "./supabase/server";
 
-const NO_RANKS: CourseRanks = { available: false, score: {}, professor: {}, easierThan: null };
+const NO_RANKS: CourseRanks = { available: false, score: {}, professor: {}, lighterLoad: null };
 
 export type CourseDetails = {
   id: string;
@@ -39,38 +39,23 @@ export async function getCourseSheet(
   if (!course) return null;
 
   // The access rules already keep hidden professors from students; an admin receives them
-  // with hidden set, and buildCourseSheet leaves them out. This course's own averages are
-  // read on their own; the averages of all courses are read only for the rank tiles.
-  const [links, subject, professors, allSubjects, allProfessors] = await Promise.all([
+  // with hidden set, and buildCourseSheet leaves them out. The ranks among all courses are
+  // worked out by the database (course_ranks()), in one call.
+  const [links, subject, professors, rankRows] = await Promise.all([
     supabase.from("course_professors").select("professors (id, name, hidden)").eq("course_id", course.id),
     supabase.rpc("course_subject_stats", { p_course_id: course.id }),
     supabase.rpc("course_professor_stats", { p_course_id: course.id }),
-    supabase.rpc("course_subject_stats", undefined, { count: "exact" }),
-    supabase.rpc("course_professor_stats", undefined, { count: "exact" }),
+    supabase.rpc("course_ranks", { p_course_id: course.id }),
   ]);
   if (links.error) throw new Error(`The professors could not be read: ${links.error.message}`);
   if (subject.error) throw new Error(`The subject averages could not be read: ${subject.error.message}`);
   if (professors.error) throw new Error(`The professor averages could not be read: ${professors.error.message}`);
 
-  // The ranks are extra: when the averages of all courses cannot be read in full (an error,
-  // or more rows than the API hands out per request, 1000 unless changed), the card is
-  // shown without ranks rather than with wrong ones or not at all.
-  // TODO: compute the ranks in the database once the catalogue nears that limit.
+  // The ranks are extra: when they cannot be read, the card is shown without the rank tiles
+  // rather than not at all.
   let ranks: CourseRanks = NO_RANKS;
-  const complete = (result: { data: unknown[] | null; count: number | null }) =>
-    result.data !== null && result.count !== null && result.data.length >= result.count;
-  if (allSubjects.error || allProfessors.error || !complete(allSubjects) || !complete(allProfessors)) {
-    console.error(
-      "Course ranks left out: the averages of all courses could not be read in full.",
-      allSubjects.error?.message ?? allProfessors.error?.message ?? "row limit reached",
-    );
-  } else {
-    ranks = courseRanks(
-      course.id,
-      allSubjects.data as SubjectStatsRow[],
-      allProfessors.data as ProfessorStatsRow[],
-    );
-  }
+  if (rankRows.error) console.error("Course ranks left out: they could not be read.", rankRows.error.message);
+  else ranks = ranksFromRows(rankRows.data);
 
   return {
     course: {

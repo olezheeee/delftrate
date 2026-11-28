@@ -1,127 +1,48 @@
 import { describe, expect, it } from "vitest";
-import { courseRanks, studyPlan } from "./course-insights";
-import type { ProfessorStatsRow, SubjectStatsRow } from "./score";
+import { ranksFromRows, studyPlan, type CourseRankRow } from "./course-insights";
 
-function subject(course: string, values: [number, number, number] | null): SubjectStatsRow {
-  return {
-    course_id: course,
-    difficulty: values?.[0] ?? null,
-    exam_level: values?.[1] ?? null,
-    interest: values?.[2] ?? null,
-    difficulty_votes: 20,
-    exam_level_votes: 20,
-    interest_votes: 20,
-    votes: 20,
-    enough_votes: values !== null,
-  };
-}
-
-function prof(course: string, id: string, value: number | null, hidden = false): ProfessorStatsRow {
-  return {
-    course_id: course,
-    professor_id: id,
-    hidden,
-    engagement: value,
-    understanding: value,
-    approachability: value,
-    engagement_votes: 20,
-    understanding_votes: 20,
-    approachability_votes: 20,
-    votes: 20,
-    enough_votes: value !== null,
-  };
-}
-
-// With subject [5,5,5] (load 5) and professor value v: difficulty = 6.15 - 0.23v, so a better
-// professor makes the course easier. Rank 1 is the hardest course.
-describe("course ranks", () => {
-  it("ranks the score among courses, with ties sharing a rank", () => {
-    const subjects = [subject("a", [5, 5, 5]), subject("b", [5, 5, 5]), subject("c", [5, 5, 5]), subject("d", [5, 5, 5])];
-    const profs = [prof("a", "pa", 8), prof("b", "pb", 9), prof("c", "pc", 8), prof("d", "pd", 6)];
-    const a = courseRanks("a", subjects, profs);
-    expect(a.score).toEqual({ pa: { rank: 2, of: 4 } });
-    expect(courseRanks("c", subjects, profs).score.pc).toEqual({ rank: 2, of: 4 });
-    expect(courseRanks("b", subjects, profs).score.pb).toEqual({ rank: 4, of: 4 });
-    expect(courseRanks("d", subjects, profs).score.pd).toEqual({ rank: 1, of: 4 });
+describe("ranks from the rows of course_ranks()", () => {
+  const row = (professor_id: string | null, values: Partial<CourseRankRow> = {}): CourseRankRow => ({
+    professor_id,
+    score_rank: null,
+    score_of: null,
+    teach_rank: null,
+    teach_of: null,
+    lighter_load: null,
+    ...values,
   });
 
-  it("gives the hardest course rank 1", () => {
-    const subjects = [subject("easy", [2, 2, 9]), subject("mid", [5, 5, 5]), subject("hard", [9, 9, 3])];
-    const profs = [prof("easy", "pe", 8), prof("mid", "pm", 8), prof("hard", "ph", 8)];
-    expect(courseRanks("hard", subjects, profs).score.ph).toEqual({ rank: 1, of: 3 });
-    expect(courseRanks("mid", subjects, profs).score.pm).toEqual({ rank: 2, of: 3 });
-    expect(courseRanks("easy", subjects, profs).score.pe).toEqual({ rank: 3, of: 3 });
+  it("puts each professor's two ranks under their id", () => {
+    const ranks = ranksFromRows([
+      row("ada", { score_rank: 2, score_of: 5, teach_rank: 1, teach_of: 9, lighter_load: 40 }),
+      row("bob", { score_rank: 4, score_of: 5, teach_rank: 7, teach_of: 9, lighter_load: 40 }),
+    ]);
+    expect(ranks).toEqual({
+      available: true,
+      score: { ada: { rank: 2, of: 5 }, bob: { rank: 4, of: 5 } },
+      professor: { ada: { rank: 1, of: 9 }, bob: { rank: 7, of: 9 } },
+      lighterLoad: 40,
+    });
   });
 
-  it("gives a course without a score no score entries and leaves it out of the others", () => {
-    const subjects = [subject("a", null), subject("b", [5, 5, 5]), subject("c", [5, 5, 5])];
-    const profs = [prof("a", "pa", 9), prof("b", "pb", 8), prof("c", "pc", 7), prof("d", "pd", 10)];
-    expect(courseRanks("a", subjects, profs).score).toEqual({});
-    expect(courseRanks("b", subjects, profs).score.pb).toEqual({ rank: 2, of: 2 });
-    // A professor with too few votes gets no entry either.
-    const few = courseRanks("b", subjects, [...profs, prof("b", "pz", null)]);
-    expect(few.score.pz).toBeUndefined();
+  it("leaves out a rank the database left empty", () => {
+    const ranks = ranksFromRows([row("ada", { teach_rank: 3, teach_of: 4 }), row("bob")]);
+    expect(ranks.score).toEqual({});
+    expect(ranks.professor).toEqual({ ada: { rank: 3, of: 4 } });
+    expect(ranks.lighterLoad).toBeNull();
   });
 
-  it("scores each professor of this course against the other courses", () => {
-    const subjects = [subject("a", [5, 5, 5]), subject("b", [5, 5, 5])];
-    const profs = [prof("a", "p1", 6), prof("a", "p2", 9), prof("b", "pb", 8)];
-    const ranks = courseRanks("a", subjects, profs);
-    expect(ranks.score.p1).toEqual({ rank: 1, of: 2 });
-    expect(ranks.score.p2).toEqual({ rank: 2, of: 2 });
+  it("keeps the share of lighter courses of a course without a professor", () => {
+    expect(ranksFromRows([row(null, { lighter_load: 25 })])).toEqual({
+      available: true,
+      score: {},
+      professor: {},
+      lighterLoad: 25,
+    });
   });
 
-  it("never counts a hidden professor", () => {
-    const subjects = [subject("a", [5, 5, 5]), subject("b", [5, 5, 5])];
-    const profs = [prof("a", "pa", 7), prof("a", "ph", 10, true), prof("b", "pb", 9), prof("b", "pbh", 10, true)];
-    const ranks = courseRanks("a", subjects, profs);
-    expect(ranks.score.ph).toBeUndefined();
-    expect(ranks.professor.ph).toBeUndefined();
-    // Course b is scored with pb (the hidden one is never its default professor).
-    expect(ranks.score.pa).toEqual({ rank: 1, of: 2 });
-    expect(ranks.professor.pa).toEqual({ rank: 2, of: 2 });
-  });
-
-  it("ranks the teaching score among all visible professor rows with enough votes", () => {
-    const subjects = [subject("a", [5, 5, 5]), subject("b", [5, 5, 5])];
-    const profs = [
-      prof("a", "p1", 8),
-      prof("a", "p2", 8),
-      prof("b", "p1", 9),
-      prof("b", "p3", 5),
-      prof("b", "p4", null),
-    ];
-    const ranks = courseRanks("a", subjects, profs);
-    // p1 on b is a separate row: ranks are per (course, professor).
-    expect(ranks.professor).toEqual({ p1: { rank: 2, of: 4 }, p2: { rank: 2, of: 4 } });
-  });
-
-  it("is robust against float noise in ties", () => {
-    const subjects = [subject("a", [5, 5, 5])];
-    const profs = [
-      { ...prof("a", "p1", 8), engagement: 7.9, understanding: 8, approachability: 8.1 },
-      { ...prof("a", "p2", 8), engagement: 8, understanding: 8, approachability: 8 },
-    ];
-    const ranks = courseRanks("a", subjects, profs);
-    expect(ranks.professor.p1.rank).toBe(1);
-    expect(ranks.professor.p2.rank).toBe(1);
-  });
-
-  it("computes easierThan, null without enough votes or without other courses", () => {
-    const subjects = [
-      subject("a", [6, 6, 5]),
-      subject("b", [2, 2, 5]),
-      subject("c", [9, 9, 5]),
-      subject("d", [6, 6, 5]),
-      subject("e", null),
-    ];
-    // Others with data: b (lower), c (higher), d (equal) -> 1 of 3.
-    expect(courseRanks("a", subjects, []).easierThan).toBe(33);
-    expect(courseRanks("c", subjects, []).easierThan).toBe(100);
-    expect(courseRanks("b", subjects, []).easierThan).toBe(0);
-    expect(courseRanks("e", subjects, []).easierThan).toBeNull();
-    expect(courseRanks("a", [subject("a", [6, 6, 5]), subject("e", null)], []).easierThan).toBeNull();
-    expect(courseRanks("missing", subjects, []).easierThan).toBeNull();
+  it("has no ranks for a course the database knows nothing about", () => {
+    expect(ranksFromRows([])).toEqual({ available: true, score: {}, professor: {}, lighterLoad: null });
   });
 });
 
