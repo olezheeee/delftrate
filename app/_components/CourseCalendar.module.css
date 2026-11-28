@@ -309,7 +309,8 @@
   position: relative;
   font-size: 8px;
   font-weight: 500;
-  color: hsl(var(--fg) / 0.82);
+  /* The colour of what the number says, set per circle (see Ring). */
+  color: var(--tone, hsl(var(--fg) / 0.82));
   line-height: 1;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;

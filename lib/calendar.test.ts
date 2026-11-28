@@ -3,6 +3,7 @@ import {
   courseHref,
   layoutCalendar,
   loadColour,
+  teachColour,
   moduleCode,
   parseChoice,
   type CalendarCourse,
@@ -140,6 +141,15 @@ describe("the colour of a subject's load", () => {
   it("stays blue below the lightest load and warm above the heaviest", () => {
     expect(loadColour(0)).toBe(loadColour(4));
     expect(loadColour(10)).toBe(loadColour(9));
+  });
+
+  it("gives a professor's score the same colours the other way round: blue for a high score", () => {
+    expect(teachColour(9)).toBe(loadColour(4));
+    expect(teachColour(6.5)).toBe("rgb(255 255 255)");
+    expect(teachColour(4)).toBe(loadColour(9));
+    expect(teachColour(8)).toBe(loadColour(5));
+    expect(teachColour(10)).toBe(teachColour(9));
+    expect(teachColour(0)).toBe(teachColour(4));
   });
 });
 

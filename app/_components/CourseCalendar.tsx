@@ -12,6 +12,7 @@ import {
   layoutCalendar,
   LOAD_SCALE,
   loadColour,
+  teachColour,
   parseChoice,
   type CalendarCourse,
   type Choice,
@@ -189,13 +190,13 @@ export function CourseCalendar({
       {layout && layout.rows > 0 && (scores ? (
         <p className={styles.legend}>
           <span className={styles.legendItem}>
-            Overall, from a light subject
+            Colours, from a light subject and a strong professor
             <span
               className={styles.scale}
               style={{ background: `linear-gradient(to right, ${LOAD_SCALE.join(", ")})` }}
               aria-hidden="true"
             />
-            to a hard one
+            to a hard subject and a weak one
           </span>
           {CIRCLES.filter(({ kind }) => kind !== "score").map(({ kind, name }) => (
             <span key={kind} className={styles.legendItem}>
@@ -353,13 +354,21 @@ function Overall({ score, load }: { score: number | null; load: number | null })
 }
 
 // One circle: a ring filled as far as the number goes (out of 10), with the number inside.
-// Empty with a dash while there are too few votes.
-function Ring({ kind, value }: { kind: keyof CourseNumbers; value: number | null }) {
+// Empty with a dash while there are too few votes. The number takes the colour of what it
+// says: blue for a light subject or a strong professor, warm for the opposite.
+function Ring({ kind, value }: { kind: "load" | "teach"; value: number | null }) {
   const name = CIRCLES.find((circle) => circle.kind === kind)!.name;
   const text = value === null ? null : tenth(value);
   const title = text === null ? `${name}: too few votes so far` : `${name}: ${text} out of 10`;
+  const colour = value === null ? null : kind === "load" ? loadColour(value) : teachColour(value);
   return (
-    <span className={styles.ring} data-kind={kind} data-empty={text === null ? "" : undefined} title={title}>
+    <span
+      className={styles.ring}
+      data-kind={kind}
+      data-empty={text === null ? "" : undefined}
+      title={title}
+      style={colour ? ({ "--tone": colour } as CSSProperties) : undefined}
+    >
       <svg viewBox="0 0 36 36" aria-hidden="true">
         <circle className={styles.track} cx="18" cy="18" r="16" />
         {value !== null && (
