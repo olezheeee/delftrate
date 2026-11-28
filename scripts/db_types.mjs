@@ -17,6 +17,7 @@ const header = `// The shape of the database, for the Supabase clients.
 // The averages of these functions are null until a block has enough votes. The generator
 // cannot know that and types them as plain numbers, so they are corrected here.
 const NULLABLE = {
+  calendar_scores: ["score", "load", "teach"],
   course_subject_stats: ["difficulty", "exam_level", "interest"],
   course_professor_stats: ["engagement", "understanding", "approachability"],
 };

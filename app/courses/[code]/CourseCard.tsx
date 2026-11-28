@@ -331,12 +331,12 @@ export function CourseCard({
         <h1 className={`${styles.title} ${styles.heading1}`}>{course.name}</h1>
       </header>
 
-      <section className={styles.score} aria-label="Combined score">
+      <section className={styles.score} aria-label="Overall difficulty">
         {combined ? (
           <>
             {/* The count is for the eyes; screen readers hear the final score once. */}
             <span className={styles.srOnly} aria-live="polite">
-              Combined score {one(combined.score)} out of 10, {VERDICT_LABELS[combined.verdict]}
+              Difficulty {one(combined.score)} out of 10, {VERDICT_LABELS[combined.verdict]}
             </span>
             <p className={styles.number} aria-hidden="true">
               <b className={`${styles.mono} ${styles.display}`}>{one(count)}</b>
@@ -353,8 +353,8 @@ export function CourseCard({
           </>
         ) : (
           <p className={`${styles.waiting} ${styles.body2}`}>
-            No combined score yet. It appears once the subject and a professor each have enough
-            votes.
+            No difficulty score yet. It appears once the subject and a professor each have
+            enough votes.
           </p>
         )}
       </section>

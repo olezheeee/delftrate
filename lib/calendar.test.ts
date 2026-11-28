@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { courseHref, layoutCalendar, moduleCode, parseChoice, type CalendarCourse } from "./calendar";
+import {
+  courseHref,
+  difficultyColour,
+  layoutCalendar,
+  loadColour,
+  teachColour,
+  moduleCode,
+  parseChoice,
+  type CalendarCourse,
+} from "./calendar";
 import { safeNextPath } from "./auth/routes";
 
 function course(code: string, quarters: number[]): CalendarCourse {
@@ -107,6 +116,49 @@ describe("the layout of the calendar", () => {
         }
       }
     }
+  });
+});
+
+describe("the colour of a subject's load", () => {
+  // Red, green and blue of a colour written as "rgb(r g b)".
+  const parts = (colour: string) => colour.slice(4, -1).split(" ").map(Number);
+
+  it("goes from the site's blue for a light subject, through white, to a warm tone for a heavy one", () => {
+    expect(loadColour(4)).toBe("rgb(127 208 247)");
+    expect(loadColour(6.5)).toBe("rgb(255 255 255)");
+    expect(loadColour(9)).toBe("rgb(247 164 126)");
+  });
+
+  it("gets warmer with every step up in load", () => {
+    // Warmer: more red than blue.
+    const warmth = [4, 5, 6, 7, 7.5, 8, 9].map((load) => {
+      const [red, , blue] = parts(loadColour(load));
+      return red - blue;
+    });
+    expect(warmth).toEqual([...warmth].sort((a, b) => a - b));
+    expect(new Set(warmth).size).toBe(warmth.length);
+  });
+
+  it("stays blue below the lightest load and warm above the heaviest", () => {
+    expect(loadColour(0)).toBe(loadColour(4));
+    expect(loadColour(10)).toBe(loadColour(9));
+  });
+
+  it("colours the overall difficulty from an easy course in blue to a hard one in the warm tone", () => {
+    expect(difficultyColour(3)).toBe(loadColour(4));
+    expect(difficultyColour(5.5)).toBe("rgb(255 255 255)");
+    expect(difficultyColour(8)).toBe(loadColour(9));
+    expect(difficultyColour(0)).toBe(difficultyColour(3));
+    expect(difficultyColour(10)).toBe(difficultyColour(8));
+  });
+
+  it("gives a professor's score the same colours the other way round: blue for a high score", () => {
+    expect(teachColour(9)).toBe(loadColour(4));
+    expect(teachColour(6.5)).toBe("rgb(255 255 255)");
+    expect(teachColour(4)).toBe(loadColour(9));
+    expect(teachColour(8)).toBe(loadColour(5));
+    expect(teachColour(10)).toBe(teachColour(9));
+    expect(teachColour(0)).toBe(teachColour(4));
   });
 });
 

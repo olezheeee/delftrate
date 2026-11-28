@@ -13,20 +13,22 @@ import {
 } from "./score";
 
 // The example courses of the demo (index.html): subject averages, professor averages, and
-// the load, teaching score, combined score and verdict the demo shows for them.
+// the load, teaching score and verdict the demo shows for them. The combined score is not
+// the demo's any more: it is the overall difficulty (65% load, 23% teaching and 12%
+// interest, the last two the other way round), worked out by hand for each course.
 const DEMO: [string, number[], number[], string, string, string, string][] = [
-  ["Calculus for Engineers", [7.2, 7.6, 7.0], [9.1, 9.6, 8.9], "7.4", "9.2", "7.7", "Smooth ride"],
-  ["Algorithms and Data Structures", [7.8, 8.2, 8.8], [9.2, 8.8, 8.3], "8.0", "8.8", "7.8", "Hard, but well taught"],
-  ["Aerodynamics I", [8.1, 8.0, 9.2], [9.0, 9.3, 8.7], "8.1", "9.0", "8.0", "Hard, but well taught"],
-  ["Orbital Mechanics", [9.1, 9.4, 8.6], [7.4, 6.3, 6.6], "9.3", "6.8", "6.3", "Brace yourself"],
-  ["Structural Mechanics 2", [8.4, 8.1, 6.8], [7.8, 8.7, 9.1], "8.3", "8.5", "7.1", "Hard, but well taught"],
-  ["Fluid Mechanics", [7.6, 7.2, 8.2], [9.6, 9.7, 9.4], "7.4", "9.6", "8.2", "Smooth ride"],
-  ["Design Studio: Housing", [6.2, 4.8, 9.0], [9.2, 7.6, 8.8], "5.5", "8.5", "8.0", "Smooth ride"],
-  ["Thermodynamics", [8.6, 8.9, 6.4], [7.0, 7.5, 7.1], "8.8", "7.2", "6.1", "Brace yourself"],
-  ["Control Systems", [8.0, 7.7, 8.4], [9.0, 9.1, 8.8], "7.8", "9.0", "7.8", "Hard, but well taught"],
-  ["Human-Centred Design", [4.6, 4.2, 8.6], [9.4, 8.5, 9.0], "4.4", "9.0", "8.4", "Smooth ride"],
-  ["Systems Modelling", [5.8, 6.1, 7.2], [8.0, 8.1, 8.2], "5.9", "8.1", "7.3", "Smooth ride"],
-  ["Quantum Mechanics 1", [9.4, 9.0, 8.9], [7.0, 6.1, 6.4], "9.2", "6.5", "6.2", "Brace yourself"],
+  ["Calculus for Engineers", [7.2, 7.6, 7.0], [9.1, 9.6, 8.9], "7.4", "9.2", "5.4", "Smooth ride"],
+  ["Algorithms and Data Structures", [7.8, 8.2, 8.8], [9.2, 8.8, 8.3], "8.0", "8.8", "5.6", "Hard, but well taught"],
+  ["Aerodynamics I", [8.1, 8.0, 9.2], [9.0, 9.3, 8.7], "8.1", "9.0", "5.6", "Hard, but well taught"],
+  ["Orbital Mechanics", [9.1, 9.4, 8.6], [7.4, 6.3, 6.6], "9.3", "6.8", "6.9", "Brace yourself"],
+  ["Structural Mechanics 2", [8.4, 8.1, 6.8], [7.8, 8.7, 9.1], "8.3", "8.5", "6.1", "Hard, but well taught"],
+  ["Fluid Mechanics", [7.6, 7.2, 8.2], [9.6, 9.7, 9.4], "7.4", "9.6", "5.1", "Smooth ride"],
+  ["Design Studio: Housing", [6.2, 4.8, 9.0], [9.2, 7.6, 8.8], "5.5", "8.5", "4.0", "Smooth ride"],
+  ["Thermodynamics", [8.6, 8.9, 6.4], [7.0, 7.5, 7.1], "8.8", "7.2", "6.8", "Brace yourself"],
+  ["Control Systems", [8.0, 7.7, 8.4], [9.0, 9.1, 8.8], "7.8", "9.0", "5.5", "Hard, but well taught"],
+  ["Human-Centred Design", [4.6, 4.2, 8.6], [9.4, 8.5, 9.0], "4.4", "9.0", "3.3", "Smooth ride"],
+  ["Systems Modelling", [5.8, 6.1, 7.2], [8.0, 8.1, 8.2], "5.9", "8.1", "4.6", "Smooth ride"],
+  ["Quantum Mechanics 1", [9.4, 9.0, 8.9], [7.0, 6.1, 6.4], "9.2", "6.5", "6.9", "Brace yourself"],
 ];
 
 describe("the demo's numbers", () => {
@@ -128,6 +130,32 @@ describe("defaultProfessor", () => {
   });
 });
 
+describe("the combined score", () => {
+  const subject = (difficulty: number, exam_level: number, interest: number) => ({ difficulty, exam_level, interest });
+  const professor = (value: number) => ({ engagement: value, understanding: value, approachability: value });
+
+  it("runs from the easiest course to one that is impossible to pass", () => {
+    // No load at all, perfect teaching, as interesting as it gets.
+    expect(combinedScore(subject(0, 0, 10), professor(10))).toBe(0);
+    // The heaviest load, the worst teaching, no interest.
+    expect(combinedScore(subject(10, 10, 0), professor(0))).toBeCloseTo(10, 10);
+  });
+
+  it("counts the load for 65%, the teaching for 23% and interest for 12%", () => {
+    expect(combinedScore(subject(10, 10, 10), professor(10))).toBeCloseTo(6.5, 10);
+    expect(combinedScore(subject(0, 0, 10), professor(0))).toBeCloseTo(2.3, 10);
+    expect(combinedScore(subject(0, 0, 0), professor(10))).toBeCloseTo(1.2, 10);
+  });
+
+  it("gets higher with a heavier load, and lower with better teaching or more interest", () => {
+    const base = combinedScore(subject(7, 7, 7), professor(7));
+    expect(combinedScore(subject(8, 7, 7), professor(7))).toBeGreaterThan(base);
+    expect(combinedScore(subject(7, 8, 7), professor(7))).toBeGreaterThan(base);
+    expect(combinedScore(subject(7, 7, 7), professor(8))).toBeLessThan(base);
+    expect(combinedScore(subject(7, 7, 8), professor(7))).toBeLessThan(base);
+  });
+});
+
 describe("courseScore", () => {
   it("uses the default professor", () => {
     const best = professorStats("best", 9.2);
@@ -135,7 +163,7 @@ describe("courseScore", () => {
     expect(result?.professor_id).toBe("best");
     expect(result?.load.toFixed(1)).toBe("7.4");
     expect(result?.teach.toFixed(1)).toBe("9.2");
-    expect(result?.score.toFixed(1)).toBe("7.7");
+    expect(result?.score.toFixed(1)).toBe("5.4");
     expect(result?.verdict).toBe("smooth-ride");
   });
 
