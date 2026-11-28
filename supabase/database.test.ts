@@ -737,7 +737,7 @@ describe("the calendar scores", () => {
     await subjectVotes(cse, [7, 8, 6]);
     await professorVotes(cse, ada, [9, 9, 9]);
 
-    const expected = [{ code: "CSE1", score: 0.6 * 9 + 0.25 * 6 + 0.15 * (10 - 7.5), load: 7.5, teach: 9 }];
+    const expected = [{ code: "CSE1", score: 0.65 * 7.5 + 0.23 * (10 - 9) + 0.12 * (10 - 6), load: 7.5, teach: 9 }];
     // An admin gets no more than anyone else: these are the numbers the site shows.
     for (const reader of [null, student, aeStudent, admin]) {
       expect(await scores(reader)).toEqual(expected);
@@ -803,13 +803,13 @@ describe("the calendar scores", () => {
 
   it("are the numbers of the course's own page, to the last digit", async () => {
     // Votes chosen to be awkward for a computer, as [value, number of votes] per criterion.
-    // The first gives a score of exactly 6.85 (teaching 7.5, interest 7, load 6), which one
-    // way of calculating shows as 6.8 and another as 6.9. The others give averages that do
+    // The first gives a score of exactly 5.25 (load 7, teaching 8, interest 8), which one
+    // way of calculating shows as 5.2 and another as 5.3. The others give averages that do
     // not end, such as 7.333...
     const cases: { subject: [number, number][][]; professor: [number, number][][] }[] = [
       {
-        subject: [[[6, 5], [7, 5]], [[5, 5], [6, 5]], [[7, 10]]],
-        professor: [[[7, 5], [8, 5]], [[7, 5], [8, 5]], [[7, 5], [8, 5]]],
+        subject: [[[7, 5], [8, 5]], [[6, 5], [7, 5]], [[8, 10]]],
+        professor: [[[8, 10]], [[8, 10]], [[8, 10]]],
       },
       {
         subject: [[[7, 10], [8, 5]], [[6, 11], [9, 3]], [[5, 7], [8, 6]]],
@@ -937,13 +937,13 @@ describe("the seed data", () => {
 
   const EXPECTED = {
     // Two professors with enough votes: the best rated one is used.
-    CSE1001: { professor: "Dr. Marijke van Houten", load: "7.4", teach: "9.2", score: "7.7", verdict: "Smooth ride" },
-    CSE1002: { professor: "Prof. Ravi Menon", load: "8.0", teach: "8.8", score: "7.8", verdict: "Hard, but well taught" },
+    CSE1001: { professor: "Dr. Marijke van Houten", load: "7.4", teach: "9.2", score: "5.4", verdict: "Smooth ride" },
+    CSE1002: { professor: "Prof. Ravi Menon", load: "8.0", teach: "8.8", score: "5.6", verdict: "Hard, but well taught" },
     CSE2001: null, // subject one vote short
     CSE2002: null, // only professor has 6 votes
-    AE2001: { professor: "Dr. Anouk Dekkers", load: "8.1", teach: "9.0", score: "8.0", verdict: "Hard, but well taught" },
+    AE2001: { professor: "Dr. Anouk Dekkers", load: "8.1", teach: "9.0", score: "5.6", verdict: "Hard, but well taught" },
     // The better rated professor is hidden, so the visible one is used.
-    AE3001: { professor: "Prof. Tomasz Wieliczko", load: "9.3", teach: "6.8", score: "6.3", verdict: "Brace yourself" },
+    AE3001: { professor: "Prof. Tomasz Wieliczko", load: "9.3", teach: "6.8", score: "6.9", verdict: "Brace yourself" },
     AE1001: null, // no votes
   };
 

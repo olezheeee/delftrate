@@ -47,8 +47,8 @@ describe("the course sheet", () => {
     });
     expect(sheet.professors).toHaveLength(1);
     expect(sheet.professors[0]).toMatchObject({ id: "a", name: "Ada", votes: 10, teach: 9 });
-    // 0.6 * 9 + 0.25 * 6 + 0.15 * (10 - 8)
-    expect(sheet.professors[0].combined?.score).toBeCloseTo(7.2);
+    // 0.65 * 8 + 0.23 * (10 - 9) + 0.12 * (10 - 6)
+    expect(sheet.professors[0].combined?.score).toBeCloseTo(5.91);
     expect(sheet.professors[0].combined?.verdict).toBe("hard-well-taught");
   });
 

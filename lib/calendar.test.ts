@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   courseHref,
+  difficultyColour,
   layoutCalendar,
   loadColour,
   teachColour,
@@ -141,6 +142,14 @@ describe("the colour of a subject's load", () => {
   it("stays blue below the lightest load and warm above the heaviest", () => {
     expect(loadColour(0)).toBe(loadColour(4));
     expect(loadColour(10)).toBe(loadColour(9));
+  });
+
+  it("colours the overall difficulty from an easy course in blue to a hard one in the warm tone", () => {
+    expect(difficultyColour(3)).toBe(loadColour(4));
+    expect(difficultyColour(5.5)).toBe("rgb(255 255 255)");
+    expect(difficultyColour(8)).toBe(loadColour(9));
+    expect(difficultyColour(0)).toBe(difficultyColour(3));
+    expect(difficultyColour(10)).toBe(difficultyColour(8));
   });
 
   it("gives a professor's score the same colours the other way round: blue for a high score", () => {

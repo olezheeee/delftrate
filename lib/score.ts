@@ -2,6 +2,10 @@
 // Every page that shows a load, a teaching score, a combined score or a verdict uses this
 // module, so the numbers are the same everywhere.
 //
+// One thing differs from the demo: the combined score. Oleg changed it on 28 November 2026
+// from a mark where higher is better into the course's overall difficulty, where higher is
+// harder (see combinedScore). The load, the teaching score and the verdict are the demo's.
+//
 // Field names match the rows returned by the database functions course_subject_stats()
 // and course_professor_stats(), so those rows can be passed in as they are.
 
@@ -37,9 +41,16 @@ export function teach(professor: ProfessorAverages): number {
   return (professor.engagement + professor.understanding + professor.approachability) / 3;
 }
 
-/** The single rating: mostly teaching, then interest, then how manageable the load is. */
+/**
+ * The single rating: how hard the course is overall, from the easiest (low) to impossible
+ * to pass (10). The load (difficulty and exam level) counts for 65%, the teaching for 23%
+ * and interest for 12%; good teaching and an interesting subject make a course easier, so
+ * those two count the other way round.
+ * The database function calendar_scores() does the same sum for the home page. Change them
+ * together.
+ */
 export function combinedScore(subject: SubjectAverages, professor: ProfessorAverages): number {
-  return 0.6 * teach(professor) + 0.25 * subject.interest + 0.15 * (10 - load(subject));
+  return 0.65 * load(subject) + 0.23 * (10 - teach(professor)) + 0.12 * (10 - subject.interest);
 }
 
 export type Verdict = "hard-well-taught" | "brace-yourself" | "smooth-ride" | "manageable-solo";

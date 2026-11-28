@@ -2,13 +2,14 @@
 
 // The course schedule calendar of the home page: pick a programme, then a year, and see
 // that year's courses under the quarters they run in, each with its ratings: the overall
-// score as "7.8/10", and under it two circles for the subject's load and the professor.
+// difficulty as "5.4/10", and under it two circles for the subject's load and the professor.
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState, type CSSProperties } from "react";
 import { PROGRAMMES, YEARS, programmeName } from "@/lib/auth/programmes";
 import {
   courseHref,
+  difficultyColour,
   layoutCalendar,
   LOAD_SCALE,
   loadColour,
@@ -40,7 +41,7 @@ function quarterLabel(quarters: number[]): string {
 const NOT_RATED: CourseNumbers = { score: null, load: null, teach: null };
 
 const CIRCLES = [
-  { kind: "score", name: "Overall" },
+  { kind: "score", name: "Difficulty" },
   { kind: "load", name: "Subject load" },
   { kind: "teach", name: "Professor" },
 ] as const satisfies readonly { kind: keyof CourseNumbers; name: string }[];
@@ -190,13 +191,13 @@ export function CourseCalendar({
       {layout && layout.rows > 0 && (scores ? (
         <p className={styles.legend}>
           <span className={styles.legendItem}>
-            Colours, from a light subject and a strong professor
+            Difficulty, from the easiest (1)
             <span
               className={styles.scale}
               style={{ background: `linear-gradient(to right, ${LOAD_SCALE.join(", ")})` }}
               aria-hidden="true"
             />
-            to a hard subject and a weak one
+            to the hardest (10)
           </span>
           {CIRCLES.filter(({ kind }) => kind !== "score").map(({ kind, name }) => (
             <span key={kind} className={styles.legendItem}>
@@ -204,7 +205,7 @@ export function CourseCalendar({
               {name}
             </span>
           ))}
-          <span>Out of 10. A dash: too few votes so far.</span>
+          <span>Blue: a light subject, a strong professor. A dash: too few votes so far.</span>
         </p>
       ) : (
         <p className={styles.hint}>The ratings are not available right now. Try again in a moment.</p>
@@ -318,7 +319,7 @@ function CourseLink({
       {numbers && (
         // The overall score on top; under it the subject's load and the professor.
         <span className={styles.scores}>
-          <Overall score={numbers.score} load={numbers.load} />
+          <Overall score={numbers.score} />
           <span className={styles.pair}>
             <Ring kind="load" value={numbers.load} />
             <Ring kind="teach" value={numbers.teach} />
@@ -329,23 +330,22 @@ function CourseLink({
   );
 }
 
-// The overall score, written as "7.8/10". The number takes the colour of how hard the
-// subject is: the site's blue for a light load, white in between, a warm tone for a heavy
-// one (loadColour). The load itself is in the circle underneath, so the colour is never the
-// only place that says it.
-function Overall({ score, load }: { score: number | null; load: number | null }) {
+// The overall difficulty of the course, written as "5.4/10": 1 is the easiest course, 10
+// one that is impossible to pass. The number takes its own colour: the site's blue for an
+// easy course, white in between, a warm tone for a hard one (difficultyColour), so the
+// colour never says anything the number does not.
+function Overall({ score }: { score: number | null }) {
   const text = score === null ? null : tenth(score);
-  const rated = text !== null && load !== null;
   return (
     <span
       className={styles.overall}
       data-empty={text === null ? "" : undefined}
       title={
-        rated
-          ? `Overall: ${text} out of 10. Its colour is the subject's load, ${tenth(load)}.`
-          : "Overall: too few votes so far"
+        text === null
+          ? "Difficulty: too few votes so far"
+          : `Difficulty: ${text} out of 10. 1 is the easiest course, 10 the hardest.`
       }
-      style={rated ? ({ "--tone": loadColour(load) } as CSSProperties) : undefined}
+      style={score === null ? undefined : ({ "--tone": difficultyColour(score) } as CSSProperties)}
     >
       <b aria-hidden="true">{text ?? "–"}</b>
       <span aria-hidden="true">/10</span>

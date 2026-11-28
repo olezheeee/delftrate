@@ -231,7 +231,7 @@
   overflow-wrap: anywhere;
 }
 
-/* The ratings of a course: the overall score as "7.8/10", and under it two small circles
+/* The ratings of a course: the overall difficulty as "5.4/10", and under it two small circles
    for the subject's load and the professor, each a ring filled as far as the number goes,
    out of 10. */
 .scores {
@@ -240,10 +240,10 @@
   align-items: flex-end;
   gap: 7px;
 }
-/* The number of the overall score is set in the site's serif, like the "Rate" of the name
-   (italic: the only style of it the site loads, see app/layout.tsx), and takes the colour
-   of how hard the subject is: --tone is set per course, the blue of
-   the accent for a light load, white in between, a warm tone for a heavy one. */
+/* The number of the overall difficulty is set in the site's serif, like the "Rate" of the
+   name (italic: the only style of it the site loads, see app/layout.tsx), and takes the
+   colour of how hard the course is: --tone is set per course, the blue of the accent for an
+   easy one, white in between, a warm tone for a hard one. */
 .overall {
   display: inline-flex;
   align-items: baseline;
