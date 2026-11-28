@@ -84,7 +84,9 @@ function useCountUp(target: number | null): number {
     let frame = 0;
     const tick = (now: number) => {
       const t = reduced ? 1 : Math.min(1, (now - start) / COUNT_MS);
-      shown.current = from + (target - from) * easeOut(t);
+      // The last frame is the target itself: the sum can end a hair beside it, which would
+      // round to another tenth.
+      shown.current = t < 1 ? from + (target - from) * easeOut(t) : target;
       setValue(shown.current);
       if (t < 1) frame = requestAnimationFrame(tick);
     };
@@ -251,6 +253,8 @@ function Switcher({
   }, [index, professors]);
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    // With Alt, Ctrl or Cmd the arrows are the browser's own shortcuts (back, forward).
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
     const last = professors.length - 1;
     let next = index;
     if (event.key === "ArrowRight" || event.key === "ArrowDown") next = index === last ? 0 : index + 1;

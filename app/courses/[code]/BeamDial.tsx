@@ -27,9 +27,12 @@ const TICK_COUNT = 21;
 const TAP_SLOP = 8; // px a finger may move and still count as a tap
 const STAGGER_MS = 4; // 20 ticks x 4ms = 80ms, plus the 300ms transition: under 400ms
 
+// Rounded to two decimals: the server and the browser may differ in the last digit of a
+// cosine, and the drawing they each render has to be the same text.
 function polar(radius: number, value: number) {
   const a = (angleForValue(value) * Math.PI) / 180;
-  return { x: CX + radius * Math.cos(a), y: CY + radius * Math.sin(a) };
+  const round = (n: number) => Math.round(n * 100) / 100;
+  return { x: round(CX + radius * Math.cos(a)), y: round(CY + radius * Math.sin(a)) };
 }
 
 function wedge(halfWidth: number, length: number): string {
@@ -121,12 +124,13 @@ export function BeamDial(props: {
 
   function onPointerDown(e: PointerEvent<SVGPathElement>) {
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    // A second pointer (another finger, or the mouse of a touchscreen laptop), while one drags
+    // or is still being decided, is ignored.
+    if (dragging.current !== null || touchStart.current !== null) return;
     if (e.pointerType === "touch" || e.pointerType === "pen") {
       // The browser's implicit capture is kept: it sends this finger's moves here even when it
       // slides off the band, so the gesture is always decided. It does not stop the page from
       // scrolling: a vertical swipe ends in pointercancel.
-      // A second finger, while one drags or is still being decided, is ignored.
-      if (dragging.current !== null || touchStart.current !== null) return;
       touchStart.current = { id: e.pointerId, x: e.clientX, y: e.clientY };
       return;
     }
@@ -150,17 +154,17 @@ export function BeamDial(props: {
   }
 
   function release(e: PointerEvent<SVGPathElement>) {
-    // Another finger lifting must not end the drag or the undecided touch, or rate.
-    if (dragging.current !== null && e.pointerId !== dragging.current) return;
-    if (touchStart.current !== null && e.pointerId !== touchStart.current.id) return;
-    const start = touchStart.current;
+    // Each record is cleared only by its own pointer: another pointer lifting must not end the
+    // drag or the undecided touch, or rate, and must not leave a record behind either.
+    const tapped = touchStart.current?.id === e.pointerId;
     const dragged = dragging.current === e.pointerId;
-    touchStart.current = null;
-    dragging.current = null;
+    if (!tapped && !dragged) return;
+    if (tapped) touchStart.current = null;
+    if (dragged) dragging.current = null;
     // A tap (the finger went down and up without moving far) rates where it lifted, and so does
     // the end of a drag, which may have been too short for a move of its own to rate. A cancel
     // (the browser taking over to scroll) never rates.
-    if (e.type === "pointerup" && ((start && start.id === e.pointerId) || dragged)) {
+    if (e.type === "pointerup") {
       wrapRef.current?.focus({ preventScroll: true });
       commit(fromEvent(e));
     }
@@ -172,6 +176,8 @@ export function BeamDial(props: {
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    // With Alt, Ctrl or Cmd the arrows are the browser's own shortcuts (back, forward).
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
     const next = keyStep(value, e.key);
     if (next === null) return;
     e.preventDefault();
