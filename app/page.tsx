@@ -1,3 +1,4 @@
+import { io } from "next/cache";
 import Link from "next/link";
 import { Suspense } from "react";
 import { getCurrentUser, getProfile } from "@/lib/auth/session";
@@ -44,6 +45,10 @@ function CalendarSkeleton() {
 async function Calendar({ searchParams }: { searchParams: PageProps<"/">["searchParams"] }) {
   // Wait for the request first: everything below runs when a visitor asks for the page, not
   // while the site is built, so the build never needs the database.
+  // io() makes that hold for a page rendered ahead of a visit as well. Such a render is
+  // given up half-way, and without this the session read below would be given up inside the
+  // try, which would log a session failure that never happened.
+  await io();
   let choice = parseChoice(await searchParams);
 
   // The course list is public and cached. Start it now so it loads while the session is
