@@ -22,11 +22,11 @@ export type Rank = { rank: number; of: number };
 export type CourseRanks = {
   /** False when the averages of all courses could not be read in full: no ranks are shown. */
   available: boolean;
-  /** By professor id (this course's visible professors): rank of this course's combined score with that professor among all courses that have a combined score. */
+  /** By professor id (this course's visible professors): rank of this course's difficulty (the combined score) with that professor among all courses that have one. Rank 1 is the hardest. */
   score: Record<string, Rank>;
   /** By professor id: rank of that professor's teaching score (teach) on this course among every visible professor row with enough votes, across all courses. */
   professor: Record<string, Rank>;
-  /** Whole percentage (0 to 100) of the other courses with enough subject votes whose load is lower than this course's. Null when this course has too few subject votes or no other course qualifies. */
+  /** Whole percentage (0 to 100) of the other courses with enough subject votes that have a lighter load (a lower load, not a lower overall difficulty) than this course. Null when this course has too few subject votes or no other course qualifies. */
   easierThan: number | null;
 };
 
@@ -44,7 +44,8 @@ function professorAverages(row: ProfessorStatsRow): ProfessorAverages | null {
   return { engagement, understanding, approachability };
 }
 
-// 1 + the number of other values that are strictly better (higher).
+// 1 + the number of other values that are strictly higher. For the difficulty score the highest
+// value is the hardest course, so #1 is the hardest; for the teaching score #1 is the best.
 function rankOf(value: number, others: readonly number[]): Rank {
   const mine = tidy(value);
   return { rank: 1 + others.filter((other) => tidy(other) > mine).length, of: others.length + 1 };
@@ -57,7 +58,7 @@ export function courseRanks(
 ): CourseRanks {
   const visibleRows = professorRows.filter((row) => !row.hidden);
 
-  // Score: the default-professor score of every other course.
+  // Difficulty: the default-professor score of every other course. Rank 1 is the hardest.
   const professorsByCourse = new Map<string, ProfessorStatsRow[]>();
   for (const row of visibleRows) {
     const list = professorsByCourse.get(row.course_id);
@@ -91,7 +92,8 @@ export function courseRanks(
     professor[entry.row.professor_id] = rankOf(entry.teach, others);
   }
 
-  // Easier than: share of the other courses with a lower load.
+  // Lighter load than: share of the other courses with a lower load (the field is still called
+  // easierThan).
   let easierThan: number | null = null;
   const ownAverages = subjectAverages(ownSubject);
   if (ownAverages) {

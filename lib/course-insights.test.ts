@@ -32,7 +32,8 @@ function prof(course: string, id: string, value: number | null, hidden = false):
   };
 }
 
-// With subject [5,5,5] (load 5) and professor value v: score = 0.6v + 1.25 + 0.75.
+// With subject [5,5,5] (load 5) and professor value v: difficulty = 6.15 - 0.23v, so a better
+// professor makes the course easier. Rank 1 is the hardest course.
 describe("course ranks", () => {
   it("ranks the score among courses, with ties sharing a rank", () => {
     const subjects = [subject("a", [5, 5, 5]), subject("b", [5, 5, 5]), subject("c", [5, 5, 5]), subject("d", [5, 5, 5])];
@@ -40,15 +41,23 @@ describe("course ranks", () => {
     const a = courseRanks("a", subjects, profs);
     expect(a.score).toEqual({ pa: { rank: 2, of: 4 } });
     expect(courseRanks("c", subjects, profs).score.pc).toEqual({ rank: 2, of: 4 });
-    expect(courseRanks("b", subjects, profs).score.pb).toEqual({ rank: 1, of: 4 });
-    expect(courseRanks("d", subjects, profs).score.pd).toEqual({ rank: 4, of: 4 });
+    expect(courseRanks("b", subjects, profs).score.pb).toEqual({ rank: 4, of: 4 });
+    expect(courseRanks("d", subjects, profs).score.pd).toEqual({ rank: 1, of: 4 });
+  });
+
+  it("gives the hardest course rank 1", () => {
+    const subjects = [subject("easy", [2, 2, 9]), subject("mid", [5, 5, 5]), subject("hard", [9, 9, 3])];
+    const profs = [prof("easy", "pe", 8), prof("mid", "pm", 8), prof("hard", "ph", 8)];
+    expect(courseRanks("hard", subjects, profs).score.ph).toEqual({ rank: 1, of: 3 });
+    expect(courseRanks("mid", subjects, profs).score.pm).toEqual({ rank: 2, of: 3 });
+    expect(courseRanks("easy", subjects, profs).score.pe).toEqual({ rank: 3, of: 3 });
   });
 
   it("gives a course without a score no score entries and leaves it out of the others", () => {
     const subjects = [subject("a", null), subject("b", [5, 5, 5]), subject("c", [5, 5, 5])];
     const profs = [prof("a", "pa", 9), prof("b", "pb", 8), prof("c", "pc", 7), prof("d", "pd", 10)];
     expect(courseRanks("a", subjects, profs).score).toEqual({});
-    expect(courseRanks("b", subjects, profs).score.pb).toEqual({ rank: 1, of: 2 });
+    expect(courseRanks("b", subjects, profs).score.pb).toEqual({ rank: 2, of: 2 });
     // A professor with too few votes gets no entry either.
     const few = courseRanks("b", subjects, [...profs, prof("b", "pz", null)]);
     expect(few.score.pz).toBeUndefined();
@@ -58,8 +67,8 @@ describe("course ranks", () => {
     const subjects = [subject("a", [5, 5, 5]), subject("b", [5, 5, 5])];
     const profs = [prof("a", "p1", 6), prof("a", "p2", 9), prof("b", "pb", 8)];
     const ranks = courseRanks("a", subjects, profs);
-    expect(ranks.score.p1).toEqual({ rank: 2, of: 2 });
-    expect(ranks.score.p2).toEqual({ rank: 1, of: 2 });
+    expect(ranks.score.p1).toEqual({ rank: 1, of: 2 });
+    expect(ranks.score.p2).toEqual({ rank: 2, of: 2 });
   });
 
   it("never counts a hidden professor", () => {
@@ -69,7 +78,7 @@ describe("course ranks", () => {
     expect(ranks.score.ph).toBeUndefined();
     expect(ranks.professor.ph).toBeUndefined();
     // Course b is scored with pb (the hidden one is never its default professor).
-    expect(ranks.score.pa).toEqual({ rank: 2, of: 2 });
+    expect(ranks.score.pa).toEqual({ rank: 1, of: 2 });
     expect(ranks.professor.pa).toEqual({ rank: 2, of: 2 });
   });
 

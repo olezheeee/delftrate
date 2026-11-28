@@ -45,16 +45,16 @@
   --r-block: 16px; /* card 24 minus padding 32 is not below 32 away, so a 16 radius */
   --r-inner: 4px; /* block 16 minus padding 12 */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --blue: #7fd0f7;
+  --blue: var(--accent);
   --pad: var(--s-32);
   position: relative;
   overflow: clip;
   width: 100%;
   max-width: 720px;
   padding: var(--pad);
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: 24px;
-  background: #181818;
+  background: var(--card);
   font-family: var(--sans);
   font-style: normal;
   font-weight: 400;
@@ -140,17 +140,17 @@
     transform 500ms var(--ease);
 }
 .target:hover {
-  border-color: hsl(0 0% 100% / 0.18);
+  border-color: var(--line-2);
 }
 .target[data-lit="true"] {
   border-color: rgb(127 208 247 / 0.5);
-  background: #272727;
+  background: hsl(210 12% 11%);
 }
 .back:focus-visible,
 .radio:focus-visible,
 .post:focus-visible,
 .card a:focus-visible {
-  outline: 2px solid #7fd0f7;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -166,15 +166,15 @@
   padding: var(--s-4) var(--s-8);
   margin: calc(var(--s-4) * -1) calc(var(--s-8) * -1);
   border-radius: 8px;
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
   transition:
     color 300ms var(--ease),
     background-color 300ms var(--ease),
     transform 500ms var(--ease);
 }
 .back:hover {
-  color: #fff;
-  background: #272727;
+  color: hsl(var(--fg));
+  background: hsl(210 12% 11%);
 }
 .back:active {
   transform: scale(0.98);
@@ -182,7 +182,7 @@
 .meta {
   margin: 0;
   font-family: var(--mono);
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 .title {
   margin: 0;
@@ -194,33 +194,29 @@
   margin-top: var(--s-24);
 }
 .switchScroll {
-  overflow-x: auto;
   padding: var(--s-4);
   margin: calc(var(--s-4) * -1);
-  scrollbar-width: none;
-}
-.switchScroll::-webkit-scrollbar {
-  display: none;
 }
 .switcher {
   position: relative;
   display: flex;
-  width: max-content;
-  margin: 0 auto; /* centred when it fits; at the start, and scrollable, when it does not */
+  flex-wrap: wrap; /* on a narrow screen the names wrap onto more lines instead of scrolling */
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto; /* centred when it fits */
   gap: var(--s-0);
   padding: var(--s-4);
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: 9999px;
-  background: #1f1f1f;
+  background: var(--card-2);
 }
 .highlight {
   position: absolute;
-  top: var(--s-4);
-  bottom: var(--s-4);
+  top: 0; /* the height and the offsets are set from the chosen button, so wrapping works */
   left: 0;
   border: 1px solid rgb(127 208 247 / 0.5);
   border-radius: 9999px;
-  background: #313131;
+  background: hsl(210 12% 14%);
   transform: translateX(0);
   transform-origin: left;
 }
@@ -234,20 +230,23 @@
   border: 1px solid transparent;
   border-radius: 9999px;
   background: transparent;
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
   font-family: var(--sans);
   font-weight: 500;
-  white-space: nowrap;
+  /* Never wider than the switcher: a very long name wraps inside its button rather than being
+     cut off by the card on a narrow phone (the switcher wraps, it does not scroll). */
+  max-width: 100%;
+  overflow-wrap: anywhere;
   cursor: pointer;
   transition:
     color 300ms var(--ease),
     transform 500ms var(--ease);
 }
 .radio:hover {
-  color: #fff;
+  color: hsl(var(--fg));
 }
 .radio[aria-checked="true"] {
-  color: #fff;
+  color: hsl(var(--fg));
 }
 .radio:active {
   transform: scale(0.98);
@@ -258,10 +257,17 @@
 }
 .single .caption {
   margin-right: var(--s-4);
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 
 /* The score hero. */
+.scoreLabel {
+  flex-basis: 100%;
+  margin: 0;
+  color: hsl(var(--fg) / 0.6);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .score {
   display: flex;
   flex-wrap: wrap;
@@ -290,7 +296,7 @@
   }
 }
 .number small {
-  color: hsl(0 0% 100% / 0.45);
+  color: hsl(var(--fg) / 0.45);
   font-weight: 400;
 }
 .verdict {
@@ -299,9 +305,9 @@
   gap: var(--s-8);
   margin-bottom: var(--s-8);
   padding: var(--s-4) var(--s-12);
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: 9999px;
-  background: #1f1f1f;
+  background: var(--card-2);
   font-weight: 500;
 }
 .dot {
@@ -311,7 +317,7 @@
 }
 .waiting {
   margin: 0;
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 
 /* Rank tiles. */
@@ -328,28 +334,28 @@
   flex-direction: column;
   gap: var(--s-4);
   padding: var(--s-12);
-  border-color: hsl(0 0% 100% / 0.1);
+  border-color: var(--line);
   border-radius: var(--r-block);
-  background: #1f1f1f;
+  background: var(--card-2);
 }
 .tile:hover {
   transform: translateY(calc(var(--s-2) * -1));
 }
 .tileValue small {
   font-weight: 400;
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 .tileCaption {
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 
 /* Blocks. */
 .block {
   margin-top: var(--s-24);
   padding: var(--s-12);
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: var(--r-block);
-  background: #1f1f1f;
+  background: var(--card-2);
 }
 .blockHead {
   display: flex;
@@ -361,15 +367,15 @@
 }
 .blockHead h2 {
   margin: 0;
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 .blockHead b small {
   margin-right: var(--s-8);
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
   font-weight: 400;
 }
 .legend {
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 
 /* Bars. */
@@ -388,7 +394,7 @@
 .bar dt {
   grid-column: 1;
   grid-row: 1;
-  color: hsl(0 0% 100% / 0.8);
+  color: hsl(var(--fg) / 0.8);
 }
 .barLine {
   grid-column: 2;
@@ -408,7 +414,7 @@
   grid-row: 2;
   height: var(--s-16);
   margin: var(--s-0);
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
   opacity: 0;
   transition: opacity 300ms var(--ease);
 }
@@ -416,11 +422,17 @@
 .bar:focus-within .hint {
   opacity: 1;
 }
+/* Nothing can hover on a touch screen, so the hints are always shown there. */
+@media (hover: none) {
+  .hint {
+    opacity: 1;
+  }
+}
 .track {
   height: var(--s-8);
   overflow: hidden;
   border-radius: 9999px;
-  background: #272727;
+  background: hsl(210 12% 14%);
 }
 /* The fill is full width, scaled from the left: width never animates. */
 .fill {
@@ -428,7 +440,7 @@
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  background: #7fd0f7;
+  background: var(--accent);
   transform: scaleX(var(--v));
   transform-origin: left;
 }
@@ -458,8 +470,8 @@
   align-items: baseline;
   gap: var(--s-8);
   padding: var(--s-12);
-  border-color: hsl(0 0% 100% / 0.1);
-  background: #181818;
+  border-color: var(--line);
+  background: var(--card);
 }
 .card[data-js] .tip {
   opacity: 0;
@@ -475,10 +487,10 @@
   transform: none;
 }
 .tip[data-lit="true"] {
-  background: #272727;
+  background: hsl(210 12% 11%);
 }
 .tipNumber {
-  color: #7fd0f7;
+  color: var(--accent);
   font-weight: 500;
 }
 
@@ -490,9 +502,9 @@
   gap: var(--s-12);
   margin-bottom: var(--s-12);
   padding: var(--s-8) var(--s-12);
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: var(--r-inner);
-  background: #181818;
+  background: var(--card);
   transition:
     border-color 300ms var(--ease),
     color 300ms var(--ease);
@@ -513,22 +525,22 @@
 .segment {
   height: var(--s-8);
   border-radius: 9999px;
-  background: #272727;
+  background: hsl(210 12% 14%);
   transition: background-color 300ms var(--ease);
 }
 .segment[data-on] {
-  background: #7fd0f7;
+  background: var(--accent);
 }
 .strip[data-complete] {
-  border-color: #7fd0f7;
+  border-color: var(--accent);
 }
 .strip[data-complete] .stripText {
-  color: #7fd0f7;
+  color: var(--accent);
 }
 .group {
   margin: var(--s-16) var(--s-4) var(--s-4);
   font-weight: 500;
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
 .dials {
   display: grid;
@@ -537,6 +549,7 @@
 }
 .dialCell {
   min-width: 0;
+  overflow-wrap: anywhere; /* a long label wraps inside the tile instead of crossing its border */
 }
 
 .formFoot {
@@ -549,16 +562,15 @@
 }
 .status {
   margin: var(--s-0);
-  color: hsl(0 0% 100% / 0.6);
+  color: hsl(var(--fg) / 0.6);
 }
-.strip[data-complete] ~ form .status {
-  color: #7fd0f7;
-}
+/* No success colour on the status while posting is closed (Pack 5 opens it): it would look as
+   if the rating had gone through. */
 .post {
   padding: var(--s-8) var(--s-12);
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: 8px;
-  background: #7fd0f7;
+  background: var(--accent);
   color: #000;
   font-family: var(--sans);
   font-weight: 500;
@@ -574,12 +586,12 @@
   transform: translateY(-1px);
 }
 .post:active:not(:disabled) {
-  background: #7fd0f7;
+  background: var(--accent);
   transform: scale(0.98);
 }
 .post:disabled {
-  background: #313131;
-  color: #fff;
+  background: hsl(210 12% 14%);
+  color: hsl(var(--fg));
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -643,12 +655,28 @@
     justify-self: center;
     width: calc((100% - var(--s-16)) / 2);
   }
+  .switcher {
+    border-radius: 20px; /* a pill would bulge when the names wrap onto two lines */
+  }
   .strip {
     flex-wrap: wrap;
   }
   .segments {
     max-width: none;
     flex-basis: 100%;
+  }
+}
+
+/* Below 400px two dials per row leave about 130px per tile, too narrow for "Approachability":
+   one dial per row. */
+@media (max-width: 399px) {
+  .dials {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dialCell:nth-child(3):last-child {
+    grid-column: auto;
+    justify-self: stretch;
+    width: auto;
   }
 }
 

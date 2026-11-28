@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { angleForValue, band, beamShape, keyStep, snap, valueFromPoint } from "./dial";
+import { angleForValue, band, bandFor, beamShape, classifyTouch, keyStep, snap, valueFromPoint } from "./dial";
 
 const c = { x: 100, y: 100 };
 
@@ -107,5 +107,40 @@ describe("beamShape", () => {
     expect(hi.halfWidth).toBeCloseTo(14);
     expect(hi.opacity).toBeCloseTo(0.28);
     expect(beamShape(5).halfWidth).toBeCloseTo(10);
+  });
+});
+
+describe("bandFor", () => {
+  it("uses the quality words where higher is better", () => {
+    expect(bandFor(9.5, "quality")).toBe("Excellent");
+    expect(bandFor(1, "quality")).toBe("Poor");
+  });
+  it("uses easy to hard words where higher is harder, at the same thresholds", () => {
+    expect(bandFor(0, "hardness")).toBe("Very easy");
+    expect(bandFor(3, "hardness")).toBe("Easy");
+    expect(bandFor(5, "hardness")).toBe("Moderate");
+    expect(bandFor(7, "hardness")).toBe("Hard");
+    expect(bandFor(9.5, "hardness")).toBe("Very hard");
+  });
+});
+
+describe("classifyTouch", () => {
+  it("stays undecided under the slop", () => {
+    expect(classifyTouch(0, 0, 8)).toBe("undecided");
+    expect(classifyTouch(5, -5, 8)).toBe("undecided");
+  });
+  it("calls a mostly sideways move a drag", () => {
+    expect(classifyTouch(12, 3, 8)).toBe("drag");
+    expect(classifyTouch(-12, -3, 8)).toBe("drag");
+  });
+  it("calls a mostly vertical move, and a diagonal tie, a scroll", () => {
+    expect(classifyTouch(2, -20, 8)).toBe("scroll");
+    expect(classifyTouch(1, 30, 8)).toBe("scroll");
+    expect(classifyTouch(10, 10, 8)).toBe("scroll");
+  });
+  it("calls a move that is more sideways than vertical a drag, also near the diagonal", () => {
+    expect(classifyTouch(9, 7, 8)).toBe("drag");
+    expect(classifyTouch(-14, 7, 8)).toBe("drag");
+    expect(classifyTouch(7, 9, 8)).toBe("scroll");
   });
 });

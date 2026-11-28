@@ -16,6 +16,8 @@ export const BEAM_INNER_HALF_WIDTH = 4;
 /** Long enough to cross a 720px card diagonally. */
 export const BEAM_LENGTH = 1200;
 export const BEAM_SWEEP_PERIOD_MS = 10000;
+/** With a mouse, the idle sweep rests after this long without pointer movement or scrolling. */
+export const BEAM_IDLE_SWEEP_MS = 7000;
 /** Share of the remaining difference covered each frame while following. */
 export const BEAM_FOLLOW_FACTOR = 0.15;
 
@@ -69,4 +71,24 @@ export function sweepAngle(timeMs: number, min: number, max: number, periodMs: n
   const mid = (min + max) / 2;
   const amp = (max - min) / 2;
   return mid + amp * Math.cos((2 * Math.PI * timeMs) / periodMs);
+}
+
+export type BeamMode = "fixed" | "follow" | "sweep" | "rest";
+
+/**
+ * What the beam does right now. Reduced motion and touch-only screens get a fixed angle (no
+ * animation at all). With a mouse, the beam follows the pointer while it is over the card,
+ * otherwise sweeps until `idleUntil` and then rests where it is, so the page does not animate
+ * (and drain the battery) forever.
+ */
+export function beamMode(state: {
+  reduced: boolean;
+  touchOnly: boolean;
+  hasPointer: boolean;
+  now: number;
+  idleUntil: number;
+}): BeamMode {
+  if (state.reduced || state.touchOnly) return "fixed";
+  if (state.hasPointer) return "follow";
+  return state.now < state.idleUntil ? "sweep" : "rest";
 }

@@ -3,16 +3,16 @@
   flex-direction: column;
   min-width: 0;
   padding: 16px;
-  border: 1px solid hsl(0 0% 100% / 0.1);
+  border: 1px solid var(--line);
   border-radius: 16px;
-  background: #1f1f1f;
+  background: var(--card-2);
   transition:
     background-color 300ms var(--ease),
     border-color 300ms var(--ease);
 }
 
 .tile:hover {
-  background: #272727;
+  background: hsl(210 12% 11%);
 }
 
 .pressed,
@@ -25,7 +25,7 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
-  color: #fff;
+  color: hsl(var(--fg));
 }
 
 .hint {
@@ -34,7 +34,7 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
-  color: hsl(0 0% 100% / 0.5);
+  color: hsl(var(--fg) / 0.5);
 }
 
 .dial {
@@ -51,7 +51,7 @@
 }
 
 .dial:focus-visible {
-  outline: 2px solid #7fd0f7;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .tick {
-  stroke: #313131;
+  stroke: hsl(210 12% 14%);
   stroke-width: 2;
   stroke-linecap: round;
   transition:
@@ -74,7 +74,7 @@
 }
 
 .lit {
-  stroke: #7fd0f7;
+  stroke: var(--accent);
   opacity: 0.85;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .tickLabel {
-  fill: hsl(0 0% 100% / 0.5);
+  fill: hsl(var(--fg) / 0.5);
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 400;
@@ -106,7 +106,8 @@
   transform-box: view-box;
   transform-origin: 0 0;
   transform: translate(100px, 100px) rotate(270deg);
-  animation: drift 4s var(--ease) infinite alternate;
+  /* A few sweeps to invite a rating, then rest: an open page should not animate forever. */
+  animation: drift 8s var(--ease) 2;
 }
 
 .ghostWedge {
@@ -114,20 +115,25 @@
 }
 
 @keyframes drift {
-  from {
+  /* Starts and ends at the resting angle (270), so it stops without a jump. */
+  0%,
+  100% {
+    transform: translate(100px, 100px) rotate(270deg);
+  }
+  25% {
     transform: translate(100px, 100px) rotate(245deg);
   }
-  to {
+  75% {
     transform: translate(100px, 100px) rotate(295deg);
   }
 }
 
 .base {
-  fill: #272727;
+  fill: hsl(210 12% 11%);
 }
 
 .lamp {
-  fill: #7fd0f7;
+  fill: var(--accent);
   transform-box: fill-box;
   transform-origin: center;
   transition: transform 500ms var(--ease);
@@ -139,7 +145,7 @@
 
 .shine {
   fill: none;
-  stroke: #7fd0f7;
+  stroke: var(--accent);
   stroke-width: 2;
   transform-box: fill-box;
   transform-origin: center;
@@ -178,7 +184,7 @@
   font-size: 30px;
   line-height: 36px;
   font-weight: 600;
-  color: #fff;
+  color: hsl(var(--fg));
 }
 
 .pop {
@@ -202,7 +208,7 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
-  color: hsl(0 0% 100% / 0.5);
+  color: hsl(var(--fg) / 0.5);
 }
 
 @media (prefers-reduced-motion: reduce) {

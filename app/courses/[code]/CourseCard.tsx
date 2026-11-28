@@ -45,11 +45,16 @@ function one(value: number): string {
   return value.toFixed(1);
 }
 
+// "Q2", "Q1–Q3" for quarters in a row, "Q1, Q3" when one is skipped: a range would suggest
+// the course runs in Q2 as well.
 function quartersText(quarters: number[]): string {
   if (quarters.length === 0) return "";
-  const first = Math.min(...quarters);
-  const last = Math.max(...quarters);
-  return first === last ? `Q${first}` : `Q${first}–Q${last}`;
+  const sorted = [...quarters].sort((a, b) => a - b);
+  const first = sorted[0];
+  const last = sorted[sorted.length - 1];
+  if (first === last) return `Q${first}`;
+  const inARow = sorted.every((q, i) => i === 0 || q === sorted[i - 1] + 1);
+  return inARow ? `Q${first}–Q${last}` : sorted.map((q) => `Q${q}`).join(", ");
 }
 
 // cubic-bezier(0.22, 1, 0.36, 1), the curve of the whole card, solved for progress t.
@@ -89,11 +94,27 @@ function useCountUp(target: number | null): number {
   return value;
 }
 
+// The big number while it counts. A component of its own, so only this number renders again on
+// every frame of the count, not the whole card with its six dials.
+function CountUp({ target }: { target: number }) {
+  return <>{one(useCountUp(target))}</>;
+}
+
 // True from the first moment the element is on screen, and stays true.
 function useInViewOnce<T extends Element>() {
   // A callback ref in state, so the effect runs again when the element appears later.
   const [element, ref] = useState<T | null>(null);
   const [seen, setSeen] = useState(false);
+  // Before the first paint of the hydrated page: a block that is already on screen is marked
+  // seen right away, so it keeps its final state and never plays the grow-in. Blocks below the
+  // fold wait for the observer below.
+  useLayoutEffect(() => {
+    if (!element || seen) return;
+    const box = element.getBoundingClientRect();
+    // Deliberate: the re-render must happen before paint, which an observer callback cannot do.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (box.top < window.innerHeight && box.bottom > 0) setSeen(true);
+  }, [element, seen]);
   useEffect(() => {
     if (!element || seen) return;
     if (typeof IntersectionObserver === "undefined") {
@@ -182,9 +203,11 @@ function Tile({
   );
 }
 
-function rankTile(rank: Rank | undefined, caption: string) {
-  return <Tile value={rank?.rank ?? null} of={rank?.of} caption={caption} />;
+function rankTile(rank: Rank | undefined, caption: string, note?: string) {
+  return <Tile value={rank?.rank ?? null} of={rank?.of} caption={caption} note={note} />;
 }
+
+const NO_PROFESSOR_NOTE = "No professor listed yet";
 
 // The professor switcher: one radio group with a highlight that slides under the choice.
 function Switcher({
@@ -210,8 +233,10 @@ function Switcher({
       const target = radios.current[index];
       const mark = highlight.current;
       if (!target || !mark) return;
+      // Top and height too: on a phone the buttons wrap onto more lines.
       mark.style.width = `${target.offsetWidth}px`;
-      mark.style.transform = `translateX(${target.offsetLeft}px)`;
+      mark.style.height = `${target.offsetHeight}px`;
+      mark.style.transform = `translate(${target.offsetLeft}px, ${target.offsetTop}px)`;
     };
     place();
     const frame = requestAnimationFrame(() => {
@@ -285,16 +310,18 @@ export function CourseCard({
   const [professorId, setProfessorId] = useState(sheet.startProfessorId);
   const [rating, setRating] = useState<Record<string, number>>({});
   const [burst, setBurst] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
+  // The professor the rating was posted for, so the ready message never shows for another one.
+  const [submittedFor, setSubmittedFor] = useState<string | null>(null);
   const card = useRef<HTMLElement>(null);
-  // Hidden start states (bars, tips) apply only once this runs, so no JavaScript shows the final state.
-  useEffect(() => {
+  // Hidden start states (bars, tips) apply only once this runs, so no JavaScript shows the final
+  // state. A layout effect, so it runs in the same frame as the in-view check of the blocks and
+  // nothing on screen is first hidden and then grown back.
+  useLayoutEffect(() => {
     card.current?.setAttribute("data-js", "");
   }, []);
 
   const professor = sheet.professors.find((p) => p.id === professorId) ?? null;
   const combined = professor?.combined ?? null;
-  const count = useCountUp(combined?.score ?? null);
   // A professor's three values are kept under that professor, so they stay behind when
   // another professor is picked.
   const professorKey = (criterion: Criterion) => `${professor?.id}:${criterion.key}`;
@@ -306,8 +333,10 @@ export function CourseCard({
   const rated = keys.length - left;
   const total = keys.length;
   const complete = total > 0 && left === 0;
+  // "" stands for a course without a professor, so its rating can be submitted too.
+  const submitted = submittedFor !== null && submittedFor === (professor?.id ?? "");
   const set = (key: string) => (value: number) => {
-    setSubmitted(false);
+    setSubmittedFor(null);
     setRating((current) => ({ ...current, [key]: value }));
   };
 
@@ -332,14 +361,22 @@ export function CourseCard({
       </header>
 
       <section className={styles.score} aria-label="Overall difficulty">
+        {/* Always in the page, so a change of text is announced when the professor changes. The
+            count is for the eyes; screen readers hear the final score once. */}
+        <span className={styles.srOnly} aria-live="polite">
+          {combined
+            ? `Difficulty ${one(combined.score)} out of 10, ${VERDICT_LABELS[combined.verdict]}`
+            : "No difficulty score yet"}
+        </span>
         {combined ? (
           <>
-            {/* The count is for the eyes; screen readers hear the final score once. */}
-            <span className={styles.srOnly} aria-live="polite">
-              Difficulty {one(combined.score)} out of 10, {VERDICT_LABELS[combined.verdict]}
-            </span>
+            <p className={`${styles.scoreLabel} ${styles.mono} ${styles.caption}`}>
+              Difficulty · higher is harder
+            </p>
             <p className={styles.number} aria-hidden="true">
-              <b className={`${styles.mono} ${styles.display}`}>{one(count)}</b>
+              <b className={`${styles.mono} ${styles.display}`}>
+                <CountUp target={combined.score} />
+              </b>
               <small className={`${styles.mono} ${styles.title2}`}>/ 10</small>
             </p>
             <span className={`${styles.verdict} ${styles.body2}`}>
@@ -363,13 +400,21 @@ export function CourseCard({
           rather than showing a wrong reason. */}
       {ranks.available && (
       <ul className={styles.tiles} aria-label="Ranks">
-        {rankTile(professor ? ranks.score[professor.id] : undefined, "Combined rating rank")}
+        {rankTile(
+          professor ? ranks.score[professor.id] : undefined,
+          "Difficulty rank · #1 is the hardest",
+          professor ? undefined : NO_PROFESSOR_NOTE,
+        )}
         <Tile
           value={ranks.easierThan}
-          caption="Of rated courses are easier"
+          caption="Of rated courses have a lighter load"
           note={sheet.subject.averages ? "No other rated courses yet" : MIN_VOTES_NOTE}
         />
-        {rankTile(professor ? ranks.professor[professor.id] : undefined, "Professor teaching rank")}
+        {rankTile(
+          professor ? ranks.professor[professor.id] : undefined,
+          "Professor teaching rank",
+          professor ? undefined : NO_PROFESSOR_NOTE,
+        )}
       </ul>
       )}
 
@@ -454,7 +499,9 @@ export function CourseCard({
           <h2 className={`${styles.mono} ${styles.caption} ${styles.label}`} id="rating-title">
             Your rating
           </h2>
-          <span className={`${styles.legend} ${styles.caption}`}>0 to 10 in steps of 0.5</span>
+          <span className={`${styles.legend} ${styles.caption}`}>
+            0 to 10 in steps of 0.5 · posting opens soon, nothing is saved yet
+          </span>
         </div>
         <div className={styles.strip} data-complete={complete ? "" : undefined}>
           <span className={`${styles.stripText} ${styles.body2}`}>
@@ -466,13 +513,15 @@ export function CourseCard({
             ))}
           </span>
         </div>
-        {/* Nothing is saved yet. Posting goes through submit_rating() (Pack 5). */}
+        {/* Nothing is saved yet. Posting goes through submit_rating() (Pack 5). Until then the Post
+            button stays disabled; the onSubmit and the fireworks are kept so Pack 5 only has to
+            enable posting. */}
         <form
           onSubmit={(event) => {
             event.preventDefault();
             if (!complete) return;
             setBurst((current) => current + 1);
-            setSubmitted(true);
+            setSubmittedFor(professor?.id ?? "");
           }}
           noValidate
         >
@@ -486,6 +535,7 @@ export function CourseCard({
                   hint={criterion.hint}
                   value={rating[criterion.key] ?? null}
                   onChange={set(criterion.key)}
+                  scale={criterion.key === "interest" ? "quality" : "hardness"}
                 />
               </div>
             ))}
@@ -514,9 +564,9 @@ export function CourseCard({
                 ? `${left} left to rate.`
                 : submitted
                   ? "Your rating is ready. Posting opens soon, so it is not saved yet."
-                  : "All rated. Press post to finish."}
+                  : "Posting ratings is not open yet."}
             </p>
-            <button type="submit" className={`${styles.post} ${styles.body2}`} disabled={!complete}>
+            <button type="submit" className={`${styles.post} ${styles.body2}`} disabled>
               Post rating
             </button>
           </div>

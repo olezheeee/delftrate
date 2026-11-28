@@ -2,14 +2,26 @@
 
 import { useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
-import { MAX, MIN, angleForValue, band, beamShape, keyStep, valueFromPoint } from "@/lib/dial";
+import {
+  MAX,
+  MIN,
+  angleForValue,
+  bandFor,
+  beamShape,
+  type Scale,
+  classifyTouch,
+  keyStep,
+  valueFromPoint,
+} from "@/lib/dial";
 import styles from "./BeamDial.module.css";
 
 const CX = 100;
 const CY = 100;
 const R = 80;
 const BAND_R = 68;
-const BAND_WIDTH = 36;
+// The band is invisible, so it can be as thick as the finger needs. 64 units is about 28px when
+// the dial renders 90px wide (a narrow phone); the old 36 was only about 16px.
+const BAND_WIDTH = 64;
 const BEAM_LENGTH = 74;
 const TICK_COUNT = 21;
 const TAP_SLOP = 8; // px a finger may move and still count as a tap
@@ -55,8 +67,10 @@ export function BeamDial(props: {
   hint: string;
   value: number | null;
   onChange: (value: number) => void;
+  /** Which words describe the value: "hardness" for difficulty and exam level. */
+  scale?: Scale;
 }) {
-  const { id, label, hint, value, onChange } = props;
+  const { id, label, hint, value, onChange, scale = "quality" } = props;
   const [pressed, setPressed] = useState(false);
   const [following, setFollowing] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -85,45 +99,68 @@ export function BeamDial(props: {
   // A finger that lands on the arc may only be scrolling the page, which must not count as a
   // rating. So for touch nothing happens on pointer down: a tap (little movement) or a
   // sideways drag rates, and an upward or downward swipe is left to the browser to scroll
-  // (the band allows vertical panning). Mouse and pen rate at once.
+  // (the band allows vertical panning). A pen pans the page like a finger, so it follows the
+  // same rules. A mouse rates at once.
   const touchStart = useRef<{ id: number; x: number; y: number } | null>(null);
+  // The pointer of the drag along the arc that is under way, or null. We keep our own record
+  // because hasPointerCapture is no use here: browsers capture touch pointers implicitly on
+  // pointer down, so it is already true on the first move of a scroll swipe. It is tied to one
+  // pointer, so a second finger on the band never moves the dial.
+  const dragging = useRef<number | null>(null);
 
-  function startDrag(e: PointerEvent<SVGPathElement>) {
+  // A mouse rates where it presses. A touch or pen drag rates only from its next move on: the
+  // move that decided it was a drag might still turn into a scroll of the page, and a scroll
+  // must leave the dial as it was.
+  function startDrag(e: PointerEvent<SVGPathElement>, rateNow: boolean) {
+    dragging.current = e.pointerId;
     e.currentTarget.setPointerCapture(e.pointerId);
     wrapRef.current?.focus({ preventScroll: true });
     setPressed(true);
-    commit(fromEvent(e));
+    if (rateNow) commit(fromEvent(e));
   }
 
   function onPointerDown(e: PointerEvent<SVGPathElement>) {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    if (e.pointerType === "touch") {
+    if (e.pointerType === "touch" || e.pointerType === "pen") {
+      // The browser's implicit capture is kept: it sends this finger's moves here even when it
+      // slides off the band, so the gesture is always decided. It does not stop the page from
+      // scrolling: a vertical swipe ends in pointercancel.
+      // A second finger, while one drags or is still being decided, is ignored.
+      if (dragging.current !== null || touchStart.current !== null) return;
       touchStart.current = { id: e.pointerId, x: e.clientX, y: e.clientY };
       return;
     }
-    startDrag(e);
+    startDrag(e, true);
   }
 
   function onPointerMove(e: PointerEvent<SVGPathElement>) {
-    const start = touchStart.current;
-    if (start && start.id === e.pointerId && !e.currentTarget.hasPointerCapture(e.pointerId)) {
-      const dx = e.clientX - start.x;
-      const dy = e.clientY - start.y;
-      if (Math.hypot(dx, dy) < TAP_SLOP) return;
-      touchStart.current = null;
-      if (Math.abs(dx) > Math.abs(dy)) startDrag(e); // sideways: a drag along the arc
-      return; // otherwise a scroll: leave it to the browser
+    if (dragging.current !== null) {
+      if (e.pointerId !== dragging.current) return;
+      setFollowing(true);
+      commit(fromEvent(e));
+      return;
     }
-    if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
-    setFollowing(true);
-    commit(fromEvent(e));
+    const start = touchStart.current;
+    if (!start || start.id !== e.pointerId) return;
+    const kind = classifyTouch(e.clientX - start.x, e.clientY - start.y, TAP_SLOP);
+    if (kind === "undecided") return;
+    touchStart.current = null; // decided: it can no longer become a tap
+    if (kind === "drag") startDrag(e, false); // sideways: a drag along the arc
+    // "scroll": leave it to the browser; nothing is rated
   }
 
   function release(e: PointerEvent<SVGPathElement>) {
+    // Another finger lifting must not end the drag or the undecided touch, or rate.
+    if (dragging.current !== null && e.pointerId !== dragging.current) return;
+    if (touchStart.current !== null && e.pointerId !== touchStart.current.id) return;
     const start = touchStart.current;
+    const dragged = dragging.current === e.pointerId;
     touchStart.current = null;
-    // A tap: the finger went down and up without moving far.
-    if (e.type === "pointerup" && start && start.id === e.pointerId) {
+    dragging.current = null;
+    // A tap (the finger went down and up without moving far) rates where it lifted, and so does
+    // the end of a drag, which may have been too short for a move of its own to rate. A cancel
+    // (the browser taking over to scroll) never rates.
+    if (e.type === "pointerup" && ((start && start.id === e.pointerId) || dragged)) {
       wrapRef.current?.focus({ preventScroll: true });
       commit(fromEvent(e));
     }
@@ -163,8 +200,10 @@ export function BeamDial(props: {
         aria-describedby={hintId}
         aria-valuemin={MIN}
         aria-valuemax={MAX}
+        // A slider must have a value: unrated, it is the middle, where the needle rests, and the
+        // valuetext below says "Not rated yet", which is what screen readers announce.
         aria-valuenow={value ?? 5}
-        aria-valuetext={value === null ? "Not rated yet" : `${format(value)} out of 10, ${band(value)}`}
+        aria-valuetext={value === null ? "Not rated yet" : `${format(value)} out of 10, ${bandFor(value, scale)}`}
         onKeyDown={onKeyDown}
       >
         <svg ref={svgRef} className={styles.svg} viewBox="0 0 200 116" aria-hidden="true">
@@ -224,13 +263,20 @@ export function BeamDial(props: {
             onPointerMove={onPointerMove}
             onPointerUp={release}
             onPointerCancel={release}
+            onLostPointerCapture={(e) => {
+              // The browser took the pointer away without an up or a cancel: the drag is over.
+              if (e.pointerId !== dragging.current) return;
+              dragging.current = null;
+              setPressed(false);
+              setFollowing(false);
+            }}
           />
         </svg>
         <div className={styles.readout}>
           <span key={value ?? "none"} className={rated ? `${styles.value} ${styles.pop}` : styles.value}>
             {value === null ? "–" : format(value)}
           </span>
-          <span className={styles.caption}>{value === null ? "Drag to rate" : band(value)}</span>
+          <span className={styles.caption}>{value === null ? "Drag to rate" : bandFor(value, scale)}</span>
         </div>
       </div>
     </div>

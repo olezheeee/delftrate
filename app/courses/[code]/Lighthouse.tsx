@@ -6,6 +6,7 @@ import {
   BEAM_ARC_MIN,
   BEAM_FOLLOW_FACTOR,
   BEAM_HALF_WIDTH,
+  BEAM_IDLE_SWEEP_MS,
   BEAM_INNER_HALF_WIDTH,
   BEAM_LENGTH,
   BEAM_REDUCED_ANGLE,
@@ -13,6 +14,7 @@ import {
   BEAM_SWEEP_PERIOD_MS,
   angleDiff,
   angleTo,
+  beamMode,
   clampAngle,
   isInBeam,
   stepToward,
@@ -21,15 +23,24 @@ import {
 } from "@/lib/beam";
 import styles from "./Lighthouse.module.css";
 
+// The beam has four modes (see beamMode in lib/beam.ts):
+// - fixed: with reduced motion or on a touch-only screen the beam stays at one angle and never
+//   moves, not at load and not on scroll. Frames are only used to relight the targets once
+//   after a resize or scroll.
+// - follow: with a mouse over the card the beam turns toward the pointer, and stops scheduling
+//   frames once it has settled.
+// - sweep: with a mouse elsewhere the beam sweeps back and forth, but only for a few seconds
+//   after the last pointer movement over the card or scroll.
+// - rest: after that the beam stays at the angle it reached and no frames are scheduled until
+//   the pointer moves over the card or the page scrolls.
+// Frames are also paused while the tab is hidden or the card is out of view.
+
 // Tower drawing space is 56 x 112; the lamp centre sits at (28, 22).
 const LAMP = { x: 28, y: 22 };
 const SETTLED = 0.05; // degrees
 // While sweeping, the lit targets are checked on every fourth frame only: the beam moves
 // slowly, and reading every rect on every frame costs battery.
 const SWEEP_HIT_EVERY = 4;
-// On a touch screen (no hover) the idle sweep rests after this long, and starts again when
-// the page scrolls, so a course page left open does not animate forever.
-const TOUCH_SWEEP_MS = 12000;
 
 function wedge(halfWidth: number, length: number): string {
   const h = length * Math.tan((halfWidth * Math.PI) / 180);
@@ -59,16 +70,27 @@ export function Lighthouse({
     const group = groupRef.current;
     const container = layer?.parentElement;
     if (!layer || !lamp || !group || !container) return;
+    // A browser without these observers (an old web view) keeps the drawing without a moving
+    // beam, rather than failing the whole card.
+    if (
+      typeof ResizeObserver === "undefined" ||
+      typeof IntersectionObserver === "undefined" ||
+      typeof MutationObserver === "undefined"
+    ) {
+      return;
+    }
 
     const reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const touchOnly = window.matchMedia("(hover: none)").matches;
+    const hoverQuery = window.matchMedia("(hover: none)");
     let reduced = reducedQuery.matches;
-    let sweepUntil = performance.now() + TOUCH_SWEEP_MS;
+    let touchOnly = hoverQuery.matches;
+    // The idle sweep runs until this time, then rests; pointer movement and scrolling extend it.
+    let idleUntil = performance.now() + BEAM_IDLE_SWEEP_MS;
     let frameCount = 0;
     let frame = 0;
     let inView = true;
     let pointer: Point | null = null; // client coordinates, only while over the card
-    let angle = reduced ? BEAM_REDUCED_ANGLE : BEAM_REST_ANGLE;
+    let angle = reduced || touchOnly ? BEAM_REDUCED_ANGLE : BEAM_REST_ANGLE;
     let origin: Point | null = null; // relative to the container
     let originDirty = true;
     // The beam reaches across the whole card, which is far taller than wide: its length is
@@ -94,28 +116,26 @@ export function Lighthouse({
       if (originDirty || !origin) measureOrigin(box);
       const o = origin!;
 
-      let target: number;
-      let following = false;
-      const resting = touchOnly && !pointer && now > sweepUntil;
-      if (reduced) {
+      const mode = beamMode({ reduced, touchOnly, hasPointer: !!pointer, now, idleUntil });
+      let target = angle;
+      if (mode === "fixed") {
         target = BEAM_REDUCED_ANGLE;
-      } else if (resting) {
-        target = angle;
-      } else if (pointer) {
-        following = true;
+      } else if (mode === "follow" && pointer) {
         const p = { x: pointer.x - box.left, y: pointer.y - box.top };
         target = clampAngle(angleTo(o, p), BEAM_ARC_MIN, BEAM_ARC_MAX);
-      } else {
+      } else if (mode === "sweep") {
         target = sweepAngle(now, BEAM_ARC_MIN, BEAM_ARC_MAX, BEAM_SWEEP_PERIOD_MS);
       }
+      // "rest" keeps the angle it reached.
 
-      angle = reduced ? target : stepToward(angle, target, BEAM_FOLLOW_FACTOR);
+      angle = mode === "fixed" ? target : stepToward(angle, target, BEAM_FOLLOW_FACTOR);
       const settled = Math.abs(angleDiff(angle, target)) < SETTLED;
+      const following = mode === "follow";
       if (following && settled) angle = target;
 
       group!.setAttribute("transform", `translate(${o.x} ${o.y}) rotate(${angle})`);
 
-      const sweeping = !reduced && !following && !resting;
+      const sweeping = mode === "sweep";
       frameCount += 1;
       if (sweeping && frameCount % SWEEP_HIT_EVERY !== 0) {
         schedule();
@@ -144,8 +164,8 @@ export function Lighthouse({
         if (!el.isConnected) litNow.delete(el);
       });
 
-      // Follow mode stops once settled, reduced and resting modes after this frame; the idle
-      // sweep goes on (on touch screens only until sweepUntil).
+      // Follow mode stops once settled; fixed and rest modes stop after this frame (hits are
+      // recomputed on resize and scroll); the idle sweep goes on until idleUntil.
       if (sweeping || (following && !settled)) schedule();
     }
 
@@ -159,26 +179,41 @@ export function Lighthouse({
     }
 
     function onPointerMove(e: PointerEvent) {
-      if (reduced || e.pointerType === "touch") return;
+      if (reduced || touchOnly || e.pointerType === "touch") return;
       pointer = { x: e.clientX, y: e.clientY };
+      idleUntil = performance.now() + BEAM_IDLE_SWEEP_MS;
       schedule();
     }
-    function onPointerLeave() {
+    function onPointerLeave(e: PointerEvent) {
+      // Browsers fire this for a finger when it lifts; only the mouse leaving counts.
+      if (e.pointerType === "touch") return;
       pointer = null;
+      // Sweep on for a while from where the pointer left, then rest.
+      idleUntil = performance.now() + BEAM_IDLE_SWEEP_MS;
       schedule();
     }
+    // A beam that never moves (touch screens, reduced motion) is relit once the scrolling has
+    // stopped, not on every frame of it: reading every target's position costs battery.
+    let scrollTimer: ReturnType<typeof setTimeout> | undefined;
     function onScroll() {
       originDirty = true;
-      sweepUntil = performance.now() + TOUCH_SWEEP_MS;
+      idleUntil = performance.now() + BEAM_IDLE_SWEEP_MS;
+      if (reduced || touchOnly) {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(schedule, 150);
+        return;
+      }
       schedule();
     }
     function onVisibility() {
       if (document.hidden) cancel();
       else schedule();
     }
-    function onReducedChange() {
+    function onMotionChange() {
       reduced = reducedQuery.matches;
-      if (reduced) pointer = null;
+      touchOnly = hoverQuery.matches;
+      if (reduced || touchOnly) pointer = null;
+      else idleUntil = performance.now() + BEAM_IDLE_SWEEP_MS;
       schedule();
     }
 
@@ -192,24 +227,33 @@ export function Lighthouse({
       else cancel();
     });
 
+    // In the fixed and rest modes no frames run, so new targets (the tips of another professor)
+    // would stay unlit until the next scroll. One frame on every change of the card's content.
+    const mutation = new MutationObserver(() => schedule());
+
     resizeObserver.observe(container);
     intersection.observe(container);
+    mutation.observe(container, { childList: true, subtree: true });
     container.addEventListener("pointermove", onPointerMove);
     container.addEventListener("pointerleave", onPointerLeave);
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
-    reducedQuery.addEventListener("change", onReducedChange);
+    reducedQuery.addEventListener("change", onMotionChange);
+    hoverQuery.addEventListener("change", onMotionChange);
     schedule();
 
     return () => {
       cancel();
+      clearTimeout(scrollTimer);
       resizeObserver.disconnect();
       intersection.disconnect();
+      mutation.disconnect();
       container.removeEventListener("pointermove", onPointerMove);
       container.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
-      reducedQuery.removeEventListener("change", onReducedChange);
+      reducedQuery.removeEventListener("change", onMotionChange);
+      hoverQuery.removeEventListener("change", onMotionChange);
       litNow.forEach((el) => el.removeAttribute("data-lit"));
       litNow.clear();
     };

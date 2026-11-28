@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   angleDiff,
+  beamMode,
   angleTo,
   clampAngle,
   isInBeam,
@@ -125,5 +126,27 @@ describe("sweepAngle", () => {
       expect(a).toBeGreaterThanOrEqual(90 - 1e-9);
       expect(a).toBeLessThanOrEqual(200 + 1e-9);
     }
+  });
+});
+
+describe("beamMode", () => {
+  const base = { reduced: false, touchOnly: false, hasPointer: false, now: 1000, idleUntil: 5000 };
+  it("is fixed with reduced motion, whatever else is going on", () => {
+    expect(beamMode({ ...base, reduced: true })).toBe("fixed");
+    expect(beamMode({ ...base, reduced: true, hasPointer: true })).toBe("fixed");
+  });
+  it("is fixed on a touch-only screen, even right after load or a scroll", () => {
+    expect(beamMode({ ...base, touchOnly: true })).toBe("fixed");
+    expect(beamMode({ ...base, touchOnly: true, now: 9000 })).toBe("fixed");
+  });
+  it("follows the pointer while it is over the card", () => {
+    expect(beamMode({ ...base, hasPointer: true })).toBe("follow");
+    expect(beamMode({ ...base, hasPointer: true, now: 9000 })).toBe("follow");
+  });
+  it("sweeps until idleUntil, then rests", () => {
+    expect(beamMode(base)).toBe("sweep");
+    expect(beamMode({ ...base, now: 4999 })).toBe("sweep");
+    expect(beamMode({ ...base, now: 5000 })).toBe("rest");
+    expect(beamMode({ ...base, now: 60000 })).toBe("rest");
   });
 });

@@ -12,6 +12,9 @@ export const ANGLE_AT_MIN = 180;
 export const ANGLE_AT_MAX = 360;
 
 export type Band = "Poor" | "Weak" | "Fine" | "Good" | "Excellent";
+export type HardnessBand = "Very easy" | "Easy" | "Moderate" | "Hard" | "Very hard";
+/** "quality": higher is better (interest, the professor). "hardness": higher is harder. */
+export type Scale = "quality" | "hardness";
 
 /** Nearest multiple of STEP, clamped to MIN..MAX. */
 export function snap(value: number): number {
@@ -75,8 +78,30 @@ export function band(value: number): Band {
   return "Excellent";
 }
 
+/** The word under a dial. Difficulty and exam level are not good or bad, only hard or easy. */
+export function bandFor(value: number, scale: Scale): Band | HardnessBand {
+  if (scale === "quality") return band(value);
+  if (value < 3) return "Very easy";
+  if (value < 5) return "Easy";
+  if (value < 7) return "Moderate";
+  if (value < 9) return "Hard";
+  return "Very hard";
+}
+
 /** Outer wedge of the beam: wider and brighter for higher values. */
 export function beamShape(value: number): { halfWidth: number; opacity: number } {
   const t = (Math.min(MAX, Math.max(MIN, value)) - MIN) / (MAX - MIN);
   return { halfWidth: 6 + 8 * t, opacity: 0.1 + 0.18 * t };
+}
+
+/**
+ * What a touch that has moved (dx, dy) pixels since it landed is doing. Under `slop` it is still
+ * undecided (it may yet be a tap); past it, a mostly sideways move is a drag along the arc and
+ * anything else is a scroll of the page, which must not rate. The band allows only vertical
+ * panning, so the browser does not scroll a mostly sideways swipe; should it scroll anyway, it
+ * cancels the pointer, and the move that decided the drag has not rated anything yet.
+ */
+export function classifyTouch(dx: number, dy: number, slop: number): "undecided" | "drag" | "scroll" {
+  if (Math.hypot(dx, dy) < slop) return "undecided";
+  return Math.abs(dx) > Math.abs(dy) ? "drag" : "scroll";
 }
