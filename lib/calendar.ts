@@ -11,11 +11,22 @@ export type CalendarCourse = {
   quarters: number[];
 };
 
-// The ratings of a course as its three circles in the calendar show them, each out of 10:
+// The ratings of a course as the calendar shows them next to its name, each out of 10:
 // the combined score, the subject's load, and the teaching score of the course's default
 // professor. Each is null until its block has enough votes; the score needs both blocks.
 // They come from the database function calendar_scores().
 export type CourseNumbers = { score: number | null; load: number | null; teach: number | null };
+
+// The colour that says how hard a subject is, as a hue for the overall score of a course:
+// green (140) for a light load, through yellow, to red (0) for a heavy one. Loads of 4 and
+// lower are all the lightest green and loads of 9 and higher all the deepest red, because
+// that is the range real courses are in; the colour changes evenly in between.
+const LIGHT_LOAD = 4;
+const HEAVY_LOAD = 9;
+export function loadHue(load: number): number {
+  const share = Math.min(Math.max((load - LIGHT_LOAD) / (HEAVY_LOAD - LIGHT_LOAD), 0), 1);
+  return Math.round(140 * (1 - share));
+}
 
 // What the visitor picked. The year only counts once a programme is picked.
 export type Choice = { programme: ProgrammeId | null; year: number | null };

@@ -1,8 +1,8 @@
 "use client";
 
 // The course schedule calendar of the home page: pick a programme, then a year, and see
-// that year's courses under the quarters they run in, each with its ratings in three
-// circles: the overall score, and under it the subject's load and the professor.
+// that year's courses under the quarters they run in, each with its ratings: the overall
+// score as "7.8/10", and under it two circles for the subject's load and the professor.
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState, type CSSProperties } from "react";
@@ -10,6 +10,7 @@ import { PROGRAMMES, YEARS, programmeName } from "@/lib/auth/programmes";
 import {
   courseHref,
   layoutCalendar,
+  loadHue,
   parseChoice,
   type CalendarCourse,
   type Choice,
@@ -183,10 +184,14 @@ export function CourseCalendar({
         )}
       </div>
 
-      {/* What the three circles of a course are. */}
+      {/* What the numbers of a course are. */}
       {layout && layout.rows > 0 && (scores ? (
         <p className={styles.legend}>
-          {CIRCLES.map(({ kind, name }) => (
+          <span className={styles.legendItem}>
+            <span className={styles.scale} aria-hidden="true" />
+            Overall: green for a light subject, red for a hard one
+          </span>
+          {CIRCLES.filter(({ kind }) => kind !== "score").map(({ kind, name }) => (
             <span key={kind} className={styles.legendItem}>
               <span className={styles.swatch} data-kind={kind} aria-hidden="true" />
               {name}
@@ -304,9 +309,9 @@ function CourseLink({
         <span className={styles.name}>{course.name}</span>
       </span>
       {numbers && (
-        // The big circle is the overall score; under it the subject's load and the professor.
+        // The overall score on top; under it the subject's load and the professor.
         <span className={styles.scores}>
-          <Ring kind="score" value={numbers.score} />
+          <Overall score={numbers.score} load={numbers.load} />
           <span className={styles.pair}>
             <Ring kind="load" value={numbers.load} />
             <Ring kind="teach" value={numbers.teach} />
@@ -314,6 +319,29 @@ function CourseLink({
         </span>
       )}
     </Link>
+  );
+}
+
+// The overall score, written as "7.8/10". The number takes the colour of how hard the
+// subject is: green for a light load, red for a heavy one (loadHue). The load itself is in
+// the circle underneath, so the colour is never the only place that says it.
+function Overall({ score, load }: { score: number | null; load: number | null }) {
+  const text = score === null ? null : tenth(score);
+  const rated = text !== null && load !== null;
+  return (
+    <span
+      className={styles.overall}
+      data-empty={text === null ? "" : undefined}
+      title={
+        rated
+          ? `Overall: ${text} out of 10. Its colour is the subject's load, ${tenth(load)}.`
+          : "Overall: too few votes so far"
+      }
+      style={rated ? ({ "--hue": loadHue(load) } as CSSProperties) : undefined}
+    >
+      <b aria-hidden="true">{text ?? "–"}</b>
+      <span aria-hidden="true">/10</span>
+    </span>
   );
 }
 

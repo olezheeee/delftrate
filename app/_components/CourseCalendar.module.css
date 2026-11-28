@@ -96,7 +96,7 @@
   color: hsl(var(--fg) / 0.72);
   text-shadow: var(--on-clip);
 }
-/* What the three circles of a course are. */
+/* What the numbers of a course are. */
 .legend {
   display: flex;
   flex-wrap: wrap;
@@ -117,9 +117,13 @@
   border: 2px solid var(--accent);
   border-radius: 50%;
 }
-.swatch[data-kind="score"] {
-  width: 14px;
-  height: 14px;
+/* The colours the overall score can take, from a light subject to a hard one. */
+.scale {
+  flex: none;
+  width: 26px;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, hsl(140 78% 62%), hsl(70 78% 62%), hsl(0 78% 62%));
 }
 .swatch[data-kind="load"] {
   border-color: hsl(var(--fg) / 0.82);
@@ -227,14 +231,37 @@
   overflow-wrap: anywhere;
 }
 
-/* The ratings of a course: a big circle for the overall score, and under it two small
-   ones for the subject's load and the professor. Each is a ring filled as far as the
-   number goes, out of 10. */
+/* The ratings of a course: the overall score as "7.8/10", and under it two small circles
+   for the subject's load and the professor, each a ring filled as far as the number goes,
+   out of 10. */
 .scores {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
+}
+/* The number of the overall score takes the colour of how hard the subject is: --hue is
+   set per course, green for a light load and red for a heavy one. */
+.overall {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.overall b {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: hsl(var(--hue, 0) 78% 62%);
+}
+.overall span {
+  font-size: 11px;
+  color: hsl(var(--fg) / 0.55);
+}
+.overall[data-empty] b {
+  color: hsl(var(--fg) / 0.4);
 }
 .pair {
   display: flex;
@@ -248,10 +275,6 @@
   width: 25px;
   height: 25px;
 }
-.ring[data-kind="score"] {
-  width: 46px;
-  height: 46px;
-}
 .ring svg {
   position: absolute;
   inset: 0;
@@ -263,9 +286,6 @@
 .ring circle {
   fill: none;
   stroke-width: 3.2;
-}
-.ring[data-kind="score"] circle {
-  stroke-width: 2.6;
 }
 .track {
   stroke: hsl(0 0% 100% / 0.14);
@@ -287,11 +307,6 @@
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.ring[data-kind="score"] b {
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: -0.03em;
-}
 .ring[data-empty] b {
   color: hsl(var(--fg) / 0.4);
 }
@@ -303,15 +318,11 @@
     grid-column: 1 / -1;
     grid-row: 2;
     flex-direction: row;
-    gap: 6px;
+    gap: 8px;
     margin-top: 8px;
   }
-  .ring[data-kind="score"] {
-    width: 38px;
-    height: 38px;
-  }
-  .ring[data-kind="score"] b {
-    font-size: 13px;
+  .overall b {
+    font-size: 19px;
   }
 }
 

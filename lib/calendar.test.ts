@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { courseHref, layoutCalendar, moduleCode, parseChoice, type CalendarCourse } from "./calendar";
+import {
+  courseHref,
+  layoutCalendar,
+  loadHue,
+  moduleCode,
+  parseChoice,
+  type CalendarCourse,
+} from "./calendar";
 import { safeNextPath } from "./auth/routes";
 
 function course(code: string, quarters: number[]): CalendarCourse {
@@ -107,6 +114,25 @@ describe("the layout of the calendar", () => {
         }
       }
     }
+  });
+});
+
+describe("the colour of a subject's load", () => {
+  it("goes from green for a light subject to red for a heavy one", () => {
+    expect(loadHue(4)).toBe(140);
+    expect(loadHue(6.5)).toBe(70);
+    expect(loadHue(9)).toBe(0);
+  });
+
+  it("gets redder with every step up in load", () => {
+    const hues = [4, 5, 6, 7, 7.5, 8, 9].map(loadHue);
+    expect(hues).toEqual([...hues].sort((a, b) => b - a));
+    expect(new Set(hues).size).toBe(hues.length);
+  });
+
+  it("stays green below the lightest load and red above the heaviest", () => {
+    expect(loadHue(0)).toBe(140);
+    expect(loadHue(10)).toBe(0);
   });
 });
 
